@@ -1,0 +1,3 @@
+Legenda das Categorias:
+- 0: Escola
+- 1: Editais
