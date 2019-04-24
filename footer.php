@@ -1,45 +1,70 @@
 
 <!-- RODAPÉ PADRÃO -->
+    <footer class="page-footer font-small text-light pt-2" style="background-color:  #33439A;">
 
-<div class="container mb-4">
-            <div class="row bg-inverse">
-                <div class="col-12"><hr></div>
-                <div class="col-lg-4 text-center mt-5">
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left">
 
-                    <div class="btn-group-vertical btn-block btn-block-lg">
-                        <a href="http://www.educacao.rs.gov.br/inicial" target="_blank" class="btn btn-outline-danger">Secretaria da Educação</a>                
-                        <a href="https://secweb.procergs.com.br/rheportal/logon.xhtml" target="_blank" class="btn btn-outline-danger">Portal do Servidor</a>                
-                        <a href="http://portaldoprofessor.mec.gov.br/index.html" target="_blank" class="btn btn-outline-danger">Portal do Professor</a>                
-                        <a href="http://site.ufsm.br/" target="_blank" class="btn btn-outline-danger">UFSM</a>                              
-                    </div>
+        <!-- Footer links -->
+        <div class="row text-center text-md-left mt-3 pb-3">
 
-                </div>
-                
-                
-                
-                <div class="col-lg-4 text-center mt-2">
-                    
-                    <h3 class="d-flex justify-content-center mb-2">Sites e Blogs</h3>
-                    <div class="btn-group-vertical btn-block btn-block-lg">    
-                        <a href="http://www.blogdonatanael.com/" target="_blank" class="btn btn-outline-danger">Professor Natanael</a>
-                    </div>
-                   
-                </div>
-                
-                <div class="col-lg-4 text-center mt-5">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">Escola Professora Maria Rocha</h6>
+            <p>Aqui fizemos educacao.</p>
+            </div>
+            <!-- Grid column -->
 
-                    <div class="btn-group-vertical btn-block btn-block-lg">
-                        <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-outline-danger">MEC</a>                
-                        <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-outline-danger">Prouni</a>                
-                        <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-outline-danger">Enem</a>                
-                        <a href="http://www.dominiopublico.gov.br/pesquisa/PesquisaObraForm.jsp" target="_blank" class="btn btn-outline-danger">Domínio Público</a>                              
-                    </div>
+            <hr class="w-100 clearfix d-md-none">
 
-                </div>
+            <!-- Grid column -->
+            <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mt-3">
+                <h6 class="text-uppercase mb-4 font-weight-bold">Como chegar</h6>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4121.790614439209!2d-53.81458902211607!3d-29.690810057559283!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6596cdcc1dbcb9c9!2sEscola+Estadual+de+Ensino+M%C3%A9dio+Professora+Maria+Rocha!5e0!3m2!1spt-BR!2sbr!4v1511223701151" width="100%" height="300px" frameborder="0" style="border:0"></iframe>
             </div>
 
-            <div class="row text-center">
-                <div class="col-12 lead">&copy; 2018 - Maria Rocha</div>
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">Contato</h6>
+            <p>
+                <i class="fa fa-car mr-2 fa-1x"></i> R. Conde de Porto Alegre, 795 Santa Maria - RS</p>
+            <p>
+                <i class="fa fa-phone mr-3 fa-1x"></i>(55)3222-8171</p>
+
             </div>
 
         </div>
+
+        <hr style="border-color: white; ">
+
+        <div class="row d-flex align-items-center">
+
+            <div class="col-md-7 col-lg-8">
+
+              <p class="text-center text-md-left">© 2019 Copyright:
+                  <a>
+                  <strong> Guilherme Selair</strong>
+                  </a>
+              </p>
+
+            </div>
+
+            <div class="col-md-5 col-lg-4 ml-lg-0">
+
+              <div class="text-center text-md-right">
+                  <ul class="list-unstyled list-inline">
+                  <li class="list-inline-item">
+                      <a class="btn-floating btn-sm rgba-white-slight mx-1" >
+                      <i class="fa fa-facebook-f fa-3x" style="text-decoration: none;"></i>
+                      </a>
+                  </li>
+                  </ul>
+              </div>
+
+            </div>
+
+        </div>
+
+      </div>
+    </footer>

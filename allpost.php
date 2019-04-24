@@ -62,8 +62,8 @@
                     
                     $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts ORDER BY id DESC") or die("Erro");
                     while ($dados=mysqli_fetch_assoc($sql)) {
-                        $rest = substr($dados['descricao'], 0, 155);
-                        
+                        //$rest = substr($dados['descricao'], 0, 155);
+                        //echo $rest;
                         echo '<div class="titulo text-danger text-center mt-5"><strong>'.$dados ['titulo'].'</strong></div><p>';
                         echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
                         echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'];

@@ -42,76 +42,77 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
         <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
         <meta name="description" content="Escola estadual de ensino médio e tecnico maria rocha">
 
+
         <!-- Links Boostrap e CSS -->
         <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
         <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
         <link rel="shortcut icon" href="img/favicon.ico" />
-        <!--<link rel="stylesheet" href="main.css">-->
-        <style>
-            #nvcor {
-                background-color: #354698;
-            }
-            
-        </style>
     </head>
-    <body>        
+    <body>
 
         <!--NAVBAR-->
 
        <?php include 'menu.php'; ?>
 
-        <!-- IMAGEM DESTAQUE HEIGHT: 500px -->
-        
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="overflow: hidden; height: 500px;">
-            <div class="carousel-inner">
-                <div class="carousel-item active" >
-                    <img class="d-block w-100" src="Galeria/05.jpg" alt="First slide">
+
+        <!-- CARROSEL -->
+
+        <!-- IMAGEM DESTAQUE HEIGHT: 400px -->
+
+        <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox" >
+
+                <div class="carousel-item active">
+                <img class="d-block w-100" src="Galeria/05.jpg"
+                    alt="Primeiro slide">
                 </div>
-                <div class="carousel-item" >
-                    <img class="d-block w-100" src="Galeria/07.jpg" alt="First slide">
-                </div>
+
             </div>
-            <!-- SETAS PROXIMA IMAGEM -->
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Anterior</span>
+
+            <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Próxima</span>
+                <span class="sr-only">Próximo</span>
             </a>
-            
+
         </div>
 
         <!-- CARDS -->
-        
-        <div class="container text-center">
+
+        <div class="container text-center text-sm-center">
             <div class="row ">
                 <div class="col">
-                    <div class="card-deck mt-3">
-                        <div class="card text-center mx-0" style="width: 10rem; border: none;">
+                    <div class="card-deck mt-3 " style="width: 60rem; margin-left:auto; margin-right:auto;">
+                        <div class="card mb-4 text-center mx-0" style="width: 10rem; border: none;">
                             <img class="card-img-top w-25 mx-auto" src="img/portal-icon.png" alt="Portal Icon">
                             <div class="card-body mx-auto">
                                 <h6 class="card-title mx-auto h6">PORTAL DO ALUNO</h6>
                                 <a href="#" class="btn btn-primary">Acesse aqui</a>
                             </div>
                         </div>
-                        <div class="card text-center mx-0" style="width: 10rem; border: none;">
+                        <div class="card mb-4 text-center mx-0" style="width: 10rem; border: none;">
                             <img class="card-img-top w-25 mx-auto" src="img/info-icon.png" alt="Portal Icon">
                             <div class="card-body mx-auto">
                                 <h6 class="card-title mx-auto h6">PORTAL DO PROFESSOR</h6>
                                 <a href="#" class="btn btn-primary">Acesse aqui</a>
                             </div>
                         </div>
-                        <div class="card text-center mx-0" style="width: 10rem; border: none;">
+                        <div class="card mb-4 text-center mx-0" style="width: 10rem; border: none;">
                             <img class="card-img-top w-25 mx-auto" src="img/info-icon.png" alt="Portal Icon">
                             <div class="card-body mx-auto">
                                 <h6 class="card-title mx-auto h6">EDITAIS</h6>
                                 <a href="#" class="btn btn-primary">Acesse aqui</a>
                             </div>
                         </div>
-                        <div class="card text-center mx-0" style="width: 10rem; border: none;">
+                        <div class="card mb-4 text-center mx-0" style="width: 10rem; border: none;">
                             <img class="card-img-top w-25 mx-auto " src="img/info-icon.png" alt="Portal Icon">
                             <div class="card-body">
                                 <h6 class="card-title h6">CURSOS</h6>
@@ -122,146 +123,269 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                 </div>
             </div>
         </div>
-        
+
         <!-- NOTICIAS -->
 
-        <div class="jumbotron top-space">
-		<div class="container-fluid">
-			
-            <h3 class="text-center thin">ÚLTIMAS NOTICIAS</h3>
-            <a href="#" class="btn btn-primary text-right">TODAS NOTICIAS</a>
-            <!--
-            <p class="text-center">
-                <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Informática</a>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Contabilidade</button>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Secretáriado</button>
-            </p>
-            <div class="row">
-                <div class="col">
-                    <div class="collapse multi-collapse" id="multiCollapseExample1">
-                        <div class="card card-body">
-                            <div class="row">     
-                                <div class="col-12">            
-                                    <?php 
-                                        $sql = mysqli_query(DBConecta(),"SELECT * FROM `mr_posts` WHERE `categoria` = 0 ORDER BY `id` DESC LIMIT 3;") or die("Erro");
-                                    while ($dados=mysqli_fetch_assoc($sql)) {
-                                        if ($dados['categoria'] == 0){
-                                            echo '<div class="titulo text-danger mt-2 text-center"><strong>'.$dados ['titulo'].'</strong></div>';
-                                            //echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
-                                            //echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'<p>Categoria: '.$dados['categoria'].'</p></div>';
+        <div class="jumbotron top-space mt-4 mb-3" style="background-color: #f2f2f2;">
+            <div class="container-fluid">
+
+                <h4 class="text-center thin">ÚLTIMAS NOTICIAS</h4>
+                <a href="allpost.php" class="btn btn-primary text-right">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
+                <hr style="border-color: #354698; ">
+				        <?php
+                    $cat = 1; // Categoria a ser filtrada
+                    $sql = mysqli_query(DBConecta(), "SELECT * FROM `mr_posts` WHERE `categoria` = $cat ORDER BY `id` DESC LIMIT 6;") or die("Erro");
+                ?>
+                <div id="multi-item-example" class="carousel slide carousel-multi-item text-center" data-ride="carousel">
+                    <div class="controls-top">
+                      <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+                      <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+                    </div>
+
+                    <ol class="carousel-indicators">
+                      <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+                      <li data-target="#multi-item-example" data-slide-to="1"></li>
+                      <li data-target="#multi-item-example" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+
+                      <div class="carousel-item active">
+
+                        <div class="row text-center text-md-left mt-3 mb-3">
+                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3" >
+
+                                <div class="card mb-2 text-center">
+
+                                    <img class="card-img-top"
+                                    src="Galeria/04.png"
+                                    alt="Card image cap">
+                                    <div class="card-body">
+                                      <?php
+                                        $i = 0;
+                                        while ($i != 1) {
+                                                $dados=mysqli_fetch_assoc($sql);
+                                                echo '<h4 class="card-title">'.$dados['titulo'].'</h4>';
+                                                echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
+                                                $nome = 'noticias/'.$dados['id'].'.php';
+                                                echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
+                                                $i = $i + 1;
                                         }
-                                    }
-                                    ?>
+                                        $i = 0;
+                                      ?>
+                                    </div>
                                 </div>
+
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="collapse multi-collapse" id="multiCollapseExample2">
-                        <div class="card card-body">
-                            <div class="row">     
-                                <div class="col-12">            
-                                    <?php 
-                                    $sql = mysqli_query(DBConecta(),"SELECT * FROM `mr_posts` WHERE `categoria` = 1 ORDER BY `id` DESC LIMIT 2;") or die("Erro");
-                                    while ($dados=mysqli_fetch_assoc($sql)) {
-                                        if ($dados['categoria'] == 1){
-                                            echo '<div class="titulo text-danger mt-5 text-center"><strong>'.$dados ['titulo'].'</strong></div>';
-                                            //echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
-                                            //echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'<p>Categoria: '.$dados['categoria'].'</p></div>';
-                                        }
-                                    }
+
+                            <hr class="w-100 clearfix d-md-none">
+
+                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
+
+                              <div class="card mb-2 text-center">
+
+                                  <img class="card-img-top"
+                                  src="Galeria/04.png"
+                                  alt="Card image cap">
+                                  <div class="card-body">
+                                    <?php
+                                      $i = 0;
+                                      while ($i != 1) {
+                                              $dados=mysqli_fetch_assoc($sql);
+                                              echo '<h4 class="card-title">'.$dados['titulo'].'</h4>';
+                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
+                                              $nome = 'noticias/'.$dados['id'].'.php';
+                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
+                                              $i = $i + 1;
+                                      }
+                                      $i = 0;
                                     ?>
-                                </div>
+                                  </div>
+                              </div>
+
                             </div>
+                            <hr class="w-100 clearfix d-md-none">
+
+                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
+
+                              <div class="card mb-2 text-center">
+
+                                  <img class="card-img-top"
+                                  src="Galeria/04.png"
+                                  alt="Card image cap">
+                                  <div class="card-body">
+                                    <?php
+                                      $i = 0;
+                                      while ($i != 1) {
+                                              $dados=mysqli_fetch_assoc($sql);
+                                              echo '<h4 class="card-title">'.$dados['titulo'].'</h4>';
+                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
+                                              $nome = 'noticias/'.$dados['id'].'.php';
+                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
+                                              $i = $i + 1;
+                                      }
+                                      $i = 0;
+                                    ?>
+                                  </div>
+
+                              </div>
+
+                            </div>
+
                         </div>
-                    </div>  
+
+                      </div>
+
+                      <div class="carousel-item">
+                        <div class="row text-center text-md-left mt-3 mb-3">
+                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3" >
+
+                              <div class="card mb-2 text-center">
+
+                                  <img class="card-img-top"
+                                  src="Galeria/04.png"
+                                  alt="Card image cap">
+                                  <div class="card-body">
+                                    <?php
+                                      $i = 0;
+                                      while ($i != 1) {
+                                              $dados=mysqli_fetch_assoc($sql);
+                                              echo '<h4 class="card-title">'.$dados['titulo'].'</h4>';
+                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
+                                              $nome = 'noticias/'.$dados['id'].'.php';
+                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
+                                              $i = $i + 1;
+                                      }
+                                      $i = 0;
+                                    ?>
+                                  </div>
+                              </div>
+
+                            </div>
+
+                            <hr class="w-100 clearfix d-md-none">
+
+                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
+
+                              <div class="card mb-2 text-center">
+
+                                  <img class="card-img-top"
+                                  src="Galeria/04.png"
+                                  alt="Card image cap">
+                                  <div class="card-body">
+                                    <?php
+                                      $i = 0;
+                                      while ($i != 1) {
+                                              $dados=mysqli_fetch_assoc($sql);
+                                              echo '<h4 class="card-title">'.$dados['titulo'].'</h4>';
+                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
+                                              $nome = 'noticias/'.$dados['id'].'.php';
+                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
+                                              $i = $i + 1;
+                                      }
+                                      $i = 0;
+                                    ?>
+                                  </div>
+                              </div>
+
+                              </div>
+
+
+                            <hr class="w-100 clearfix d-md-none">
+
+                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
+
+                              <div class="card mb-2 text-center">
+
+                                  <img class="card-img-top"
+                                  src="Galeria/04.png"
+                                  alt="Card image cap">
+                                  <div class="card-body">
+                                    <?php
+                                      $i = 0;
+                                      while ($i != 1) {
+                                              $dados=mysqli_fetch_assoc($sql);
+                                              echo '<h4 class="card-title">'.$dados['titulo'].'</h4>';
+                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
+                                              $nome = 'noticias/'.$dados['id'].'.php';
+                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
+                                              $i = $i + 1;
+                                      }
+                                      $i = 0;
+                                    ?>
+                                  </div>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
                 </div>
+
             </div>
-            -->
-            <?php
-                $cat = 1; // Categoria a ser filtrada
-                $sql = mysqli_query(DBConecta(), "SELECT * FROM `mr_posts` WHERE `categoria` = $cat ORDER BY `id` DESC LIMIT 2;") or die("Erro");
-            ?>
-            <div class="owl-carousel">
-                <div class="row">     
-                    <div class="col">            
-                        <?php 
-                        $i = 0;
-                        while ($i != 1) {
-                                $dados=mysqli_fetch_assoc($sql);
-                                echo '<div class="titulo text-danger mt-5 text-center h4"><strong>'.$dados ['titulo'].'</strong></div>';
-                                echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
-                                echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'<p>Categoria: '.$dados['categoria'].'</p></div>';
-                                $i = $i + 1;
-                        }
-                        $i = 0;
-                        ?>
+
+        <!-- BOTÕES -->
+        <div class="container text-center  mb-2">
+
+            <div class="row text-center mt-3 mb-3">
+
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+
+                    <div class="btn-group-vertical btn-block btn-block-lg">
+                        <a href="http://www.educacao.rs.gov.br/inicial" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Secretaria da Educação</h6></a>
+                        <a href="https://secweb.procergs.com.br/rheportal/logon.xhtml" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Portal do Servidor</h6></a>
                     </div>
-                    <div class="col">            
-                        <?php 
-                        $i = 0;
-                        while ($i != 1) {
-                                $dados=mysqli_fetch_assoc($sql);
-                                echo '<div class="titulo text-danger mt-5 text-center h4"><strong>'.$dados ['titulo'].'</strong></div>';
-                                echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
-                                echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'<p>Categoria: '.$dados['categoria'].'</p></div>';
-                                $i = $i + 1;
-                        }
-                        $i = 0;
-                        ?>
-                    </div>
-                    
-                </div>
-		    </div>
-		</div>
-	</div>
-
-
-        <!-- POSTAGENS 
-
-        <div class="container">
-
-            <div class="row">     
-
-                <div class="col-12">            
-                    <?php 
-
-                    $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts ORDER BY id DESC LIMIT 4") or die("Erro");
-                    while ($dados=mysqli_fetch_assoc($sql)) {
-
-                        echo '<div class="titulo text-danger mt-5 text-center"><strong>'.$dados ['titulo'].'</strong></div><p>';
-                        echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
-                        echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'<p>Categoria: '.$dados['categoria'].'</p></div>';
-                    }
-
-                    ?>
                 </div>
 
-            </div>
+                    <hr class="w-100 clearfix d-md-none">
 
-            <div class="container mt-5">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
 
-                <div class="row">
+                        <div class="btn-group-vertical btn-block btn-block-lg">
 
-                    <div class="col-12 text-right">
+                            <a href="http://portaldoprofessor.mec.gov.br/index.html" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Portal do Professor</h6></a>
+                            <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">UFSM</h6></a>
 
-                        <a href="allpost.php" class="lead">Ver todas as notícias.</a>
+                        </div>
+                </div>
 
+                    <hr class="w-100 clearfix d-md-none">
+
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 mb-3">
+                    <div class="btn-group-vertical btn-block btn-block-lg">
+                        <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">MEC</h6></a>
+                        <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Prouni</h6></a>
                     </div>
+                </div>
 
+                    <hr class="w-100 clearfix d-md-none">
+
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+
+                        <div class="btn-group-vertical btn-block btn-block-lg">
+
+                            <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary mb-3 p-2" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Enem</h6></a>
+                            <a href="http://www.dominiopublico.gov.br/pesquisa/PesquisaObraForm.jsp" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Domínio Público</h6></a>
+
+                        </div>
                 </div>
 
             </div>
 
         </div>
-        -->
+
         <!--FOOTER-->
-        
+
         <?php
             include_once("footer.php");
         ?>
-        
+
         <!--TELA DE LOGIN -->
         <?php
         include_once("loginAdmin.php");
@@ -271,5 +395,6 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
         <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="node_modules/popper.js/dist/umd/popper.js"></script>
         <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    </body>
+
+  </body>
 </html>
