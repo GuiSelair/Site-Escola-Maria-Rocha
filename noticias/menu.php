@@ -1,13 +1,12 @@
  
  
  <!--NAVBAR-->
-    <div class="navbar navbar-expand-lg navbar-dark" id="nvcor" style="height: 73px; background-color: white"></div>
-    <div class="navbar navbar-expand-lg navbar-dark" id="nvcor" style="height: 1px; background-color: red"></div>
+    <div class="navbar navbar-expand-lg navbar-dark" id="nvcor" style="height: 70px;"></div>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark" id="nvcor" style="height: 70px; background-color: #354698;">
 
             <div class="container ml-8">
 
-                <a href="index.php" class="navbar-brand text-light">
+                <a href="../index.php" class="navbar-brand text-light">
                     <img src="img/log.png" class="d-inline-block align-right mx-2" width="40">
                     Escola Maria Rocha
                 </a>
@@ -21,15 +20,15 @@
                     <ul class="nav navbar-nav ml-auto pull-right">
 
                         <li class="nav-item">
-                            <a href="index.php" class="nav-link h7 text-white">Início</a>
+                            <a href="../index.php" class="nav-link h7 text-white">Início</a>
                         </li>
                         &nbsp;
                         <li class="nav-item">
-                            <a href="escola.php" class="nav-link h7 text-white">A Escola</a>
+                            <a href="../escola.php" class="nav-link h7 text-white">A Escola</a>
                         </li>
                         &nbsp;
                         <li class="nav-item">
-                            <a href="galeria.php" class="nav-link h7 text-white">Galeria</a>
+                            <a href="../galeria.php" class="nav-link h7 text-white">Galeria</a>
                         </li>                     
                         &nbsp;
                         <li class="nav-item dropdown">
@@ -37,14 +36,14 @@
                             <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Cursos</a>
 
                             <div class="dropdown-menu">
-                                <a href="infor.php" class="dropdown-item">Informática</a>
-                                <a href="cont.php" class="dropdown-item">Contabilidade</a>
-                                <a href="secret.php" class="dropdown-item">Secretariado</a>
+                                <a href="../infor.php" class="dropdown-item">Informática</a>
+                                <a href="../cont.php" class="dropdown-item">Contabilidade</a>
+                                <a href="../secret.php" class="dropdown-item">Secretariado</a>
                             </div>
                         </li>
                         &nbsp;
                         <li class="nav-item">
-                            <a href="contato.php" class="nav-link h7 text-white">Contato</a>
+                            <a href="../contato.php" class="nav-link h7 text-white">Contato</a>
                         </li>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         
