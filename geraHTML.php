@@ -51,4 +51,5 @@
         exit();
     }
     fclose($arquivo);
+    mysqli_close();
 ?>
