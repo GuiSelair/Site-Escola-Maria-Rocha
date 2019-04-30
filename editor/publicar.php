@@ -122,7 +122,7 @@ if(isset($_POST['postar'])) {
                 var content = $('textarea[name="descrição"]').html($('#summernote').code());
             }
         </script>
-
+        <script src="../geraHTML.php"></script>
         <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
         <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="../painel/componentes/js/painel-admin.js"></script>

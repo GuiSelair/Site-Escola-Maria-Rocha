@@ -1,5 +1,9 @@
 <?php
 
+include_once("../conexao/conexao.php");
+include_once("../conexao/config.php");
+include_once("../conexao/function.php");
+
 session_start();
 
 if (!isset($_SESSION['Logado'])) {
@@ -9,22 +13,61 @@ if (!isset($_SESSION['Logado'])) {
 
 $diretorio = "../Galeria/";
 
-if(!is_dir($diretorio)){ 
-    echo "Pasta $diretorio nao existe";
-}else{
-    $arquivo = isset($_FILES['arquivo']) ? $_FILES['arquivo'] : FALSE;
-    for ($controle = 0; $controle < count($arquivo['name']); $controle++){
+if (isset($_POST['postar'])) {
+    $conn = DBConecta();
+    
+    
+    if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
+        echo "Pasta $diretorio nao existe";
+    }
+    else {
+        if (isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) { 
+            $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
+            $nome = $_FILES[ 'arquivo' ][ 'name' ];
 
-        $destino = $diretorio."/".$arquivo['name'][$controle];
-        if(move_uploaded_file($arquivo['tmp_name'][$controle], $destino)){
+            // Pega a extensão
+            $extensao = pathinfo ( $nome, PATHINFO_EXTENSION );
 
-        }else{
-            echo "Erro ao realizar upload";
+            // Converte a extensão para minúsculo
+            $extensao = strtolower ( $extensao );
+            
+            if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
+                $novoNome = uniqid ( time () ) . '.' . $extensao;
+                // Concatena a pasta com o nome
+                $destino = '../Galeria/' . $novoNome;
+
+                // tenta mover o arquivo para o destino
+                if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                    echo "<div class='alert alert-success alert-dismissable'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Upload efetuado com sucesso!</strong>
+                    </div>
+                    ";
+                }
+                else
+                    echo "<div class='alert alert-danger alert-dismissable'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Erro ao fazer Upload!</strong> 
+                    </div>
+                    ";
+            }
+            else
+                echo "<div class='alert alert-danger alert-dismissable'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Você só pode fazer upload de imagens</strong> 
+                    </div>
+                    ";
         }
+        else
+            echo "<div class='alert alert-danger alert-dismissable'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Você não selecionou nenhuma imagem</strong> 
+                    </div>
+                    ";
 
     }
-}
 
+}
 ?>
 
 <!doctype html>
@@ -192,7 +235,7 @@ if(!is_dir($diretorio)){
 
                                             <form action="" method="POST" enctype="multipart/form-data" id="postForm">
 
-                                                <input type="file" name="arquivo[]" multiple="multiple" /><br><br>
+                                                <input type="file" name="arquivo" multiple="multiple" /><br><br>
                                                 <p></p>
                                                 <button type="submit" class="btn btn-success btn-block" name="postar">Enviar Foto</button>
                                                 <a href="../painel/painel.php" class="btn btn-block btn-warning">Voltar ao Painel de Controle</a>

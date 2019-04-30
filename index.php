@@ -55,10 +55,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
         <!--NAVBAR-->
 
        <?php include 'menu.php'; ?>
-
-
-        <!-- CARROSEL -->
-
+    
         <!-- IMAGEM DESTAQUE HEIGHT: 400px -->
         
         <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
@@ -67,7 +64,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                 <li data-target="#carousel-example-1z" data-slide-to="1"></li>
             </ol>
             <div class="carousel-inner">
-                
+
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="Galeria/05.jpg" alt="Primeiro slide"/>
                 </div>
@@ -84,45 +81,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
             </a>
 
         </div>
-
-        <!-- CARDS -->
-
-        <div class="container text-center text-sm-center">
-            <div class="row ">
-                <div class="col">
-                    <div class="card-deck mt-3 " style="width: 40rem; margin-left:auto; margin-right:auto;">
-                        <div class="card mb-2 text-center mx-0" style="width: 10rem; border: none;">
-                            <img class="card-img-top w-25 mx-auto" src="img/user-graduate-solid.png" alt="Portal Icon">
-                            <div class="card-body mx-auto">
-                                <h6 class="card-title mx-auto h6">PORTAL ACADÊMICO</h6>
-                                <a href="#" class="btn btn-primary">Acesse aqui</a>
-                            </div>
-                        </div>
-                        <div class="card mb-2 text-center mx-0" style="width: 10rem; border: none;">
-                            <img class="card-img-top w-25 mx-auto" src="img/newspaper-regular.png" alt="Portal Icon">
-                            <div class="card-body mx-auto">
-                                <h6 class="card-title mx-auto h6">EDITAIS</h6>
-                                <a href="#" class="btn btn-primary">Acesse aqui</a>
-                            </div>
-                        </div>
-                        <div class="card mb-2 text-center mx-0" style="width: 10rem; border: none;">
-                            <img class="card-img-top w-25 mx-auto " src="img/desktop-solid.png" alt="Portal Icon">
-                            <div class="card-body">
-                                <h6 class="card-title h6">CURSOS</h6>
-                                <a href="#" class="btn btn-primary">Acesse aqui</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
         <!-- NOTICIAS -->
 
-        <div class="jumbotron top-space mb-3" style="background-color: #f2f2f2;">
+        <div class="jumbotron top-space mt-1 mb-3 pt-5" style="background-color: #f2f2f2;">
             <div class="container-fluid">
-
-                <h4 class="text-center thin">ÚLTIMAS NOTICIAS</h4>
+                <h4 class="text-center mt-0">ÚLTIMAS NOTICIAS</h4>
                 <a href="allpost.php" class="btn btn-primary text-right">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
                 <hr style="border-color: #354698; ">
                 
@@ -157,7 +121,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 <div class="card mb-2 text-center">
 
                                     <img class="card-img-top"
-                                    src="Galeria/04.png"
+                                    src="Galeria/08.png"
                                     alt="Card image cap">
                                     <div class="card-body">
                                       <?php
@@ -184,7 +148,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                               <div class="card mb-2 text-center">
 
                                   <img class="card-img-top"
-                                  src="Galeria/04.png"
+                                  src="Galeria/08.png"
                                   alt="Card image cap">
                                   <div class="card-body">
                                     <?php
@@ -210,7 +174,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                               <div class="card mb-2 text-center">
 
                                   <img class="card-img-top"
-                                  src="Galeria/04.png"
+                                  src="Galeria/08.png"
                                   alt="Card image cap">
                                   <div class="card-body">
                                     <?php
@@ -245,7 +209,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                               <div class="card mb-2 text-center">
 
                                   <img class="card-img-top"
-                                  src="Galeria/04.png"
+                                  src="Galeria/08.png"
                                   alt="Card image cap">
                                   <div class="card-body">
                                     <?php
@@ -272,7 +236,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                               <div class="card mb-2 text-center">
 
                                   <img class="card-img-top"
-                                  src="Galeria/04.png"
+                                  src="Galeria/08.png"
                                   alt="Card image cap">
                                   <div class="card-body">
                                     <?php
@@ -300,7 +264,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                               <div class="card mb-2 text-center">
 
                                   <img class="card-img-top"
-                                  src="Galeria/04.png"
+                                  src="Galeria/08.png"
                                   alt="Card image cap">
                                   <div class="card-body">
                                     <?php
@@ -334,11 +298,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
             </div>
 
         <!-- BOTÕES -->
+        
         <div class="container text-center  mb-2">
 
             <div class="row text-center mt-3 mb-3">
 
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
 
                     <div class="btn-group-vertical btn-block btn-block-lg">
                         <a href="http://www.educacao.rs.gov.br/inicial" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Secretaria da Educação</h6></a>
@@ -348,7 +313,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
                     <hr class="w-100 clearfix d-md-none">
 
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
 
                         <div class="btn-group-vertical btn-block btn-block-lg">
 
@@ -360,7 +325,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
                     <hr class="w-100 clearfix d-md-none">
 
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 mb-3">
+                <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 mb-3">
                     <div class="btn-group-vertical btn-block btn-block-lg">
                         <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">MEC</h6></a>
                         <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"><h6 class="text-uppercase">Prouni</h6></a>
@@ -369,7 +334,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
                     <hr class="w-100 clearfix d-md-none">
 
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
 
                         <div class="btn-group-vertical btn-block btn-block-lg">
 
