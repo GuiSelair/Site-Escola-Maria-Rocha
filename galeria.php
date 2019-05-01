@@ -29,8 +29,6 @@ if (isset($_GET['deslogar'])) {
     header("location: galeria.php");
 }
 
-
-
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -63,19 +61,20 @@ if (isset($_GET['deslogar'])) {
 
                 <?php
 
-                $pasta = "Galeria/"; 
-
-                $arquivos = glob("$pasta{*.jpg,*.JPG,*.png, *.jpeg}", GLOB_BRACE);
+                $pasta = "Galeria/";
                 
-                foreach($arquivos as $id => $img)
-				{
-                    echo "<div class='col-lg-3 order-1 mt-3'>
+                $sql = mysqli_query(DBConecta(),"SELECT * FROM imagens WHERE categoria = 0;") or die("Erro"); 
+
+                while($row = mysqli_fetch_assoc($sql)){
+                    $nome = $pasta.$row['nome'];
+                    
+                    echo "<div class='col-lg-6 order-1 my-5'>
 
                         <picture>
 
-                            <a data-lightbox='roadtrip' href='".$img."'>
+                            <a data-lightbox='roadtrip' href='".$nome."'>
 
-                                <img src='".$img."' class='img-thumbnail'>
+                                <img src='".$nome."' class='img-thumbnail'>
 
                             </a>
 
@@ -83,8 +82,9 @@ if (isset($_GET['deslogar'])) {
 
                     </div>
                     ";
+
                 }
-                ?>
+            ?>
             </div>
 
             <div class="col order-2"></div>
