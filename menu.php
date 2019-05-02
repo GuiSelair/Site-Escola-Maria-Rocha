@@ -4,7 +4,7 @@
     <div class="row align-items-center">
         <div class="col-sm-3 col-md-6 col-lg-6 col-xl-6 mx-right">
             <div class="text-center ">
-                <a href="loginUser.php" target="_blank" class="btn btn-outline-dark py-0  my-0" style="border-radius: 20px;">Portal Acadêmico</a>
+                <a href="loginUser.php" target="_blank" class="btn btn-outline-dark py-0  my-0" style="border-radius: 10px;"><i class="fa fa-graduation-cap mx-2"></i>Portal Acadêmico</a>
             </div>
         </div>
         <hr class="w-100 clearfix d-md-none">

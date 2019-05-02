@@ -51,5 +51,5 @@
         exit();
     }
     fclose($arquivo);
-    mysqli_close();
+    DBClose($pesquisa);
 ?>

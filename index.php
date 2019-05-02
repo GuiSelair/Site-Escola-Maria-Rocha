@@ -62,44 +62,39 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
   <!-- IMAGEM DESTAQUE HEIGHT: 400px -->
 
   <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
-      <li data-target="#carousel-example-1z" data-slide-to="1"></li>
-    </ol>
     <div class="carousel-inner">
+
       <?php 
+
         $pasta = "Galeria/";
-        $sql = mysqli_query(DBConecta(),"SELECT * FROM imagens WHERE categoria = 1;") or die("Erro");
-        $cont = mysqli_num_rows($sql);
-        echo $cont;
-        
-        while ($row=mysqli_fetch_assoc($sql)){
-          
-          if ($cont == 0){
-            echo "<div class='carousel-item active'>
-              <img class='d-block w-100' src='Galeria/07.jpg' alt='Primeiro slide' />
-            </div>";
-          }
-          else{
-            $nome = $pasta.$row['nome'];
-            echo $row['id'];
-            $n = 0;
-            if ($n === 0){
-              echo "<div class='carousel-item active'>
-                <img class='d-block w-100' src='".$nome."'/>
-                </div>";
-              $n = 1;
+        $sql = mysqli_query(DBConecta(),"SELECT nome FROM imagens WHERE categoria = 1;") or die("Erro");
+        $linha = mysqli_num_rows($sql);
 
-            }
-            else{
-              echo "<div class='carousel-item'>
-              <img class='d-block w-100' src='".$nome."'/>
-            </div>";
-            }
-          }
-
+        if ($linha == 0){
+          echo "<div class='carousel-item active'>
+            <img class='d-block w-100' src='Galeria/05.jpg' alt='Primeiro slide' />
+          </div>";
         }
-      
+        else{
+          $n = TRUE;
+          while ($row = mysqli_fetch_assoc($sql)){
+              $nome = $pasta.$row['nome'];
+              if ($n){
+                echo "
+                  <div class='carousel-item active'>
+                    <img class='d-block w-100' src='".$nome."'/>
+                  </div>";
+                $n = FALSE;
+
+              }
+              else{
+                echo "
+                <div class='carousel-item'>
+                  <img class='d-block w-100' src='".$nome."'/>
+                </div>";
+              }
+            }
+        }
       ?>
 
     </div>
