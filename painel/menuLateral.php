@@ -56,7 +56,7 @@
                     <a href="uploadgal.php">
 
                         <i class="pe-7s-cloud-upload"></i>
-                        <p>Upload Galeria</p>
+                        <p>Upload de Imagens</p>
 
                     </a>
 

@@ -15,7 +15,9 @@ $diretorio = "../Galeria/";
 
 if (isset($_POST['postar'])) {
     
-    
+    $foto = $_FILES['arquivo'];
+    $dimensoes = getimagesize($foto['tmp_name']);
+    $altura = 900;
     
     if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
         echo "Pasta $diretorio nao existe";
@@ -33,27 +35,38 @@ if (isset($_POST['postar'])) {
             
             if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
                 $novoNome = uniqid ( time () ) . '.' . $extensao;
+                
                 // Concatena a pasta com o nome
                 $destino = '../Galeria/' . $novoNome;
+                $cat = $_POST["cat"];
 
-                // tenta mover o arquivo para o destino
-                if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
-                    $conn = DBConecta();
-                    $cat = $_POST["cat"];
-                    $up = mysqli_query($conn, "INSERT INTO imagens (categoria, nome) VALUES ('$cat', '$novoNome');");
-
-                    echo "<div class='alert alert-success alert-dismissable'>
-          <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                    <strong>Upload efetuado com sucesso!</strong>
-                    </div>
-                    ";                   
-                }
-                else
+                // Verifica se a imagem tem mais que a altura máxima.
+                if ($cat == 1 && $dimensoes[1] > $altura){ 
                     echo "<div class='alert alert-danger alert-dismissable'>
-          <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                    <strong>Erro ao fazer Upload!</strong> 
-                    </div>
-                    ";
+                      <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                                <strong>Imagem deve ter no máximo 450px de altura</strong> 
+                                </div>
+                                ";
+                }
+                else{
+                    // tenta mover o arquivo para o destino
+                    if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                        $conn = DBConecta();
+                        $up = mysqli_query($conn, "INSERT INTO imagens (categoria, nome) VALUES ('$cat', '$novoNome');");
+
+                        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                        <strong>Upload efetuado com sucesso!</strong>
+                        </div>
+                        ";                   
+                    }
+                    else
+                        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                        <strong>Erro ao fazer Upload!</strong> 
+                        </div>
+                        ";
+                }
             }
             else
                 echo "<div class='alert alert-danger alert-dismissable'>
@@ -72,6 +85,10 @@ if (isset($_POST['postar'])) {
     }
 
 }
+
+$sql = mysqli_query(DBConecta(),"SELECT * FROM imagens WHERE categoria = 1;") or die("Erro");
+$linha = mysqli_num_rows($sql);
+
 ?>
 
 <!doctype html>
@@ -145,7 +162,7 @@ if (isset($_POST['postar'])) {
 
                             <div class="header">
 
-                                <h4 class="title text">Upload para Galeria</h4>
+                                <h4 class="title text">Upload de Imagens</h4>
 
                             </div>
 
@@ -175,9 +192,31 @@ if (isset($_POST['postar'])) {
                                             Galeria
                                         </h6>
                                         <br>
+                                        <?php
+                                            if ($linha != 0){
+                                        ?>
+                                        <fieldset>
+                                            <legend>Imagens Principais Ativas</legend>
+                                            <div class="container">
+                                                <?php
+                                                    while ($row = mysqli_fetch_assoc($sql)){
+                                                        echo "
+                                                            <div class='text-center my-5'>
+                                                                <img src='".$diretorio.$row['nome']."' class='img-thumbnail mb-2'>
+                                                                <a class='btn btn-danger btn-block my-3' href='deleteImagePrincipal.php?id=".$row['id']."'><i class='fa fa-angle-double-up'></i>Excluir</a>
+                                                            </div>
+                                                            <br>
+                                                        ";
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        <br>
+                                        </fieldset>                                   
+                                        
                                         <button type="submit" class="btn btn-primary btn-block mt-5"
                                             name="postar" href="../painel/painel.php">Enviar
-                                            Foto</button>
+                                            Imagem</button>
                                         <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao
                                             Painel de Controle</a>
 
