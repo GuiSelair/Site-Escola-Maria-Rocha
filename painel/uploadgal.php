@@ -17,7 +17,7 @@ if (isset($_POST['postar'])) {
     
     $foto = $_FILES['arquivo'];
     $dimensoes = getimagesize($foto['tmp_name']);
-    $altura = 900;
+    $altura = 500;
     
     if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
         echo "Pasta $diretorio nao existe";
