@@ -1,13 +1,13 @@
 <!--NAVBAR-->
 
-<div class="container-fluid py-0 my-0" style="height: 30px; background-color: #f2f2f2;">
+<div class="container-fluid py-0 my-0 " style="height: 30px; background-color: #f2f2f2;">
     <div class="row align-items-center">
         <div class="col-sm-3 col-md-6 col-lg-6 col-xl-6 mx-right">
-            <div class="text-center ">
-                <a href="loginUser.php" target="_blank" class="btn btn-outline-dark py-0  my-0" style="border-radius: 10px;"><i class="fa fa-graduation-cap mx-2"></i>Portal Acadêmico</a>
+            <div class="text-center mb-0 pb-0">
+                <a href="loginUser.php" target="_blank" class="btn btn-info py-0  my-0" ><i class="fa fa-graduation-cap mx-2"></i>Portal Acadêmico</a>
             </div>
         </div>
-        <hr class="w-100 clearfix d-md-none">
+
         <div class="col-sm-3 col-md-6 col-lg-6 col-xl-6 mx-left">
             <div class="text-center">
                 <a href="#"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
@@ -39,7 +39,7 @@
         </div>
     </div>
 </div>
-<div class="navbar navbar-expand-lg navbar-dark" id="nvcor" style="height: 70px; background-color: #354698; border-bottom: 2px solid #D32022;">
+<div class="navbar navbar-expand-lg navbar-dark " id="nvcor" style="height: 70px; background-color: #354698; border-bottom: 2px solid #D32022;">
 
     <div class="container ml-8">
 

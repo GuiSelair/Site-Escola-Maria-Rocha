@@ -135,25 +135,29 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
         
                 <div class="carousel-inner" role="listbox">
                     <?php 
-                        while ($quantNotices != $quantNotices/2 ){
+                        $quantCardPorLinha = $quantNotices/2;
+                        echo "
+                                <div class='carousel-item active'>
+                                        <div class='row text-center text-md-left mt-3 mb-3'>
+                            ";
+                        while ($quantNotices != $quantCardPorLinha ){
                             $i = 0;
                             while ($i != 1){
                                 $dados = mysqli_fetch_assoc($sql);
                                 $i = $i + 1;
                                 echo "
-                                    <div class='carousel-item active'>
-                                        <div class='row text-center text-md-left mt-3 mb-3'>
                                             <div class='col-md-3 col-lg-3 col-xl-4 mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
-                                $idPosts = $dados["id"];
-                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagem WHERE idPosts = '$idPosts';") or die("Erro");
+                                $idNoticia = $dados["id"];
+                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
                                 $linha = mysqli_num_rows($buscaImage);
+
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/".$image['nome']."'>
+                                                        <img class='card-img-top' src='Galeria/".$image['nome']."' height='300px' style='overflow: hidden;'>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
@@ -161,12 +165,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <hr class='w-100 clearfix d-md-none'>
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/08.png'>
+                                                        <img class='card-img-top' src='Galeria/08.png' height='300px'>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
@@ -174,31 +177,36 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <hr class='w-100 clearfix d-md-none'>
                                     ";
                                 }
                             }
                             $quantNotices--;
+
                         }
+                        echo "
+                                    </div>
+                                </div>
+                                <div class='carousel-item'>
+                                        <div class='row text-center text-md-left mt-3 mb-3'>
+                            ";
                         while ($quantNotices > 0){
                             $i = 0;
                             while ($i != 1){
                                 $dados = mysqli_fetch_assoc($sql);
                                 $i = $i + 1;
                                 echo "
-                                    <div class='carousel-item'>
-                                        <div class='row text-center text-md-left mt-3 mb-3'>
                                             <div class='col-md-3 col-lg-3 col-xl-4 mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
-                                $idPosts = $dados["id"];
-                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagem WHERE idPosts = '$idPosts';") or die("Erro");
+                                $idNoticia = $dados["id"];
+                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
                                 $linha = mysqli_num_rows($buscaImage);
+
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/".$image['nome']."'>
+                                                        <img class='card-img-top' src='Galeria/".$image['nome']." height='300px' max>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
@@ -211,7 +219,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/08.png'>
+                                                        <img class='card-img-top' src='Galeria/08.png' height='300px'>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
@@ -225,183 +233,18 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                             }
                             $quantNotices--;
                         }
-                        
-            
+                        echo "
+                            </div>
+                        </div>
+                    </div>
+                        ";
+
+
                     ?>
-                    <!--
-                    <div class="carousel-item active">
-
-                        <div class="row text-center text-md-left mt-3 mb-3">
-                            
-
-                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
-
-                                <div class="card mb-2 text-center">
-
-                                    <img class="card-img-top" src="Galeria/08.png" alt="Card image cap">
-                                    <div class="card-body">
-                                        <?php
-                                        $i = 0;
-                                        while ($i != 1) {
-                                                $dados=mysqli_fetch_assoc($sql);
-                                                echo '<h5 class="card-title">'.$dados['titulo'].'</h5>';
-                                                echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
-                                                $nome = 'noticias/'.$dados['id'].'.php';
-                                                echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
-                                                $i = $i + 1;
-                                        }
-                                        $i = 0;
-                                      ?>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <hr class="w-100 clearfix d-md-none">
-
-                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
-
-                                <div class="card mb-2 text-center">
-
-                                    <img class="card-img-top" src="Galeria/08.png" alt="Card image cap">
-                                    <div class="card-body">
-                                        <?php
-                                      $i = 0;
-                                      while ($i != 1) {
-                                              $dados=mysqli_fetch_assoc($sql);
-                                              echo '<h5 class="card-title">'.$dados['titulo'].'</h5>';
-                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
-                                              $nome = 'noticias/'.$dados['id'].'.php';
-                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
-                                              $i = $i + 1;
-                                      }
-                                      $i = 0;
-                                    ?>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <hr class="w-100 clearfix d-md-none">
-
-                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
-
-                                <div class="card mb-2 text-center">
-
-                                    <img class="card-img-top" src="Galeria/08.png" alt="Card image cap">
-                                    <div class="card-body">
-                                        <?php
-                                      $i = 0;
-                                      while ($i != 1) {
-                                              $dados=mysqli_fetch_assoc($sql);
-                                              echo '<h5 class="card-title">'.$dados['titulo'].'</h5>';
-                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
-                                              $nome = 'noticias/'.$dados['id'].'.php';
-                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
-                                              $i = $i + 1;
-                                      }
-                                      $i = 0;
-                                    ?>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="carousel-item">
-
-                        <div class="row text-center text-md-left mt-3 mb-3">
-                            
-
-                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
-
-                                <div class="card mb-2 text-center">
-
-                                    <img class="card-img-top" src="Galeria/08.png" alt="Card image cap">
-                                    <div class="card-body">
-                                        <?php
-                                      $i = 0;
-                                      while ($i != 1) {
-                                              $dados=mysqli_fetch_assoc($sql);
-                                              echo '<h5 class="card-title">'.$dados['titulo'].'</h5>';
-                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
-                                              $nome = 'noticias/'.$dados['id'].'.php';
-                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
-                                              $i = $i + 1;
-                                      }
-                                      $i = 0;
-                                    ?>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <hr class="w-100 clearfix d-md-none">
-
-                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
-
-                                <div class="card mb-2 text-center">
-
-                                    <img class="card-img-top" src="Galeria/08.png" alt="Card image cap">
-                                    <div class="card-body">
-                                        <?php
-                                      $i = 0;
-                                      while ($i != 1) {
-                                              $dados=mysqli_fetch_assoc($sql);
-                                              echo '<h5 class="card-title">'.$dados['titulo'].'</h5>';
-                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
-                                              $nome = 'noticias/'.$dados['id'].'.php';
-                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
-                                              $i = $i + 1;
-                                      }
-                                      $i = 0;
-                                    ?>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <hr class="w-100 clearfix d-md-none">
-
-                            <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mt-3">
-
-                                <div class="card mb-2 text-center">
-
-                                    <img class="card-img-top" src="Galeria/08.png" alt="Card image cap">
-                                    <div class="card-body">
-                                        <?php
-                                      $i = 0;
-                                      while ($i != 1) {
-                                              $dados=mysqli_fetch_assoc($sql);
-                                              echo '<h5 class="card-title">'.$dados['titulo'].'</h5>';
-                                              echo '<p class="card-footer">Postado por: '.$dados['postador'].' em '.$dados['data'].'</p>';
-                                              $nome = 'noticias/'.$dados['id'].'.php';
-                                              echo '<a href="'.$nome.'" class="btn btn-primary mt-2">Leia mais</a>';
-                                              $i = $i + 1;
-                                      }
-                                      $i = 0;
-                                    ?>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
                 </div>
-
             </div>
-
         </div>
 
-    </div>
 
     <!-- BOTÕES -->
 
