@@ -73,14 +73,14 @@
                     <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Cursos</a>
 
                     <div class="dropdown-menu">
-                        <a href="infor.php" class="dropdown-item">Informática</a>
-                        <a href="cont.php" class="dropdown-item">Contabilidade</a>
-                        <a href="secret.php" class="dropdown-item">Secretariado</a>
+                        <a href="./infor.php" class="dropdown-item">Informática</a>
+                        <a href="./cont.php" class="dropdown-item">Contabilidade</a>
+                        <a href="./secret.php" class="dropdown-item">Secretariado</a>
                     </div>
                 </li>
                 
                 <li class="nav-item mx-2">
-                    <a href="contato.php" class="nav-link h7 text-white">Editais</a>
+                    <a href="#" class="nav-link h7 text-white">Editais</a>
                 </li>
             </ul>
 

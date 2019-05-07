@@ -49,93 +49,93 @@ if(isset($_POST['criar'])) {
     </head>
     <body>
 
-        <div class="wrapper">
+    <div class="wrapper">
 
-            <div class="sidebar" data-color="dark" data-image="fundo.jpg">
+<div class="sidebar" data-color="dark" data-image="fundo.jpg">
 
-                <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper">
 
-                    <div class="logo">
+        <div class="logo">
 
-                        <a href="../index.php" class="simple-text">
-                            Maria Rocha
-                        </a>
+            <a href="../index.php" class="simple-text">
+                Maria Rocha
+            </a>
 
-                    </div>
+        </div>
 
-                    <ul class="nav">
+        <ul class="nav">
 
-                        <li>
+            <li>
 
-                            <a href="painel.php">
+                <a href="painel.php">
 
-                                <i class="pe-7s-graph"></i>
-                                <p>Painel de controle</p>
+                    <i class="pe-7s-graph"></i>
+                    <p>Painel de controle</p>
 
-                            </a>
+                </a>
 
-                        </li>
+            </li>
 
-                        <li>
+            <li>
 
-                            <a href="posts.php">
+                <a href="posts.php">
 
-                                <i class="pe-7s-pin"></i>
-                                <p>Posts</p>
+                    <i class="pe-7s-pin"></i>
+                    <p>Posts</p>
 
-                            </a>
+                </a>
 
-                        </li>
+            </li>
 
-                        <li>
+            <li>
 
-                            <a href="../editor/publicar.php">
+                <a href="../editor/publicar.php">
 
-                                <i class="pe-7s-pen"></i>
-                                <p>Publicar</p>
+                    <i class="pe-7s-pen"></i>
+                    <p>Publicar</p>
 
-                            </a>
+                </a>
 
-                        </li>
+            </li>
 
-                        <li>
+            <li>
 
-                            <a href="uploadgal.php">
+                <a href="uploadgal.php">
 
-                                <i class="pe-7s-cloud-upload"></i>
-                                <p>Upload Galeria</p>
+                    <i class="pe-7s-cloud-upload"></i>
+                    <p>Upload de Imagens</p>
 
-                            </a>
+                </a>
 
-                        </li>
+            </li>
 
-                        <li class="active">
+            <li class="active">
 
-                            <a href="user.php">
+                <a href="usuario.php">
 
-                                <i class="pe-7s-user"></i>
-                                <p>Criar Usuário</p>
+                    <i class="pe-7s-user"></i>
+                    <p>Criar Usuário</p>
 
-                            </a>
+                </a>
 
-                        </li>
+            </li>
 
-                        <li>
+            <li>
 
-                            <a href="../index.php">
+                <a href="../index.php">
 
-                                <i class="pe-7s-home"></i>
-                                <p>Pagina Inicial</p>
+                    <i class="pe-7s-home"></i>
+                    <p>Pagina Inicial</p>
 
-                            </a>
+                </a>
 
-                        </li>
+            </li>
 
-                    </ul>
+        </ul>
 
-                </div>
+    </div>
 
-            </div>
+</div>
 
             <div class="main-panel">
 

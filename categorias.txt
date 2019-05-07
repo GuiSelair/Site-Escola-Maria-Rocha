@@ -2,3 +2,8 @@ Legenda das Categorias:
 - 1: Escola
 - 0: Editais
 mdbootstrap.com
+
+Legenda das Imagens:
+- 0: Imagem normal (Aparece na galeria)
+- 1: Imagem Principal (Não aparece na galeria)
+- 3: Imagem vinculada as noticias (Não aparece na galeria)

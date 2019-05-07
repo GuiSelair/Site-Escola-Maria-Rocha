@@ -47,6 +47,7 @@ if (isset($_GET['deslogar'])) {
             #nvcor {
                 background-color: #354698;
             }
+            
         </style>
     </head>
     <body>        
@@ -65,105 +66,55 @@ if (isset($_GET['deslogar'])) {
 
                     <div class="col-12 text-center">
 
-                        <h1 class="display-4">Nossa Escola</h1>
-                        <p></p>
-                        <p class="lead">Nossa Escola possui Ensino Médio, Ensino Técnico Profissionalizante Subsequente e Ensino Técnico em Informática Concomitante ao Ensino Médio.</p>
-
-                    </div>
-
-                    <div class="col-12">
-
-                        <p>Confira alguns números da nossa escola:<p>
-
-                        <ul>
-                            <li>Número de Alunos: 1110</li>
-                            <li>Número de Professores: 103</li>
-                            <li>Número de Funcionários: 14</li>
-                        </ul>
-                        <hr>
-                    </div>
+                            <img src="./img/profMariaRocha.jpg" alt="Professora Maria Rocha" class="rounded float-left img-fluid w-25 mx-5">
+                            <h1 class="display-4 ">Professora Maria Rocha</h1>
+                            <hr style="border-color: #354698; ">
+                            <p class="lead">Maria Manoela Rocha nasceu em 23 de dezembro de 1904. Em 1926, concluiu os estudos na Escola Complementar em Porto Alegre, tornando-se professora. Passou a lecionar no Colégio Elementar Farroupilha, atual Instituto de Educação Olavo Bilac. Foi professora dedicada por 32 anos. Vítima de câncer, faleceu em 1º de outubro de 1958.</p>
+                        </div>
 
                 </div>
-
+                
             </div>
 
+        </div>
+
+        <div class="container my-2">
+            
             <div class="row">
 
                 <div class="col-12 text-center">
 
-                    <h1 class="display-4">Nossa Equipe</h1>
-                    <p></p>
-                    <p class="lead">Atualmente a equipe diretiva da Escola Maria Rocha é composta por:</p>
+                    <h1 class="display-4">Nossa História</h1>
+                    <hr style="border-color: #354698; ">
+                    <p class="lead mb-4">A Escola Maria Rocha nasceu dentro do atual Instituto de Educação Olavo Bilac. Em 1941, foi criado o Curso Ginasial (1º Ciclo do Curso Secundário) na Escola Normal Olavo Bilac. Este curso foi desanexado desta Escola em 08 de fevereiro de 1957. Em 1958, o Ginásio passa a denominar-se Ginásio Estadual Caetano Pagliuca. Em 1962, com a criação de 2º Ciclo do Secundário (atual Ensino Médio), a Escola passa a denominar-se Colégio Estadual Caetano Pagliuca. Em 21 de janeiro de 1963, após intensa mobilização dos professores e funcionários, finalmente, recebe a denominação de Colégio Estadual Professora Maria Rocha - atualmente Escola de Ensino Médio PROF.ª Maria Rocha.</p>
 
                 </div>
 
             </div>
+        
         </div>
+        
+        <div class="container my-2">
+            
+            <div class="row">
 
-        <div class="container">
+                <div class="col-12 text-center">
 
-            <div class="row my-5">
-
-                <div class="col-4">
-                    <img src="img/Cleunice.jpg" class="img-responsive rounded-circle" width="70%">
-                </div>
-
-                <div class="col-8">
-                    <h1 class="display-4">Cleunice Dornelles Fialho</h1>
-
-                    <p class="lead my-5">Cleunice Dornelles Fialho, professora estadual desde 1983, Licenciada em História com especialização em Educação Profissional Integrada à Educação Básica na modalidade EJA e Mestrado em Educação Brasileira. Diretora.</p>
-                </div>
-
-            </div>
-
-            <div class="row my-5">
-
-                <div class="col-8">
-                    <h1 class="display-4">Carmem Cassio Borges de Brum</h1>
-
-                    <p class="lead my-5">Carmen Cassia Borges de Brum, professora estadual desde 2003. Licenciada em Letras Português e Literatura, com especialização em Português e Literatura. Vice-diretora do turno da Tarde.</p>        
-                </div>
-
-                <div class="col-4">
-                    <img src="img/Carmen.jpg" class="img-responsive rounded-circle" width="90%">                
-                </div>
-
-            </div>
-
-            <div class="row my-5">
-
-                <div class="col-4">
-                    <img src="img/darlene.jpg" class="img-responsive rounded-circle" width="70%">            
-                </div>
-
-                <div class="col-8">
-                    <h1 class="display-4">Darlene Iolanda Santolima</h1>
-
-                    <p class="lead my-5">Darlene Iolanda Santolima, professora estadual desde 1994. licenciada em História com especialização em Pensamento político brasileiro e em Educação Profissional Integrada à Educação Básica na modalidade EJA. Vice-diretora do turno da Noite.</p>
+                    <h1 class="display-4">Direção e Coordenação</h1>
+                    <hr style="border-color: #354698; ">
+                    
 
                 </div>
 
             </div>
-
-            <div class="row my-5">
-
-                <div class="col-8">
-                    <h1 class="display-4">Maria Helena Tanuri Pascotini</h1>
-
-                    <p class="lead my-5">Maria Helena Tanuri Pascotini, professora estadual desde 1993. licenciada em Letras com especialização em Psicopedagogia. Vice-diretora do turno da Manhã.</p>
-
-                </div>
-
-                <div class="col-4">
-                    <img src="img/mariahelena.jpg" class="img-responsive rounded-circle" width="70%">
-                </div>
-
-            </div>
+        
         </div>
-
+        
+        
+        
         <div class="jumbotron">
 
-            <div class="container">
+            <div class="container-fluid">
 
                 <div class="row">
 
@@ -175,36 +126,47 @@ if (isset($_GET['deslogar'])) {
 
                 <div class="row mt-5 text-center">
 
-                    <div class="col-xl-4 mb-3">
+                    <div class="col-xl-3 mb-3">
 
-                        <card class="body">
+                        <div class="card-body">
 
-                            <h4 class="card-title display-4">Informática</h4>
+                            <h2 class="card-title display-4 " >Informática</h2>
                             <a href="infor.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
-                        </card>
+                        </div>
 
                     </div>
 
-                    <div class="col-xl-4 mb-3">
+                    <div class="col-xl-3 mb-3">
 
-                        <card class="body">
+                        <div class="card-body">
 
-                            <h4 class="card-title display-4">Contabilidade</h4>
+                            <h2 class="card-title display-4 ">Contabilidade</h2>
                             <a href="cont.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
-                        </card>
+                        </div>
 
                     </div>
 
-                    <div class="col-xl-4 mb-3">
+                    <div class="col-xl-3 mb-3">
 
-                        <card class="body">
+                        <div class="card-body">
 
-                            <h4 class="card-title display-4">Secretariado</h4>
+                            <h2 class="card-title display-4 ">Secretariado</h2>
                             <a href="secret.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
-                        </card>
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-3 mb-3">
+
+                        <div class="card-body">
+
+                            <h2 class="card-title display-4 ">Técnico em Informática<br> Subsequente</h2>
+                            <a href="#" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
+
+                        </div>
 
                     </div>
 
