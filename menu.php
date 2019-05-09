@@ -76,6 +76,7 @@
                         <a href="./infor.php" class="dropdown-item">Informática</a>
                         <a href="./cont.php" class="dropdown-item">Contabilidade</a>
                         <a href="./secret.php" class="dropdown-item">Secretariado</a>
+                        <a href="#" class="dropdown-item">Informática Subsequente</a>
                     </div>
                 </li>
                 

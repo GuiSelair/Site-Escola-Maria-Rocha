@@ -71,7 +71,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
         if ($linha == 0){
           echo "<div class='carousel-item active'>
-            <img class='d-block w-100' src='Galeria/05.jpg' alt='Primeiro slide' />
+            <img class='d-block w-100' src='Galeria/default.jpg' alt='Primeiro slide' />
           </div>";
         }
         else{
@@ -111,7 +111,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
     <!-- NOTICIAS -->
 
-    <div class="jumbotron top-space mt-1 mb-3 pt-5" style="background-color: #f2f2f2;">
+    <div class="jumbotron top-space mt-0 mb-3 pt-5" style="background-color: #f2f2f2;">
         <div class="container-fluid">
             <h4 class="text-center mt-0">ÚLTIMAS NOTICIAS</h4>
             <a href="allpost.php" class="btn btn-primary text-right">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
@@ -157,7 +157,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/".$image['nome']."' height='300px' style='overflow: hidden;'>
+                                                        <img class='card-img-top' src='Galeria/".$image['nome']."' height='250px' style='overflow: hidden;'>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
@@ -169,7 +169,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/08.png' height='300px'>
+                                                        <img class='card-img-top' src='Galeria/08.png' height='250px'>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
@@ -206,7 +206,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/".$image['nome']." height='300px' max>
+                                                        <img class='card-img-top' src='Galeria/".$image['nome']." height='250px' max>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
@@ -219,7 +219,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
                                     echo "
-                                                        <img class='card-img-top' src='Galeria/08.png' height='300px'>
+                                                        <img class='card-img-top' src='Galeria/08.png' height='250px'>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$dados['titulo']."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>

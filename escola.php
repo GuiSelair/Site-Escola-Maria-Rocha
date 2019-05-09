@@ -114,7 +114,7 @@ if (isset($_GET['deslogar'])) {
         
         <div class="jumbotron">
 
-            <div class="container-fluid">
+            <div class="container-fluid mx-auto">
 
                 <div class="row">
 
@@ -124,46 +124,46 @@ if (isset($_GET['deslogar'])) {
 
                 </div>
 
-                <div class="row mt-5 text-center">
+                <div class="row mt-3 mx-auto">
 
-                    <div class="col-xl-3 mb-3">
+                    <div class="col-lg-6 col-xl-3 mb-3">
 
-                        <div class="card-body">
+                        <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 " >Informática</h2>
+                            <h2 class="card-title display-4 " style="font-size: 35pt;">Informática</h2>
                             <a href="infor.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
 
                     </div>
 
-                    <div class="col-xl-3 mb-3">
+                    <div class="col-lg-6 col-xl-3 mb-3">
 
-                        <div class="card-body">
+                        <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 ">Contabilidade</h2>
+                            <h2 class="card-title display-4 "style="font-size: 35pt;">Contabilidade</h2>
                             <a href="cont.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
 
                     </div>
 
-                    <div class="col-xl-3 mb-3">
+                    <div class="col-lg-6 col-xl-3 mb-3">
 
-                        <div class="card-body">
+                        <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 ">Secretariado</h2>
+                            <h2 class="card-title display-4 "style="font-size: 35pt;">Secretariado</h2>
                             <a href="secret.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
 
                     </div>
 
-                    <div class="col-xl-3 mb-3">
+                    <div class="col-lg-6 col-xl-3 mb-3 ">
 
-                        <div class="card-body">
+                        <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 ">Técnico em Informática<br> Subsequente</h2>
+                            <h2 class="card-title display-4 "style="font-size: 35pt;">Técnico em Informática Subsequente</h2>
                             <a href="#" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
