@@ -39,7 +39,7 @@
             <div class='container text-center'>
                 <h3 class='my-4'>".$resultado['titulo']."</h3>
                 <p class='mb-5'>".$resultado['descricao']."</p>
-                <span class='fa fa-user mb-4'></span> Postado por <i>".$resultado ['postador']."</i><i> em ".$resultado['data']."</i>
+                <span class='fa fa-user mb-4 text-left'></span> Postado por <i>".$resultado ['postador']."</i><i> em ".$resultado['data']."</i>
             </div>
             <?php include('../footer.php'); ?>
         </body>
@@ -50,6 +50,7 @@
         echo 'Erro ao gravar';
         exit();
     }
-    fclose($arquivo);
+
     mysqli_close($pesquisa);
+    fclose($arquivo);
 ?>

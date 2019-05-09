@@ -40,7 +40,6 @@ if(isset($_POST['postar'])) {
          // Download da Imagem
         
         $foto = $_FILES['arquivo'];
-        $dimensoes = getimagesize($foto['tmp_name']);
         $diretorio = "../Galeria/";
 
         if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
@@ -48,6 +47,7 @@ if(isset($_POST['postar'])) {
         }
         else {
             if (isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) { 
+                //$dimensoes = getimagesize($foto['tmp_name']);
                 $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
                 $nome = $_FILES[ 'arquivo' ][ 'name' ];
 
@@ -85,25 +85,28 @@ if(isset($_POST['postar'])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
-<link rel="shortcut icon" href="../img/favicon.ico" />
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-<meta name="viewport" content="width=device-width" />
+    <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
+    <link rel="shortcut icon" href="../img/favicon.ico" />
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<link rel="stylesheet" href="dist/summernote-bs4.css">
-<script src="dist/summernote-bs4.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <link rel="stylesheet" href="dist/summernote-bs4.css">
+    <script src="dist/summernote-bs4.min.js"></script>
+</head>
 
 <body>
 
@@ -125,14 +128,16 @@ if(isset($_POST['postar'])) {
 
                 <form action="" method="POST" enctype="multipart/form-data" id="postForm">
 
-                    <input type="text" name="titulo" id="titulo" placeholder="Titulo" class="form-control my-3" required>
+                    <input type="text" name="titulo" id="titulo" placeholder="Titulo" class="form-control my-3"
+                        required>
 
                     <textarea class="form-control" name="descrição" id="summernote" required></textarea>
 
                     <fieldset class="my-3">
                         <h6>Opções</h6>
                         <hr />
-                        <input class="form-check ml-3" type="file" name="arquivo" multiple="multiple" style="font-size: 15px;" />
+                        <input class="form-check ml-3" type="file" name="arquivo" multiple="multiple"
+                            style="font-size: 15px;" />
 
                         <h6 class="my-3">Categoria da notícia:</h6>
                         <hr />
@@ -147,8 +152,10 @@ if(isset($_POST['postar'])) {
 
                     </fieldset>
 
-                    <button type="submit" class="btn btn-primary btn-block" name="postar" style="background-color: #354698; border:none;">Publicar Notícia</button>
-                    <a href="../painel/painel.php" class="btn btn-block btn-dark" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
+                    <button type="submit" class="btn btn-primary btn-block" name="postar"
+                        style="background-color: #354698; border:none;">Publicar Notícia</button>
+                    <a href="../painel/painel.php" class="btn btn-block btn-dark"
+                        style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
 
                 </form>
 
@@ -159,7 +166,7 @@ if(isset($_POST['postar'])) {
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#summernote').summernote({
                 toolbar: [
                     ['style', ['style']],
@@ -172,17 +179,16 @@ if(isset($_POST['postar'])) {
                     ['insert', ['link', 'picture', 'hr']],
                     ['view', ['fullscreen', 'codeview']],
                 ],
-                height: 300,
+                height: 250,
                 minHeight: null,
                 maxHeight: null,
                 focus: true,
                 lang: 'pt-BR'
             });
         });
-        var postForm = function() {
+        var postForm = function () {
             var content = $('textarea[name="descrição"]').html($('#summernote').code());
         }
-
     </script>
 
     <script src="../geraHTML.php"></script>

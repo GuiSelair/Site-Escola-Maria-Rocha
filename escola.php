@@ -34,21 +34,23 @@ if (isset($_GET['deslogar'])) {
 <html lang="pt-br">
     <head>
         <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
         <!-- Links Boostrap e CSS -->
-        <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
-        <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
-        <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css"/>
+        <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css"/>
+        <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css"/>
         <link rel="shortcut icon" href="img/favicon.ico" />
         <style>
-
-            #nvcor {
-                background-color: #354698;
+            .display-4{
+                font-size: 40pt;
             }
-            
+            .lead{
+                font-size: 12pt;
+            }
         </style>
+
     </head>
     <body>        
 
@@ -63,10 +65,11 @@ if (isset($_GET['deslogar'])) {
             <div class="container">
 
                 <div class="row">
+                    <div class="col-4">
+                        <img src="./img/profMariaRocha.jpg" alt="Professora Maria Rocha" class="rounded float-left img-fluid mx-5 w-75">
+                    </div>
 
-                    <div class="col-12 text-center">
-
-                            <img src="./img/profMariaRocha.jpg" alt="Professora Maria Rocha" class="rounded float-left img-fluid w-25 mx-5">
+                    <div class="col-8 text-center">
                             <h1 class="display-4 ">Professora Maria Rocha</h1>
                             <hr style="border-color: #354698; ">
                             <p class="lead">Maria Manoela Rocha nasceu em 23 de dezembro de 1904. Em 1926, concluiu os estudos na Escola Complementar em Porto Alegre, tornando-se professora. Passou a lecionar no Colégio Elementar Farroupilha, atual Instituto de Educação Olavo Bilac. Foi professora dedicada por 32 anos. Vítima de câncer, faleceu em 1º de outubro de 1958.</p>
@@ -130,7 +133,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 " style="font-size: 35pt;">Informática</h2>
+                            <h2 class="card-title display-4 " style="font-size: 25pt;">Informática</h2>
                             <a href="infor.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
@@ -141,7 +144,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 "style="font-size: 35pt;">Contabilidade</h2>
+                            <h2 class="card-title display-4 "style="font-size: 25pt;">Contabilidade</h2>
                             <a href="cont.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
@@ -152,7 +155,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 "style="font-size: 35pt;">Secretariado</h2>
+                            <h2 class="card-title display-4 "style="font-size: 25pt;">Secretariado</h2>
                             <a href="secret.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
@@ -163,7 +166,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 "style="font-size: 35pt;">Técnico em Informática Subsequente</h2>
+                            <h2 class="card-title display-4 "style="font-size: 25pt;">Técnico em Informática Subsequente</h2>
                             <a href="#" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
