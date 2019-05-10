@@ -147,7 +147,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 $i = $i + 1;
                                 echo "
                                             <div class='col-md-3 col-lg-3 col-xl-4 mx-auto mt-3'>
-                                                <div class='card mb-2 text-center'>
+                                                <div class='card mb-2 text-center' style='overflow: hidden; '>
                                 ";
                                 $idNoticia = $dados["id"];
                                 $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
@@ -156,10 +156,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    echo "
-                                                        <img class='card-img-top' src='Galeria/".$image['nome']."' height='250px' style='overflow: hidden;'>
+                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    echo "              <div style='overflow: hidden; min-height: 250px; max-height: 250px;'>
+                                                            <img class='card-img-top' src='Galeria/".$image['nome']."'  >
+                                                        </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title'>".$tit."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
@@ -168,10 +170,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    echo "
-                                                        <img class='card-img-top' src='Galeria/08.png' height='250px'>
+                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                echo "                  <div style='overflow: hidden; min-height: 250px; max-height: 250px;'>
+                                                            <img class='card-img-top' src='Galeria/08.png'>
+                                                        </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title'>".$tit."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
@@ -205,10 +209,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    echo "
-                                                        <img class='card-img-top' src='Galeria/".$image['nome']." height='250px' max>
+                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    echo "              <div style='overflow: hidden; min-height: 250px;max-height: 250px;'>
+                                                            <img class='card-img-top' src='Galeria/".$image['nome']."'>
+                                                        </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title'>".$tit."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
@@ -218,10 +224,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    echo "
-                                                        <img class='card-img-top' src='Galeria/08.png' height='250px'>
+                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    echo "              <div style='overflow: hidden; min-height: 250px;max-height: 250px;'>
+                                                            <img class='card-img-top' src='Galeria/08.png'>
+                                                        </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title'>".$tit."</h5>
                                                             <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>

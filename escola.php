@@ -133,7 +133,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 " style="font-size: 25pt;">Informática</h2>
+                            <h2 class="card-title display-4 " style="font-size: 30pt;">Informática</h2>
                             <a href="infor.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
@@ -144,7 +144,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 "style="font-size: 25pt;">Contabilidade</h2>
+                            <h2 class="card-title display-4 "style="font-size: 30pt;">Contabilidade</h2>
                             <a href="cont.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
@@ -155,7 +155,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 "style="font-size: 25pt;">Secretariado</h2>
+                            <h2 class="card-title display-4 "style="font-size: 30pt;">Secretariado</h2>
                             <a href="secret.php" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
@@ -166,7 +166,7 @@ if (isset($_GET['deslogar'])) {
 
                         <div class="card-body text-center">
 
-                            <h2 class="card-title display-4 "style="font-size: 25pt;">Técnico em Informática Subsequente</h2>
+                            <h2 class="card-title display-4 "style="font-size: 30pt;">Informática Integrado</h2>
                             <a href="#" class="btn btn-outline-info mt-3">SAIBA MAIS!</a>
 
                         </div>
