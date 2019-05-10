@@ -194,7 +194,15 @@ $con = mysqli_query(DBConecta(),$consulta);
                                     </thead>
                                     <?php while($row = $con -> fetch_array()){ ?>
                                     <tr>
-                                        <td><?php echo $row['titulo']; ?></td>
+                                        <td><?php 
+                                            if (strlen($row['titulo']) > 60){
+                                                $tit = substr($row['titulo'], 0, 60).' ...';
+                                                echo $tit;
+                                            }
+                                            else{
+                                                echo $row['titulo'];
+                                            }
+                                             ?></td>
                                         <td><?php echo $row['data']; ?></td>
                                         <td><?php echo $row['postador']; ?></td>
                                         <td><?php echo "<a class='btn btn-warning' href='../editor/editar.php?edit=".$row['id']."'>Editar</a>" ?>
@@ -257,7 +265,7 @@ $con = mysqli_query(DBConecta(),$consulta);
 
                     </nav>
                     <p class="copyright pull-right">
-                        &copy; 2018 <a href="../index.php">Maria Rocha</a>
+                        &copy; 2019 <a href="../index.php">Maria Rocha</a>
                     </p>
 
                 </div>

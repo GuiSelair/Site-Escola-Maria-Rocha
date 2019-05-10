@@ -114,7 +114,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
     <div class="jumbotron top-space mt-0 mb-3 pt-5" style="background-color: #f2f2f2;">
         <div class="container-fluid">
             <h4 class="text-center mt-0">ÚLTIMAS NOTICIAS</h4>
-            <a href="allpost.php" class="btn btn-primary text-right">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
+            <a href="allpost.php?pagina=0" class="btn btn-primary text-right">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
             <hr style="border-color: #354698; ">
 
             <!-- Cabeçalho Noticia -->
@@ -156,7 +156,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 40){
+                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    }
+                                    else{
+                                        $tit = $dados['titulo'];
+                                    }
                                     echo "              <div style='overflow: hidden; min-height: 250px; max-height: 250px;'>
                                                             <img class='card-img-top' src='Galeria/".$image['nome']."'  >
                                                         </div>
@@ -170,7 +175,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 40){
+                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    }
+                                    else{
+                                        $tit = $dados['titulo'];
+                                    }
                                 echo "                  <div style='overflow: hidden; min-height: 250px; max-height: 250px;'>
                                                             <img class='card-img-top' src='Galeria/08.png'>
                                                         </div>
@@ -209,7 +219,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 40){
+                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    }
+                                    else{
+                                        $tit = $dados['titulo'];
+                                    }
                                     echo "              <div style='overflow: hidden; min-height: 250px;max-height: 250px;'>
                                                             <img class='card-img-top' src='Galeria/".$image['nome']."'>
                                                         </div>
@@ -224,7 +239,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 40){
+                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    }
+                                    else{
+                                        $tit = $dados['titulo'];
+                                    }
                                     echo "              <div style='overflow: hidden; min-height: 250px;max-height: 250px;'>
                                                             <img class='card-img-top' src='Galeria/08.png'>
                                                         </div>

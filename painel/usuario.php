@@ -259,7 +259,7 @@ if(isset($_POST['criar'])) {
 
                             </nav>
                             <p class="copyright pull-right">
-                                &copy; 2018 <a href="../index.php">Maria Rocha</a>
+                                &copy; 2019 <a href="../index.php">Maria Rocha</a>
                             </p>
 
                         </div>

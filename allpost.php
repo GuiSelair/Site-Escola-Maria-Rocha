@@ -6,6 +6,17 @@
     include_once("conexao/conexao.php");
     include_once("conexao/function.php");
 
+    $noticesbyPages = 6;
+    $pagina = intval($_GET['pagina']);
+
+    $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts ORDER BY id DESC LIMIT $pagina, $noticesbyPages");
+    $num = mysqli_num_rows($sql);
+    
+    $sql1 = mysqli_query(DBConecta(), "SELECT * FROM mr_posts");
+    $num_total = mysqli_num_rows($sql1);
+
+    $num_pages = ceil($num_total/$noticesbyPages);
+    
     if(isset($_POST['entrar'])) {
         $conn = DBConecta();
         
@@ -59,19 +70,39 @@
             
             <div class="col md-auto">            
                   <?php 
-                    
-                    $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts ORDER BY id DESC") or die("Erro");
+    
                     while ($dados=mysqli_fetch_assoc($sql)) {
-                        //$rest = substr($dados['descricao'], 0, 155);
-                        //echo $rest;
                         echo '<div class="titulo text-danger text-center mt-5"><strong>'.$dados ['titulo'].'</strong></div><p>';
                         echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
-                        echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'];
+                        echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'</div>';
                     }
 
                   ?>
             </div>
-                  
+            <div class="container my-4 mx-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="allpost.php?pagina=0" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <?php 
+                    for($i = 0; $i < $num_pages; $i++){
+                        $estilo = "class='page-item'";
+                        if($pagina == $i)
+                            $estilo = "class='page-item active'";
+                    ?>
+                    <li <?php echo $estilo; ?> ><a class="page-link" href="allpost.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
+                    <?php } ?>
+                    <li class="page-item">
+                        <a class="page-link" href="allpost.php?pagina=<?php echo $num_pages-1; ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            </div>
         </div>
         
     </div>
