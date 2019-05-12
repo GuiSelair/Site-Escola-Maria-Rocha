@@ -10,7 +10,7 @@
 
         <div class="col-sm-3 col-md-6 col-lg-6 col-xl-6 mx-left">
             <div class="text-center">
-                <a href="#"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
+                <a href="https://www.facebook.com/people/Esta%C3%A7%C3%A3o-Midias-Maria-Rocha/100005206065343"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
                 <?php
                     if (!isset($_SESSION['Logado'])) {
                 ?>
@@ -81,7 +81,7 @@
                 </li>
                 
                 <li class="nav-item mx-2">
-                    <a href="#" class="nav-link h7 text-white">Editais</a>
+                    <a href="editais.php?pagina=0" class="nav-link h7 text-white">Editais</a>
                 </li>
             </ul>
 

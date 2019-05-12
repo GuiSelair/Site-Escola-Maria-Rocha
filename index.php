@@ -147,7 +147,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 $i = $i + 1;
                                 echo "
                                             <div class='col-md-3 col-lg-3 col-xl-4 mx-auto mt-3'>
-                                                <div class='card mb-2 text-center' style='overflow: hidden; '>
+                                                <div class='card mb-2 text-center'>
                                 ";
                                 $idNoticia = $dados["id"];
                                 $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
@@ -156,8 +156,8 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 40){
-                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 30){
+                                        $tit = substr($dados['titulo'], 0, 30).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
@@ -175,8 +175,8 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 40){
-                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 30){
+                                        $tit = substr($dados['titulo'], 0, 30).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
@@ -219,8 +219,8 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 40){
-                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 30){
+                                        $tit = substr($dados['titulo'], 0, 30).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
@@ -239,8 +239,8 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 40){
-                                        $tit = substr($dados['titulo'], 0, 40).' ...';
+                                    if (strlen($dados['titulo']) > 30){
+                                        $tit = substr($dados['titulo'], 0, 30).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
@@ -272,8 +272,10 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                 </div>
             </div>
         </div>
+    </div>
 
-
+    
+    
     <!-- BOTÕES -->
 
     <div class="container text-center  mb-2">

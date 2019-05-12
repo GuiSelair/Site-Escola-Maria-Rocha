@@ -48,159 +48,159 @@ $con = mysqli_query(DBConecta(),$consulta);
 
 <body>
 
-<div class="wrapper">
+    <div class="wrapper">
 
-<div class="sidebar" data-color="dark" data-image="fundo.jpg">
+        <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
 
-    <div class="sidebar-wrapper">
+            <div class="sidebar-wrapper">
 
-        <div class="logo">
+                <div class="logo">
 
-            <a href="../index.php" class="simple-text">
-                Maria Rocha
-            </a>
-
-        </div>
-
-        <ul class="nav">
-
-            <li class="active">
-
-                <a href="painel.php">
-
-                    <i class="pe-7s-graph"></i>
-                    <p>Painel de controle</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="posts.php">
-
-                    <i class="pe-7s-pin"></i>
-                    <p>Posts</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="../editor/publicar.php">
-
-                    <i class="pe-7s-pen"></i>
-                    <p>Publicar</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="uploadgal.php">
-
-                    <i class="pe-7s-cloud-upload"></i>
-                    <p>Upload de Imagens</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="usuario.php">
-
-                    <i class="pe-7s-user"></i>
-                    <p>Criar Usuário</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="../index.php">
-
-                    <i class="pe-7s-home"></i>
-                    <p>Pagina Inicial</p>
-
-                </a>
-
-            </li>
-
-        </ul>
-
-    </div>
-
-</div>
-
-    <div class="main-panel">
-
-        <nav class="navbar navbar-default navbar-fixed">
-
-            <div class="container-fluid">
-
-                <div class="navbar-header">
-
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navegação">
-
-                        <span class="sr-only">Mostrar navegação</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-
-                    </button>
-
-                    <a class="navbar-brand" href="#">Painel de Controle</a>
+                    <a href="../index.php" class="simple-text">
+                        Maria Rocha
+                    </a>
 
                 </div>
 
-                <div class="collapse navbar-collapse">
+                <ul class="nav">
 
-                </div>
+                    <li class="active">
+
+                        <a href="painel.php">
+
+                            <i class="pe-7s-graph"></i>
+                            <p>Painel de controle</p>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="posts.php">
+
+                            <i class="pe-7s-pin"></i>
+                            <p>Posts</p>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="../editor/publicar.php">
+
+                            <i class="pe-7s-pen"></i>
+                            <p>Publicar</p>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="uploadgal.php">
+
+                            <i class="pe-7s-cloud-upload"></i>
+                            <p>Upload de Imagens</p>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="usuario.php">
+
+                            <i class="pe-7s-user"></i>
+                            <p>Criar Usuário</p>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="../index.php">
+
+                            <i class="pe-7s-home"></i>
+                            <p>Pagina Inicial</p>
+
+                        </a>
+
+                    </li>
+
+                </ul>
 
             </div>
 
-        </nav>
+        </div>
+
+        <div class="main-panel">
+
+            <nav class="navbar navbar-default navbar-fixed">
+
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navegação">
+
+                            <span class="sr-only">Mostrar navegação</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+
+                        </button>
+
+                        <a class="navbar-brand" href="#">Painel de Controle</a>
+
+                    </div>
+
+                    <div class="collapse navbar-collapse">
+
+                    </div>
+
+                </div>
+
+            </nav>
 
 
-        <div class="content">
+            <div class="content">
 
-            <div class="container-fluid">
+                <div class="container-fluid">
 
-                <div class="row">
+                    <div class="row">
 
-                    <div class="col-sm-12">
+                        <div class="col-sm-12">
 
-                        <div class="card">
+                            <div class="card">
 
-                            <div class="header">
+                                <div class="header">
 
-                                <h4 class="title text">Posts recentes</h4>
+                                    <h4 class="title text">Posts recentes</h4>
 
-                            </div>
+                                </div>
 
-                            <div class="content">
+                                <div class="content">
 
-                                <div>
+                                    <div>
 
-                                    <table class="table">
+                                        <table class="table">
 
-                                        <thead>
+                                            <thead>
+                                                <tr>
+
+                                                    <th scope="col">Título</th>
+                                                    <th scope="col">Data</th>
+                                                    <th scope="col">Postador</th>
+                                                    <th scope="col">Ações</th>
+
+                                                </tr>
+                                            </thead>
+                                            <?php while($row = $con -> fetch_array()){ ?>
                                             <tr>
-
-                                                <th scope="col">Título</th>
-                                                <th scope="col">Data</th>
-                                                <th scope="col">Postador</th>
-                                                <th scope="col">Ações</th>
-
-                                            </tr>
-                                        </thead>
-                                        <?php while($row = $con -> fetch_array()){ ?>
-                                        <tr>
-                                            <td><?php 
+                                                <td><?php 
                                             if (strlen($row['titulo']) > 60){
                                                 $tit = substr($row['titulo'], 0, 60).' ...';
                                                 echo $tit;
@@ -209,16 +209,18 @@ $con = mysqli_query(DBConecta(),$consulta);
                                                 echo $row['titulo'];
                                             }
                                              ?></td>
-                                            <td><?php echo $row['data']; ?></td>
-                                            <td><?php echo $row['postador']; ?></td>
-                                            <td><?php echo "<a class='btn btn-warning' href='../editor/editar.php?edit=".$row['id']."'>Editar</a>" ?>
-                                                <?php echo "<a class='btn btn-danger' href='deletar.php?id=".$row['id']."'>Excluir</a>" ?>
-                                            <td>
+                                                <td><?php echo $row['data']; ?></td>
+                                                <td><?php echo $row['postador']; ?></td>
+                                                <td><?php echo "<a class='btn btn-warning' href='../editor/editar.php?edit=".$row['id']."'>Editar</a>" ?>
+                                                    <?php echo "<a class='btn btn-danger' href='deletar.php?id=".$row['id']."'>Excluir</a>" ?>
+                                                <td>
 
-                                        </tr>
-                                        <?php } ?>
+                                            </tr>
+                                            <?php } ?>
 
-                                    </table>
+                                        </table>
+
+                                    </div>
 
                                 </div>
 
@@ -230,59 +232,57 @@ $con = mysqli_query(DBConecta(),$consulta);
 
                 </div>
 
+                <footer class="footer">
+
+                    <div class="container-fluid">
+
+                        <nav class="pull-left">
+
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        Painel
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="posts.php">
+                                        Posts
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="publicar.php">
+                                        Publicar
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="uploadgal.php">
+                                        Upload Galeria
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="usuario.php">
+                                        Criar usuário
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </nav>
+                        <p class="copyright pull-right">
+                            &copy; 2019 <a href="../index.php">Maria Rocha</a>
+                        </p>
+
+                    </div>
+
+                </footer>
+
             </div>
 
-            <footer class="footer">
-
-                <div class="container-fluid">
-
-                    <nav class="pull-left">
-
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Painel
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="posts.php">
-                                    Posts
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="publicar.php">
-                                    Publicar
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="uploadgal.php">
-                                    Upload Galeria
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="usuario.php">
-                                    Criar usuário
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </nav>
-                    <p class="copyright pull-right">
-                        &copy; 2019 <a href="../index.php">Maria Rocha</a>
-                    </p>
-
-                </div>
-
-            </footer>
-
         </div>
-
-    </div>
 
     </div>
 

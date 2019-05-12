@@ -8,11 +8,15 @@
 
     $noticesbyPages = 6;
     $pagina = intval($_GET['pagina']);
+    $beginningPage = $pagina;
+    
+    if ($pagina != 0)
+        $beginningPage = $pagina * $noticesbyPages;
 
-    $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts ORDER BY id DESC LIMIT $pagina, $noticesbyPages");
+    $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts WHERE categoria = 1 ORDER BY id DESC LIMIT $beginningPage, $noticesbyPages");
     $num = mysqli_num_rows($sql);
     
-    $sql1 = mysqli_query(DBConecta(), "SELECT * FROM mr_posts");
+    $sql1 = mysqli_query(DBConecta(), "SELECT * FROM mr_posts WHERE categoria = 1");
     $num_total = mysqli_num_rows($sql1);
 
     $num_pages = ceil($num_total/$noticesbyPages);
@@ -49,12 +53,6 @@
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
     <link rel="shortcut icon" href="img/favicon.ico" />
-    <style>
-     
-    #nvcor {
-        background-color: #354698;
-    }
-    </style>
   </head>
   <body>        
     

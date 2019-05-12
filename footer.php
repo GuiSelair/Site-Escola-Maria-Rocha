@@ -55,9 +55,7 @@
               <div class="text-center text-md-right">
                   <ul class="list-unstyled list-inline">
                   <li class="list-inline-item">
-                      <a class="btn-floating btn-sm rgba-white-slight mx-1" >
-                      <i class="fa fa-facebook-f fa-3x" style="text-decoration: none;"></i>
-                      </a>
+                  <a href="https://www.facebook.com/people/Esta%C3%A7%C3%A3o-Midias-Maria-Rocha/100005206065343"><i class="fa fa-facebook fa-2x mx-3" style="color: white;"></i></a>
                   </li>
                   </ul>
               </div>

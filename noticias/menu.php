@@ -43,7 +43,7 @@
 
     <div class="container ml-8">
 
-        <a href="index.php" class="navbar-brand text-light">
+        <a href="../index.php" class="navbar-brand text-light">
             <img src="img/log.png" class="d-inline-block align-right mx-2" width="40">
             Escola Maria Rocha
         </a>
