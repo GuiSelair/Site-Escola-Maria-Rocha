@@ -39,7 +39,7 @@
         </div>
     </div>
 </div>
-<div class="navbar navbar-expand-lg navbar-dark " id="nvcor" style="height: 70px; background-color: #354698; border-bottom: 2px solid #D32022;">
+<div class="navbar navbar-expand-lg navbar-dark "  style="background-color: #354698; border-bottom: 2px solid #D32022;">
 
     <div class="container ml-8">
 
@@ -48,13 +48,13 @@
             Escola Maria Rocha
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite" aria-controls="navbarSite" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSite" style="background-color: #354698;">
 
-            <ul class="nav navbar-nav ml-auto pull-right">
+            <ul class="navbar-nav ml-auto text-center">
 
                 <li class="nav-item mx-2">
                     <a href="index.php" class="nav-link h7 text-white">Início</a>
