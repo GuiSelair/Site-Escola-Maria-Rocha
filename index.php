@@ -114,14 +114,14 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
     <div class="jumbotron top-space mt-0 mb-3 pt-5" style="background-color: #f2f2f2;">
         <div class="container-fluid">
             <h4 class="text-center mt-0">ÚLTIMAS NOTICIAS</h4>
-            <a href="allpost.php?pagina=0" class="btn btn-primary text-right">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
+            <a href="allpost.php?pagina=0" class="btn btn-primary col-sm col-lg-2 col-md-4">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
             <hr style="border-color: #354698; ">
 
             <!-- Cabeçalho Noticia -->
 
             <?php
                     $cat = 1; // Categoria a ser filtrada
-                    $quantNotices = 6;
+                    $quantNotices = 8;
                     $sql = mysqli_query(DBConecta(), "SELECT * FROM `mr_posts` WHERE `categoria` = $cat ORDER BY `id` DESC LIMIT $quantNotices;") or die("Erro");
                 ?>
 
@@ -138,7 +138,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                         $quantCardPorLinha = $quantNotices/2;
                         echo "
                                 <div class='carousel-item active'>
-                                        <div class='row text-center text-md-left mt-3 mb-3'>
+                                        <div class='row text-center mt-3 mb-3'>
                             ";
                         while ($quantNotices != $quantCardPorLinha ){
                             $i = 0;
@@ -146,7 +146,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 $dados = mysqli_fetch_assoc($sql);
                                 $i = $i + 1;
                                 echo "
-                                            <div class='col-md-3 col-lg-3 col-xl-4 mx-auto mt-3'>
+                                            <div class='col-md-6 col-lg-3  mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
                                 $idNoticia = $dados["id"];
@@ -162,12 +162,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                    echo "              <div style='overflow: hidden; min-height: 250px; max-height: 250px;'>
-                                                            <img class='card-img-top' src='Galeria/".$image['nome']."'  >
+                                    echo "              <div>
+                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'  >
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>
-                                                            <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -181,12 +180,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                echo "                  <div style='overflow: hidden; min-height: 250px; max-height: 250px;'>
-                                                            <img class='card-img-top' src='Galeria/08.png'>
+                                echo "                  <div>
+                                                            <img class='card-img-top img-fluid' src='Galeria/08.png'>
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>
-                                                            <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -209,7 +207,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 $dados = mysqli_fetch_assoc($sql);
                                 $i = $i + 1;
                                 echo "
-                                            <div class='col-md-3 col-lg-3 col-xl-4 mx-auto mt-3'>
+                                            <div class='col-md-6 col-lg-3 mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
                                 $idNoticia = $dados["id"];
@@ -225,12 +223,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                    echo "              <div style='overflow: hidden; min-height: 250px;max-height: 250px;'>
-                                                            <img class='card-img-top' src='Galeria/".$image['nome']."'>
+                                    echo "              <div>
+                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'>
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>
-                                                            <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -245,13 +242,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                    echo "              <div style='overflow: hidden; min-height: 250px;max-height: 250px;'>
-                                                            <img class='card-img-top' src='Galeria/08.png'>
+                                    echo "              <div>
+                                                            <img class='card-img-top img-fluid' src='Galeria/08.png' height: '250px'>
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>
-                                                            <p class='card-footer'>Postado por: ".$dados['postador']." em ".$dados['data']."</p>
-                                                            <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
+                                                            <a href='".$nome."' class='btn btn-primary mt-2 '>Leia mais</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -278,17 +274,17 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
     
     <!-- BOTÕES -->
 
-    <div class="container text-center  mb-2">
+    <div class="container text-center mb-2">
 
-        <div class="row text-center mt-3 mb-3">
+        <div class="row text-center">
 
-            <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3">
 
                 <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://www.educacao.rs.gov.br/inicial" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="http://www.educacao.rs.gov.br/inicial" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">Secretaria da Educação</h6>
                     </a>
-                    <a href="https://secweb.procergs.com.br/rheportal/logon.xhtml" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="https://secweb.procergs.com.br/rheportal/logon.xhtml" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">Portal do Servidor</h6>
                     </a>
                 </div>
@@ -296,14 +292,14 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
             <hr class="w-100 clearfix d-md-none">
 
-            <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3">
 
                 <div class="btn-group-vertical btn-block btn-block-lg">
 
-                    <a href="http://portaldoprofessor.mec.gov.br/index.html" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="http://portaldoprofessor.mec.gov.br/index.html" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">Portal do Professor</h6>
                     </a>
-                    <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">UFSM</h6>
                     </a>
 
@@ -312,12 +308,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
             <hr class="w-100 clearfix d-md-none">
 
-            <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 mb-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3 mb-3">
                 <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">MEC</h6>
                     </a>
-                    <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">Prouni</h6>
                     </a>
                 </div>
@@ -325,14 +321,14 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
             <hr class="w-100 clearfix d-md-none">
 
-            <div class="col-sm col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3">
 
                 <div class="btn-group-vertical btn-block btn-block-lg">
 
-                    <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary mb-3 p-2" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">Enem</h6>
                     </a>
-                    <a href="http://www.dominiopublico.gov.br/pesquisa/PesquisaObraForm.jsp" target="_blank" class="btn btn-primary mb-3" style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;">
+                    <a href="http://www.dominiopublico.gov.br/pesquisa/PesquisaObraForm.jsp" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">Domínio Público</h6>
                     </a>
 

@@ -3,40 +3,40 @@
     <footer class="page-footer font-small text-light pt-2" style="background-color:  #33439A;">
 
         <!-- Footer Links -->
-        <div class="container text-center text-md-left">
+        <div class="container text-center">
 
         <!-- Footer links -->
-        <div class="row text-center text-md-left mt-3 pb-3">
+        <div class="row text-center mt-3 pb-3 mb-3">
 
             <!-- Grid column -->
-            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <div class="col-md-12 col-lg-3 col-xl-3 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Escola Professora Maria Rocha</h6>
             <p>Aqui fizemos educacao.</p>
             </div>
             <!-- Grid column -->
 
-            <hr class="w-100 clearfix d-md-none">
+            <hr class="w-100 clearfix d-lg-none">
 
             <!-- Grid column -->
-            <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mt-3">
+            <div class="col-md-12 col-lg-6 col-xl-6 mx-auto mt-3">
                 <h6 class="text-uppercase mb-4 font-weight-bold">Como chegar</h6>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4121.790614439209!2d-53.81458902211607!3d-29.690810057559283!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6596cdcc1dbcb9c9!2sEscola+Estadual+de+Ensino+M%C3%A9dio+Professora+Maria+Rocha!5e0!3m2!1spt-BR!2sbr!4v1511223701151" width="100%" height="300px" frameborder="0" style="border:0"></iframe>
             </div>
 
 
             <!-- Grid column -->
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">Contato</h6>
-            <p>
-                <i class="fa fa-car mr-2 fa-1x"></i> R. Conde de Porto Alegre, 795 Santa Maria - RS</p>
-            <p>
-                <i class="fa fa-phone mr-3 fa-1x"></i>(55)3222-8171</p>
+            <div class="col-md-12 col-lg-3 col-xl-3 mt-3">
+                <h6 class="text-uppercase mb-4 font-weight-bold">Contato</h6>
+                <p>
+                    <i class="fa fa-car mr-2 fa-1x"></i> R. Conde de Porto Alegre, 795 Santa Maria - RS</p>
+                <p>
+                    <i class="fa fa-phone mr-3 fa-1x"></i>(55) 3222-8171</p>
 
             </div>
 
         </div>
 
-        <hr style="border-color: white; ">
+        <hr style="border-color: white;">
 
         <div class="row d-flex align-items-center">
 

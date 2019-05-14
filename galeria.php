@@ -57,7 +57,7 @@ if (isset($_GET['deslogar'])) {
 
         <div class="container">
 
-            <div class="row mx-5">
+            <div class="row ">
 
                 <?php
 
@@ -68,7 +68,7 @@ if (isset($_GET['deslogar'])) {
                 while($row = mysqli_fetch_assoc($sql)){
                     $nome = $pasta.$row['nome'];
                     
-                    echo "<div class='col-lg-12 order-1 my-3' style='overflow: hidden; min-width: 450px; max-width: 450px; max-height: 450px; min-height: 300px;'>
+                    echo "<div class='col-lg-8 col-md-4 col-lg-12 order-1 my-3' style='overflow: hidden; min-width: 450px; max-width: 450px; max-height: 450px; min-height: 300px;'>
 
                         <picture>
 

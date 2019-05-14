@@ -1,14 +1,14 @@
 <!--NAVBAR-->
 
-<div class="container-fluid py-0 my-0 " style="height: 30px; background-color: #f2f2f2;">
+<div class="container-fluid py-0  " style="background-color: #f2f2f2;">
     <div class="row align-items-center">
-        <div class="col-sm-3 col-md-6 col-lg-6 col-xl-6 mx-right">
+        <div class="col-sm-10 col-md-6 col-lg-6 col-xl-6  ">
             <div class="text-center mb-0 pb-0">
-                <a href="loginUser.php" target="_blank" class="btn btn-info py-0  my-0" ><i class="fa fa-graduation-cap mx-2"></i>Portal Acadêmico</a>
+                <a href="loginUser.php" target="_blank" class="btn btn-info p-1  my-0 rounded-0" ><i class="fa fa-graduation-cap mx-2"></i>Portal Acadêmico</a>
             </div>
         </div>
 
-        <div class="col-sm-3 col-md-6 col-lg-6 col-xl-6 mx-left">
+        <div class="col-sm-2 col-md-6 col-lg-6 col-xl-6 ">
             <div class="text-center">
                 <a href="https://www.facebook.com/people/Esta%C3%A7%C3%A3o-Midias-Maria-Rocha/100005206065343"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
                 <?php
@@ -22,9 +22,9 @@
                         else{
                 ?>
                 
-                <li class="btn-group dropright mb-1">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navDrop" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user mx-3" style="color: black;"></i></a>
-                    <div class="dropdown-menu">
+                <li class="btn-group dropright ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navDrop" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user ml-2 " style="color: black;"></i></a>
+                    <div class="dropdown-menu mx-3">
                         <a href="painel/painel.php" class="dropdown-item">Painel de Controle <i class="fa fa-cogs" aria-hidden="true"></i></a>
                         <a href="?deslogar" class="dropdown-item">Deslogar <i class="fa fa-sign-out" aria-hidden="true"></i>
                         </a>

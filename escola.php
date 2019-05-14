@@ -65,12 +65,12 @@ if (isset($_GET['deslogar'])) {
             <div class="container">
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-6 col-sm-8 col-lg-4 mb-2">
                         <img src="./img/profMariaRocha.jpg" alt="Professora Maria Rocha" class="rounded float-left img-fluid mx-5 w-75">
                     </div>
 
-                    <div class="col-8 text-center">
-                            <h1 class="display-4 ">Professora Maria Rocha</h1>
+                    <div class="col-md-6 col-sm-6 col-lg-8 text-center">
+                            <h1 class="display-4">Professora Maria Rocha</h1>
                             <hr style="border-color: #354698; ">
                             <p class="lead">Maria Manoela Rocha nasceu em 23 de dezembro de 1904. Em 1926, concluiu os estudos na Escola Complementar em Porto Alegre, tornando-se professora. Passou a lecionar no Colégio Elementar Farroupilha, atual Instituto de Educação Olavo Bilac. Foi professora dedicada por 32 anos. Vítima de câncer, faleceu em 1º de outubro de 1958.</p>
                         </div>

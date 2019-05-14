@@ -7,3 +7,15 @@ Legenda das Imagens:
 - 0: Imagem normal (Aparece na galeria)
 - 1: Imagem Principal (Não aparece na galeria)
 - 3: Imagem vinculada as noticias (Não aparece na galeria)
+
+
+style='overflow: hidden; min-height: 250px; max-height: 250px;'
+
+style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"
+style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"
+style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"
+style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"
+style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"
+style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"
+
+<p class='card-footer d-none d-lg-block'>Postado em ".$dados['data']."</p>
