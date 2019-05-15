@@ -86,20 +86,24 @@
                             <nav aria-label="Page navigation example" >
                                 <ul class="pagination pagination-sm justify-content-center">
                                     <li class="page-item">
-                                        <a class="page-link" href="editais.php?pagina=0" aria-label="Previous">
+                                        <?php if ($pagina != 0) {?>
+                                            <a class="page-link" href="editais.php?pagina=<?php echo $pagina-1;?>" aria-label="Previous">
+                                        <?php }else{ ?>
+                                            <a class="page-link" href="editais.php?pagina=0" aria-label="Previous">
+                                        <?php } ?>
                                         <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
-                                    <?php 
-                                    for($i = 0; $i < $num_pages; $i++){
-                                        $estilo = "class='page-item'";
-                                        if($pagina == $i)
-                                            $estilo = "class='page-item active'";
-                                    ?>
-                                    <li <?php echo $estilo; ?> ><a class="page-link" href="editais.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
-                                    <?php } ?>
+                                        <?php                                
+                                            for($i = 0; $i < $pagina+3 || $i < $num_pages; $i++){
+                                                $estilo = "class='page-item'";
+                                                if($pagina == $i)
+                                                    $estilo = "class='page-item active'";
+                                        ?>
+                                        <li <?php echo $estilo; ?> ><a class="page-link" href="editais.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
+                                        <?php } ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="editais.php?pagina=<?php echo $num_pages-1; ?>" aria-label="Next">
+                                        <a class="page-link" href="editais.php?pagina=<?php echo $pagina + 1; ?>" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
