@@ -156,14 +156,14 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 30){
-                                        $tit = substr($dados['titulo'], 0, 30).' ...';
+                                    if (strlen($dados['titulo']) > 25){
+                                        $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                    echo "              <div>
-                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'  >
+                                    echo "              <div class='no-gutters'>
+                                                            <img class='card-img-top img-fluid' height: '250' src='Galeria/".$image['nome']."'  >
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>
@@ -174,14 +174,14 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 30){
-                                        $tit = substr($dados['titulo'], 0, 30).' ...';
+                                    if (strlen($dados['titulo']) > 25){
+                                        $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                echo "                  <div>
-                                                            <img class='card-img-top img-fluid' src='Galeria/08.png'>
+                                echo "                  <div class='no-gutters'>
+                                                            <img class='card-img-top img-fluid' height: '250' src='Galeria/08.png'>
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>
@@ -217,14 +217,14 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 30){
-                                        $tit = substr($dados['titulo'], 0, 30).' ...';
+                                    if (strlen($dados['titulo']) > 25){
+                                        $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
                                     }
                                     echo "              <div>
-                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'>
+                                                            <img class='card-img-top img-fluid' height: '250' src='Galeria/".$image['nome']."'>
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>
@@ -236,14 +236,14 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     ";
                                 }else{
                                     $nome = 'noticias/'.$dados['id'].'.php';
-                                    if (strlen($dados['titulo']) > 30){
-                                        $tit = substr($dados['titulo'], 0, 30).' ...';
+                                    if (strlen($dados['titulo']) > 25){
+                                        $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
                                     else{
                                         $tit = $dados['titulo'];
                                     }
                                     echo "              <div>
-                                                            <img class='card-img-top img-fluid' src='Galeria/08.png' height: '250px'>
+                                                            <img class='card-img-top img-fluid' src='Galeria/08.png' height: '250'>
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title'>".$tit."</h5>

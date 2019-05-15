@@ -7,7 +7,18 @@
     $consulta = "SELECT * FROM mr_posts ORDER BY id DESC LIMIT 1";
     $pesquisa = mysqli_query(DBConecta(),$consulta);
     $resultado = mysqli_fetch_assoc($pesquisa);
+    $id = $resultado['id'];
+
+    $consulta = "SELECT * FROM imagens WHERE idPosts = $id";
+    $pesquisa = mysqli_query(DBConecta(),$consulta);
+    $linhas = mysqli_num_rows($pesquisa);
+    $nome = '...';
+    if ($linhas > 0){
+        $imagem = mysqli_fetch_assoc($pesquisa);
+        $nome = '../Galeria/'.$imagem['nome'];
+    }
     
+
     $nomeArq = 'noticias/'.$resultado['id'].".php";
     echo $nomeArq;
     if (!$arquivo = fopen($nomeArq, "w")){
@@ -37,9 +48,11 @@
         <body>
             <?php include('menu.php'); ?>
             <div class='container text-center'>
-                <h3 class='my-4'>".$resultado['titulo']."</h3>
-                <p class='mb-5'>".$resultado['descricao']."</p>
-                <span class='fa fa-user mb-4 text-left'></span> Postado por <i>".$resultado ['postador']."</i><i> em ".$resultado['data']."</i>
+                <h3 class='display-4'>".$resultado['titulo']."</h3>
+                <img src='".$nome."' class='img-fluid my-4'>
+                <hr style='border-color: #354698; '>
+                <p class='text-justify mb-5'>".$resultado['descricao']."</p>
+                <p class='text-left'><span class='fa fa-user'></span> Postado por <i>".$resultado ['postador']."</i><i> em ".$resultado['data']."</i></p>
             </div>
             <?php include('../footer.php'); ?>
         </body>
@@ -50,7 +63,7 @@
         echo 'Erro ao gravar';
         exit();
     }
-
+    mysqli_close($imagem);
     mysqli_close($pesquisa);
     fclose($arquivo);
 ?>

@@ -120,7 +120,7 @@ $linha = mysqli_num_rows($sql);
 
 <div class="wrapper">
 
-<div class="sidebar" data-color="dark" data-image="fundo.jpg">
+<div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
 
     <div class="sidebar-wrapper">
 

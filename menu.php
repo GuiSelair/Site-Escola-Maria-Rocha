@@ -15,7 +15,7 @@
                     if (!isset($_SESSION['Logado'])) {
                 ?>
                 
-                <a href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user mx-3" style="color: black;"></i></a>
+                <a href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user mx-3 " style="color: black;"></i></a>
 
                 <?php
                         } 
@@ -23,7 +23,7 @@
                 ?>
                 
                 <li class="btn-group dropright ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navDrop" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user ml-2 " style="color: black;"></i></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navDrop" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user ml-2 mb-2 " style="color: black;"></i></a>
                     <div class="dropdown-menu mx-3">
                         <a href="painel/painel.php" class="dropdown-item">Painel de Controle <i class="fa fa-cogs" aria-hidden="true"></i></a>
                         <a href="?deslogar" class="dropdown-item">Deslogar <i class="fa fa-sign-out" aria-hidden="true"></i>

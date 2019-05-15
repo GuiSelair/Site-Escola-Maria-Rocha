@@ -3,6 +3,7 @@
 include_once("../conexao/conexao.php");
 include_once("../conexao/config.php");
 include_once("../conexao/function.php");
+include "../wideimage/lib/WideImage.php";
 
 session_start();
 
@@ -191,13 +192,14 @@ if(isset($_POST['postar'])) {
         }
     </script>
 
-    <script src="../geraHTML.php"></script>
+    
     <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../painel/componentes/js/painel-admin.js"></script>
     <link rel="stylesheet" href="dist/summernote-bs4.css">
     <script src="dist/summernote-bs4.js"></script>
     <script src="dist/lang/summernote-pt-BR.js"></script>
+    <script src="../geraHTML.php"></script>
 </body>
 
 </html>

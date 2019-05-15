@@ -43,11 +43,7 @@ if (isset($_GET['deslogar'])) {
         <link rel="stylesheet" href="node_modules/lb/lightbox.css">
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
         <link rel="shortcut icon" href="img/favicon.ico" />
-        <style>
-            #nvcor {
-                background-color: #354698;
-            }
-        </style>
+        
     </head>
     <body>        
 
@@ -68,7 +64,7 @@ if (isset($_GET['deslogar'])) {
                 while($row = mysqli_fetch_assoc($sql)){
                     $nome = $pasta.$row['nome'];
                     
-                    echo "<div class='col-lg-8 col-md-4 col-lg-12 order-1 my-3' style='overflow: hidden; min-width: 450px; max-width: 450px; max-height: 450px; min-height: 300px;'>
+                    echo "<div class='col-lg-4 col-md-6 order-1 my-3'>
 
                         <picture>
 
@@ -86,8 +82,6 @@ if (isset($_GET['deslogar'])) {
                 }
             ?>
             </div>
-
-            <div class="col order-2"></div>
 
         </div>
 
