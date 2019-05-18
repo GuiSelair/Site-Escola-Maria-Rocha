@@ -162,11 +162,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                    echo "              <div class='no-gutters'>
-                                                            <img class='card-img-top img-fluid' height: '250' src='Galeria/".$image['nome']."'  >
+                                    echo "              <div style='max-height: 180px; overflow: hidden;'>
+                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'  >
                                                         </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$tit."</h5>
+                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -180,11 +180,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                echo "                  <div class='no-gutters'>
-                                                            <img class='card-img-top img-fluid' height: '250' src='Galeria/08.png'>
+                                echo "                  <div style='max-height: 180px; overflow: hidden;'>
+                                                            <img class='card-img-top img-fluid' src='Galeria/08.png'>
                                                         </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$tit."</h5>
+                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -223,11 +223,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                    echo "              <div>
-                                                            <img class='card-img-top img-fluid' height: '250' src='Galeria/".$image['nome']."'>
+                                    echo "              <div style='max-height: 180px; overflow: hidden;'>
+                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."' >
                                                         </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$tit."</h5>
+                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -242,11 +242,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                     else{
                                         $tit = $dados['titulo'];
                                     }
-                                    echo "              <div>
-                                                            <img class='card-img-top img-fluid' src='Galeria/08.png' height: '250'>
+                                    echo "              <div style='max-height: 180px; overflow: hidden;'>
+                                                            <img class='card-img-top img-fluid' src='Galeria/08.png'>
                                                         </div>
                                                         <div class='card-body'>
-                                                            <h5 class='card-title'>".$tit."</h5>
+                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='".$nome."' class='btn btn-primary mt-2 '>Leia mais</a>
                                                         </div>
                                                     </div>

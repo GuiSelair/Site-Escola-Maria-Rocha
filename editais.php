@@ -41,7 +41,8 @@
 ?>
 <!doctype html>
 <html lang="pt-br">
-  <head>
+
+<head>
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -53,21 +54,22 @@
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
     <link rel="shortcut icon" href="img/favicon.ico" />
-  </head>
-  <body>        
-    
+</head>
+
+<body>
+
     <!--NAVBAR-->
-    
+
     <?php include 'menu.php'; ?>
-           
-   <!-- POSTAGENS -->
-   
+
+    <!-- POSTAGENS -->
+
     <div class="container">
-     
-        <div class="row">     
-            
-            <div class="col md-auto">            
-                  <?php 
+
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12 col-sm-2">
+                <?php 
     
                     while ($dados=mysqli_fetch_assoc($sql)) {
                         echo '<div class="titulo text-danger text-center mt-5"><strong>'.$dados ['titulo'].'</strong></div><p>';
@@ -82,61 +84,66 @@
 
             <div class="container my-4 mx-4">
                 <div class="row">
-                        <div class="col-12">
-                            <nav aria-label="Page navigation example" >
-                                <ul class="pagination pagination-sm justify-content-center">
-                                    <li class="page-item">
-                                        <?php if ($pagina != 0) {?>
-                                            <a class="page-link" href="editais.php?pagina=<?php echo $pagina-1;?>" aria-label="Previous">
+                    <div class="col-12">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination pagination-sm justify-content-center">
+                                <li class="page-item">
+                                    <?php if ($pagina != 0) { ?>
+                                        <a class="page-link" href="editais.php?pagina=<?php echo $pagina-1;?>" aria-label="Previous">
                                         <?php }else{ ?>
-                                            <a class="page-link" href="editais.php?pagina=0" aria-label="Previous">
-                                        <?php } ?>
-                                        <span aria-hidden="true">&laquo;</span>
+                                        <a class="page-link" href="editais.php?pagina=0" aria-label="Previous">
+                                            <?php } ?>
+                                            <span aria-hidden="true">&laquo;</span>
                                         </a>
-                                    </li>
-                                        <?php                                
-                                            for($i = 0; $i < $pagina+3 || $i < $num_pages; $i++){
+                                </li>
+                                <?php        
+                                            if ($pagina+1 < 3){
+                                                $i = $pagina;
+                                            }
+                                            else{
+                                                $i = $pagina-2;
+                                            }
+                                            for(; $i < $pagina+3; $i++){
                                                 $estilo = "class='page-item'";
                                                 if($pagina == $i)
                                                     $estilo = "class='page-item active'";
                                         ?>
-                                        <li <?php echo $estilo; ?> ><a class="page-link" href="editais.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
-                                        <?php } ?>
-                                    <li class="page-item">
-                                        <?php if ($pagina != $num_pages){ ?>
-                                            <a class="page-link" href="editais.php?pagina=<?php echo $pagina + 1; ?>" aria-label="Next">
-        
+                                <li <?php echo $estilo; ?>><a class="page-link" href="editais.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
+                                <?php } ?>
+                                <li class="page-item">
+                                    <?php if ($pagina != $num_pages){ ?>
+                                        <a class="page-link" href="editais.php?pagina=<?php echo $pagina + 1; ?>" aria-label="Next">
                                         <?php }else { ?>
-                                            <a class="page-link" href="editais.php?pagina=<?php echo $num_pages-1; ?>" aria-label="Next">
-                                            
-                                        <?php } ?>
-                                           <span aria-hidden="true">&raquo;</span>
+                                        <a class="page-link" href="editais.php?pagina=<?php echo $num_pages-1; ?>" aria-label="Next">
+                                            <?php } ?>
+                                            <span aria-hidden="true">&raquo;</span>
                                         </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
-        
+        </div>
+
     </div>
-  
-   <!--FOOTER-->
-        
-   <?php
+
+    <!--FOOTER-->
+
+    <?php
         include_once("footer.php");
     ?>
-        
+
     <!--TELA DE LOGIN -->
     <?php
         include_once("loginAdmin.php");
     ?>
-   
-   
+
+
     <!-- Links JS, Jquery e Popper -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-  </body>
+</body>
+
 </html>
