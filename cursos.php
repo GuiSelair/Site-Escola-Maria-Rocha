@@ -35,21 +35,21 @@ switch ($curso) {
     case '1':
         $icon = "class= 'fa fa-laptop mx-2'";
         $tec = "Informática";
-        $sql_code = "SELECT * FROM informaticatecnico;";
+        $sql_code = "SELECT * FROM cursoinformatica;";
         $sql = mysqli_query(DBConecta(), $sql_code);
         $results = mysqli_fetch_assoc($sql);
         break;
     case '2':
         $icon = "class= 'fa fa-calculator mx-2'";
         $tec = "Contabilidade";
-        $sql_code = "SELECT * FROM secretariadotecnico;";
+        $sql_code = "SELECT * FROM cursocontabilidade;";
         $sql = mysqli_query(DBConecta(), $sql_code);
         $results = mysqli_fetch_assoc($sql);
         break;
     case '3':
         $icon = "class= 'fa fa-book mx-2'";
         $tec = "Secretariado";
-        $sql_code = "SELECT * FROM contabilidadetecnico;";
+        $sql_code = "SELECT * FROM cursosecretariado;";
         $sql = mysqli_query(DBConecta(), $sql_code);
         $results = mysqli_fetch_assoc($sql);
         break;    

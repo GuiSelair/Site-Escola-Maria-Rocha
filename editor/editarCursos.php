@@ -27,25 +27,31 @@ switch ($editar){
         break;
 }
 
-$sql_code = "SELECT * FROM '$tabela';";
+
+$sql_code = "SELECT * FROM $tabela;";
 $res = mysqli_query(DBConecta(), $sql_code);
-$row = mysqli_fetch_array($res);
+$linhas = mysqli_num_rows($res);
+if ($linhas > 0){
+    $row = mysqli_fetch_array($res);
+}
+
+if (isset($_POST['atualizaRadio'])){
+    $opcao = $_POST['opcao'];
+}
 
 if (isset($_POST['atualizar'])) {
     $conn = DBConecta();
     $ndescricao = $_POST['ndescrição'];
     
-    $sql_code1 = "UPDATE '$tabela' SET '$opcao' = '$ndescricao';";
+    $sql_code1 = "UPDATE $tabela SET $opcao = '$ndescricao';";
     $up = mysqli_query($conn, $sql_code1);
 
     if ($up) {
         echo "<script>alert('Publicação atualizada com Sucesso!')</script>";
-        header("Location: ../painel/painel.php");
+        //header("Location: ../painel/painel.php");
     }
 }
-if (isset($_POST['atualizaRadio']){
-    $opcao = $_POST['opcao'];
-}
+//$opcao = "";
 
 
 ?>
@@ -93,30 +99,57 @@ if (isset($_POST['atualizaRadio']){
 
                     <form action="" method="POST" enctype="multipart/form-data" id="postForm">
                         
-                        <p><input type="text" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php echo $opcao ?>"></p>
+                        <p><input type="text" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php 
+                            switch ($opcao) {
+                                case "objetivoCurso":
+                                    echo "Objetivos do Curso";
+                                    break;
+                                case "perfilConclusao":
+                                    echo "Perfil de Formação Profissional";
+                                    break;
+                                case "estagio":
+                                    echo "Estágio";
+                                    break;
+                                case "gradeCurricular";
+                                    echo "Grade Curricular";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        ?>"></p>
                         <fieldset class="my-3">
                             <h6>Marque a opção que deseja atualizar</h6>
                             <hr />
                             <div class="form-check ml-5">
-                                <input class="form-check-input" type="radio" name="opcao" value="perfilConclusao" checked> Perfil de Formação Profissional
+                                <input class="form-check-input" type="radio" name="opcao" value="perfilConclusao" > <?php echo $opcao; ?>Perfil de Formação Profissional
                             </div>
                             <div class="form-check ml-5">
-                                <input class="form-check-input" type="radio" name="opcao" value="objetivoCurso"> Objetivos do Curso
+                                <input class="form-check-input" type="radio" name="opcao" value="objetivoCurso" > Objetivos do Curso
                             </div>
                             <div class="form-check ml-5">
-                                <input class="form-check-input" type="radio" name="opcao" value="estagio"> Estágio
+                                <input class="form-check-input" type="radio" name="opcao" value="estagio" checked> Estágio
                             </div>
                             <div class="form-check ml-5">
-                                <input class="form-check-input" type="radio" name="opcao" value="gradeCurricular"> Grade Curricular
+                                <input class="form-check-input" type="radio" name="opcao" value="gradeCurricular" > Grade Curricular
                             </div>
                             <div class="form-check ml-5">
-                                <input class="form-check-input" type="radio" name="opcao" value="criteriosAvaliacao"> Criterios de Avaliação
+                                <input class="form-check-input" type="radio" name="opcao" value="criteriosAvaliacao" > Criterios de Avaliação
                             </div>
-                            <button type="submit" class="btn btn-dark btn-sm" name="atualizaRadio">Atualizar opções</button>
+                            <button class="btn btn-dark btn-sm mt-2" name="atualizaRadio">Atualizar opções</button>
                         </fieldset>             
-                        <p><textarea class="form-control" name="ndescrição" id="summernote"><?php echo $row[$opcao] ?></textarea>
-                        <button type="submit" class="btn btn-primary btn-block" name="atualizar">Atualizar Publicação</button>
-                        <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao Painel de Controle</a>
+                        <hr />
+                        <p><textarea class="form-control" name="ndescrição" id="summernote"><?php 
+                            if ($linhas > 0){
+                                if ($opcao == " "){
+                                    echo "";
+                                }else{
+                                    echo $row[$opcao];
+                                }
+                            }
+                                                   
+                        ?></textarea>
+                        <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
+                        <a href="../painel/painel.php" class="btn btn-block btn-dark" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
 
                     </form>
 

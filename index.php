@@ -315,7 +315,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
                 <div class="btn-group-vertical btn-block btn-block-lg">
 
-                    <a href=""http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
+                    <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">PROUNI</h6>
                     </a>
                 </div>
