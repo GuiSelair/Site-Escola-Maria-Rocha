@@ -17,7 +17,7 @@ if (isset($_POST['postar'])) {
     
     $foto = $_FILES['arquivo'];
     $dimensoes = getimagesize($foto['tmp_name']);
-    $altura = 500;
+    $altura = 450;
     
     if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
         echo "Pasta $diretorio nao existe";
@@ -41,7 +41,7 @@ if (isset($_POST['postar'])) {
                 $cat = $_POST["cat"];
 
                 // Verifica se a imagem tem mais que a altura máxima.
-                if ($cat == 1 && $dimensoes[1] > $altura){ 
+                if ($cat == 1 && $dimensoes[1] >= $altura){ 
                     echo "<div class='alert alert-danger alert-dismissable'>
                       <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
                                 <strong>Imagem deve ter no máximo 450px de altura</strong> 
@@ -284,11 +284,11 @@ $linha = mysqli_num_rows($sql);
                                         <fieldset>
                                             <legend>Opções</legend>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cat" value="0" checked> Imagem Normal
+                                                <input class="form-check-input" type="radio" name="cat" value="0" checked> Imagem Normal (Aparecerá na Galeria)
                                             </div>
                                            
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cat" value="1"> Imagem Principal
+                                                <input class="form-check-input" type="radio" name="cat" value="1"> Imagem Principal (Aparecerá na tela principal)
                                             </div>
                                             <br>
                                             <br>
@@ -296,6 +296,9 @@ $linha = mysqli_num_rows($sql);
                                         <h6 class="my-5">OBS: A opção "Imagem Principal" só deve ser marcada para
                                             imagens que devam aparecer na tela principal. Não será exibida na aba
                                             Galeria
+                                        </h6>
+                                        <br>
+                                        <h6 class="my-5">OBS: A altura desta imagem deve ser no máximo 450px
                                         </h6>
                                         <br>
                                         <?php
