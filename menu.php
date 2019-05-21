@@ -73,10 +73,14 @@
                     <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Cursos</a>
 
                     <div class="dropdown-menu">
-                        <a href="./infor.php" class="dropdown-item">Informática</a>
-                        <a href="./cont.php" class="dropdown-item">Contabilidade</a>
-                        <a href="./secret.php" class="dropdown-item">Secretariado</a>
+                        <!--<a href="./infor.php" class="dropdown-item">Informática</a>-->
+                        <a href="./cursos.php?curso=1" class="dropdown-item">Informática</a>
+                        <!--<a href="./cont.php" class="dropdown-item">Contabilidade</a>-->
+                        <a href="./cursos.php?curso=2" class="dropdown-item">Contabilidade</a>
+                        <!--<a href="./secret.php" class="dropdown-item">Secretariado</a>-->
+                        <a href="./cursos.php?curso=3" class="dropdown-item">Secretariado</a>
                         <a href="#" class="dropdown-item">Informática Integrado</a>
+                        <!--<a href="./cursos.php?curso=4" class="dropdown-item">Informática Integrado</a>-->
                     </div>
                 </li>
                 

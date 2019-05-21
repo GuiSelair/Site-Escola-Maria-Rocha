@@ -118,11 +118,11 @@ $linha = mysqli_num_rows($sql);
 
 <body>
 
-<div class="wrapper">
+<div class="wrapper ">
 
 <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
 
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper ">
 
         <div class="logo">
 
@@ -132,7 +132,7 @@ $linha = mysqli_num_rows($sql);
 
         </div>
 
-        <ul class="nav">
+        <ul class="nav ">
 
             <li>
 
@@ -161,9 +161,22 @@ $linha = mysqli_num_rows($sql);
                 <a href="../editor/publicar.php">
 
                     <i class="pe-7s-pen"></i>
-                    <p>Publicar</p>
+                    <p>Publicar notícia</p>
 
                 </a>
+
+            </li>
+
+            <li>
+
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="pe-7s-pen"></i>Editar página cursos</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Alguma ação</a>
+                        <a class="dropdown-item" href="#">Outra ação</a>
+                        <a class="dropdown-item" href="#">Alguma coisa aqui</a>
+                    </div>
+                </div>
 
             </li>
 

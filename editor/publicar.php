@@ -3,7 +3,7 @@
 include_once("../conexao/conexao.php");
 include_once("../conexao/config.php");
 include_once("../conexao/function.php");
-include "../wideimage/lib/WideImage.php";
+
 
 session_start();
 

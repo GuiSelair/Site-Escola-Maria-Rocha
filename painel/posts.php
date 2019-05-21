@@ -87,7 +87,18 @@ $con = mysqli_query(DBConecta(),$consulta);
                 <a href="../editor/publicar.php">
 
                     <i class="pe-7s-pen"></i>
-                    <p>Publicar</p>
+                    <p>Publicar notícia</p>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="editarCursos.php">
+
+                    <i class="pe-7s-pen"></i>
+                    <p>Editar página cursos</p>
 
                 </a>
 

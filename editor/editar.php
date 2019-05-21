@@ -84,8 +84,8 @@ if (isset($_POST['atualizar'])) {
                         <p><input type="text" name="ntitulo" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php echo $row['titulo'] ?>"></p>
                         <p><textarea class="form-control" name="ndescrição" id="summernote"><?php echo $row['descricao'] ?></textarea>
                         <p></p>
-                        <button type="submit" class="btn btn-success btn-block" name="atualizar">Atualizar Publicação</button>
-                        <a href="../painel/painel.php" class="btn btn-block btn-warning">Voltar ao Painel de Controle</a>
+                        <button type="submit" class="btn btn-primary btn-block" name="atualizar">Atualizar Publicação</button>
+                        <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao Painel de Controle</a>
 
                     </form>
 
@@ -120,7 +120,6 @@ if (isset($_POST['atualizar'])) {
                 var content = $('textarea[name="descrição"]').html($('#summernote').code());
             }
         </script>
-        <script src="../geraHTML.php"></script>
         <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
         <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="../painel/componentes/js/painel-admin.js"></script>

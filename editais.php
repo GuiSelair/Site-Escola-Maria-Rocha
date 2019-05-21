@@ -7,7 +7,7 @@
     include_once("conexao/function.php");
 
     $noticesbyPages = 6;
-    $pagina = intval($_GET['pagina']);
+    $pagina = intval($_GET['pagina']); //Pega um valor inteiro
     $beginningPage = $pagina;
     
     if ($pagina != 0)

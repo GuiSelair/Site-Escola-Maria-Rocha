@@ -19,7 +19,7 @@
         </head>
         <body>
             <?php include('menu.php'); ?>
-            <div class='container text-center'>
+            <div class='container text-center my-5'>
                 <h3 class='display-4'>Classificados CONTABILIDADE</h3>
                 <img src='...' class='img-fluid my-4'>
                 <hr style='border-color: #354698; '>
