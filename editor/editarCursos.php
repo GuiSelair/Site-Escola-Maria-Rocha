@@ -109,6 +109,9 @@ if (isset($_POST['atualizaRadio']){
                             <div class="form-check ml-5">
                                 <input class="form-check-input" type="radio" name="opcao" value="gradeCurricular"> Grade Curricular
                             </div>
+                            <div class="form-check ml-5">
+                                <input class="form-check-input" type="radio" name="opcao" value="criteriosAvaliacao"> Criterios de Avaliação
+                            </div>
                             <button type="submit" class="btn btn-dark btn-sm" name="atualizaRadio">Atualizar opções</button>
                         </fieldset>             
                         <p><textarea class="form-control" name="ndescrição" id="summernote"><?php echo $row[$opcao] ?></textarea>
