@@ -11,29 +11,40 @@ if (!isset($_SESSION{'Logado'})) {
     session_destroy();
 }
 
+$editar = $_GET['edit'];
 
-if (isset($_GET['edit'])) {
-
-    $id = $_GET['edit'];
-    $res = mysqli_query(DBConecta(), "SELECT * FROM mr_posts WHERE id = '$id' ");
-    $row = mysqli_fetch_array($res);
-
+switch ($editar){
+    case '1':
+        $tabela = "cursoinformatica";
+        break;
+    case '2':
+        $tabela = "cursocontabilidade";
+        break;
+    case '3':
+        $tabela = "cursosecretariado";
+        break;
+    default:
+        break;
 }
+
+$sql_code = "SELECT * FROM '$tabela';";
+$res = mysqli_query(DBConecta(), $sql_code);
+$row = mysqli_fetch_array($res);
 
 if (isset($_POST['atualizar'])) {
     $conn = DBConecta();
-
-    $ntitulo = $_POST['ntitulo'];
     $ndescricao = $_POST['ndescrição'];
-    $id =  $_GET['edit'];
-
-    $up = mysqli_query($conn, "UPDATE mr_posts SET titulo = '$ntitulo', descricao = '$ndescricao' WHERE id = '$id' ") or die(mysqli_error($conn));
+    
+    $sql_code1 = "UPDATE '$tabela' SET '$opcao' = '$ndescricao';";
+    $up = mysqli_query($conn, $sql_code1);
 
     if ($up) {
         echo "<script>alert('Publicação atualizada com Sucesso!')</script>";
         header("Location: ../painel/painel.php");
     }
-    
+}
+if (isset($_POST['atualizaRadio']){
+    $opcao = $_POST['opcao'];
 }
 
 
@@ -81,10 +92,26 @@ if (isset($_POST['atualizar'])) {
                 <div class="col-12">
 
                     <form action="" method="POST" enctype="multipart/form-data" id="postForm">
-
-                        <p><input type="text" name="ntitulo" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php echo $row['titulo'] ?>"></p>
-                        <p><textarea class="form-control" name="ndescrição" id="summernote"><?php echo $row['descricao'] ?></textarea>
-                        <p></p>
+                        
+                        <p><input type="text" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php echo $opcao ?>"></p>
+                        <fieldset class="my-3">
+                            <h6>Marque a opção que deseja atualizar</h6>
+                            <hr />
+                            <div class="form-check ml-5">
+                                <input class="form-check-input" type="radio" name="opcao" value="perfilConclusao" checked> Perfil de Formação Profissional
+                            </div>
+                            <div class="form-check ml-5">
+                                <input class="form-check-input" type="radio" name="opcao" value="objetivoCurso"> Objetivos do Curso
+                            </div>
+                            <div class="form-check ml-5">
+                                <input class="form-check-input" type="radio" name="opcao" value="estagio"> Estágio
+                            </div>
+                            <div class="form-check ml-5">
+                                <input class="form-check-input" type="radio" name="opcao" value="gradeCurricular"> Grade Curricular
+                            </div>
+                            <button type="submit" class="btn btn-dark btn-sm" name="atualizaRadio">Atualizar opções</button>
+                        </fieldset>             
+                        <p><textarea class="form-control" name="ndescrição" id="summernote"><?php echo $row[$opcao] ?></textarea>
                         <button type="submit" class="btn btn-primary btn-block" name="atualizar">Atualizar Publicação</button>
                         <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao Painel de Controle</a>
 
