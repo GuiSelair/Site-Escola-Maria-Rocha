@@ -48,104 +48,113 @@ $con = mysqli_query(DBConecta(),$consulta);
 
 <body>
 
-    <div class="wrapper">
+<div class="wrapper ">
 
-        <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
+<div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
 
-            <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper ">
 
-                <div class="logo">
+        <div class="logo">
 
-                    <a href="../index.php" class="simple-text">
-                        Maria Rocha
-                    </a>
-
-                </div>
-
-                <ul class="nav">
-
-                    <li class="active">
-
-                        <a href="painel.php">
-
-                            <i class="pe-7s-graph"></i>
-                            <p>Painel de controle</p>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="posts.php">
-
-                            <i class="pe-7s-pin"></i>
-                            <p>Posts</p>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="../editor/publicar.php">
-
-                            <i class="pe-7s-pen"></i>
-                            <p>Publicar notícia</p>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="editarCursos.php">
-
-                            <i class="pe-7s-pen"></i>
-                            <p>Editar página cursos</p>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="uploadgal.php">
-
-                            <i class="pe-7s-cloud-upload"></i>
-                            <p>Upload de Imagens</p>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="usuario.php">
-
-                            <i class="pe-7s-user"></i>
-                            <p>Criar Usuário</p>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="../index.php">
-
-                            <i class="pe-7s-home"></i>
-                            <p>Pagina Inicial</p>
-
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </div>
+            <a href="../index.php" class="simple-text">
+                Maria Rocha
+            </a>
 
         </div>
+
+        <ul class="nav ">
+
+            <li class="active">
+
+                <a href="painel.php">
+
+                    <i class="pe-7s-graph"></i>
+                    <p>Painel de controle</p>
+
+                </a>
+
+            </li>
+
+            <li >
+
+                <a href="posts.php">
+
+                    <i class="pe-7s-pin"></i>
+                    <p>Posts</p>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="../editor/publicar.php">
+
+                    <i class="pe-7s-pen"></i>
+                    <p>Publicar notícia</p>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="pe-7s-pen"></i>
+                    <p>Editar página cursos</p>
+                </a>
+                <ul class="collapse list-unstyled text-center" id="homeSubmenu">
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=1">Informática</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=2">Contabilidade</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=3">Secretariado</a>
+                    </li>
+                </ul>
+
+            </li>
+
+            <li>
+
+                <a href="uploadgal.php">
+
+                    <i class="pe-7s-cloud-upload"></i>
+                    <p>Upload de Imagens</p>
+
+                </a>
+
+            </li>
+
+            <li >
+
+                <a href="usuario.php">
+
+                    <i class="pe-7s-user"></i>
+                    <p>Criar Usuário</p>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="../index.php">
+
+                    <i class="pe-7s-home"></i>
+                    <p>Pagina Inicial</p>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
 
         <div class="main-panel">
 

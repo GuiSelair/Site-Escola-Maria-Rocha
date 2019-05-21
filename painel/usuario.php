@@ -49,11 +49,11 @@ if(isset($_POST['criar'])) {
     </head>
     <body>
 
-    <div class="wrapper">
+    <div class="wrapper ">
 
 <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
 
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper ">
 
         <div class="logo">
 
@@ -63,7 +63,7 @@ if(isset($_POST['criar'])) {
 
         </div>
 
-        <ul class="nav">
+        <ul class="nav ">
 
             <li>
 
@@ -76,7 +76,7 @@ if(isset($_POST['criar'])) {
 
             </li>
 
-            <li>
+            <li >
 
                 <a href="posts.php">
 
@@ -100,12 +100,21 @@ if(isset($_POST['criar'])) {
 
             <li>
 
-                <a href="editarCursos.php">
-
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <i class="pe-7s-pen"></i>
                     <p>Editar página cursos</p>
-
                 </a>
+                <ul class="collapse list-unstyled text-center" id="homeSubmenu">
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=1">Informática</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=2">Contabilidade</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=3">Secretariado</a>
+                    </li>
+                </ul>
 
             </li>
 
@@ -147,6 +156,7 @@ if(isset($_POST['criar'])) {
     </div>
 
 </div>
+
 
             <div class="main-panel">
 

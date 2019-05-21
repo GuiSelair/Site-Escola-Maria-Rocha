@@ -169,14 +169,21 @@ $linha = mysqli_num_rows($sql);
 
             <li>
 
-                <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="pe-7s-pen"></i>Editar página cursos</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Alguma ação</a>
-                        <a class="dropdown-item" href="#">Outra ação</a>
-                        <a class="dropdown-item" href="#">Alguma coisa aqui</a>
-                    </div>
-                </div>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="pe-7s-pen"></i>
+                    <p>Editar página cursos</p>
+                </a>
+                <ul class="collapse list-unstyled text-center" id="homeSubmenu">
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=1">Informática</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=2">Contabilidade</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=3">Secretariado</a>
+                    </li>
+                </ul>
 
             </li>
 

@@ -44,11 +44,11 @@ $con = mysqli_query(DBConecta(),$consulta);
 
 <body>
 
-<div class="wrapper">
+<div class="wrapper ">
 
 <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
 
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper ">
 
         <div class="logo">
 
@@ -58,7 +58,7 @@ $con = mysqli_query(DBConecta(),$consulta);
 
         </div>
 
-        <ul class="nav">
+        <ul class="nav ">
 
             <li>
 
@@ -95,12 +95,21 @@ $con = mysqli_query(DBConecta(),$consulta);
 
             <li>
 
-                <a href="editarCursos.php">
-
-                    <i class="pe-7s-pen"></i>
-                    <p>Editar página cursos</p>
-
-                </a>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="pe-7s-pen"></i>
+                        <p>Editar página cursos</p>
+                </a>                
+                <ul class="collapse list-unstyled text-center" id="homeSubmenu">
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=1">Informática</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=2">Contabilidade</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=3">Secretariado</a>
+                    </li>
+                </ul>
 
             </li>
 
@@ -115,7 +124,7 @@ $con = mysqli_query(DBConecta(),$consulta);
 
             </li>
 
-            <li>
+            <li >
 
                 <a href="usuario.php">
 
