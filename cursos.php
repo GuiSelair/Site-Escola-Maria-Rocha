@@ -8,13 +8,13 @@ include_once("conexao/function.php");
 
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
-
+    // Faz login caso seja selecionado
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
 
+    // Faz UPDATE no banco de dados
     $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-
     if ($conect) {
         $_SESSION['Logado'] = true;
         $_SESSION["user"] = $login;
@@ -36,29 +36,26 @@ switch ($curso) {
         $icon = "class= 'fa fa-laptop mx-2'";
         $tec = "Informática";
         $sql_code = "SELECT * FROM cursoinformatica;";
-        $sql = mysqli_query(DBConecta(), $sql_code);
-        $results = mysqli_fetch_assoc($sql);
         break;
     case '2':
         $icon = "class= 'fa fa-calculator mx-2'";
         $tec = "Contabilidade";
         $sql_code = "SELECT * FROM cursocontabilidade;";
-        $sql = mysqli_query(DBConecta(), $sql_code);
-        $results = mysqli_fetch_assoc($sql);
         break;
     case '3':
         $icon = "class= 'fa fa-book mx-2'";
         $tec = "Secretariado";
         $sql_code = "SELECT * FROM cursosecretariado;";
-        $sql = mysqli_query(DBConecta(), $sql_code);
-        $results = mysqli_fetch_assoc($sql);
         break;    
     default:
         break;
 }
 
-
+// Após a sair do switch com o sql_code feito, realizada a pesquisa no Banco de Dados
+$sql = mysqli_query(DBConecta(), $sql_code);
+$results = mysqli_fetch_assoc($sql);
 ?>
+
 <!doctype html>
 <html lang="pt-br">
 

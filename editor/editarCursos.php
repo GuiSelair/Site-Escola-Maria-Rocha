@@ -10,37 +10,35 @@ if (!isset($_SESSION{'Logado'})) {
     header("location: ../index.php");
     session_destroy();
 }
-/*
+
 if (isset($_GET['edit'])){
     $editar = $_GET['edit'];
-}
-*/
 
+    switch ($editar){
+        case '1':
+            $tabela = "cursoinformatica";
+            break;
+        case '2':
+            $tabela = "cursocontabilidade";
+            break;
+        case '3':
+            $tabela = "cursosecretariado";
+            break;
+        default:
+            break;
 
-if (isset($_GET['opcao']) && isset($_GET['cursos'])){
-    $opcao = $_GET['opcao'];
-    $tabela = $_GET['cursos'];
-}
-else{
-    $opcao = "";
-    $tabela = "cursoinformatica";
-}
-
-
-$sql_code = "SELECT * FROM $tabela;";
-$res = mysqli_query(DBConecta(), $sql_code);
-
-$linhas = mysqli_num_rows($res);
-if ($linhas > 0){
-    $row = mysqli_fetch_array($res);
+    $sql_code = "SELECT * FROM $tabela;";
+    $res = mysqli_query(DBConecta(), $sql_code);
+    $linhas = mysqli_num_rows($res);
+    if ($linhas > 0){
+        $row = mysqli_fetch_array($res);
+    }
 }
 
 $opcao1 = var_dump($_GET);
 echo $tabela;
 
 if (isset($_POST['atualizar'])) {
-    $opcao = $_GET['opcao'];
-    $tabela = $_GET['cursos'];
     $conn = DBConecta();
     $ndescricao = $_POST['ndescrição'];
     
@@ -51,12 +49,9 @@ if (isset($_POST['atualizar'])) {
 
     if ($up) {
         echo "<script>alert('Publicação atualizada com Sucesso!')</script>";
-        //header("Location: ../painel/painel.php");
+        header("Location: ../painel/painel.php");
     }
 }
-//$opcao = "";
-
-
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +78,6 @@ if (isset($_POST['atualizar'])) {
         <script src="dist/summernote-bs4.min.js"></script>
     </head>
     <body>
-
         <div class="container my-5">
 
             <div class="row">
@@ -100,7 +94,7 @@ if (isset($_POST['atualizar'])) {
 
                 <div class="col-12">
 
-                    <form action="./editarCursos.php" method="POST" enctype="multipart/form-data" id="postForm">
+                    <form action="" method="POST" enctype="multipart/form-data" id="postForm">
                         
                         <p><input type="text" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php 
                             switch ($opcao) {
@@ -120,18 +114,41 @@ if (isset($_POST['atualizar'])) {
                                     break;
                             }
                         ?>"></p>
-                        <?php include "./pegaRadio.php"; ?>            
+                        <fieldset class="my-3">
+                            <h6>Marque a opção que deseja atualizar</h6>
+                            <hr />
+                            <form action="./editarCursos.php" method="POST">
+                                <div class="form-check ml-5">
+                                    <input class="form-check-input" type="radio" name="opcao" value="perfilConclusao"
+                                        <?php echo ($opcao == "perfilConclusao") ? "checked" : null; ?> onclick="atualiza('perfilConclusao')"> <?php echo $opcao; ?>Perfil de
+                                    Formação Profissional
+                                </div>
+                                <div class="form-check ml-5">
+                                    <input class="form-check-input" type="radio" name="opcao" value="objetivoCurso"
+                                        <?php echo ($opcao == "objetivoCurso") ? "checked" : null; ?> onclick="atualiza('objetivoCurso')"> Objetivos do Curso
+                                </div>
+                                <div class="form-check ml-5">
+                                    <input class="form-check-input" type="radio" name="opcao" value="estagio"
+                                        <?php echo ($opcao == "estagio") ? "checked" : null; ?> onclick="atualiza('estagio')"> Estágio
+                                </div>
+                                <div class="form-check ml-5">
+                                    <input class="form-check-input" type="radio" name="opcao" value="gradeCurricular"
+                                        <?php echo ($opcao == "gradeCurricular") ? "checked" : null; ?> onclick="atualiza('gradeCurricular')"> Grade Curricular
+                                </div>
+                                <div class="form-check ml-5">
+                                    <input class="form-check-input" type="radio" name="opcao" value="criteriosAvaliacao"
+                                        <?php echo ($opcao == "criteriosAvaliacao") ? "checked" : null; ?> onclick="atualiza('criteriosAvaliacao')"> Criterios de Avaliação
+                                </div>
+                            </form>
+                        </fieldset>    
+                        <script>
+                            function atualiza(value){
+                                <?php $opcao = "<script>document.write(value)</script>" ?>
+                                document.getElementByClassName("ndescrição").innerHTML = <?php $row[$opcao] ?>; 
+                            }
+                        </script>
                         <hr />
-                    <form action="./editarCursos.php" method="POST" enctype="multipart/form-data" id="postForm">
-                        <p><textarea class="form-control" name="ndescrição" id="summernote"><?php 
-                            if ($linhas > 0){
-                                if ($opcao == ""){
-                                    echo "";
-                                }else{
-                                    echo $row[$opcao];
-                                }
-                            }              
-                        ?></textarea>
+                        <p><textarea class="form-control" name="ndescrição" id="summernote"></textarea>
                         <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
                         <a href="../painel/painel.php" class="btn btn-block btn-dark" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
 
