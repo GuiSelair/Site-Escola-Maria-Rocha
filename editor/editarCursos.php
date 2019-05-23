@@ -26,7 +26,7 @@ if (isset($_GET['edit'])){
             break;
         default:
             break;
-
+    }
     $sql_code = "SELECT * FROM $tabela;";
     $res = mysqli_query(DBConecta(), $sql_code);
     $linhas = mysqli_num_rows($res);
@@ -35,13 +35,11 @@ if (isset($_GET['edit'])){
     }
 }
 
-$opcao1 = var_dump($_GET);
-echo $tabela;
 
 if (isset($_POST['atualizar'])) {
     $conn = DBConecta();
     $ndescricao = $_POST['ndescrição'];
-    
+    $editar = $_GET['edit'];
     $sql_code1 = "UPDATE $tabela SET $opcao = '$ndescricao';";
     echo $sql_code;
     echo $sql_code1;
@@ -95,60 +93,46 @@ if (isset($_POST['atualizar'])) {
                 <div class="col-12">
 
                     <form action="" method="POST" enctype="multipart/form-data" id="postForm">
-                        
-                        <p><input type="text" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php 
-                            switch ($opcao) {
-                                case "objetivoCurso":
-                                    echo "Objetivos do Curso";
-                                    break;
-                                case "perfilConclusao":
-                                    echo "Perfil de Formação Profissional";
-                                    break;
-                                case "estagio":
-                                    echo "Estágio";
-                                    break;
-                                case "gradeCurricular";
-                                    echo "Grade Curricular";
-                                    break;
-                                default:
-                                    break;
-                            }
-                        ?>"></p>
+
+                        <p id="ntitulo"><input type="text"  placeholder="Titulo" class="form-control"></p>
                         <fieldset class="my-3">
                             <h6>Marque a opção que deseja atualizar</h6>
                             <hr />
                             <form action="./editarCursos.php" method="POST">
                                 <div class="form-check ml-5">
                                     <input class="form-check-input" type="radio" name="opcao" value="perfilConclusao"
-                                        <?php echo ($opcao == "perfilConclusao") ? "checked" : null; ?> onclick="atualiza('perfilConclusao')"> <?php echo $opcao; ?>Perfil de
+                                     onclick="atualiza('perfilConclusao')">Perfil de
                                     Formação Profissional
                                 </div>
                                 <div class="form-check ml-5">
                                     <input class="form-check-input" type="radio" name="opcao" value="objetivoCurso"
-                                        <?php echo ($opcao == "objetivoCurso") ? "checked" : null; ?> onclick="atualiza('objetivoCurso')"> Objetivos do Curso
+                                    onclick="atualiza('objetivoCurso')"> Objetivos do Curso
                                 </div>
                                 <div class="form-check ml-5">
                                     <input class="form-check-input" type="radio" name="opcao" value="estagio"
-                                        <?php echo ($opcao == "estagio") ? "checked" : null; ?> onclick="atualiza('estagio')"> Estágio
+                                    onclick="atualiza('estagio')"> Estágio
                                 </div>
                                 <div class="form-check ml-5">
                                     <input class="form-check-input" type="radio" name="opcao" value="gradeCurricular"
-                                        <?php echo ($opcao == "gradeCurricular") ? "checked" : null; ?> onclick="atualiza('gradeCurricular')"> Grade Curricular
+                                    onclick="atualiza('gradeCurricular')"> Grade Curricular
                                 </div>
                                 <div class="form-check ml-5">
                                     <input class="form-check-input" type="radio" name="opcao" value="criteriosAvaliacao"
-                                        <?php echo ($opcao == "criteriosAvaliacao") ? "checked" : null; ?> onclick="atualiza('criteriosAvaliacao')"> Criterios de Avaliação
+                                    onclick="atualiza('criteriosAvaliacao')"> Criterios de Avaliação
                                 </div>
                             </form>
-                        </fieldset>    
-                        <script>
+                        </fieldset>
+                        <script type="text/javascript">
                             function atualiza(value){
-                                <?php $opcao = "<script>document.write(value)</script>" ?>
-                                document.getElementByClassName("ndescrição").innerHTML = <?php $row[$opcao] ?>; 
+                                if (value == "objetivoCurso"){
+                                  ntitulo = 1;
+                                }
+                                document.getElementById("writeBox").innerHTML = value;
+                                document.getElementById("ntitulo").innerHTML = ntitulo;
                             }
                         </script>
                         <hr />
-                        <p><textarea class="form-control" name="ndescrição" id="summernote"></textarea>
+                        <textarea class="form-control" name="ndescrição" id="summernote"><p id="writeBox"></p></textarea>
                         <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
                         <a href="../painel/painel.php" class="btn btn-block btn-dark" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
 
@@ -174,9 +158,9 @@ if (isset($_POST['atualizar'])) {
                         ['insert', ['link', 'picture', 'hr']],
                         ['view', ['fullscreen', 'codeview']],
                     ],
-                    height: 300,                
-                    minHeight: null,             
-                    maxHeight: null,             
+                    height: 300,
+                    minHeight: null,
+                    maxHeight: null,
                     focus: true,
                     lang: 'pt-BR'
                 });

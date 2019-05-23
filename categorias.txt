@@ -19,3 +19,26 @@ style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-
 style="height: 5rem; width: 15rem; display: flex; justify-content: center;align-items: center;"
 
 <p class='card-footer d-none d-lg-block'>Postado em ".$dados['data']."</p>
+
+<script>
+
+    function atualiza(value){
+        document.getElementById("aqui").innerHTML = value;
+        document.getElementById("ntitulo").innerHTML = atualizaTitulo(value)
+    }
+
+    function atualizaTitulo(value){
+        switch (value){:
+            case "objetivoCurso":
+                return "Objetivos do Curso";
+            case "perfilConclusao":
+                return "Perfil de Formação Profissional"
+            case "estagio":
+                return "Estágio";
+            case "gradeCurricular";
+                return "Grade Curricular";
+            default:
+              break;
+        }
+    }
+</script>
