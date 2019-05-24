@@ -101,7 +101,7 @@ if(isset($_POST['criar'])) {
             <li>
 
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="pe-7s-pen"></i>
+                    <i class="pe-7s-id"></i>
                     <p>Editar página cursos</p>
                 </a>
                 <ul class="collapse list-unstyled text-center" id="homeSubmenu">
@@ -227,7 +227,7 @@ if(isset($_POST['criar'])) {
 
                                             <p><input name="criar" type="submit" value="Criar Usuário" class="btn btn-outline-primary"></p>
 
-                                        </form>  
+                                        </form>
 
                                     </div>
 
@@ -263,7 +263,7 @@ if(isset($_POST['criar'])) {
                                             Publicar
                                         </a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="uploadgal.php">
                                             Upload Galeria

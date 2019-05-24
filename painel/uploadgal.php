@@ -14,16 +14,16 @@ if (!isset($_SESSION['Logado'])) {
 $diretorio = "../Galeria/";
 
 if (isset($_POST['postar'])) {
-    
+
     $foto = $_FILES['arquivo'];
     $dimensoes = getimagesize($foto['tmp_name']);
     $altura = 450;
-    
+
     if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
         echo "Pasta $diretorio nao existe";
     }
     else {
-        if (isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) { 
+        if (isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) {
             $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
             $nome = $_FILES[ 'arquivo' ][ 'name' ];
 
@@ -32,19 +32,19 @@ if (isset($_POST['postar'])) {
 
             // Converte a extensão para minúsculo
             $extensao = strtolower ( $extensao );
-            
+
             if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
                 $novoNome = uniqid ( time () ) . '.' . $extensao;
-                
+
                 // Concatena a pasta com o nome
                 $destino = '../Galeria/' . $novoNome;
                 $cat = $_POST["cat"];
 
                 // Verifica se a imagem tem mais que a altura máxima.
-                if ($cat == 1 && $dimensoes[1] >= $altura){ 
+                if ($cat == 1 && $dimensoes[1] >= $altura){
                     echo "<div class='alert alert-danger alert-dismissable'>
                       <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                                <strong>Imagem deve ter no máximo 450px de altura</strong> 
+                                <strong>Imagem deve ter no máximo 450px de altura</strong>
                                 </div>
                                 ";
                 }
@@ -58,12 +58,12 @@ if (isset($_POST['postar'])) {
             <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
                         <strong>Upload efetuado com sucesso!</strong>
                         </div>
-                        ";                   
+                        ";
                     }
                     else
                         echo "<div class='alert alert-danger alert-dismissable'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                        <strong>Erro ao fazer Upload!</strong> 
+                        <strong>Erro ao fazer Upload!</strong>
                         </div>
                         ";
                 }
@@ -71,14 +71,14 @@ if (isset($_POST['postar'])) {
             else
                 echo "<div class='alert alert-danger alert-dismissable'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                    <strong>Você só pode fazer upload de imagens</strong> 
+                    <strong>Você só pode fazer upload de imagens</strong>
                     </div>
                     ";
         }
         else
             echo "<div class='alert alert-danger alert-dismissable'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                    <strong>Você não selecionou nenhuma imagem</strong> 
+                    <strong>Você não selecionou nenhuma imagem</strong>
                     </div>
                     ";
 
@@ -170,7 +170,7 @@ $linha = mysqli_num_rows($sql);
             <li>
 
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="pe-7s-pen"></i>
+                    <i class="pe-7s-id"></i>
                     <p>Editar página cursos</p>
                 </a>
                 <ul class="collapse list-unstyled text-center" id="homeSubmenu">
@@ -286,7 +286,7 @@ $linha = mysqli_num_rows($sql);
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="cat" value="0" checked> Imagem Normal (Aparecerá na Galeria)
                                             </div>
-                                           
+
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="cat" value="1"> Imagem Principal (Aparecerá na tela principal)
                                             </div>
@@ -321,8 +321,8 @@ $linha = mysqli_num_rows($sql);
                                                 ?>
                                             </div>
                                         <br>
-                                        </fieldset>                                   
-                                        
+                                        </fieldset>
+
                                         <button type="submit" class="btn btn-primary btn-block mt-5"
                                             name="postar" href="../painel/painel.php">Enviar
                                             Imagem</button>

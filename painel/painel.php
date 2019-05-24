@@ -7,7 +7,7 @@ if (!isset($_SESSION['Logado'])) {
     session_destroy();
 }
 
-/*LER REGISTROS*/ 
+/*LER REGISTROS*/
 
 include_once("../conexao/conexao.php");
 include_once("../conexao/config.php");
@@ -100,7 +100,7 @@ $con = mysqli_query(DBConecta(),$consulta);
             <li>
 
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="pe-7s-pen"></i>
+                    <i class="pe-7s-id"></i>
                     <p>Editar página cursos</p>
                 </a>
                 <ul class="collapse list-unstyled text-center" id="homeSubmenu">
@@ -220,7 +220,7 @@ $con = mysqli_query(DBConecta(),$consulta);
                                             </thead>
                                             <?php while($row = $con -> fetch_array()){ ?>
                                             <tr>
-                                                <td><?php 
+                                                <td><?php
                                             if (strlen($row['titulo']) > 60){
                                                 $tit = substr($row['titulo'], 0, 60).' ...';
                                                 echo $tit;

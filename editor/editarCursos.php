@@ -10,7 +10,7 @@ if (!isset($_SESSION{'Logado'})) {
     header("location: ../index.php");
     session_destroy();
 }
-
+/*
 if (isset($_GET['edit'])){
     $editar = $_GET['edit'];
 
@@ -34,20 +34,22 @@ if (isset($_GET['edit'])){
         $row = mysqli_fetch_array($res);
     }
 }
-
+*/
 
 if (isset($_POST['atualizar'])) {
-    $conn = DBConecta();
+    $tabela = $_POST['tabela'];
+    $coluna = $_POST['coluna'];
     $ndescricao = $_POST['ndescrição'];
-    $editar = $_GET['edit'];
-    $sql_code1 = "UPDATE $tabela SET $opcao = '$ndescricao';";
+    $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
     echo $sql_code;
-    echo $sql_code1;
-    $up = mysqli_query($conn, $sql_code1);
+    $up = mysqli_query(DBConecta(), $sql_code);
 
     if ($up) {
         echo "<script>alert('Publicação atualizada com Sucesso!')</script>";
         header("Location: ../painel/painel.php");
+    }
+    else{
+      echo "<script>alert('ERRO')</script>";
     }
 }
 ?>
@@ -70,8 +72,42 @@ if (isset($_POST['atualizar'])) {
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
-
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+        <script type="text/javascript">
+          $(document).ready(function(){
+              $('#tabela').on('change',function(){
+                  var nameTabela = $(this).val();
+                  if(nameTabela != ""){
+                      $('#coluna').html('<option value="">Selecione um tópico abaixo</option> <option value="objetivoCurso">Objetivos do Curso</option> <option value="criteriosAvaliacao">Criterios de Avaliação</option> <option value="estagio">Estagio</option> <option value="perfilConclusao">Perfil de Formação Profissional</option> <option value="gradeCurricular">Grade Curricular</option>');
+
+                  }else{
+                      $('#coluna').html('<option value="">Selecione o Curso primeiro</option>');
+                      $('#writeBox').html('<p>Selecione o tópico a editar...</p>');
+                  }
+              });
+
+              $('#coluna').on('change',function(){
+                  let tabela = document.getElementById("tabela").value;
+                  var coluna_ID = $(this).val();
+                  $('#summernote').summernote('reset');
+                  if(coluna_ID){
+                      $.ajax({
+                          type:'POST',
+                          url:'getDados.php',
+                          data:'tabela_ID='+tabela+'&coluna_ID='+coluna_ID,
+                          success:function(html){
+                              $('#summernote').summernote("pasteHTML", html);
+
+                          }
+                      });
+                  }else{
+                      $('#city').html('<p>Selecione o Tópicos para editar...</p>');
+                  }
+              });
+          });
+        </script>
+
         <link rel="stylesheet" href="dist/summernote-bs4.css">
         <script src="dist/summernote-bs4.min.js"></script>
     </head>
@@ -98,42 +134,19 @@ if (isset($_POST['atualizar'])) {
                         <fieldset class="my-3">
                             <h6>Marque a opção que deseja atualizar</h6>
                             <hr />
-                            <form action="./editarCursos.php" method="POST">
-                                <div class="form-check ml-5">
-                                    <input class="form-check-input" type="radio" name="opcao" value="perfilConclusao"
-                                     onclick="atualiza('perfilConclusao')">Perfil de
-                                    Formação Profissional
-                                </div>
-                                <div class="form-check ml-5">
-                                    <input class="form-check-input" type="radio" name="opcao" value="objetivoCurso"
-                                    onclick="atualiza('objetivoCurso')"> Objetivos do Curso
-                                </div>
-                                <div class="form-check ml-5">
-                                    <input class="form-check-input" type="radio" name="opcao" value="estagio"
-                                    onclick="atualiza('estagio')"> Estágio
-                                </div>
-                                <div class="form-check ml-5">
-                                    <input class="form-check-input" type="radio" name="opcao" value="gradeCurricular"
-                                    onclick="atualiza('gradeCurricular')"> Grade Curricular
-                                </div>
-                                <div class="form-check ml-5">
-                                    <input class="form-check-input" type="radio" name="opcao" value="criteriosAvaliacao"
-                                    onclick="atualiza('criteriosAvaliacao')"> Criterios de Avaliação
-                                </div>
-                            </form>
+                            <select class="" name="tabela" id="tabela">
+                              <option value="">Selecione o curso</option>
+                              <option value="cursoinformatica">Informática</option>
+                              <option value="cursocontabilidade">Contabilidade</option>
+                              <option value="cursosecretariado">Secretariado</option>
+                            </select>
+                            <select class="" name="coluna" id="coluna">
+                              <option value="">Selecione o curso primeiro</option>
+                            </select>
                         </fieldset>
-                        <script type="text/javascript">
-                            function atualiza(value){
-                                if (value == "objetivoCurso"){
-                                  ntitulo = 1;
-                                }
-                                document.getElementById("writeBox").innerHTML = value;
-                                document.getElementById("ntitulo").innerHTML = ntitulo;
-                            }
-                        </script>
                         <hr />
-                        <textarea class="form-control" name="ndescrição" id="summernote"><p id="writeBox"></p></textarea>
-                        <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
+                        <textarea class="form-control" name="ndescrição" id="summernote"></textarea>
+                        <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" id="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
                         <a href="../painel/painel.php" class="btn btn-block btn-dark" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
 
                     </form>
