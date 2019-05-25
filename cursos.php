@@ -46,7 +46,7 @@ switch ($curso) {
         $icon = "class= 'fa fa-book mx-2'";
         $tec = "Secretariado";
         $sql_code = "SELECT * FROM cursosecretariado;";
-        break;    
+        break;
     default:
         break;
 }
@@ -86,53 +86,61 @@ $results = mysqli_fetch_assoc($sql);
     </div>
 
     <div class="container">
+        <?php if ($results['objetivoCurso'] != "<p><br></p>"){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivos do Curso</h5>
                 <hr class="text-left">
-                <?php 
+                <?php
                     echo "<p>".$results['objetivoCurso']."</p>"
                 ?>
             </div>
         </div>
+        <?php } ?>
+        <?php if ($results['criteriosAvaliacao'] != "<p><br></p>"){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Critérios de Avaliação</h5>
                 <hr class="text-left">
-                <?php 
+                <?php
                     echo "<p>".$results['criteriosAvaliacao']."</p>"
                 ?>
             </div>
         </div>
+        <?php } ?>
+        <?php if ($results['estagio'] != "<p><br></p>"){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Estágio</h5>
                 <hr class="text-left">
-                <?php 
+                <?php
                     echo "<p>".$results['estagio']."</p>"
                 ?>
             </div>
         </div>
+        <?php } ?>
+        <?php if ($results['perfilConclusao'] != "<p><br></p>"){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Perfil Profissional de Conclusão</h5>
                 <hr class="text-left">
-                <?php 
+                <?php
                     echo "<p>".$results['perfilConclusao']."</p>"
                 ?>
             </div>
         </div>
+        <?php } ?>
+        <?php if ($results['gradeCurricular'] != "<p><br></p>"){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Grade Curricular</h5>
                 <hr class="text-left">
-                <?php 
+                <?php
                     echo "<p>".$results['gradeCurricular']."</p>"
                 ?>
             </div>
         </div>
-
-
+        <?php } ?>
     </div>
 
     <!--FOOTER-->
