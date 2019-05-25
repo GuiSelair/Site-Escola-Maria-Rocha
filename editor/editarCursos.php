@@ -10,38 +10,21 @@ if (!isset($_SESSION{'Logado'})) {
     header("location: ../index.php");
     session_destroy();
 }
-/*
-if (isset($_GET['edit'])){
-    $editar = $_GET['edit'];
-
-    switch ($editar){
-        case '1':
-            $tabela = "cursoinformatica";
-            break;
-        case '2':
-            $tabela = "cursocontabilidade";
-            break;
-        case '3':
-            $tabela = "cursosecretariado";
-            break;
-        default:
-            break;
-    }
-    $sql_code = "SELECT * FROM $tabela;";
-    $res = mysqli_query(DBConecta(), $sql_code);
-    $linhas = mysqli_num_rows($res);
-    if ($linhas > 0){
-        $row = mysqli_fetch_array($res);
-    }
-}
-*/
 
 if (isset($_POST['atualizar'])) {
     $tabela = $_POST['tabela'];
     $coluna = $_POST['coluna'];
     $ndescricao = $_POST['ndescrição'];
-    $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
-    echo $sql_code;
+    // Verificando se há algum campo na tabela
+    $verifica = mysqli_query(DBConecta(), "SELECT * FROM $tabela");
+    $linhas = mysqli_num_rows($verifica);
+    if ($linhas > 0){
+        $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";    
+    }
+    else{
+        $sql_code = "INSERT INTO $tabela ($coluna) VALUES ('$ndescricao');";
+
+    }
     $up = mysqli_query(DBConecta(), $sql_code);
 
     if ($up) {
@@ -96,9 +79,9 @@ if (isset($_POST['atualizar'])) {
                           type:'POST',
                           url:'getDados.php',
                           data:'tabela_ID='+tabela+'&coluna_ID='+coluna_ID,
-                          success:function(html){
-                              $('#summernote').summernote("pasteHTML", html);
-
+                          success:function(html){    
+            
+                            $('#summernote').summernote("pasteHTML", html);
                           }
                       });
                   }else{
@@ -118,7 +101,7 @@ if (isset($_POST['atualizar'])) {
 
                 <div class="col-12">
 
-                    <h3>EDITAR PUBLICAÇÃO</h3>
+                    <h3>Marque a opção que deseja atualizar</h3>
 
                 </div>
 
@@ -129,21 +112,18 @@ if (isset($_POST['atualizar'])) {
                 <div class="col-12">
 
                     <form action="" method="POST" enctype="multipart/form-data" id="postForm">
-
-                        <p id="ntitulo"><input type="text"  placeholder="Titulo" class="form-control"></p>
-                        <fieldset class="my-3">
-                            <h6>Marque a opção que deseja atualizar</h6>
-                            <hr />
-                            <select class="" name="tabela" id="tabela">
-                              <option value="">Selecione o curso</option>
-                              <option value="cursoinformatica">Informática</option>
-                              <option value="cursocontabilidade">Contabilidade</option>
-                              <option value="cursosecretariado">Secretariado</option>
+                        <hr>
+                        <div class="text-center">
+                            <select class="form-control-inline col-lg-4 p-2" name="tabela" id="tabela">
+                                <option value="">Selecione o curso</option>
+                                <option value="cursoinformatica">Informática</option>
+                                <option value="cursocontabilidade">Contabilidade</option>
+                                <option value="cursosecretariado">Secretariado</option>
                             </select>
-                            <select class="" name="coluna" id="coluna">
-                              <option value="">Selecione o curso primeiro</option>
+                            <select class="form-control-inline col-lg-4 p-2" name="coluna" id="coluna">
+                                <option value="">Selecione o curso primeiro</option>
                             </select>
-                        </fieldset>
+                        </div>
                         <hr />
                         <textarea class="form-control" name="ndescrição" id="summernote"></textarea>
                         <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" id="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
@@ -175,7 +155,7 @@ if (isset($_POST['atualizar'])) {
                     minHeight: null,
                     maxHeight: null,
                     focus: true,
-                    lang: 'pt-BR'
+                    lang: 'pt-BR',
                 });
             });
             var postForm = function() {

@@ -118,196 +118,189 @@ $linha = mysqli_num_rows($sql);
 
 <body>
 
-<div class="wrapper ">
+    <div class="wrapper ">
 
-<div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
+        <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
 
-    <div class="sidebar-wrapper ">
+            <div class="sidebar-wrapper ">
 
-        <div class="logo">
+                <div class="logo">
 
-            <a href="../index.php" class="simple-text">
-                Maria Rocha
-            </a>
+                    <a href="../index.php" class="simple-text">
+                        Maria Rocha
+                    </a>
 
-        </div>
+                </div>
 
-        <ul class="nav ">
+                <ul class="nav ">
 
-            <li>
-
-                <a href="painel.php">
-
-                    <i class="pe-7s-graph"></i>
-                    <p>Painel de controle</p>
-
-                </a>
-
-            </li>
-
-            <li >
-
-                <a href="posts.php">
-
-                    <i class="pe-7s-pin"></i>
-                    <p>Posts</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="../editor/publicar.php">
-
-                    <i class="pe-7s-pen"></i>
-                    <p>Publicar notícia</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="pe-7s-id"></i>
-                    <p>Editar página cursos</p>
-                </a>
-                <ul class="collapse list-unstyled text-center" id="homeSubmenu">
                     <li>
-                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=1">Informática</a>
+
+                        <a href="painel.php">
+
+                            <i class="pe-7s-graph"></i>
+                            <p>Painel de controle</p>
+
+                        </a>
+
                     </li>
+
                     <li>
-                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=2">Contabilidade</a>
+
+                        <a href="posts.php">
+
+                            <i class="pe-7s-pin"></i>
+                            <p>Posts</p>
+
+                        </a>
+
                     </li>
+
                     <li>
-                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=3">Secretariado</a>
+
+                        <a href="../editor/publicar.php">
+
+                            <i class="pe-7s-pen"></i>
+                            <p>Publicar notícia</p>
+
+                        </a>
+
                     </li>
+
+                    <li>
+
+                        <a href="../editor/editarCursos.php">
+
+                            <i class="pe-7s-id"></i>
+                            <p>Editar página cursos</p>
+
+                        </a>
+
+                    </li>
+
+                    <li class="active">
+
+                        <a href="uploadgal.php">
+
+                            <i class="pe-7s-cloud-upload"></i>
+                            <p>Upload de Imagens</p>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="usuario.php">
+
+                            <i class="pe-7s-user"></i>
+                            <p>Criar Usuário</p>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="../index.php">
+
+                            <i class="pe-7s-home"></i>
+                            <p>Pagina Inicial</p>
+
+                        </a>
+
+                    </li>
+
                 </ul>
-
-            </li>
-
-            <li class="active">
-
-                <a href="uploadgal.php">
-
-                    <i class="pe-7s-cloud-upload"></i>
-                    <p>Upload de Imagens</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="usuario.php">
-
-                    <i class="pe-7s-user"></i>
-                    <p>Criar Usuário</p>
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="../index.php">
-
-                    <i class="pe-7s-home"></i>
-                    <p>Pagina Inicial</p>
-
-                </a>
-
-            </li>
-
-        </ul>
-
-    </div>
-
-</div>
-
-    <div class="main-panel">
-
-        <nav class="navbar navbar-default navbar-fixed">
-
-            <div class="container-fluid">
-
-                <div class="navbar-header">
-
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navegação">
-
-                        <span class="sr-only">Mostrar navegação</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-
-                    </button>
-
-                    <a class="navbar-brand" href="#">Painel de Controle</a>
-
-                </div>
-
-                <div class="collapse navbar-collapse">
-
-                </div>
 
             </div>
 
-        </nav>
+        </div>
+
+        <div class="main-panel">
+
+            <nav class="navbar navbar-default navbar-fixed">
+
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navegação">
+
+                            <span class="sr-only">Mostrar navegação</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+
+                        </button>
+
+                        <a class="navbar-brand" href="#">Painel de Controle</a>
+
+                    </div>
+
+                    <div class="collapse navbar-collapse">
+
+                    </div>
+
+                </div>
+
+            </nav>
 
 
-        <div class="content">
+            <div class="content">
 
-            <div class="container-fluid">
+                <div class="container-fluid">
 
-                <div class="row">
+                    <div class="row">
 
-                    <div class="col-sm-12">
+                        <div class="col-sm-12">
 
-                        <div class="card">
+                            <div class="card">
 
-                            <div class="header">
+                                <div class="header">
 
-                                <h4 class="title text">Upload de Imagens</h4>
+                                    <h4 class="title text">Upload de Imagens</h4>
 
-                            </div>
+                                </div>
 
-                            <div class="content">
+                                <div class="content">
 
-                                <div>
+                                    <div>
 
-                                    <form action="" method="POST" enctype="multipart/form-data" id="postForm">
+                                        <form action="" method="POST" enctype="multipart/form-data" id="postForm">
 
-                                        <input class="form-check-input" type="file" name="arquivo" multiple="multiple"
-                                            style="font-size: 15px;" />
-                                        <br><br>
-                                        <fieldset>
-                                            <legend>Opções</legend>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cat" value="0" checked> Imagem Normal (Aparecerá na Galeria)
-                                            </div>
+                                            <input class="form-check-input" type="file" name="arquivo"
+                                                multiple="multiple" style="font-size: 15px;" />
+                                            <br><br>
+                                            <fieldset>
+                                                <legend>Opções</legend>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="cat" value="0"
+                                                        checked> Imagem Normal (Aparecerá na Galeria)
+                                                </div>
 
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cat" value="1"> Imagem Principal (Aparecerá na tela principal)
-                                            </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="cat" value="1">
+                                                    Imagem Principal (Aparecerá na tela principal)
+                                                </div>
+                                                <br>
+                                                <br>
+                                            </fieldset>
+                                            <h6 class="my-5">OBS: A opção "Imagem Principal" só deve ser marcada para
+                                                imagens que devam aparecer na tela principal. Não será exibida na aba
+                                                Galeria
+                                            </h6>
                                             <br>
+                                            <h6 class="my-5">OBS: A altura desta imagem deve ser no máximo 450px
+                                            </h6>
                                             <br>
-                                        </fieldset>
-                                        <h6 class="my-5">OBS: A opção "Imagem Principal" só deve ser marcada para
-                                            imagens que devam aparecer na tela principal. Não será exibida na aba
-                                            Galeria
-                                        </h6>
-                                        <br>
-                                        <h6 class="my-5">OBS: A altura desta imagem deve ser no máximo 450px
-                                        </h6>
-                                        <br>
-                                        <?php
+                                            <?php
                                             if ($linha != 0){
                                         ?>
-                                        <fieldset>
-                                            <legend>Imagens Principais Ativas</legend>
-                                            <div class="container">
-                                                <?php
+                                            <fieldset>
+                                                <legend>Imagens Principais Ativas</legend>
+                                                <div class="container">
+                                                    <?php
                                                     while ($row = mysqli_fetch_assoc($sql)){
                                                         echo "
                                                             <div class='text-center my-5'>
@@ -319,19 +312,21 @@ $linha = mysqli_num_rows($sql);
                                                     }
                                                 }
                                                 ?>
-                                            </div>
-                                        <br>
-                                        </fieldset>
+                                                </div>
+                                                <br>
+                                            </fieldset>
 
-                                        <button type="submit" class="btn btn-primary btn-block mt-5"
-                                            name="postar" href="../painel/painel.php">Enviar
-                                            Imagem</button>
-                                        <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao
-                                            Painel de Controle</a>
+                                            <button type="submit" class="btn btn-primary btn-block mt-5" name="postar"
+                                                href="../painel/painel.php">Enviar
+                                                Imagem</button>
+                                            <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao
+                                                Painel de Controle</a>
 
-                                    </form>
+                                        </form>
 
 
+
+                                    </div>
 
                                 </div>
 
@@ -343,59 +338,57 @@ $linha = mysqli_num_rows($sql);
 
                 </div>
 
+                <footer class="footer">
+
+                    <div class="container-fluid">
+
+                        <nav class="pull-left">
+
+                            <ul>
+                                <li>
+                                    <a href="painel.php">
+                                        Painel
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="posts.php">
+                                        Posts
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="publicar.php">
+                                        Publicar
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        Upload Galeria
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="usuario.php">
+                                        Criar usuário
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </nav>
+                        <p class="copyright pull-right">
+                            &copy; 2019 <a href="../index.php">Maria Rocha</a>
+                        </p>
+
+                    </div>
+
+                </footer>
+
             </div>
 
-            <footer class="footer">
-
-                <div class="container-fluid">
-
-                    <nav class="pull-left">
-
-                        <ul>
-                            <li>
-                                <a href="painel.php">
-                                    Painel
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="posts.php">
-                                    Posts
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="publicar.php">
-                                    Publicar
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#">
-                                    Upload Galeria
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="usuario.php">
-                                    Criar usuário
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </nav>
-                    <p class="copyright pull-right">
-                        &copy; 2019 <a href="../index.php">Maria Rocha</a>
-                    </p>
-
-                </div>
-
-            </footer>
-
         </div>
-
-    </div>
 
     </div>
 

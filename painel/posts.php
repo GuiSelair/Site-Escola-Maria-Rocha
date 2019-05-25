@@ -95,21 +95,12 @@ $con = mysqli_query(DBConecta(),$consulta);
 
             <li>
 
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="pe-7s-id"></i>
-                        <p>Editar página cursos</p>
-                </a>
-                <ul class="collapse list-unstyled text-center" id="homeSubmenu">
-                    <li>
-                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=1">Informática</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=2">Contabilidade</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="../editor/editarCursos.php?edit=3">Secretariado</a>
-                    </li>
-                </ul>
+            <a href="../editor/editarCursos.php">
+
+                <i class="pe-7s-id"></i>
+                <p>Editar página cursos</p>
+
+            </a>
 
             </li>
 
