@@ -78,7 +78,7 @@ $imagem = mysqli_fetch_assoc($sql);
         <div class="row">
             <div class="col-5 mb-3">
                 <?php
-                    echo "<img src=".$imagem['nome']." class='img-fluid my-2' style='max-height: 400px'>"
+                    echo "<img src="./Galeria/$imagem['nome']." class='img-fluid my-2' style='max-height: 400px'>"
                 ?>
             </div>
         </div> 
