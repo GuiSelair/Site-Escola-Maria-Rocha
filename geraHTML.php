@@ -1,69 +1,112 @@
 <?php
-    session_start();
-    include_once("conexao/config.php");
-    include_once("conexao/conexao.php");
-    include_once("conexao/function.php");
 
-    $consulta = "SELECT * FROM mr_posts ORDER BY id DESC LIMIT 1";
-    $pesquisa = mysqli_query(DBConecta(),$consulta);
-    $resultado = mysqli_fetch_assoc($pesquisa);
-    $id = $resultado['id'];
+session_start();
 
-    $consulta = "SELECT * FROM imagens WHERE idPosts = $id";
-    $pesquisa = mysqli_query(DBConecta(),$consulta);
-    $linhas = mysqli_num_rows($pesquisa);
-    $nome = '...';
-    if ($linhas > 0){
-        $imagem = mysqli_fetch_assoc($pesquisa);
-        $nome = '../Galeria/'.$imagem['nome'];
+include_once("conexao/config.php");
+include_once("conexao/conexao.php");
+include_once("conexao/function.php");
+
+if(isset($_POST['entrar'])) {
+    $conn = DBConecta();
+    // Faz login caso seja selecionado
+    $login = mysqli_escape_string($conn, $_POST['login']);
+    $senha = mysqli_escape_string($conn, $_POST['senha']);
+    $cript = md5($senha);
+
+    // Faz UPDATE no banco de dados
+    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+    if ($conect) {
+        $_SESSION['Logado'] = true;
+        $_SESSION["user"] = $login;
+        header("location: cont.php");
+    } else {
+        echo "<script>alert('Usuário ou Senha inválida!')</script>";
     }
-    
+}
 
-    $nomeArq = 'noticias/'.$resultado['id'].".php";
-    echo $nomeArq;
-    if (!$arquivo = fopen($nomeArq, "w")){
-        echo 'Erro ao criar arquivo';
-        exit();
-    }
+if (isset($_GET['deslogar'])) {
+    session_destroy();
+    header("location: cont.php");
+}
 
-    $conteudo = "
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
-            <meta http-equiv='refresh' content='30'>
-            <meta charset='utf-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-            <meta name='keywords' content='maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS'>
-            <meta name='description' content='Escola estadual de ensino médio e tecnico maria rocha'>
+$id = $_GET['id'];
+//BUSCA NOTICIA
+$sql_code = "SELECT * FROM mr_posts WHERE ID = $id;";        
+$sql = mysqli_query(DBConecta(), $sql_code);
+$results = mysqli_fetch_assoc($sql);
 
-
-            <!-- Links Boostrap e CSS -->
-            <link rel='stylesheet' href='../node_modules/bootstrap/compiler/bootstrap.css'>
-            <link rel='stylesheet' href='../node_modules/bootstrap/compiler/style.css'>
-            <link rel='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'>
-            <link rel='stylesheet' href='../font-awesome/css/font-awesome.min.css'>
-            <link rel='shortcut icon' href='../img/favicon.ico' />
-        </head>
-        <body>
-            <?php include('menu.php'); ?>
-            <div class='container text-center my-5'>
-                <h3 class='display-4'>".$resultado['titulo']."</h3>
-                <img src='".$nome."' class='img-fluid my-4'>
-                <hr style='border-color: #354698; '>
-                <p class='text-justify mb-5'>".$resultado['descricao']."</p>
-                <p class='text-left'><span class='fa fa-user'></span> Postado por <i>".$resultado ['postador']."</i><i> em ".$resultado['data']."</i></p>
-            </div>
-            <?php include('../footer.php'); ?>
-        </body>
-    </html>
-    ";
-
-    if (fwrite($arquivo, $conteudo) === FALSE){
-        echo 'Erro ao gravar';
-        exit();
-    }
-    mysqli_close($imagem);
-    mysqli_close($pesquisa);
-    fclose($arquivo);
+//BUSCA IMAGEM
+$sql_code = "SELECT * FROM imagens WHERE idPosts = $id;";
+$sql = mysqli_query(DBConecta(), $sql_code);
+$imagem = mysqli_fetch_assoc($sql);
 ?>
+
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Links Boostrap e CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+</head>
+
+<body>
+
+    <!--NAVBAR-->
+
+    <?php include 'menu.php'; ?>
+
+
+    <div class="container text-center">
+        //TITULO
+        <div class="row">
+            <div class="col-12 mb-3">
+                <?php
+                    echo "<h5 class='display-4 my-3'>".$results['titulo']."</h5>"
+                    echo "<p class='text-left font-italic text-muted'>Postado por: ".$results['postador']." em ".$results['data'];
+                ?>
+                <hr style="border-color: #354698;">
+            </div>
+        </div>
+               
+        <div class="row">
+            <div class="col-5 mb-3">
+                <?php
+                    echo "<img src=".$imagem['nome']." class='img-fluid my-2' style='max-height: 400px'>"
+                ?>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-12 mb-3">
+                <?php
+                    echo "<p class='text-justify'>".$results['descricao']."</p>"
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <!--FOOTER-->
+
+    <?php
+            include_once("footer.php");
+        ?>
+
+    <!--TELA DE LOGIN -->
+    <?php
+            include_once("loginAdmin.php");
+        ?>
+
+
+    <!-- Links JS, Jquery e Popper -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+
+</html>
