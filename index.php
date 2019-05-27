@@ -155,7 +155,6 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
-                                    $nome = 'noticias/'.$dados['id'].'.php';
                                     if (strlen($dados['titulo']) > 25){
                                         $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
@@ -167,13 +166,12 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
-                                                            <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
+                                                            <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                     ";
                                 }else{
-                                    $nome = 'noticias/'.$dados['id'].'.php';
                                     if (strlen($dados['titulo']) > 25){
                                         $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
@@ -185,7 +183,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
-                                                            <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
+                                                            <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -216,7 +214,6 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
-                                    $nome = 'noticias/'.$dados['id'].'.php';
                                     if (strlen($dados['titulo']) > 25){
                                         $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
@@ -228,14 +225,13 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
-                                                            <a href='".$nome."' class='btn btn-primary mt-2'>Leia mais</a>
+                                                            <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             <hr class='w-100 clearfix d-md-none'>
                                     ";
                                 }else{
-                                    $nome = 'noticias/'.$dados['id'].'.php';
                                     if (strlen($dados['titulo']) > 25){
                                         $tit = substr($dados['titulo'], 0, 25).' ...';
                                     }
@@ -247,7 +243,7 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                                                         </div>
                                                         <div class='card-body'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
-                                                            <a href='".$nome."' class='btn btn-primary mt-2 '>Leia mais</a>
+                                                            <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2 '>Leia mais</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -262,8 +258,6 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                         </div>
                     </div>
                         ";
-
-
                     ?>
                 </div>
             </div>
