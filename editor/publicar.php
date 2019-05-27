@@ -27,7 +27,7 @@ if(isset($_POST['postar'])) {
         echo "
         <div class='alert alert-danger alert-dismissable'>
   <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao publicar!</strong> 
+            <strong>Erro ao publicar!</strong>
             </div>
             ";
     } else {
@@ -37,9 +37,9 @@ if(isset($_POST['postar'])) {
             <strong>Operação efetuada com sucesso!</strong>
             </div>
             ";
-        
+
          // Download da Imagem
-        
+
         $foto = $_FILES['arquivo'];
         $diretorio = "../Galeria/";
 
@@ -47,7 +47,7 @@ if(isset($_POST['postar'])) {
             echo "Pasta $diretorio nao existe";
         }
         else {
-            if (isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) { 
+            if (isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) {
                 //$dimensoes = getimagesize($foto['tmp_name']);
                 $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
                 $nome = $_FILES[ 'arquivo' ][ 'name' ];
@@ -78,7 +78,7 @@ if(isset($_POST['postar'])) {
             }
         }
     }
-    
+
 }
 
 
@@ -135,7 +135,7 @@ if(isset($_POST['postar'])) {
                     <textarea class="form-control" name="descrição" id="summernote" required></textarea>
 
                     <fieldset class="my-3">
-                        <h6>Opções</h6>
+                        <h6>Foto de capa para a notícia</h6>
                         <hr />
                         <input class="form-check ml-3" type="file" name="arquivo" multiple="multiple"
                             style="font-size: 15px;" />
@@ -192,7 +192,7 @@ if(isset($_POST['postar'])) {
         }
     </script>
 
-    
+
     <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../painel/componentes/js/painel-admin.js"></script>

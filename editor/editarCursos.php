@@ -12,6 +12,7 @@ if (!isset($_SESSION{'Logado'})) {
 }
 
 if (isset($_POST['atualizar'])) {
+  if (!empty($_POST['tabela']) || !empty($_POST['coluna'])){
     $tabela = $_POST['tabela'];
     $coluna = $_POST['coluna'];
     $ndescricao = $_POST['ndescrição'];
@@ -19,7 +20,7 @@ if (isset($_POST['atualizar'])) {
     $verifica = mysqli_query(DBConecta(), "SELECT * FROM $tabela");
     $linhas = mysqli_num_rows($verifica);
     if ($linhas > 0){
-        $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";    
+        $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
     }
     else{
         $sql_code = "INSERT INTO $tabela ($coluna) VALUES ('$ndescricao');";
@@ -28,12 +29,22 @@ if (isset($_POST['atualizar'])) {
     $up = mysqli_query(DBConecta(), $sql_code);
 
     if ($up) {
-        echo "<script>alert('Publicação atualizada com Sucesso!')</script>";
-        header("Location: ../painel/painel.php");
+        header("location: editarCursos.php");
     }
     else{
-      echo "<script>alert('ERRO')</script>";
+      echo "<div class='alert alert-danger alert-dismissable'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Erro ao editar!</strong>
+          </div>
+          ";
     }
+  }
+  else {
+    echo "<div class='alert alert-danger alert-dismissable'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Selecione o Curso e Tópico antes de clicar neste botão</strong>
+        </div>";
+  }
 }
 ?>
 
@@ -66,7 +77,6 @@ if (isset($_POST['atualizar'])) {
 
                   }else{
                       $('#coluna').html('<option value="">Selecione o Curso primeiro</option>');
-                      $('#writeBox').html('<p>Selecione o tópico a editar...</p>');
                   }
               });
 
@@ -79,8 +89,8 @@ if (isset($_POST['atualizar'])) {
                           type:'POST',
                           url:'getDados.php',
                           data:'tabela_ID='+tabela+'&coluna_ID='+coluna_ID,
-                          success:function(html){    
-            
+                          success:function(html){
+
                             $('#summernote').summernote("pasteHTML", html);
                           }
                       });
@@ -114,7 +124,7 @@ if (isset($_POST['atualizar'])) {
                     <form action="" method="POST" enctype="multipart/form-data" id="postForm">
                         <hr>
                         <div class="text-center">
-                            <select class="form-control-inline col-lg-4 p-2" name="tabela" id="tabela">
+                            <select class="form-control-inline col-lg-4 p-2 mb-2" name="tabela" id="tabela">
                                 <option value="">Selecione o curso</option>
                                 <option value="cursoinformatica">Informática</option>
                                 <option value="cursocontabilidade">Contabilidade</option>
@@ -145,12 +155,22 @@ if (isset($_POST['atualizar'])) {
                         ['font', ['bold', 'italic', 'underline', 'clear']],
                         ['fontname', ['fontname']],
                         ['fontsize', ['fontsize']],
-                        ['color', ['color']],
+                        ['color', ['color', 'forecolor', 'backcolor']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
                         ['insert', ['link', 'picture', 'hr']],
                         ['view', ['fullscreen', 'codeview']],
                     ],
+                    tableClassName: function() {
+                        $(this).addClass('table table-bordered')
+                        //.attr('cellpadding', 10)
+                        //.attr('cellspacing', 0)
+                        .attr('border', 1)
+                        //.css('borderCollapse', 'collapse');
+                        $(this).find('td')
+                        .css('borderColor', '#2d2e30')
+                        //.css('padding', '10px');
+                    },
                     height: 300,
                     minHeight: null,
                     maxHeight: null,

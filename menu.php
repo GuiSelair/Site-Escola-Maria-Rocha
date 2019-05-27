@@ -14,14 +14,14 @@
                 <?php
                     if (!isset($_SESSION['Logado'])) {
                 ?>
-                
+
                 <a href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user mx-3 " style="color: black;"></i></a>
 
                 <?php
-                        } 
+                        }
                         else{
                 ?>
-                
+
                 <li class="btn-group dropright ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navDrop" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user ml-2 mb-2 " style="color: black;"></i></a>
                     <div class="dropdown-menu mx-3">
@@ -30,11 +30,11 @@
                         </a>
                     </div>
                 </li>
-                
+
                 <?php
                         }
                 ?>
-                
+
             </div>
         </div>
     </div>
@@ -59,31 +59,31 @@
                 <li class="nav-item mx-2">
                     <a href="index.php" class="nav-link h7 text-white">Início</a>
                 </li>
-                
+
                 <li class="nav-item mx-2">
                     <a href="escola.php" class="nav-link h7 text-white">História</a>
                 </li>
-                
+
                 <li class="nav-item mx-2">
                     <a href="galeria.php" class="nav-link h7 text-white">Galeria</a>
                 </li>
-                
+
                 <li class="nav-item dropdown mx-2">
 
-                    <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Cursos</a>
+                    <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Ensino</a>
 
-                    <div class="dropdown-menu">
-                        <!--<a href="./infor.php" class="dropdown-item">Informática</a>-->
-                        <a href="./cursos.php?curso=1" class="dropdown-item">Informática</a>
+                    <ul class="dropdown-menu">
+                        <!--<a href="./cursos.php?curso" class="dropdown-item">Informática</a>-->
+                        <li><a href="./cursos.php?curso=1" class="dropdown-item">Informática</a></li>
                         <!--<a href="./cont.php" class="dropdown-item">Contabilidade</a>-->
-                        <a href="./cursos.php?curso=2" class="dropdown-item">Contabilidade</a>
+                        <li><a href="./cursos.php?curso=2" class="dropdown-item">Contabilidade</a></li>
                         <!--<a href="./secret.php" class="dropdown-item">Secretariado</a>-->
-                        <a href="./cursos.php?curso=3" class="dropdown-item">Secretariado</a>
-                        <a href="#" class="dropdown-item">Informática Integrado</a>
+                        <li><a href="./cursos.php?curso=3" class="dropdown-item">Secretariado</a></li>
+                        <li><a href="#" class="dropdown-item">Informática Integrado</a></li>
                         <!--<a href="./cursos.php?curso=4" class="dropdown-item">Informática Integrado</a>-->
-                    </div>
+                    </ul>
                 </li>
-                
+
                 <li class="nav-item mx-2">
                     <a href="editais.php?pagina=0" class="nav-link h7 text-white">Editais</a>
                 </li>

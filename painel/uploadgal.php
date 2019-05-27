@@ -17,7 +17,7 @@ if (isset($_POST['postar'])) {
 
     $foto = $_FILES['arquivo'];
     $dimensoes = getimagesize($foto['tmp_name']);
-    $altura = 450;
+    $altura = 500;
 
     if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
         echo "Pasta $diretorio nao existe";
@@ -44,7 +44,7 @@ if (isset($_POST['postar'])) {
                 if ($cat == 1 && $dimensoes[1] >= $altura){
                     echo "<div class='alert alert-danger alert-dismissable'>
                       <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                                <strong>Imagem deve ter no máximo 450px de altura</strong>
+                                <strong>Imagem deve ter no máximo 500px de altura</strong>
                                 </div>
                                 ";
                 }
@@ -291,7 +291,7 @@ $linha = mysqli_num_rows($sql);
                                                 Galeria
                                             </h6>
                                             <br>
-                                            <h6 class="my-5">OBS: A altura desta imagem deve ser no máximo 450px
+                                            <h6 class="my-5">OBS: A altura desta imagem deve ser no máximo 500px
                                             </h6>
                                             <br>
                                             <?php

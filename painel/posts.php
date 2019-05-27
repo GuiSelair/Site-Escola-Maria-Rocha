@@ -216,8 +216,8 @@ $con = mysqli_query(DBConecta(),$consulta);
                                              ?></td>
                                         <td><?php echo $row['data']; ?></td>
                                         <td><?php echo $row['postador']; ?></td>
-                                        <td><?php echo "<a class='btn btn-warning' href='../editor/editar.php?edit=".$row['id']."'>Editar</a>" ?>
-                                            <?php echo "<a class='btn btn-danger' href='deletar.php?id=".$row['id']."'>Excluir</a>" ?>
+                                        <td><?php echo "<a class='btn btn-primary' href='../editor/editar.php?edit=".$row['id']."'><i class='fa fa-edit'></i>Editar</a>" ?>
+                                            <?php echo "<a class='btn btn-danger' href='deletar.php?id=".$row['id']."'><i class='fa fa-trash'></i>Excluir</a>" ?>
                                         <td>
 
                                     </tr>

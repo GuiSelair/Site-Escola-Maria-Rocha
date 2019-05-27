@@ -90,7 +90,7 @@ $results = mysqli_fetch_assoc($sql);
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivos do Curso</h5>
-                <hr class="text-left">
+                <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
                     echo "<p>".$results['objetivoCurso']."</p>"
                 ?>
@@ -101,7 +101,7 @@ $results = mysqli_fetch_assoc($sql);
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Critérios de Avaliação</h5>
-                <hr class="text-left">
+                <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
                     echo "<p>".$results['criteriosAvaliacao']."</p>"
                 ?>
@@ -112,7 +112,7 @@ $results = mysqli_fetch_assoc($sql);
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Estágio</h5>
-                <hr class="text-left">
+                <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
                     echo "<p>".$results['estagio']."</p>"
                 ?>
@@ -123,7 +123,7 @@ $results = mysqli_fetch_assoc($sql);
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Perfil Profissional de Conclusão</h5>
-                <hr class="text-left">
+                <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
                     echo "<p>".$results['perfilConclusao']."</p>"
                 ?>
@@ -134,7 +134,7 @@ $results = mysqli_fetch_assoc($sql);
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Grade Curricular</h5>
-                <hr class="text-left">
+                <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
                     echo "<p>".$results['gradeCurricular']."</p>"
                 ?>
