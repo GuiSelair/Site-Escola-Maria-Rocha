@@ -99,6 +99,14 @@ if (isset($_POST['atualizar'])) {
                   }
               });
           });
+          function confirmar(){
+            echo "<div class='alert alert-success alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Você tem certeza que quer SAIR?</strong>
+                <a class='btn btn-dark' href='../painel/painel.php'>SAIR</a>
+                </div>
+                ";  
+          }
         </script>
 
         <link rel="stylesheet" href="dist/summernote-bs4.css">
@@ -137,7 +145,7 @@ if (isset($_POST['atualizar'])) {
                         <hr />
                         <textarea class="form-control" name="ndescrição" id="summernote"></textarea>
                         <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" id="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
-                        <a href="../painel/painel.php" class="btn btn-block btn-dark" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
+                        <a href="#" onClick("confirma()") class="btn btn-block btn-dark" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
 
                     </form>
 
