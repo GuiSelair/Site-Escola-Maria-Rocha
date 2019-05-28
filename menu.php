@@ -69,18 +69,20 @@
                 </li>
 
                 <li class="nav-item dropdown mx-2">
-
                     <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Ensino</a>
-
                     <ul class="dropdown-menu">
-                        <!--<a href="./cursos.php?curso" class="dropdown-item">Informática</a>-->
-                        <li><a href="./cursos.php?curso=1" class="dropdown-item">Informática</a></li>
-                        <!--<a href="./cont.php" class="dropdown-item">Contabilidade</a>-->
-                        <li><a href="./cursos.php?curso=2" class="dropdown-item">Contabilidade</a></li>
-                        <!--<a href="./secret.php" class="dropdown-item">Secretariado</a>-->
-                        <li><a href="./cursos.php?curso=3" class="dropdown-item">Secretariado</a></li>
-                        <li><a href="#" class="dropdown-item">Informática Integrado</a></li>
-                        <!--<a href="./cursos.php?curso=4" class="dropdown-item">Informática Integrado</a>-->
+                        <a href="./cursos.php?curso=0" class="dropdown-item">Ensino Médio </a>
+                        <div class="dropdown-submenu">
+                          <a class="dropdown-toggle h7 text-white" data-toggle="dropdown" tabindex="-1" id="segundo" href="#">Cursos Técnicos <span class="caret"></span></a>
+                          <div class="dropdown-menu" aria-labelledby="segundo">
+                            <a href="./cursos.php?curso=1" class="dropdown-item">Informática</a>
+                            <a href="./cursos.php?curso=2" class="dropdown-item">Contabilidade</a>
+                            <a href="./cursos.php?curso=3" class="dropdown-item">Secretariado</a>
+                            <a href="./cursos.php?curso=4" class="dropdown-item">Informática Integrado</a>
+                            <!--<a href="./cursos.php?curso=4" class="dropdown-item">Informática Integrado</a>-->
+                          </div>
+                        </div>
+
                     </ul>
                 </li>
 

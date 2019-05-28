@@ -9,27 +9,27 @@
     $noticesbyPages = 6;
     $pagina = intval($_GET['pagina']);
     $beginningPage = $pagina;
-    
+
     if ($pagina != 0)
         $beginningPage = $pagina * $noticesbyPages;
 
     $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts WHERE categoria = 1 ORDER BY id DESC LIMIT $beginningPage, $noticesbyPages");
     $num = mysqli_num_rows($sql);
-    
+
     $sql1 = mysqli_query(DBConecta(), "SELECT * FROM mr_posts WHERE categoria = 1");
     $num_total = mysqli_num_rows($sql1);
 
     $num_pages = ceil($num_total/$noticesbyPages);
-    
+
     if(isset($_POST['entrar'])) {
         $conn = DBConecta();
-        
+
         $login = mysqli_escape_string($conn, $_POST['login']);
         $senha = mysqli_escape_string($conn, $_POST['senha']);
         $cript = md5($senha);
-        
+
         $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-        
+
         if ($conect) {
             $_SESSION['UsuarioLog'] = true;
             header("location: painel/painel.php");
@@ -37,6 +37,7 @@
             echo "<script>alert('Usuário ou Senha inválida!')</script>";
         }
     }
+
 
 ?>
 <!doctype html>
@@ -54,23 +55,26 @@
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
     <link rel="shortcut icon" href="img/favicon.ico" />
   </head>
-  <body>        
-    
+  <body>
+
     <!--NAVBAR-->
-    
+
     <?php include 'menu.php'; ?>
-           
+
    <!-- POSTAGENS -->
-   
+
     <div class="container">
-     
-        <div class="row">     
-            
-            <div class="col md-auto">            
-                  <?php 
-    
+
+        <div class="row">
+
+            <div class="col md-auto">
+                  <?php
+
                     while ($dados=mysqli_fetch_assoc($sql)) {
-                        echo '<div class="titulo text-danger text-center mt-5"><strong>'.$dados ['titulo'].'</strong></div><p>';
+
+                        echo '<div class="h2 text-center mt-5">'.$dados ['titulo'].'</div><p>
+                        <hr>';
+
                         echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
                         echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'</div>';
                     }
@@ -85,7 +89,7 @@
                         <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <?php 
+                    <?php
                     for($i = 0; $i < $num_pages; $i++){
                         $estilo = "class='page-item'";
                         if($pagina == $i)
@@ -102,21 +106,21 @@
             </nav>
             </div>
         </div>
-        
+
     </div>
-  
+
    <!--FOOTER-->
-        
+
    <?php
         include_once("footer.php");
     ?>
-        
+
     <!--TELA DE LOGIN -->
     <?php
         include_once("loginAdmin.php");
     ?>
-   
-   
+
+
     <!-- Links JS, Jquery e Popper -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.js"></script>

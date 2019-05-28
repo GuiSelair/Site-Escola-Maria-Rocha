@@ -33,7 +33,7 @@ if (isset($_POST['atualizar'])) {
         echo "<script>alert('Publicação atualizada com Sucesso!')</script>";
         header("Location: ../painel/painel.php");
     }
-    
+
 }
 
 
@@ -85,7 +85,7 @@ if (isset($_POST['atualizar'])) {
                         <p><textarea class="form-control" name="ndescrição" id="summernote"><?php echo $row['descricao'] ?></textarea>
                         <p></p>
                         <button type="submit" class="btn btn-primary btn-block" name="atualizar">Atualizar Publicação</button>
-                        <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao Painel de Controle</a>
+                        <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark">Voltar ao Painel de Controle</button>
 
                     </form>
 
@@ -94,6 +94,13 @@ if (isset($_POST['atualizar'])) {
             </div>
 
         </div>
+        <script>
+          function confirmExclusao() {
+             if (confirm("Tem certeza que deseja sair desta postagem?")) {
+                location.href="../painel/painel.php";
+             }
+          }
+        </script>
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -109,9 +116,9 @@ if (isset($_POST['atualizar'])) {
                         ['insert', ['link', 'picture', 'hr']],
                         ['view', ['fullscreen', 'codeview']],
                     ],
-                    height: 300,                
-                    minHeight: null,             
-                    maxHeight: null,             
+                    height: 300,
+                    minHeight: null,
+                    maxHeight: null,
                     focus: true,
                     lang: 'pt-BR'
                 });

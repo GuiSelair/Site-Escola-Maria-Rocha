@@ -155,8 +155,8 @@ if(isset($_POST['postar'])) {
 
                     <button type="submit" class="btn btn-primary btn-block" name="postar"
                         style="background-color: #354698; border:none;">Publicar Notícia</button>
-                    <a href="../painel/painel.php" class="btn btn-block btn-dark"
-                        style="background-color: #232323; border:none;">Voltar ao Painel de Controle</a>
+                    <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark"
+                        style="background-color: #232323; border:none;">Voltar ao Painel de Controle</button>
 
                 </form>
 
@@ -165,6 +165,13 @@ if(isset($_POST['postar'])) {
         </div>
 
     </div>
+    <script>
+      function confirmExclusao() {
+         if (confirm("Tem certeza que deseja sair desta postagem?")) {
+            location.href="../painel/painel.php";
+         }
+      }
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
