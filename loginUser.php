@@ -1,3 +1,34 @@
+<?php
+    session_start();
+
+    include_once("conexao/config.php");
+    include_once("conexao/conexao.php");
+    include_once("conexao/function.php");
+
+    if(isset($_POST['entrar'])) {
+        $conn = DBConecta();
+
+        $login = mysqli_real_escape_string($conn, $_POST['login']);
+        $senha = mysqli_real_escape_string($conn, $_POST['senha']);
+        $cript = md5($senha);
+        echo $senha;
+        echo $cript;
+
+        $sql_code = "SELECT * FROM `mr_usuarios` WHERE `login` = '$login' AND `senha` = '$cript';"; 
+        $verifica = mysqli_query($conn, $sql_code) or die("erro ao selecionar");
+        
+        if (!mysqli_num_rows($verifica)) {
+            echo "<script>alert('Usuário ou Senha inválida!')</script>";
+        }
+        else {
+            $_SESSION['Logado'] = true;
+            $_SESSION["user"] = $login;
+            $_SESSION["tipo"] = $_POST['categoria'];
+            header("location: index.php");
+        }
+    }
+?>
+
 <!doctype html>
 <html lang="pt-br">
     <head>
@@ -5,82 +36,81 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="favicon.ico" rel="icon" type="image/x-icon" />
-
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
-        <title>SOS My Pets</title>
-
+        <title>Portal Acadêmico</title>
         <style>
-
-            .toplog {
-                background-color: #f6f6f6;
-                border-top: 1px solid gray;
+            html,
+            body {
+                height: 100%;
             }
 
+            body {
+                display: -ms-flexbox;
+                display: -webkit-box;
+                display: flex;
+                -ms-flex-align: center;
+                -ms-flex-pack: center;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                justify-content: center;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
 
+            .form-signin {
+                width: 100%;
+                max-width: 330px;
+                padding: 15px;
+                margin: 0 auto;
+            }
+
+            .form-signin .checkbox {
+                font-weight: 400;
+            }
+
+            .form-signin .form-control {
+                position: relative;
+                box-sizing: border-box;
+                height: auto;
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .form-signin .form-control:focus {
+                z-index: 2;
+            }
+
+            .form-signin input[type="email"] {
+                margin-bottom: -1px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .form-signin input[type="password"] {
+                margin-bottom: 10px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
         </style>
 
     </head>
-    <body>
-
-
-
-        <div class="col-12">
-
-            <h1 class="text-center display-3" id="topo"><b><i>Maria Rocha</i></b></h1>
-
-        </div>
-
-
-        <div class="container-fluid toplog">
-
-            <div class="row text-center mx-auto">
-
-                <div class="col-lg-3"></div>
-
-                <div class="col-lg-6">
-
-
-                    <h3 class="text-center mt-5">Área do Cliente</h3>
-
-                    <div class="container mx-auto">
-
-                        <form accept-charset="utf-8" action="" method="POST">
-
-                            <div class="form-group">
-
-                                <input type="text" class="form-control" name="login" id="login" placeholder="Login">
-
-                            </div>
-                            <div class="form-group">
-
-                                <input type="password" class="form-control" name="senha" id="senha" placeholder="*******">
-
-                            </div>
-
-                            <button type="submit" name="entrar" id="entrar" class="btn btn-success btn-block btn-lg">Entrar</button>
-                            
-                            <a href="index.php" class="btn btn-warning btn-block btn-lg">Voltar ao Início</a>
-
-                        </form>
-
-                    </div>
-
-                    <div class="col-lg-3"></div>
-
-                </div>
-
-
+    <body class="text-center">
+        <form class="form-signin" action="" method="POST">
+            <img class="mb-4" src="./img/Login.png" alt="" width="120" height="150">
+            <h3 class="h4 mb-3 font-weight-normal">Entrar no Portal Acadêmico</h3>
+            <input type="text" id="inputEmail" class="form-control mb-2 rounded" placeholder="Login" name="login" required autofocus>
+            <input type="password" id="inputPassword" class="form-control rounded" placeholder="Senha" name="senha" required>
+            <div class="checkbox mb-3">
+                <label>
+                    <a href="#">Esqueceu sua senha?</a>
+                </label>
             </div>
-            <div class="row mt-5"></div>
-            <div class="row mt-5"></div>
-            <div class="row mt-5"></div>
-            <div class="row mt-5"></div>
-            <div class="row mt-5"></div>
-            <div class="row mt-5"></div>
-            <div class="row mt-4"></div>
-        </div>
-
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="entrar">Entrar</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
+        </form>
         <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="node_modules/popper.js/dist/umd/popper.js" crossorigin="anonymous"></script>
         <script src="node_modules/bootstrap/dist/js/bootstrap.js" crossorigin="anonymous"></script>
