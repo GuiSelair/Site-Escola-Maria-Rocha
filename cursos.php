@@ -18,7 +18,7 @@ if(isset($_POST['entrar'])) {
     if ($conect) {
         $_SESSION['Logado'] = true;
         $_SESSION["user"] = $login;
-        header("location: cont.php");
+        header("location: cursos.php?curso=".$_GET['curso']);
     } else {
         echo "<script>alert('Usuário ou Senha inválida!')</script>";
     }
@@ -26,7 +26,7 @@ if(isset($_POST['entrar'])) {
 
 if (isset($_GET['deslogar'])) {
     session_destroy();
-    header("location: cont.php");
+    header("location: cursos.php?curso=1");
 }
 
 $curso = $_GET['curso'];
@@ -48,6 +48,7 @@ switch ($curso) {
         $sql_code = "SELECT * FROM cursosecretariado;";
         break;
     default:
+        header("location: index.php");
         break;
 }
 

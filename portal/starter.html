@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Portal Acadêmico</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Barra cabeçalho -->
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="starter.html" class="logo">
+        <!-- Logo abreviada -->
+        <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
+        <span class="logo-lg">Portal Acadêmico</span>
+      </a>
+      <!-- Toggle Hamburguer -->
+      <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Notificações e Usuario -->
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">        
+
+            <!-- Notificações -->
+            <li class="dropdown notifications-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-danger">100</span> <!--QUANDO HÁ NOTIFICAÇÕES NÃO LIDAS-->
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have 10 notifications</li>
+                <li>
+                  <!-- Inner Menu: contains the notifications -->
+                  <ul class="menu">
+                    <li>
+                      <!-- start notification -->
+                      <a href="#">
+                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      </a>
+                    </li>
+                    <!-- end notification -->
+                  </ul>
+                </li>
+                <li class="footer"><a href="#">View all</a></li>
+              </ul>
+            </li>
+
+            <!-- Conta do usuario -->
+            <li class="dropdown user user-menu ">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-user mx-5"></i>
+                <span class="hidden-xs">Guilherme Selair</span> <!--NOME COMPLETO DO USUARIO-->
+              </a>
+              <ul class="dropdown-menu">
+                <li class="user-footer">
+                  <div class="pull-right mx-5">
+                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  </div>
+                  <div class="pull-right mx-5">
+                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+            <li>
+              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel">
+          <div class="pull-left image">
+            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          </div>
+          <div class="pull-left info">
+            <p>Alexander Pierce</p>
+            <!-- Status -->
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div>
+        </div>
+
+        <!-- search form (Optional) -->
+        <form action="#" method="get" class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+        </form>
+        <!-- /.search form -->
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="header">HEADER</li>
+          <!-- Optionally, you can add icons to the links -->
+          <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+          <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+          <li class="treeview">
+            <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="#">Link in level 2</a></li>
+              <li><a href="#">Link in level 2</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!-- /.sidebar-menu -->
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Page Header
+          <small>Optional description</small>
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+          <li class="active">Here</li>
+        </ol>
+      </section>
+
+      <!-- Main content -->
+      <section class="content container-fluid">
+
+        <section class="content">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h4 class="box-title">Draggable Events</h4>
+                </div>
+                <div class="box-body">
+                  <!-- the events -->
+                  <div id="external-events">
+                    <div class="external-event bg-green">Lunch</div>
+                    <div class="external-event bg-yellow">Go home</div>
+                    <div class="external-event bg-aqua">Do homework</div>
+                    <div class="external-event bg-light-blue">Work on UI design</div>
+                    <div class="external-event bg-red">Sleep tight</div>
+                    <div class="checkbox">
+                      <label for="drop-remove">
+                        <input type="checkbox" id="drop-remove">
+                        remove after drop
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /. box -->
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Create Event</h3>
+                </div>
+                <div class="box-body">
+                  <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                    <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+                    <ul class="fc-color-picker" id="color-chooser">
+                      <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
+                      <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
+                    </ul>
+                  </div>
+                  <!-- /btn-group -->
+                  <div class="input-group">
+                    <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+
+                    <div class="input-group-btn">
+                      <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
+                    </div>
+                    <!-- /btn-group -->
+                  </div>
+                  <!-- /input-group -->
+                </div>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+              <div class="box box-primary">
+                <div class="box-body no-padding">
+                  <p>dasdsadsadsadsadsa</p>
+                  <div id="calendar"></div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /. box -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </section>
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <!-- To the right -->
+      <div class="pull-right hidden-xs">
+        Anything you want
+      </div>
+      <!-- Default to the left -->
+      <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Create the tabs -->
+      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- Home tab content -->
+        <div class="tab-pane active" id="control-sidebar-home-tab">
+          <h3 class="control-sidebar-heading">Recent Activity</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:;">
+                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                  <p>Will be 23 on April 24th</p>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+          <h3 class="control-sidebar-heading">Tasks Progress</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:;">
+                <h4 class="control-sidebar-subheading">
+                  Custom Template Design
+                  <span class="pull-right-container">
+                    <span class="label label-danger pull-right">70%</span>
+                  </span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+        </div>
+        <!-- /.tab-pane -->
+        <!-- Stats tab content -->
+        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+        <!-- /.tab-pane -->
+        <!-- Settings tab content -->
+        <div class="tab-pane" id="control-sidebar-settings-tab">
+          <form method="post">
+            <h3 class="control-sidebar-heading">General Settings</h3>
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Report panel usage
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+
+              <p>
+                Some information about this general settings option
+              </p>
+            </div>
+            <!-- /.form-group -->
+          </form>
+        </div>
+        <!-- /.tab-pane -->
+      </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+  immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED JS SCRIPTS -->
+
+  <!-- jQuery 3 -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.min.js"></script>
+
+  <!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+</body>
+
+</html>

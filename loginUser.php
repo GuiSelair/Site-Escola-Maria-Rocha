@@ -11,8 +11,6 @@
         $login = mysqli_real_escape_string($conn, $_POST['login']);
         $senha = mysqli_real_escape_string($conn, $_POST['senha']);
         $cript = md5($senha);
-        echo $senha;
-        echo $cript;
 
         $sql_code = "SELECT * FROM `mr_usuarios` WHERE `login` = '$login' AND `senha` = '$cript';"; 
         $verifica = mysqli_query($conn, $sql_code) or die("erro ao selecionar");
