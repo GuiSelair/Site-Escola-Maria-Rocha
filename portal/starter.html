@@ -33,7 +33,7 @@
         </a>
         <!-- Notificações e Usuario -->
         <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">        
+          <ul class="nav navbar-nav">
 
             <!-- Notificações -->
             <li class="dropdown notifications-menu">
@@ -67,277 +67,83 @@
               </a>
               <ul class="dropdown-menu">
                 <li class="user-footer">
-                  <div class="pull-right mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <div class="pull-left mx-5">
+                    <a href="#" class="btn btn-default btn-flat">Senha</a>
                   </div>
                   <div class="pull-right mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="#" class="btn btn-default btn-flat">Sair</a>
                   </div>
                 </li>
               </ul>
             </li>
-            <!-- Control Sidebar Toggle Button -->
+            <!-- Botão Toggle de ADM
             <li>
               <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-            </li>
+            </li>-->
           </ul>
         </div>
       </nav>
     </header>
-    <!-- Left side column. contains the logo and sidebar -->
+
+    <!-- Barra Lateral Links -->
     <aside class="main-sidebar">
-
-      <!-- sidebar: style can be found in sidebar.less -->
-      <section class="sidebar">
-
-        <!-- Sidebar user panel (optional) -->
+      <section class="sidebar"> <!-- sidebar: style can be found in sidebar.less -->
         <div class="user-panel">
-          <div class="pull-left image">
-            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <div class="pull-left">
+            <i class="fa fa-user bg-white fa-3x" style="color: white;"></i>
           </div>
-          <div class="pull-left info">
-            <p>Alexander Pierce</p>
-            <!-- Status -->
-            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <div class="pull-left info h4">
+            <p>Guilherme Selair</p> <!--NOME COMPLETO-->
           </div>
         </div>
 
-        <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-          <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
-            <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-          </div>
-        </form>
-        <!-- /.search form -->
-
-        <!-- Sidebar Menu -->
+        <!-- Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-          <li class="header">HEADER</li>
+          <li class="header">MENU</li>
           <!-- Optionally, you can add icons to the links -->
-          <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-          <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+          <li class="active"><a href="#"><i class="fa fa-home"></i> <span>INICIO</span></a></li>
+          <li><a href="#"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
           <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+            <a href="#"><i class="fa fa-plus-square"></i> <span>Cadastros</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
-            <ul class="treeview-menu">
-              <li><a href="#">Link in level 2</a></li>
-              <li><a href="#">Link in level 2</a></li>
+            <ul class="treeview-menu text-center">
+              <li><a href="#">Aluno</a></li>
+              <li><a href="#">Professor</a></li>
+              <li><a href="#">Turma</a></li>
+              <li><a href="#">Disciplinas</a></li>
             </ul>
           </li>
         </ul>
-        <!-- /.sidebar-menu -->
       </section>
-      <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
+    <!-- Titulo da Área com conteudo -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Page Header
-          <small>Optional description</small>
+          INICIO  <!--NOME DA PAGINA-->
         </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-          <li class="active">Here</li>
-        </ol>
       </section>
 
-      <!-- Main content -->
+      <!-- Área com Conteudo -->
       <section class="content container-fluid">
 
-        <section class="content">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="box box-solid">
-                <div class="box-header with-border">
-                  <h4 class="box-title">Draggable Events</h4>
-                </div>
-                <div class="box-body">
-                  <!-- the events -->
-                  <div id="external-events">
-                    <div class="external-event bg-green">Lunch</div>
-                    <div class="external-event bg-yellow">Go home</div>
-                    <div class="external-event bg-aqua">Do homework</div>
-                    <div class="external-event bg-light-blue">Work on UI design</div>
-                    <div class="external-event bg-red">Sleep tight</div>
-                    <div class="checkbox">
-                      <label for="drop-remove">
-                        <input type="checkbox" id="drop-remove">
-                        remove after drop
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.box-body -->
-              </div>
-              <!-- /. box -->
-              <div class="box box-solid">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Create Event</h3>
-                </div>
-                <div class="box-body">
-                  <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                    <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                    <ul class="fc-color-picker" id="color-chooser">
-                      <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
-                      <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
-                    </ul>
-                  </div>
-                  <!-- /btn-group -->
-                  <div class="input-group">
-                    <input id="new-event" type="text" class="form-control" placeholder="Event Title">
-
-                    <div class="input-group-btn">
-                      <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
-                    </div>
-                    <!-- /btn-group -->
-                  </div>
-                  <!-- /input-group -->
-                </div>
-              </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-md-9">
-              <div class="box box-primary">
-                <div class="box-body no-padding">
-                  <p>dasdsadsadsadsadsa</p>
-                  <div id="calendar"></div>
-                </div>
-                <!-- /.box-body -->
-              </div>
-              <!-- /. box -->
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </section>
-
       </section>
-      <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
-    <!-- Main Footer -->
+    <!-- Rodapé -->
     <footer class="main-footer">
-      <!-- To the right -->
       <div class="pull-right hidden-xs">
-        Anything you want
+        <i>Todos os direitos reservados</i>
       </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+      <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Create the tabs -->
-      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-        <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-      </ul>
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <!-- Home tab content -->
-        <div class="tab-pane active" id="control-sidebar-home-tab">
-          <h3 class="control-sidebar-heading">Recent Activity</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:;">
-                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                  <p>Will be 23 on April 24th</p>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-          <h3 class="control-sidebar-heading">Tasks Progress</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:;">
-                <h4 class="control-sidebar-subheading">
-                  Custom Template Design
-                  <span class="pull-right-container">
-                    <span class="label label-danger pull-right">70%</span>
-                  </span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-        </div>
-        <!-- /.tab-pane -->
-        <!-- Stats tab content -->
-        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-        <!-- /.tab-pane -->
-        <!-- Settings tab content -->
-        <div class="tab-pane" id="control-sidebar-settings-tab">
-          <form method="post">
-            <h3 class="control-sidebar-heading">General Settings</h3>
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Report panel usage
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Some information about this general settings option
-              </p>
-            </div>
-            <!-- /.form-group -->
-          </form>
-        </div>
-        <!-- /.tab-pane -->
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-  immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
   </div>
-  <!-- ./wrapper -->
-
-  <!-- REQUIRED JS SCRIPTS -->
-
-  <!-- jQuery 3 -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- AdminLTE App -->
   <script src="dist/js/adminlte.min.js"></script>
-
-  <!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
 </body>
-
 </html>

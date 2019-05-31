@@ -12,9 +12,9 @@
         $senha = mysqli_real_escape_string($conn, $_POST['senha']);
         $cript = md5($senha);
 
-        $sql_code = "SELECT * FROM `mr_usuarios` WHERE `login` = '$login' AND `senha` = '$cript';"; 
+        $sql_code = "SELECT * FROM `mr_usuarios` WHERE `login` = '$login' AND `senha` = '$cript';";
         $verifica = mysqli_query($conn, $sql_code) or die("erro ao selecionar");
-        
+
         if (!mysqli_num_rows($verifica)) {
             echo "<script>alert('Usuário ou Senha inválida!')</script>";
         }
@@ -22,7 +22,7 @@
             $_SESSION['Logado'] = true;
             $_SESSION["user"] = $login;
             $_SESSION["tipo"] = $_POST['categoria'];
-            header("location: index.php");
+            header("location: ./portal/starter.html");
         }
     }
 ?>
