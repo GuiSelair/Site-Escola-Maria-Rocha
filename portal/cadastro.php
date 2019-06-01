@@ -16,19 +16,23 @@ if (isset($_GET['id'])){
 
     switch ($id) {
         case '0':
-            $tit = "USUÁRIO";
+            $tit = "ALUNO";
+            $sql_code = "SELECT * FROM aluno";
             break;
         case '1':
             $tit = "PROFESSOR";
+            $sql_code = "SELECT * FROM professor";
             break;
         case '2':
             $tit = "TURMA";
+            $sql_code = "SELECT * FROM turma";
             break;
         case '3':
             $tit = "DISCIPLINAS";
+            $sql_code = "SELECT * FROM disciplina";
             break;
         default:
-            $tit = "";
+            header("location: ./index.php");
             break;
     }
 }
@@ -43,12 +47,25 @@ if (isset($_GET['id'])){
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Portal Acadêmico</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!--
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+-->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+  <script src='js/jquery.min.js'></script>
+  <script src='js/fullcalendar.min.js'></script>
+  <script src="bower_components\fullcalendar\dist\locale\pt-br.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -162,7 +179,7 @@ if (isset($_GET['id'])){
               </span>
             </a>
             <ul class="treeview-menu text-center">
-              <li class="active"><a href="cadastro.php">Aluno</a></li>
+              <li class="active"><a href="cadastro.php?id=0">Aluno</a></li>
               <li><a href="cadastro.php?id=1">Professor</a></li>
               <li><a href="cadastro.php?id=2">Turma</a></li>
               <li><a href="cadastro.php?id=3">Disciplinas</a></li>
@@ -183,8 +200,57 @@ if (isset($_GET['id'])){
       </section>
 
       <!-- Área com Conteudo -->
-      <section class="content ">
-        
+      <section class="content">
+        <div class="container text-center mb-4" style="margin-bottom: 20px;">
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary">Buscar Aluno</button>    
+                    <button type="button" class="btn btn-primary">Cadastrar Aluno</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="box box-primary" >
+            <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="nomeUser">Nome</label>
+                  <input type="text" class="form-control" id="nomeUser" placeholder="Nome" required>
+                </div>
+                <div class="form-group">
+                  <label for="sobrenomeUser">Sobrenome</label>
+                  <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" required>
+                </div>
+                <div class="form-group">
+                  <label for="emailUser">Email</label>
+                  <input type="email" class="form-control" id="emailUser" placeholder="Email" value="guilherme.lima1997@hotmail.com" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="matriUser">Data de Matricula</label>
+                  <input type="date" class="form-control" id="matriUser" placeholder="Data de Matricula">
+                </div>
+                <div class="form-group">
+                  <label for="foneUser">Telefone</label>
+                  <input type="text" class="form-control" id="foneUser" placeholder="Telefone">
+                </div>
+              </div>
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-3">
+            <div style="margin-bottom: 5px;">
+                <button type="button" class="btn btn-warning">Editar Cadastro</button>    
+            </div>
+            <div>
+                <button type="button" class="btn btn-danger">Excluir Cadastro</button>
+            </div>
+        </div>
+        <div>
+            <p>dhauisdhuasdiashudasdasuhduiashduiashduiashudihasuidhuaishdui</p>
+        </div>
       </section>
     </div>
 
@@ -199,6 +265,9 @@ if (isset($_GET['id'])){
   
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+  <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>

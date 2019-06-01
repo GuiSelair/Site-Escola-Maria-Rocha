@@ -272,10 +272,10 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
         <div class="row text-center">
 
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
 
                 <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
+                    <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">UFSM</h6>
                     </a>
                 </div>
@@ -283,11 +283,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
             <hr class="w-100 clearfix d-md-none">
 
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
 
                 <div class="btn-group-vertical btn-block btn-block-lg">
 
-                    <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
+                    <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">ENEM</h6>
                     </a>
                 </div>
@@ -295,9 +295,9 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
             <hr class="w-100 clearfix d-md-none">
 
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3 mb-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
                 <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
+                    <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-primary p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">MEC</h6>
                     </a>
                 </div>
@@ -305,11 +305,11 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
             <hr class="w-100 clearfix d-md-none">
 
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mt-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-3">
 
                 <div class="btn-group-vertical btn-block btn-block-lg">
 
-                    <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary mb-3 p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
+                    <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">PROUNI</h6>
                     </a>
                 </div>

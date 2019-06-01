@@ -73,7 +73,17 @@ if (isset($_POST['atualizar'])) {
               $('#tabela').on('change',function(){
                   var nameTabela = $(this).val();
                   if(nameTabela != ""){
-                      $('#coluna').html('<option value="">Selecione um tópico abaixo</option> <option value="objetivoCurso">Objetivos do Curso</option> <option value="criteriosAvaliacao">Criterios de Avaliação</option> <option value="estagio">Estagio</option> <option value="perfilConclusao">Perfil de Formação Profissional</option> <option value="gradeCurricular">Grade Curricular</option>');
+                      if (nameTabela != "cursomedio" && nameTabela != "cursointegrado"){
+                        $('#coluna').html('<option value="">Selecione um tópico abaixo</option> <option value="objetivoCurso">Objetivos do Curso</option> <option value="criteriosAvaliacao">Criterios de Avaliação</option> <option value="estagio">Estagio</option> <option value="perfilConclusao">Perfil de Formação Profissional</option> <option value="gradeCurricular">Grade Curricular</option>');
+                      }
+                      else{
+                          if (nameTabela == "cursomedio"){
+                              $('#coluna').html('<option value="">Selecione um tópico abaixo</option> <option value="objetivocurso">Objetivos do Curso</option>');
+                          }
+                          else{
+                              $('#coluna').html('<option value="">Selecione um tópico abaixo</option> <option value="objetivocurso">Objetivos do Curso</option> <option value="perfilconclusao">Perfil de Formação Profissional</option>');
+                          }
+                      }
 
                   }else{
                       $('#coluna').html('<option value="">Selecione o Curso primeiro</option>');
@@ -127,9 +137,11 @@ if (isset($_POST['atualizar'])) {
                         <div class="text-center">
                             <select class="form-control-inline col-lg-4 p-2 mb-2" name="tabela" id="tabela">
                                 <option value="">Selecione o curso</option>
+                                <option value="cursomedio">Ensino Médio</option>
                                 <option value="cursoinformatica">Informática</option>
                                 <option value="cursocontabilidade">Contabilidade</option>
                                 <option value="cursosecretariado">Secretariado</option>
+                                <option value="cursointegrado">Informática Integrado</option>
                             </select>
                             <select class="form-control-inline col-lg-4 p-2" name="coluna" id="coluna">
                                 <option value="">Selecione o curso primeiro</option>

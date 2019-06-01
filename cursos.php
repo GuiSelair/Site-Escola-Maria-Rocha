@@ -32,6 +32,11 @@ if (isset($_GET['deslogar'])) {
 $curso = $_GET['curso'];
 
 switch ($curso) {
+    case '0':
+        $icon = "class= 'fa fa-laptop mx-2'";
+        $tec = "Médio";
+        $sql_code = "SELECT * FROM cursomedio;";
+        break;
     case '1':
         $icon = "class= 'fa fa-laptop mx-2'";
         $tec = "Informática";
@@ -46,6 +51,11 @@ switch ($curso) {
         $icon = "class= 'fa fa-book mx-2'";
         $tec = "Secretariado";
         $sql_code = "SELECT * FROM cursosecretariado;";
+        break;
+    case '4':
+        $icon = "class= 'fa fa-laptop mx-2'";
+        $tec = "Informática Integrado";
+        $sql_code = "SELECT * FROM cursointegrado;";
         break;
     default:
         header("location: index.php");
@@ -81,12 +91,16 @@ $results = mysqli_fetch_assoc($sql);
 
     <div class="container text-center">
         <?php
-            echo "<h2 class='display-4 my-5'>Curso Técnico em ".$tec."</h2>";
+            if ($tec != "Médio")
+                echo "<h2 class='display-4 my-5'>Curso Técnico em ".$tec."</h2>";
+            else
+                echo "<h2 class='display-4 my-5'>Ensino ".$tec."</h2>";
         ?>
         <hr style="border-color: #354698;">
     </div>
 
     <div class="container">
+        <?php if ($tec != "Médio" && $tec != "Informática Integrado"){ ?>
         <?php if ($results['objetivoCurso'] != "<p><br></p>"){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
@@ -141,7 +155,40 @@ $results = mysqli_fetch_assoc($sql);
                 ?>
             </div>
         </div>
-        <?php } ?>
+        <?php } 
+          }
+        else{ 
+            if ($tec == "Informática Integrado"){?>
+        <div class="row">
+            <div class="col-12 text-center mb-3">
+                <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivo do Curso</h5>
+                <hr class="text-left" style="border-color: #b2b2b2;">
+                <?php
+                    echo "<p>".$results['objetivocurso']."</p>"
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center mb-3">
+                <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Perfil de Formação Profissional</h5>
+                <hr class="text-left" style="border-color: #b2b2b2;">
+                <?php
+                    echo "<p>".$results['perfilconclusao']."</p>"
+                ?>
+            </div>
+        </div>
+        <?php }
+            else{?>
+        <div class="row">
+            <div class="col-12 text-center mb-3">
+                <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivos</h5>
+                <hr class="text-left" style="border-color: #b2b2b2;">
+                <?php
+                    echo "<p>".$results['objetivocurso']."</p>"
+                ?>
+            </div>
+        </div>
+        <?php }} ?>
     </div>
 
     <!--FOOTER-->
