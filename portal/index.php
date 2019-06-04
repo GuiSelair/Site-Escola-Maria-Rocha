@@ -167,7 +167,7 @@ if (isset($_GET['deslogar'])) {
       <!-- Área com Conteudo -->
       <section class="content ">
         <div class="row ">
-          <div class="col-md-10 col-lg-10">
+          <div class="col-md-10 col-lg-12">
             <div class="box box-primary">
               <div class="box-body no-padding">
                 <!-- THE CALENDAR -->
