@@ -201,46 +201,155 @@ if (isset($_GET['id'])){
 
       <!-- Área com Conteudo -->
       <section class="content">
-        <div class="container text-center mb-4" style="margin-bottom: 20px;">
+        <script type="text/javascript">
+          function buscador(){
+            let buscaNome = document.getElementById("buscaNome").value;
+            let buscaSobre = document.getElementById("buscaSobre").value;
+            $.ajax({
+              <?php $bloqueio = 'disabled'; ?>
+              type: "POST",
+              dataType:"json",
+              url: "buscador.php",
+              data: "tabela_ID="+<?php echo $id; ?>+"&nome="+buscaNome+"&sobrenome="+buscaSobre,
+              success: function(results){
+                console.log(results);
+                if (<?php echo $id; ?> == '0'){
+                  document.getElementById("nomeUser").value = results["nome"]
+                  document.getElementById("sobrenomeUser").value = results["sobrenome"]
+                  if (results["email"] != "NULL")
+                    document.getElementById("emailUser").value = results["email"]
+                  if (results["dataEntrada"] != "NULL")
+                    document.getElementById("matriUser").value = results["dataEntrada"]
+                  document.getElementById("foneUser").value = results["telefone"]
+                  document.getElementById("loginUser").value = results["login"]
+                  if (results["sexo"] == "masculino"){
+                     document.getElementById("masculino").checked = true;
+                  }
+                  else{
+                    document.getElementById("feminino").checked = true;
+                  }
+                }
+                if (<?php echo $id; ?> == '1'){
+                  document.getElementById("nomeUser").value = results["nome"]
+                  document.getElementById("sobrenomeUser").value = results["sobrenome"]
+                  if (results["email"] != "NULL")
+                    document.getElementById("emailUser").value = results["email"]
+                  document.getElementById("foneUser").value = results["telefone"]
+                  document.getElementById("loginUser").value = results["login"]
+                  if (results["sexo"] == "masculino"){
+                     document.getElementById("masculino").checked = true;
+                  }
+                  else{
+                    document.getElementById("feminino").checked = true;
+                  }
+                }
+
+              }
+            })
+            document.getElementById("buscaNome").value = "";
+            document.getElementById("buscaSobre").value = "";
+          }
+        </script>
+        <div class="container text-center mb-4" style="margin-bottom: 30px;">
             <div class="row">
-                <div class="col-12">
-                    <div class="input-group mb-3" >
-                      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    </div>
-                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <button type="button" class="btn btn-primary">Buscar Aluno</button>
-                    <button type="button" class="btn btn-primary">Cadastrar Aluno</button>
-                </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre"/>
+              </div>
+              <div class="col-md-3">
+                  <button type="button" class="btn btn-primary" id="busca" onclick="buscador()">Buscar Aluno</button>
+                  <button type="button" class="btn btn-primary" id="cadastra">Cadastrar Aluno</button>
+              </div>
             </div>
         </div>
         <div class="col-md-9">
             <div class="box box-primary" >
             <form role="form">
               <div class="box-body">
+                <?php if ($id == "0"){ ?>
                 <div class="form-group">
                   <label for="nomeUser">Nome</label>
-                  <input type="text" class="form-control" id="nomeUser" placeholder="Nome" required>
+                  <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
                 </div>
                 <div class="form-group">
                   <label for="sobrenomeUser">Sobrenome</label>
-                  <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" required>
+                  <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" <?php echo $bloqueio; ?> >
                 </div>
                 <div class="form-group">
                   <label for="emailUser">Email</label>
-                  <input type="email" class="form-control" id="emailUser" placeholder="Email" value="guilherme.lima1997@hotmail.com" disabled>
+                  <input type="email" class="form-control" id="emailUser" placeholder="Email" <?php echo $bloqueio; ?>>
                 </div>
                 <div class="form-group">
                   <label for="matriUser">Data de Matricula</label>
-                  <input type="date" class="form-control" id="matriUser" placeholder="Data de Matricula">
+                  <input type="date" class="form-control" id="matriUser" placeholder="Data de Matricula" <?php echo $bloqueio; ?>>
                 </div>
                 <div class="form-group">
                   <label for="foneUser">Telefone</label>
-                  <input type="text" class="form-control" id="foneUser" placeholder="Telefone">
+                  <input type="text" class="form-control" id="foneUser" placeholder="Telefone" <?php echo $bloqueio; ?>>
+                </div>
+                <div class="form-group">
+                  <label>Sexo: </label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="masculino" value="masculino" <?php echo $bloqueio; ?> >
+                      Masculino
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="feminino" value="feminino" <?php echo $bloqueio; ?> >
+                      Feminino
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="foneUser">Login</label>
+                  <input type="text" class="form-control" id="loginUser" placeholder="Login" <?php echo $bloqueio; ?>>
                 </div>
               </div>
+              <?php }elseif($id == "1"){ ?>
+              <div class="form-group">
+                  <label for="nomeUser">Nome</label>
+                  <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
+                </div>
+                <div class="form-group">
+                  <label for="sobrenomeUser">Sobrenome</label>
+                  <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" <?php echo $bloqueio; ?> >
+                </div>
+                <div class="form-group">
+                  <label for="emailUser">Email</label>
+                  <input type="email" class="form-control" id="emailUser" placeholder="Email" <?php echo $bloqueio; ?>>
+                </div>
+                <div class="form-group">
+                  <label for="foneUser">Telefone</label>
+                  <input type="text" class="form-control" id="foneUser" placeholder="Telefone" <?php echo $bloqueio; ?>>
+                </div>
+                <div class="form-group">
+                  <label>Sexo: </label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="masculino" value="masculino" <?php echo $bloqueio; ?> >
+                      Masculino
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="feminino" value="feminino" <?php echo $bloqueio; ?> >
+                      Feminino
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="foneUser">Login</label>
+                  <input type="text" class="form-control" id="loginUser" placeholder="Login" <?php echo $bloqueio; ?>>
+                </div>
+              <?php } ?>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
               </div>
+
             </form>
           </div>
         </div>
@@ -252,9 +361,7 @@ if (isset($_GET['id'])){
                 <button type="button" class="btn btn-danger">Excluir Cadastro</button>
             </div>
         </div>
-        <div>
-            <p>dhauisdhuasdiashudasdasuhduiashduiashduiashudihasuidhuaishdui</p>
-        </div>
+
       </section>
     </div>
 
