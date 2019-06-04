@@ -6,7 +6,7 @@ include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
-if (isset($_GET['deslogar'])) {   
+if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
@@ -204,7 +204,11 @@ if (isset($_GET['id'])){
         <div class="container text-center mb-4" style="margin-bottom: 20px;">
             <div class="row">
                 <div class="col-12">
-                    <button type="button" class="btn btn-primary">Buscar Aluno</button>    
+                    <div class="input-group mb-3" >
+                      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    </div>
+                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <button type="button" class="btn btn-primary">Buscar Aluno</button>
                     <button type="button" class="btn btn-primary">Cadastrar Aluno</button>
                 </div>
             </div>
@@ -242,7 +246,7 @@ if (isset($_GET['id'])){
         </div>
         <div class="col-md-3">
             <div style="margin-bottom: 5px;">
-                <button type="button" class="btn btn-warning">Editar Cadastro</button>    
+                <button type="button" class="btn btn-warning">Editar Cadastro</button>
             </div>
             <div>
                 <button type="button" class="btn btn-danger">Excluir Cadastro</button>
@@ -262,7 +266,7 @@ if (isset($_GET['id'])){
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
   </div>
-  
+
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>
