@@ -210,21 +210,38 @@ if (isset($_GET['id'])){
               type: "POST",
               dataType:"json",
               url: "buscador.php",
-              data: "tabela_ID="+<?php echo $id ?>+"&nome="+buscaNome+"&sobrenome="+buscaSobre,
+              data: "tabela_ID="+<?php echo $id; ?>+"&nome="+buscaNome+"&sobrenome="+buscaSobre,
               success: function(results){
                 console.log(results);
-                
-                if (<?php echo $id ?> == '0'){
+                if (<?php echo $id; ?> == '0'){
                   document.getElementById("nomeUser").value = results["nome"]
                   document.getElementById("sobrenomeUser").value = results["sobrenome"]
                   if (results["email"] != "NULL")
                     document.getElementById("emailUser").value = results["email"]
-
                   if (results["dataEntrada"] != "NULL")
                     document.getElementById("matriUser").value = results["dataEntrada"]
-
                   document.getElementById("foneUser").value = results["telefone"]
-                  
+                  document.getElementById("loginUser").value = results["login"]
+                  if (results["sexo"] == "masculino"){
+                     document.getElementById("masculino").checked = true;
+                  }
+                  else{
+                    document.getElementById("feminino").checked = true;
+                  }
+                }
+                if (<?php echo $id; ?> == '1'){
+                  document.getElementById("nomeUser").value = results["nome"]
+                  document.getElementById("sobrenomeUser").value = results["sobrenome"]
+                  if (results["email"] != "NULL")
+                    document.getElementById("emailUser").value = results["email"]
+                  document.getElementById("foneUser").value = results["telefone"]
+                  document.getElementById("loginUser").value = results["login"]
+                  if (results["sexo"] == "masculino"){
+                     document.getElementById("masculino").checked = true;
+                  }
+                  else{
+                    document.getElementById("feminino").checked = true;
+                  }
                 }
                 
               }
@@ -251,6 +268,7 @@ if (isset($_GET['id'])){
             <div class="box box-primary" >
             <form role="form">
               <div class="box-body">
+                <?php if ($id == "0"){ ?>
                 <div class="form-group">
                   <label for="nomeUser">Nome</label>
                   <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
@@ -275,21 +293,63 @@ if (isset($_GET['id'])){
                   <label>Sexo: </label>
                   <div class="radio">
                     <label>
-                      <input type="radio" id="masculino" value="masculino" > 
+                      <input type="radio" id="masculino" value="masculino" <?php echo $bloqueio; ?> > 
                       Masculino
                     </label>
                   </div>
                   <div class="radio">
                     <label>
-                      <input type="radio" id="feminino" value="feminino">
+                      <input type="radio" id="feminino" value="feminino" <?php echo $bloqueio; ?> >
                       Feminino
                     </label>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label for="foneUser">Login</label>
+                  <input type="text" class="form-control" id="loginUser" placeholder="Login" <?php echo $bloqueio; ?>>
+                </div>
               </div>
+              <?php }elseif($id == "1"){ ?>
+              <div class="form-group">
+                  <label for="nomeUser">Nome</label>
+                  <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
+                </div>
+                <div class="form-group">
+                  <label for="sobrenomeUser">Sobrenome</label>
+                  <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" <?php echo $bloqueio; ?> >
+                </div>
+                <div class="form-group">
+                  <label for="emailUser">Email</label>
+                  <input type="email" class="form-control" id="emailUser" placeholder="Email" <?php echo $bloqueio; ?>>
+                </div>
+                <div class="form-group">
+                  <label for="foneUser">Telefone</label>
+                  <input type="text" class="form-control" id="foneUser" placeholder="Telefone" <?php echo $bloqueio; ?>>
+                </div>
+                <div class="form-group">
+                  <label>Sexo: </label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="masculino" value="masculino" <?php echo $bloqueio; ?> > 
+                      Masculino
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" id="feminino" value="feminino" <?php echo $bloqueio; ?> >
+                      Feminino
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="foneUser">Login</label>
+                  <input type="text" class="form-control" id="loginUser" placeholder="Login" <?php echo $bloqueio; ?>>
+                </div>
+              <?php } ?>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
               </div>
+              
             </form>
           </div>
         </div>
