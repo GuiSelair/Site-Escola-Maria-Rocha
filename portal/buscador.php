@@ -5,7 +5,7 @@ include_once("conexao/config.php");
 include_once("conexao/function.php");
 
 // METODO DE BUSCA: NOME COMPLETO
-if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && isset($_POST["sobrenome"]) && !empty($_POST["nome"]) !empty($_POST["sobrenome"]) ){
+if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && isset($_POST["sobrenome"]) && !empty($_POST["nome"]) && !empty($_POST["sobrenome"]) ){
     $id = $_POST["tabela_ID"];
     switch ($id) {
         case '0':
@@ -19,9 +19,9 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && isset($_POST["sobrenom
             break;
         case '3':
             $tabela = "disciplina";
-            break;        
+            break;
     }
-    $buscaNome = $_POST["nome"];    
+    $buscaNome = $_POST["nome"];
     $buscaSobre = $_POST["sobrenome"];
     $sql_code = "SELECT * FROM $tabela WHERE nome='$buscaNome' AND sobrenome='$buscaSobre';";
     $sql = mysqli_query(DBConecta(), $sql_code);
@@ -30,7 +30,7 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && isset($_POST["sobrenom
     echo $cadastro;
 }
 
-
+/*
 // METODO DE BUSCA: ID
 if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"]) && !empty($_POST["idUser"]){
     $idUser = $_POST["idUser"];
@@ -51,7 +51,7 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"]) && !empty($_POST["idUse
         case '3':
             $tabela = "disciplina";
             $idTabela = "idDisciplina";
-            break;        
+            break;
     }
     $sql_code = "SELECT * FROM $tabela WHERE $idTabela = '$idUser';";
     $sql = mysqli_query(DBConecta(), $sql_code);
@@ -59,4 +59,5 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"]) && !empty($_POST["idUse
     $cadastro = json_encode($row);
     echo $cadastro;
 }
+*/
 ?>

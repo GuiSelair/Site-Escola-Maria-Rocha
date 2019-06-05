@@ -13,23 +13,21 @@ if (isset($_GET['deslogar'])) {
 
 if (isset($_POST['edita'])){
   $id = $_GET['id'];
-  
+
   switch ($id) {
     case '0':
+      $idUser = $_POST["idUser"];
       $nome = $_POST['nomeUser'];
       $sobrenome = $_POST['sobrenomeUser'];
       $email = $_POST['emailUser'];
       $login = $_POST['loginUser'];
       $dataNascimento = $_POST['dataNascimento'];
       $sexo = $_POST['sexo'];
-      $sql_code0 = "SELECT * FROM aluno WHERE nome='$nome' AND sobrenome='$sobrenome';";
-      $descubraID = mysqli_query(DBConecta(), $sql_code0);
-      if (mysqli_num_rows($descubraID)){
-        $idUser = mysqli_fetch_array($descubraID);
-        $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login' WHERE idAluno = '$idUser')";
-        $execute_sql = mysqli_query(DBConecta(), $sql_code);  
-      }
-      
+
+      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login' WHERE idAluno = '$idUser')";
+      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+
+
       if (!$execute_sql) {
         echo "<div class='alert alert-danger alert-dismissable'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -55,9 +53,9 @@ if (isset($_POST['edita'])){
       if (mysqli_num_rows($descubraID)){
         $idUser = mysqli_fetch_array($descubraID);
         $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login' WHERE idProfessor = '$idUser')";
-        $execute_sql = mysqli_query(DBConecta(), $sql_code);  
+        $execute_sql = mysqli_query(DBConecta(), $sql_code);
       }
-      
+
       if (!$execute_sql) {
         echo "<div class='alert alert-danger alert-dismissable'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -110,14 +108,14 @@ if (isset($_POST['edita'])){
             ";
       }
       break;
-    
+
   }
 
 }
 
 if (isset($_POST['salva'])){
   $id = $_GET['id'];
-  
+
   switch ($id) {
     case '0':
       $nome = $_POST['nomeUser'];
@@ -206,7 +204,7 @@ if (isset($_POST['salva'])){
             ";
       }
       break;
-    
+
   }
 
 }
@@ -243,22 +241,13 @@ if (isset($_GET['id'])){
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Portal Acadêmico</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<!--
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
--->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
-  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+
   <script src='js/jquery.min.js'></script>
   <script src='js/fullcalendar.min.js'></script>
   <script src="bower_components\fullcalendar\dist\locale\pt-br.js"></script>
@@ -401,10 +390,8 @@ if (isset($_GET['id'])){
           function buscador(){
             let buscaNome = document.getElementById("buscaNome").value;
             let buscaSobre = document.getElementById("buscaSobre").value;
+            desabilita(true, 0)
             $.ajax({
-              <?php $bloqueio = 'disabled'; 
-              $bloqueioSalvar = "disabled";
-              $bloqueioEditar = "disabled";?>
               type: "POST",
               dataType:"json",
               url: "buscador.php",
@@ -414,143 +401,158 @@ if (isset($_GET['id'])){
                 if (<?php echo $id; ?> < '2'){
                   document.getElementById("nomeUser").value = results["nome"]
                   document.getElementById("sobrenomeUser").value = results["sobrenome"]
+
                   if (results["email"] != "NULL")
                     document.getElementById("emailUser").value = results["email"]
+
                   if (results["dataEntrada"] != "NULL" && <?php echo $id; ?> != '1')
                     document.getElementById("dataNascimento").value = results["dataEntrada"]
-                  document.getElementById("foneUser").value = results["telefone"]
-                  document.getElementById("loginUser").value = results["login"]
-                  if (results["sexo"] == "Masculino"){
-                     document.getElementById("masculino").checked = true;
-                  }
-                  else{
-                    document.getElementById("feminino").checked = true;
-                  }
-                }
-                if (<?php echo $id; ?> == '2'){
-                  document.getElementById("nomeUser").value = results["nome"]
-                  document.getElementById("sobrenomeUser").value = results["sobrenome"]
-                  if (results["email"] != "NULL")
-                    document.getElementById("emailUser").value = results["email"]
-                  document.getElementById("foneUser").value = results["telefone"]
-                  document.getElementById("loginUser").value = results["login"]
-                  if (results["sexo"] == "Masculino"){
-                     document.getElementById("masculino").checked = true;
-                  }
-                  else{
-                    document.getElementById("feminino").checked = true;
-                  }
-                }
 
+                  document.getElementById("foneUser").value = results["telefone"]
+                  document.getElementById("loginUser").value = results["login"]
+
+                  if (<?php echo $id; ?> == '0')
+                    document.getElementById("idUser").value = results["idAluno"]
+                  else if (<?php echo $id; ?> == '1')
+                    document.getElementById("idUser").value = results["idProfessor"]
+
+                  if (results["sexo"] == "Masculino"){
+                     document.getElementById("masculino").checked = true;
+                  }
+                  else{
+                    document.getElementById("feminino").checked = true;
+                  }
+                }
               }
             })
             document.getElementById("buscaNome").value = "";
             document.getElementById("buscaSobre").value = "";
           }
-
+          function desabilita(opcao, tipo){
+            if (<?php echo $id; ?> < "2"){
+              document.getElementById("nomeUser").disabled = opcao
+              document.getElementById("sobrenomeUser").disabled = opcao
+              document.getElementById("foneUser").disabled = opcao
+              document.getElementById("dataNascimento").disabled = opcao
+              document.getElementById("masculino").disabled = opcao
+              document.getElementById("feminino").disabled = opcao
+              document.getElementById("loginUser").disabled = opcao
+              document.getElementById("idUser").disabled = opcao
+              document.getElementById("emailUser").disabled = opcao
+            }
+            if (tipo == 0){
+              document.getElementById("salva").disabled = opcao
+              document.getElementById("edita").disabled = opcao
+              document.getElementById("cancela").disabled = opcao
+            }
+            if (tipo == "editar"){
+              document.getElementById("edita").disabled = opcao
+              document.getElementById("cancela").disabled = opcao
+            }
+            if(tipo == "salvar"){
+              document.getElementById("salva").disabled = opcao
+              document.getElementById("cancela").disabled = opcao
+            }
+          }
           function edicao(){
-            <?php 
-              $bloqueio = "required";
-              $bloqueioEditar = "";
-            ?>
+            desabilita(false, "editar")
           }
         </script>
         <div class="container text-center mb-4" style="margin-bottom: 30px;">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre"/>
               </div>
               <div class="col-md-3">
                   <button type="button" class="btn btn-primary" id="busca" onclick="buscador()">Buscar Aluno</button>
                   <button type="button" class="btn btn-primary" id="cadastra">Cadastrar Aluno</button>
               </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-warning mb-sm-4"  onclick="edicao()">Editar Cadastro</button>
+                <button type="button" class="btn btn-danger" >Excluir Cadastro</button>
+              </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="box box-primary" >
-            <form role="form" action="" method="POST">
-              <div class="box-body">
-                <?php if ($id < "2"){ ?>
-                  <div class="form-group col-md-6">
-                    <label for="nomeUser">Nome</label>
-                    <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="sobrenomeUser">Sobrenome</label>
-                    <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" <?php echo $bloqueio; ?> >
-                  </div>
-                  <div class="form-group">
-                    <label for="emailUser">Email</label>
-                    <input type="email" class="form-control" id="emailUser" placeholder="Email" <?php echo $bloqueio; ?>>
-                  </div>
-                  <?php if ($id == '0'){ ?>
-                    <div class="form-group col-md-3">
-                      <label for="matriUser">Data de Nascimento</label>
-                      <input type="date" class="form-control" id="dataNascimento" placeholder="Data de Nascimento" <?php echo $bloqueio; ?>>
+              <form role="form" action="" method="POST" id="form">
+                <div class="box-body">
+                  <?php if ($id < "2"){ ?>
+                    <div class="form-group col-md-6">
+                      <label for="nomeUser">Nome</label>
+                      <input type="text" class="form-control" id="nomeUser" name="nomeUser" placeholder="Nome"/>
                     </div>
-                <?php } ?>
-                <div class="form-group col-md-6">
-                  <label for="foneUser">Telefone</label>
-                  <input type="text" class="form-control" id="foneUser" placeholder="Telefone" <?php echo $bloqueio; ?>>
-                </div>
-                <div class="form-group col-md-3">
-                  <label>Sexo: </label>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" id="sexo" value="Masculino" name="sexo" <?php echo $bloqueio; ?> >
-                      Masculino
-                    </label>
-                    <label>
-                      <input type="radio" id="sexo" value="Feminino" name="sexo" <?php echo $bloqueio; ?> >
-                      Feminino
-                    </label>
+                    <div class="form-group col-md-6">
+                      <label for="sobrenomeUser">Sobrenome</label>
+                      <input type="text" class="form-control" id="sobrenomeUser" name="sobrenomeUser" placeholder="Sobrenome">
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="emailUser">Email</label>
+                      <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="Email">
+                    </div>
+                    <?php if ($id == '0'){ ?>
+                      <div class="form-group col-md-3">
+                        <label for="matriUser">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" placeholder="Data de Nascimento">
+                      </div>
+                  <?php } ?>
+                  <div class="form-group col-md-6">
+                    <label for="foneUser">Telefone</label>
+                    <input type="text" class="form-control" id="foneUser" name = "foneUser" placeholder="Telefone">
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Sexo: </label>
+                    <div class="radio" name="radio">
+                      <label style="margin-right: 5px;">
+                        <input type="radio" id="masculino" value="Masculino" name="sexo">
+                        Masculino
+                      </label>
+                      <label>
+                        <input type="radio" id="feminino" value="Feminino" name="sexo">
+                        Feminino
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="loginUser">Login</label>
+                    <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="loginUser">ID/Matricula</label>
+                    <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID">
                   </div>
                 </div>
-                <div class="form-group col-md-2">
-                  <label for="loginUser">Login</label>
-                  <input type="text" class="form-control" id="loginUser" placeholder="Login" <?php echo $bloqueio; ?>>
+                <?php }elseif($id == "2"){ ?>
+                  <div class="form-group col-md-12">
+                    <label for="nomeTurma">Nome da Turma</label>
+                    <input type="text" class="form-control" id="nomeTurma" placeholder="Nome"  />
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label>Curso</label>
+                    <select class="form-control"  name="curso">
+                      <option value="">Selecione um curso</option>
+                      <option value="1">Técnico em Informática</option>
+                      <option value="2">Técnico em Secretariado</option>
+                      <option value="3">Técnico em Contabilidade</option>
+                    </select>
+                  </div>
+                <?php }elseif($id == "3"){ ?>
+                  <div class="form-group col-md-12">
+                    <label for="nomeDisc">Nome da Disciplina</label>
+                    <input type="text" class="form-control" id="nomeDisc" placeholder="Nome"  />
+                  </div>
+                <?php } ?>
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
+                  <button type="submit" class="btn btn-primary" name="edita" id="edita" style="margin-right: 5px;">Salvar Edição</button>
+                  <button type="reset" class="btn btn-warning" id="cancela">Cancelar</button>
                 </div>
-              </div>
-              <?php }elseif($id == "2"){ ?>
-                <div class="form-group">
-                  <label for="nomeTurma">Nome da Turma</label>
-                  <input type="text" class="form-control" id="nomeTurma" placeholder="Nome" <?php echo $bloqueio; ?> />
-                </div>
-                <div class="form-group col-md-4">
-                  <label>Curso</label>
-                  <select class="form-control" <?php echo $bloqueio; ?> name="curso">
-                    <option value="">Selecione um curso</option>
-                    <option value="1">Técnico em Informática</option>
-                    <option value="2">Técnico em Secretariado</option>
-                    <option value="3">Técnico em Contabilidade</option>
-                  </select>
-                </div>
-              <?php }elseif($id == "3"){ ?>
-                <div class="form-group">
-                  <label for="nomeDisc">Nome da Disciplina</label>
-                  <input type="text" class="form-control" id="nomeDisc" placeholder="Nome" <?php echo $bloqueio; ?> />
-                </div>
-              <?php } ?>
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary" name="salva" id="salva" <?php echo $bloqueioSalvar; ?> >Salvar</button>
-                <button type="submit" class="btn btn-primary" name="edita" id="edita" <?php echo $bloqueioEditar; ?> >Salvar Edição</button>
-                <button type="reset" class="btn btn-warning">Cancelar</button>
-              </div>
-            </form>
+              </form>
           </div>
         </div>
-        <div class="col-md-4">
-            <div style="margin-bottom: 5px;">
-                <button type="button" class="btn btn-warning mb-sm-4" <?php echo $bloqueio; ?> onclick="edicao()">Editar Cadastro</button>
-            </div>
-            <div>
-                <button type="button" class="btn btn-danger" <?php echo $bloqueio; ?>>Excluir Cadastro</button>
-            </div>
-        </div>
-
       </section>
     </div>
 
