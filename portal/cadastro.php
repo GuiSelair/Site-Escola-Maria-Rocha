@@ -11,25 +11,221 @@ if (isset($_GET['deslogar'])) {
   header("location: ./loginUser.php");
 }
 
+if (isset($_POST['edita'])){
+  $id = $_GET['id'];
+  
+  switch ($id) {
+    case '0':
+      $nome = $_POST['nomeUser'];
+      $sobrenome = $_POST['sobrenomeUser'];
+      $email = $_POST['emailUser'];
+      $login = $_POST['loginUser'];
+      $dataNascimento = $_POST['dataNascimento'];
+      $sexo = $_POST['sexo'];
+      $sql_code0 = "SELECT * FROM aluno WHERE nome='$nome' AND sobrenome='$sobrenome';";
+      $descubraID = mysqli_query(DBConecta(), $sql_code0);
+      if (mysqli_num_rows($descubraID)){
+        $idUser = mysqli_fetch_array($descubraID);
+        $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login' WHERE idAluno = '$idUser')";
+        $execute_sql = mysqli_query(DBConecta(), $sql_code);  
+      }
+      
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    case '1':
+      $nome = $_POST['nomeUser'];
+      $sobrenome = $_POST['sobrenomeUser'];
+      $email = $_POST['emailUser'];
+      $login = $_POST['loginUser'];
+      $sexo = $_POST['sexo'];
+      $sql_code0 = "SELECT * FROM professor WHERE nome='$nome' AND sobrenome='$sobrenome';";
+      $descubraID = mysqli_query(DBConecta(), $sql_code0);
+      if (mysqli_num_rows($descubraID)){
+        $idUser = mysqli_fetch_array($descubraID);
+        $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login' WHERE idProfessor = '$idUser')";
+        $execute_sql = mysqli_query(DBConecta(), $sql_code);  
+      }
+      
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    case '2':
+      $nomeTurma = $_POST['nomeTurma'];
+      $cursoTurma = $_POST['curso'];
+
+      $sql_code = "UPDATE turma SET idTurma = '$nomeTurma', idCurso = '$cursoTurma' WHERE idTurma = '$nomeTurma')";
+      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    case '3':
+      $nomeDisc = $_POST['nomeDisc'];
+      $sql_code = "UPDATE disciplina nome = '$nomeDisc' VALUES ('$nomeDisc')";
+      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    
+  }
+
+}
+
+if (isset($_POST['salva'])){
+  $id = $_GET['id'];
+  
+  switch ($id) {
+    case '0':
+      $nome = $_POST['nomeUser'];
+      $sobrenome = $_POST['sobrenomeUser'];
+      $email = $_POST['emailUser'];
+      $login = $_POST['loginUser'];
+      $dataNascimento = $_POST['dataNascimento'];
+      $sexo = $_POST['sexo'];
+
+      $sql_code = "INSERT INTO aluno (nome, sobrenome, dataNascimento, email, sexo, login) VALUES ('$nome','$sobrenome','$dataNascimento','$email','$sexo','$login')";
+      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    case '1':
+      $nome = $_POST['nomeUser'];
+      $sobrenome = $_POST['sobrenomeUser'];
+      $email = $_POST['emailUser'];
+      $login = $_POST['loginUser'];
+      $sexo = $_POST['sexo'];
+
+      $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, login) VALUES ('$nome','$sobrenome','$email','$sexo','$login')";
+      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    case '2':
+      $nomeTurma = $_POST['nomeTurma'];
+      $cursoTurma = $_POST['curso'];
+
+      $sql_code = "INSERT INTO turma (id, idCurso) VALUES ('$nomeTurma','$cursoTurma')";
+      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    case '3':
+      $nomeDisc = $_POST['nomeDisc'];
+      $sql_code = "INSERT INTO disciplina (nome) VALUES ('$nomeDisc')";
+      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      if (!$execute_sql) {
+        echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao Salvar!</strong>
+            </div>
+            ";
+      } else {
+        echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Operação efetuada com sucesso!</strong>
+            </div>
+            ";
+      }
+      break;
+    
+  }
+
+}
+
 if (isset($_GET['id'])){
     $id = $_GET['id'];
 
     switch ($id) {
         case '0':
             $tit = "ALUNO";
-            $sql_code = "SELECT * FROM aluno";
             break;
         case '1':
             $tit = "PROFESSOR";
-            $sql_code = "SELECT * FROM professor";
             break;
         case '2':
             $tit = "TURMA";
-            $sql_code = "SELECT * FROM turma";
             break;
         case '3':
             $tit = "DISCIPLINAS";
-            $sql_code = "SELECT * FROM disciplina";
             break;
         default:
             header("location: ./index.php");
@@ -206,37 +402,39 @@ if (isset($_GET['id'])){
             let buscaNome = document.getElementById("buscaNome").value;
             let buscaSobre = document.getElementById("buscaSobre").value;
             $.ajax({
-              <?php $bloqueio = 'disabled'; ?>
+              <?php $bloqueio = 'disabled'; 
+              $bloqueioSalvar = "disabled";
+              $bloqueioEditar = "disabled";?>
               type: "POST",
               dataType:"json",
               url: "buscador.php",
               data: "tabela_ID="+<?php echo $id; ?>+"&nome="+buscaNome+"&sobrenome="+buscaSobre,
               success: function(results){
                 console.log(results);
-                if (<?php echo $id; ?> == '0'){
+                if (<?php echo $id; ?> < '2'){
                   document.getElementById("nomeUser").value = results["nome"]
                   document.getElementById("sobrenomeUser").value = results["sobrenome"]
                   if (results["email"] != "NULL")
                     document.getElementById("emailUser").value = results["email"]
-                  if (results["dataEntrada"] != "NULL")
-                    document.getElementById("matriUser").value = results["dataEntrada"]
+                  if (results["dataEntrada"] != "NULL" && <?php echo $id; ?> != '1')
+                    document.getElementById("dataNascimento").value = results["dataEntrada"]
                   document.getElementById("foneUser").value = results["telefone"]
                   document.getElementById("loginUser").value = results["login"]
-                  if (results["sexo"] == "masculino"){
+                  if (results["sexo"] == "Masculino"){
                      document.getElementById("masculino").checked = true;
                   }
                   else{
                     document.getElementById("feminino").checked = true;
                   }
                 }
-                if (<?php echo $id; ?> == '1'){
+                if (<?php echo $id; ?> == '2'){
                   document.getElementById("nomeUser").value = results["nome"]
                   document.getElementById("sobrenomeUser").value = results["sobrenome"]
                   if (results["email"] != "NULL")
                     document.getElementById("emailUser").value = results["email"]
                   document.getElementById("foneUser").value = results["telefone"]
                   document.getElementById("loginUser").value = results["login"]
-                  if (results["sexo"] == "masculino"){
+                  if (results["sexo"] == "Masculino"){
                      document.getElementById("masculino").checked = true;
                   }
                   else{
@@ -248,6 +446,13 @@ if (isset($_GET['id'])){
             })
             document.getElementById("buscaNome").value = "";
             document.getElementById("buscaSobre").value = "";
+          }
+
+          function edicao(){
+            <?php 
+              $bloqueio = "required";
+              $bloqueioEditar = "";
+            ?>
           }
         </script>
         <div class="container text-center mb-4" style="margin-bottom: 30px;">
@@ -264,101 +469,85 @@ if (isset($_GET['id'])){
               </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="box box-primary" >
-            <form role="form">
+            <form role="form" action="" method="POST">
               <div class="box-body">
-                <?php if ($id == "0"){ ?>
-                <div class="form-group">
-                  <label for="nomeUser">Nome</label>
-                  <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
-                </div>
-                <div class="form-group">
-                  <label for="sobrenomeUser">Sobrenome</label>
-                  <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" <?php echo $bloqueio; ?> >
-                </div>
-                <div class="form-group">
-                  <label for="emailUser">Email</label>
-                  <input type="email" class="form-control" id="emailUser" placeholder="Email" <?php echo $bloqueio; ?>>
-                </div>
-                <div class="form-group">
-                  <label for="matriUser">Data de Matricula</label>
-                  <input type="date" class="form-control" id="matriUser" placeholder="Data de Matricula" <?php echo $bloqueio; ?>>
-                </div>
-                <div class="form-group">
+                <?php if ($id < "2"){ ?>
+                  <div class="form-group col-md-6">
+                    <label for="nomeUser">Nome</label>
+                    <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="sobrenomeUser">Sobrenome</label>
+                    <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" <?php echo $bloqueio; ?> >
+                  </div>
+                  <div class="form-group">
+                    <label for="emailUser">Email</label>
+                    <input type="email" class="form-control" id="emailUser" placeholder="Email" <?php echo $bloqueio; ?>>
+                  </div>
+                  <?php if ($id == '0'){ ?>
+                    <div class="form-group col-md-3">
+                      <label for="matriUser">Data de Nascimento</label>
+                      <input type="date" class="form-control" id="dataNascimento" placeholder="Data de Nascimento" <?php echo $bloqueio; ?>>
+                    </div>
+                <?php } ?>
+                <div class="form-group col-md-6">
                   <label for="foneUser">Telefone</label>
                   <input type="text" class="form-control" id="foneUser" placeholder="Telefone" <?php echo $bloqueio; ?>>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-3">
                   <label>Sexo: </label>
                   <div class="radio">
                     <label>
-                      <input type="radio" id="masculino" value="masculino" <?php echo $bloqueio; ?> >
+                      <input type="radio" id="sexo" value="Masculino" name="sexo" <?php echo $bloqueio; ?> >
                       Masculino
                     </label>
-                  </div>
-                  <div class="radio">
                     <label>
-                      <input type="radio" id="feminino" value="feminino" <?php echo $bloqueio; ?> >
+                      <input type="radio" id="sexo" value="Feminino" name="sexo" <?php echo $bloqueio; ?> >
                       Feminino
                     </label>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="foneUser">Login</label>
+                <div class="form-group col-md-2">
+                  <label for="loginUser">Login</label>
                   <input type="text" class="form-control" id="loginUser" placeholder="Login" <?php echo $bloqueio; ?>>
                 </div>
               </div>
-              <?php }elseif($id == "1"){ ?>
-              <div class="form-group">
-                  <label for="nomeUser">Nome</label>
-                  <input type="text" class="form-control" id="nomeUser" placeholder="Nome" <?php echo $bloqueio; ?> />
-                </div>
+              <?php }elseif($id == "2"){ ?>
                 <div class="form-group">
-                  <label for="sobrenomeUser">Sobrenome</label>
-                  <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome" <?php echo $bloqueio; ?> >
+                  <label for="nomeTurma">Nome da Turma</label>
+                  <input type="text" class="form-control" id="nomeTurma" placeholder="Nome" <?php echo $bloqueio; ?> />
                 </div>
-                <div class="form-group">
-                  <label for="emailUser">Email</label>
-                  <input type="email" class="form-control" id="emailUser" placeholder="Email" <?php echo $bloqueio; ?>>
+                <div class="form-group col-md-4">
+                  <label>Curso</label>
+                  <select class="form-control" <?php echo $bloqueio; ?> name="curso">
+                    <option value="">Selecione um curso</option>
+                    <option value="1">Técnico em Informática</option>
+                    <option value="2">Técnico em Secretariado</option>
+                    <option value="3">Técnico em Contabilidade</option>
+                  </select>
                 </div>
+              <?php }elseif($id == "3"){ ?>
                 <div class="form-group">
-                  <label for="foneUser">Telefone</label>
-                  <input type="text" class="form-control" id="foneUser" placeholder="Telefone" <?php echo $bloqueio; ?>>
-                </div>
-                <div class="form-group">
-                  <label>Sexo: </label>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" id="masculino" value="masculino" <?php echo $bloqueio; ?> >
-                      Masculino
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" id="feminino" value="feminino" <?php echo $bloqueio; ?> >
-                      Feminino
-                    </label>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="foneUser">Login</label>
-                  <input type="text" class="form-control" id="loginUser" placeholder="Login" <?php echo $bloqueio; ?>>
+                  <label for="nomeDisc">Nome da Disciplina</label>
+                  <input type="text" class="form-control" id="nomeDisc" placeholder="Nome" <?php echo $bloqueio; ?> />
                 </div>
               <?php } ?>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" class="btn btn-primary" name="salva" id="salva" <?php echo $bloqueioSalvar; ?> >Salvar</button>
+                <button type="submit" class="btn btn-primary" name="edita" id="edita" <?php echo $bloqueioEditar; ?> >Salvar Edição</button>
+                <button type="reset" class="btn btn-warning">Cancelar</button>
               </div>
-
             </form>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div style="margin-bottom: 5px;">
-                <button type="button" class="btn btn-warning">Editar Cadastro</button>
+                <button type="button" class="btn btn-warning mb-sm-4" <?php echo $bloqueio; ?> onclick="edicao()">Editar Cadastro</button>
             </div>
             <div>
-                <button type="button" class="btn btn-danger">Excluir Cadastro</button>
+                <button type="button" class="btn btn-danger" <?php echo $bloqueio; ?>>Excluir Cadastro</button>
             </div>
         </div>
 
