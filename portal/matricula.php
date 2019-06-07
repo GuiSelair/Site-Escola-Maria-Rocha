@@ -26,8 +26,6 @@ if (isset($_GET['deslogar'])) {
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
-  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
   <script src='js/jquery.min.js'></script>
   <script src='js/fullcalendar.min.js'></script>
   <script src="bower_components\fullcalendar\dist\locale\pt-br.js"></script>
@@ -55,7 +53,27 @@ if (isset($_GET['deslogar'])) {
           <ul class="nav navbar-nav">
 
             <!-- Notificações -->
-            <?php include_once("notificacoes.php") ?>
+            <li class="dropdown notifications-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-danger">100</span>
+                <!--QUANDO HÁ NOTIFICAÇÕES NÃO LIDAS-->
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">Você tem 100 notificações</li>
+                <li>
+                  <ul class="menu">
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-users text-aqua"></i> Aviso de Reunião dia ...
+                      </a>
+                    </li>
+
+                  </ul>
+                </li>
+                <li class="footer"><a href="#">Ver mais</a></li>
+              </ul>
+            </li>
 
             <!-- Conta do usuario -->
             <li class="dropdown user user-menu ">
@@ -137,8 +155,8 @@ if (isset($_GET['deslogar'])) {
               </span>
             </a>
             <ul class="treeview-menu text-center">
-              <li><a href="cadastro.php?id=0">Aluno na turma</a></li>
-              <li><a href="cadastro.php?id=1">Professor para disciplina</a></li>
+              <li><a href="matricula.php">Aluno na turma</a></li>
+              <li><a href="matricula.php">Professor para disciplina</a></li>
             </ul>
           </li>
           <?php } ?>
@@ -157,16 +175,7 @@ if (isset($_GET['deslogar'])) {
 
       <!-- Área com Conteudo -->
       <section class="content ">
-        <div class="row ">
-          <div class="col-md-10 col-lg-12">
-            <div class="box box-primary">
-              <div class="box-body no-padding">
-                <!-- THE CALENDAR -->
-                <div id="calendar"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </section>
     </div>
 
@@ -178,24 +187,7 @@ if (isset($_GET['deslogar'])) {
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
   </div>
-  <script>
-			$(document).ready(function() {
-				$('#calendar').fullCalendar({
-					header: {
-						left: 'prev,next today',
-						center: 'title',
-						right: 'month,agendaWeek,agendaDay'
-					},
-					defaultDate: Date(),
-					navLinks: true, // can click day/week names to navigate views
-					editable: false,
-          events: "eventos.php",
-          eventLimit: true, // allow "more" link when too many events
-          contentHeight: 500,
-          eventColor: '#378006',
-				});
-			});
-	</script>
+
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>

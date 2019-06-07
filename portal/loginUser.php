@@ -21,6 +21,7 @@
             $_SESSION["logado"] = true;
             $_SESSION["user"] = $login;
             $_SESSION["tipo"] = "Administrador";
+            $_SESSION["id"] = $dados['idAdministrador'];
             $_SESSION["nome"] = $dados['nome']." ".$dados['sobrenome'];
             header("location: ./index.php");
         }
@@ -32,6 +33,7 @@
                 $_SESSION["logado"] = true;
                 $_SESSION["user"] = $login;
                 $_SESSION["tipo"] = "Professor";
+                $_SESSION["id"] = $dados['idProfessor'];
                 $_SESSION["nome"] = $dados['nome']." ".$dados['sobrenome'];
                 header("location: ./index.php");
             }
@@ -43,6 +45,7 @@
                     $_SESSION["logado"] = true;
                     $_SESSION["user"] = $login;
                     $_SESSION["tipo"] = "Aluno";
+                    $_SESSION["id"] = $dados['idAluno'];
                     $_SESSION["nome"] = $dados['nome']." ".$dados['sobrenome'];
                     header("location: ./index.php");
                 }

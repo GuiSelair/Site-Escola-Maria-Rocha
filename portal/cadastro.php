@@ -364,10 +364,21 @@ if (isset($_GET['id'])){
               </span>
             </a>
             <ul class="treeview-menu text-center">
-              <li class="active"><a href="cadastro.php?id=0">Aluno</a></li>
-              <li><a href="cadastro.php?id=1">Professor</a></li>
-              <li><a href="cadastro.php?id=2">Turma</a></li>
-              <li><a href="cadastro.php?id=3">Disciplinas</a></li>
+              <li <?php if ($id == "0") echo "class='active'" ?>><a href="cadastro.php?id=0">Aluno</a></li>
+              <li <?php if ($id == "1") echo "class='active'" ?>><a href="cadastro.php?id=1">Professor</a></li>
+              <li <?php if ($id == "2") echo "class='active'" ?>><a href="cadastro.php?id=2">Turma</a></li>
+              <li <?php if ($id == "3") echo "class='active'" ?>><a href="cadastro.php?id=3">Disciplinas</a></li>
+            </ul>
+          </li>
+          <li class="treeview">
+            <a href="#"><i class="fa fa-id-badge"></i><span>Matricula</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu text-center">
+              <li><a href="matricula.php">Aluno na turma</a></li>
+              <li><a href="matricula.php">Professor para disciplina</a></li>
             </ul>
           </li>
           <?php } ?>
@@ -430,15 +441,11 @@ if (isset($_GET['id'])){
           }
           function desabilita(opcao, tipo){
             if (<?php echo $id; ?> < "2"){
-              document.getElementById("nomeUser").disabled = opcao
-              document.getElementById("sobrenomeUser").disabled = opcao
-              document.getElementById("foneUser").disabled = opcao
-              document.getElementById("dataNascimento").disabled = opcao
-              document.getElementById("masculino").disabled = opcao
-              document.getElementById("feminino").disabled = opcao
-              document.getElementById("loginUser").disabled = opcao
-              document.getElementById("idUser").disabled = opcao
-              document.getElementById("emailUser").disabled = opcao
+              let form = document.querySelectorAll("#form-cadastro [id]");
+              form.forEach(function(elemento, index){
+                console.log(elemento);
+                elemento.disabled = opcao
+              });
             }
             if (tipo == 0){
               document.getElementById("salva").disabled = opcao
@@ -478,7 +485,7 @@ if (isset($_GET['id'])){
         </div>
         <div class="col-md-10">
             <div class="box box-primary" >
-              <form role="form" action="" method="POST" id="form">
+              <form role="form" action="" method="POST" id="form-cadastro">
                 <div class="box-body">
                   <?php if ($id < "2"){ ?>
                     <div class="form-group col-md-6">
