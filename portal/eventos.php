@@ -26,6 +26,6 @@ if ($_SESSION["tipo"] == "Aluno"){
 		}
 		echo json_encode($noticeTurmaResults);
 	}
-
+// ALTERAR O NOME DA COR NO BD PARA COLOR
 }
 ?>

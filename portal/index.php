@@ -169,6 +169,38 @@ if (isset($_GET['deslogar'])) {
         </div>
       </section>
     </div>
+    <div class="modal fade" id="visualiza" tabindex="-1" role="dialog" aria-labelledby="visualiza" aria-hidden="true">
+      <?php include "eventos.php"; ?>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="visualiza">Informações sobre a postagem:</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+              <span aria-hidden="true">&times;</span> <!--X de fechar-->
+            </button>
+          </div>
+          <div class="modal-body">
+            <dl class="dl-horizontal">
+              <dt>ID:</dt>
+              <dd id="id"></dd>
+              <dt>Titulo:</dt>
+              <dd id="title"></dd>
+              <dt>Descricao:</dt>
+              <dd id="descricao"></dd>
+              <dt>Postado por:</dt>
+              <dd id="postador"></dd>
+              <dt>De: </dt>
+              <dd id="start"></dd>
+              <dt>Até: </dt>
+              <dd id="end"></dd>
+            </dl>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Rodapé -->
     <footer class="main-footer">
@@ -190,9 +222,19 @@ if (isset($_GET['deslogar'])) {
 					navLinks: true, // can click day/week names to navigate views
 					editable: false,
           events: "eventos.php",
-          eventLimit: true, // allow "more" link when too many events
+          eventLimit: true, 
           contentHeight: 500,
-          eventColor: '#378006',
+          selectable: true,
+          eventClick: function(event) {
+            $("#visualiza #title").text(event.title)
+            $("#visualiza #id").text(event.id)
+            $("#visualiza #descricao").text(event.descricao)
+            $("#visualiza #start").text(event.start.format("DD/MM/YYYY HH:mm"))
+            $("#visualiza #end").text(event.end.format("DD/MM/YYYY HH:mm"))
+            $("#visualiza #postador").text(event.postador)
+            $('#visualiza').modal('show')
+            info.el.style.borderColor = 'red';  //Cor da borda ao selecionar um elemento
+          }
 				});
 			});
 	</script>

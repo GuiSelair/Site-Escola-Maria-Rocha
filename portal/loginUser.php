@@ -10,10 +10,10 @@
 
         $login = mysqli_real_escape_string($conn, $_POST['login']);
         $senha = mysqli_real_escape_string($conn, $_POST['senha']);
-        //$cript = md5($senha);
+        $cript = md5($senha);
 
 
-        $sql_code = "SELECT * FROM `administrador` WHERE `login` = '$login' AND `senha` = '$senha';";
+        $sql_code = "SELECT * FROM `administrador` WHERE `login` = '$login' AND `senha` = '$cript';";
         $verifica = mysqli_query($conn, $sql_code);
 
         if (mysqli_num_rows($verifica)){
@@ -26,7 +26,7 @@
             header("location: ./index.php");
         }
         else{
-            $sql_code = "SELECT * FROM `professor` WHERE `login` = '$login' AND `senha` = '$senha';";
+            $sql_code = "SELECT * FROM `professor` WHERE `login` = '$login' AND `senha` = '$cript';";
             $verifica = mysqli_query($conn, $sql_code);
             if (mysqli_num_rows($verifica)){
                 $dados = mysqli_fetch_assoc($verifica);
@@ -38,7 +38,7 @@
                 header("location: ./index.php");
             }
             else{
-                $sql_code = "SELECT * FROM `aluno` WHERE `login` = '$login' AND `senha` = '$senha';";
+                $sql_code = "SELECT * FROM `aluno` WHERE `login` = '$login' AND `senha` = '$cript';";
                 $verifica = mysqli_query($conn, $sql_code);
                 if (mysqli_num_rows($verifica)){
                     $dados = mysqli_fetch_assoc($verifica);
@@ -131,7 +131,7 @@
             <input type="password" id="inputPassword" class="form-control rounded" placeholder="Senha" name="senha" required>
             <div class="checkbox mb-3">
                 <label>
-                    <a href="#">Esqueceu sua senha?</a>
+                    <a href="./recupera.php">Esqueceu sua senha?</a>
                 </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit" name="entrar">Entrar</button>
