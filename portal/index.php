@@ -10,6 +10,10 @@ if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
+
+if (!isset($_SESSION["id"])){
+  header("location: ./loginUser.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +32,13 @@ if (isset($_GET['deslogar'])) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
   <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
+  <!--
   <script src='js/jquery.min.js'></script>
   <script src='js/fullcalendar.min.js'></script>
-  <script src="bower_components\fullcalendar\dist\locale\pt-br.js"></script>
+  -->
+  
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -67,7 +75,7 @@ if (isset($_GET['deslogar'])) {
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Senha</a>
+                    <a href="./redefine.php" class="btn btn-default btn-flat">Senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -170,19 +178,16 @@ if (isset($_GET['deslogar'])) {
       </section>
     </div>
     <div class="modal fade" id="visualiza" tabindex="-1" role="dialog" aria-labelledby="visualiza" aria-hidden="true">
-      <?php include "eventos.php"; ?>
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="visualiza">Informações sobre a postagem:</h5>
+            <h4 class="modal-title" id="visualiza">Informações sobre a postagem:</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
               <span aria-hidden="true">&times;</span> <!--X de fechar-->
             </button>
           </div>
           <div class="modal-body">
             <dl class="dl-horizontal">
-              <dt>ID:</dt>
-              <dd id="id"></dd>
               <dt>Titulo:</dt>
               <dd id="title"></dd>
               <dt>Descricao:</dt>
@@ -213,6 +218,7 @@ if (isset($_GET['deslogar'])) {
   <script>
 			$(document).ready(function() {
 				$('#calendar').fullCalendar({
+          locale: "pt-br",
 					header: {
 						left: 'prev,next today',
 						center: 'title',
@@ -227,13 +233,11 @@ if (isset($_GET['deslogar'])) {
           selectable: true,
           eventClick: function(event) {
             $("#visualiza #title").text(event.title)
-            $("#visualiza #id").text(event.id)
-            $("#visualiza #descricao").text(event.descricao)
+            $("#visualiza #descricao").text(event.description)
             $("#visualiza #start").text(event.start.format("DD/MM/YYYY HH:mm"))
             $("#visualiza #end").text(event.end.format("DD/MM/YYYY HH:mm"))
             $("#visualiza #postador").text(event.postador)
             $('#visualiza').modal('show')
-            info.el.style.borderColor = 'red';  //Cor da borda ao selecionar um elemento
           }
 				});
 			});

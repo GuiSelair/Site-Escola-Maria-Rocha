@@ -10,10 +10,10 @@ if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
-
 if (!isset($_SESSION["id"])){
-  header("location: ./loginUser.php");
+    header("location: ./loginUser.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +30,11 @@ if (!isset($_SESSION["id"])){
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <script src='js/jquery.min.js'></script>
-  <script src='js/fullcalendar.min.js'></script>
-  <script src="bower_components\fullcalendar\dist\locale\pt-br.js"></script>
+  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
+  
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -139,8 +141,8 @@ if (!isset($_SESSION["id"])){
               </span>
             </a>
             <ul class="treeview-menu text-center">
-              <li><a href="matricula.php">Aluno na turma</a></li>
-              <li><a href="matricula.php">Professor para disciplina</a></li>
+              <li><a href="cadastro.php?id=0">Aluno na turma</a></li>
+              <li><a href="cadastro.php?id=1">Professor para disciplina</a></li>
             </ul>
           </li>
           <?php } ?>
@@ -152,16 +154,22 @@ if (!isset($_SESSION["id"])){
     <div class="content-wrapper">
       <section class="content-header">
         <h1>
-          INICIO
+          ADICIONAR EVENTO AO CALENDÁRIO
           <!--NOME DA PAGINA-->
         </h1>
       </section>
-
-      <!-- Área com Conteudo -->
-      <section class="content ">
-
+      <section class="content">
+        <div class="col-md-12">
+            <div class="box box-primary" >
+              <form role="form" action="" method="POST" id="form-cadastro">
+                <div class="box-body">
+                </div>
+              </form>
+          </div>
+        </div>
       </section>
     </div>
+    
 
     <!-- Rodapé -->
     <footer class="main-footer">
@@ -171,7 +179,7 @@ if (!isset($_SESSION["id"])){
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
   </div>
-
+  
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>

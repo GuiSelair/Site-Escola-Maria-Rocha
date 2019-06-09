@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    //session_start();
 
     include_once("conexao/config.php");
     include_once("conexao/conexao.php");
@@ -7,77 +7,40 @@
 
     if(isset($_POST['envia'])) {
 
-        $login = mysqli_real_escape_string($conn, $_POST['login']);
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $login = $_POST['login'];
+        $email = $_POST['email'];
 
-        $sql_code = "SELECT * FROM `administrador` WHERE `login` = '$login' AND `email` = '$email';";
+    
+        $sql_code = "SELECT * FROM `aluno` WHERE `login` = '$login' AND `email` = '$email';";
         $verifica = mysqli_query(DBConecta(), $sql_code);
-
         if (mysqli_num_rows($verifica)){
             $dados = mysqli_fetch_assoc($verifica);
-            $novaSenha = substr($dados["login"],0,2).substr($dados["email"],0,5);
+            $novaSenha = substr($dados["login"],0,2).substr($dados["dataNascimento"],0,4);
             $cript = md5($novaSenha);
-            $id = $dados['idAdministrador'];
-            $sql_code = "UPDATE administrador SET senha='$cript' WHERE idAdministrador='$id';";
+            $id = $dados['idAluno'];
+            $sql_code = "UPDATE aluno SET senha='$cript' WHERE idAluno=$id;";
             $atualiza = mysqli_query(DBConecta(), $sql_code);
-                if($atualiza)
-                    echo "<div class='alert alert-success alert-dismissable'>
+            if($atualiza)
+                echo "<div class='alert alert-warning alert-dismissable status'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Senha temporaria ativa! Altere para um senha mais segura o quanto antes!</strong>
+                </div>";
+            else{
+                echo "<div class='alert alert-danger alert-dismissable status'>
                     <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                    <strong>Senha temporaria ativada</strong>
-                    </div>
-                    ";
-                else{
-                    echo "<script>alert('Erro ao ativar senha temporaria')</script>";
-                }
+                    <strong>Erro ao ativar senha temporaria! Verifique sua conexão</strong>
+                    </div>";
+            }
             
         }
-        else{/*
-            $sql_code = "SELECT * FROM `professor` WHERE `login` = '$login' AND `email` = '$email';";
-            $verifica = mysqli_query(DBConecta(), $sql_code);
-            if (mysqli_num_rows($verifica)){
-                $dados = mysqli_fetch_assoc($verifica);
-                $novaSenha = substr($dados["login"],0,2).substr($dados["email"],0,5);
-                $cript = md5($novaSenha);
-                $id = $dados['idProfessor'];
-                $sql_code = "UPDATE professor SET senha='$cript' WHERE idProfessor='$id';";
-                $atualiza = mysqli_query(DBConecta(), $sql_code);
-                    if($atualiza)
-                        echo "<div class='alert alert-success alert-dismissable'>
-                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                        <strong>Senha temporaria ativada</strong>
-                        </div>
-                        ";
-                    else{
-                        echo "<script>alert('Erro ao ativar senha temporaria')</script>";
-                    }
-                
-            }
-            else{*/
-                $sql_code = "SELECT * FROM `aluno` WHERE `login` = '$login' AND `email` = '$email';";
-                $verifica = mysqli_query(DBConecta(), $sql_code);
-                if (mysqli_num_rows($verifica)){
-                    $dados = mysqli_fetch_assoc($verifica);
-                    $novaSenha = substr($dados["login"],0,2).substr($dados["dataNascimento"],0,4);
-                    $cript = md5($novaSenha);
-                    $id = $dados['idAluno'];
-                    $sql_code = "UPDATE aluno SET senha='$cript' WHERE idAluno='$id';";
-                    $atualiza = mysqli_query(DBConecta(), $sql_code);
-                    if($atualiza)
-                        echo "<div class='alert alert-success alert-dismissable'>
-                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                        <strong>Senha temporaria ativada</strong>
-                        </div>
-                        ";
-                    else{
-                        echo "<script>alert('Erro ao ativar senha temporaria')</script>";
-                    }
-                    
-                }
-                else{
-                    echo "<script>alert('Usuário não cadastrado!')</script>";
-                }
-            //}
+        else{
+            echo "<div class='alert alert-danger alert-dismissable status'>
+                    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Usuário não cadastrado!</strong>
+                    </div>";
+            
         }
+        
     }
 ?>
 
@@ -144,6 +107,11 @@
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
             }
+            .status {
+                position: absolute;
+                width: 100%;
+                top:0px;
+            }
         </style>
 
     </head>
@@ -151,8 +119,8 @@
         <form class="form-signin" action="" method="POST">
             <img class="mb-4" src="../img/Login.png" alt="" width="120" height="150">
             <h3 class="h4 mb-3 font-weight-normal">Recuperação de Senha</h3>
-            <input type="text" id="inputLogin" class="form-control mb-2 rounded" placeholder="Login" name="login" required autofocus>
-            <input type="email" id="inputEmail" class="form-control rounded" placeholder="Email" name="email" required>
+            <input type="text" id="login" class="form-control mb-2 rounded" placeholder="Login" name="login" required autofocus>
+            <input type="email" id="email" class="form-control rounded" placeholder="Email" name="email" required>
             <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" name="envia">Enviar</button>
             <a href="./loginUser.php" class="btn btn-lg btn-primary btn-block rounded" >Voltar</a>
             <p class="mt-4 mb-2"><strong>SENHA TEMPORARIA:</strong> Quando ativa sua senha passa a ser os 2 primeiras letras de seu LOGIN e o ano que você nasceu (AAAA). </p>

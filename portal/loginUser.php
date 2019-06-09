@@ -13,7 +13,7 @@
         $cript = md5($senha);
 
 
-        $sql_code = "SELECT * FROM `administrador` WHERE `login` = '$login' AND `senha` = '$cript';";
+        $sql_code = "SELECT * FROM `administrador` WHERE `login` = '$login' AND `senha` = '$senha';";
         $verifica = mysqli_query($conn, $sql_code);
 
         if (mysqli_num_rows($verifica)){
@@ -26,7 +26,7 @@
             header("location: ./index.php");
         }
         else{
-            $sql_code = "SELECT * FROM `professor` WHERE `login` = '$login' AND `senha` = '$cript';";
+            $sql_code = "SELECT * FROM `professor` WHERE `login` = '$login' AND `senha` = '$senha';";
             $verifica = mysqli_query($conn, $sql_code);
             if (mysqli_num_rows($verifica)){
                 $dados = mysqli_fetch_assoc($verifica);
@@ -50,7 +50,10 @@
                     header("location: ./index.php");
                 }
                 else{
-                    echo "<script>alert('Usuário ou Senha inválida!')</script>";
+                    echo "<div class='alert alert-danger alert-dismissable status'>
+                    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Usuário ou Senha inválida!</strong>
+                    </div>";
                 }
             }
         }
@@ -93,10 +96,6 @@
                 margin: 0 auto;
             }
 
-            .form-signin .checkbox {
-                font-weight: 400;
-            }
-
             .form-signin .form-control {
                 position: relative;
                 box-sizing: border-box;
@@ -120,11 +119,17 @@
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
             }
+            .status {
+                position: absolute;
+                width: 100%;
+                top:0px;
+            }
         </style>
 
     </head>
     <body class="text-center">
         <form class="form-signin" action="" method="POST">
+            
             <img class="mb-4" src="../img/Login.png" alt="" width="120" height="150">
             <h3 class="h4 mb-3 font-weight-normal">Entrar no Portal Acadêmico</h3>
             <input type="text" id="inputEmail" class="form-control mb-2 rounded" placeholder="Login" name="login" required autofocus>

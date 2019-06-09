@@ -1,8 +1,9 @@
 <?php
 $linha = NULL;
+
 if ($_SESSION["tipo"] == "Aluno"){
-  $sql_code1 = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno`=".$_SESSION["id"];	//ENCONTRA AS TURMAS DO ALUNO
-	$turmaAluno = mysqli_query(DBConecta(), $sql_code1);
+  $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno`=".$_SESSION["id"];	//ENCONTRA AS TURMAS DO ALUNO
+	$turmaAluno = mysqli_query(DBConecta(), $sql_code);
   $linha = mysqli_num_rows($turmaAluno);
 	if ($linha){
 		while ($turmaAlunoNum = mysqli_fetch_assoc($turmaAluno)){
@@ -21,16 +22,18 @@ if ($_SESSION["tipo"] == "Aluno"){
 	}
 }
  ?>
-<script type="text/javascript">
-  function notifica(){
-    <?php $linha = 0; ?>
-  }
-</script>
 
-<li class="dropdown notifications-menu">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="notifica()">
+ <script>
+    function desabilita(){
+      $("#conta").hide();
+      
+    }
+ </script>
+
+<li class="dropdown notifications-menu" >
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="desabilita()">
     <i class="fa fa-bell-o"></i>
-    <span class="label label-danger"><?php if ($linha != 0) echo $linha; ?></span>
+    <span class="label label-danger" id="conta"><?php if ($linha != 0) echo $linha; ?></span>
     <!--QUANDO HÁ NOTIFICAÇÕES NÃO LIDAS-->
   </a>
   <ul class="dropdown-menu">
@@ -43,7 +46,7 @@ if ($_SESSION["tipo"] == "Aluno"){
             for ($i = 0; $i < count($noticeTurmaResults) || $i > 3; $i++){
           ?>
           <a href="#">
-            <i class="fa fa-users text-aqua"></i> <?php echo $noticeTurmaResults[$i]["title"]." - ".$noticeTurmaResults[$i]["postador"]; ?>
+            <i class="fa fa-users text-aqua"></i> <?php echo $noticeTurmaResults[$i]["title"]." - ".date("d/m/Y", strtotime($noticeTurmaResults[$i]["start"])); ?>
           </a>
           <?php }} ?>
         </li>

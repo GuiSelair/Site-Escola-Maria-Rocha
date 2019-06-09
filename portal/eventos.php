@@ -2,15 +2,16 @@
 
 session_start();
 
+
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
 if ($_SESSION["tipo"] == "Aluno"){
-//ACHA TURMA(s) DO ALUNO
-	$sql_code1 = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno`=".$_SESSION["id"];	//ENCONTRA AS TURMAS DO ALUNO
+	//ACHA TURMA(s) DO ALUNO
+	$sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno`=".$_SESSION["id"];	//ENCONTRA AS TURMAS DO ALUNO
 
-	$turmaAluno = mysqli_query(DBConecta(), $sql_code1);
+	$turmaAluno = mysqli_query(DBConecta(), $sql_code);
 	if (mysqli_num_rows($turmaAluno)){
 		while ($turmaAlunoNum = mysqli_fetch_assoc($turmaAluno)){
 			$turmaAlunoResults[] = $turmaAlunoNum; // IDs DA TURMA DO ALUNO
@@ -26,6 +27,5 @@ if ($_SESSION["tipo"] == "Aluno"){
 		}
 		echo json_encode($noticeTurmaResults);
 	}
-// ALTERAR O NOME DA COR NO BD PARA COLOR
 }
 ?>
