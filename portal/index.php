@@ -233,7 +233,7 @@ if (!isset($_SESSION["id"])){
           selectable: true,
           eventClick: function(event) {
             $("#visualiza #title").text(event.title)
-            $("#visualiza #descricao").text(event.description)
+            $("#visualiza #descricao").html(event.description)
             $("#visualiza #start").text(event.start.format("DD/MM/YYYY HH:mm"))
             $("#visualiza #end").text(event.end.format("DD/MM/YYYY HH:mm"))
             $("#visualiza #postador").text(event.postador)

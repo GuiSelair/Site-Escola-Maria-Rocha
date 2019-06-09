@@ -54,9 +54,11 @@ if (isset($_POST['edita'])){
       $login = $_POST['loginUser'];
       $sexo = $_POST['sexo'];
       $telefone = $_POST["foneUser"];
-      $senha = $_POST["senhaprof"];
+      $senha = mysqli_real_escape_string(DBConecta(), $_POST['senhaprof']);
+      //$senha = $_POST["senhaprof"];
+      $cript = md5($senha);
 
-      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', senha='$senha' WHERE idProfessor = $idUser";
+      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', senha = '$cript' WHERE idProfessor = $idUser";
       $execute_sql = mysqli_query(DBConecta(), $sql_code);
       
 
@@ -134,7 +136,7 @@ if (isset($_POST['salva'])){
       $senha = substr($login,0,2).substr($dataNascimento,0,4);
       $cript = md5($senha);
 
-      $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$senha')";
+      $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript')";
       
       $execute_sql = mysqli_query(DBConecta(), $sql_code);
 
@@ -162,7 +164,7 @@ if (isset($_POST['salva'])){
       $senha = substr($login,0,2).substr($email,0,4);
       $cript = md5($senha);
 
-      $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$senha')";
+      $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript')";
       $execute_sql = mysqli_query(DBConecta(), $sql_code);
 
       if (!$execute_sql) {
@@ -402,7 +404,7 @@ if (isset($_GET['id'])){
               url: "buscador.php",
               data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
               success: function(results){
-                //console.log(results);
+                console.log(results);
                 <?php if($id < '2'){ ?>
                   document.getElementById("nomeUser").value = results["nome"]
                   document.getElementById("sobrenomeUser").value = results["sobrenome"]
@@ -416,13 +418,13 @@ if (isset($_GET['id'])){
                   document.getElementById("foneUser").value = results["telefone"]
                   document.getElementById("loginUser").value = results["login"]
 
-                  if (<?php echo $id; ?> == '0')
+                  <?php if ($id == "0"){ ?>
                     document.getElementById("idUser").value = results["idAluno"]
-                  else if (<?php echo $id; ?> == '1')
+                  <?php }else{ ?>
                     document.getElementById("idUser").value = results["idProfessor"]
-                    document.getElementById("senhaProf").value = results["senha"]
+                  <?php } ?>
 
-                  if (results["sexo"] == "Masculino"){
+                  if (results["sexo"] == "Masculino"){  /// BUGADOOOOOOOOOOOOOOOOOO!
                      document.getElementById("masculino").checked = true;
                   }
                   else{
@@ -444,7 +446,7 @@ if (isset($_GET['id'])){
             console.log(opcao);
             let form = document.querySelectorAll("#form-cadastro [id]");
             form.forEach(function(elemento, index){
-              console.log(elemento);
+              //console.log(elemento);
               elemento.disabled = opcao
             });
             if (tipo == 0){
@@ -463,6 +465,7 @@ if (isset($_GET['id'])){
             $('#edita').show();
             $("#salva").hide();
             $("#senhaprofedit").show();
+            $("#idMatricula").show();
             
           }
           
@@ -531,7 +534,7 @@ if (isset($_GET['id'])){
                   </div>
                   <div class="form-group col-md-3" >
                     <label>Sexo: </label>
-                    <div class="radio" name="radio" >
+                    <div class="radio"  >
                       <label style="margin-right: 5px;">
                         <input type="radio" id="masculino" value="Masculino" name="sexo" >
                         Masculino
@@ -546,10 +549,12 @@ if (isset($_GET['id'])){
                     <label for="loginUser">Login</label>
                     <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
                   </div>
+                  <?php if($id == "1"){ ?>
                   <div class="form-group col-md-3" id = "senhaprofedit">
                     <label for="senhaprof">Senha</label>
-                    <input type="text" class="form-control" id="senhaprof" name="senhaprof" placeholder="senha" required>
+                    <input type="text" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
                   </div>
+                  <?php } ?>
                   <div class="form-group col-md-4" id ="idMatricula">
                     <label for="loginUser">ID/Matricula</label>
                     <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>

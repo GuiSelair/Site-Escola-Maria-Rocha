@@ -10,9 +10,50 @@ if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
+
 if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
 }
+
+
+// PESQUISA DE TURMAS 
+
+if ($_SESSION["tipo"] == "Professor"){
+  $id = $_SESSION["id"];
+  $sql_code = "SELECT `idTurma` FROM `turma-professor` WHERE `idProfessor`=$id";
+  $results = mysqli_query(DBConecta(),$sql_code);
+}
+
+if (isset($_POST["salva"])){
+  $turma = $_POST["turma"];
+  $cor = $_POST["cor"];
+  $titulo = $_POST["titulo"];
+  $editor = $_POST["editor"];
+  $start = $_POST["start"];
+  $end = $_POST["end"];
+  $postador = $_SESSION["nome"];
+  $inicio = $_POST["inicio"];
+  $fim = $_POST["fim"];
+  $start = $start." ".$inicio;
+  $end = $end." ".$fim;
+  $sql_code = "INSERT INTO calendario (title,description,color,start,end,idTurma,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$postador')";
+  $gera = mysqli_query(DBConecta(), $sql_code);
+  if ($gera){
+    echo "<div class='alert alert-success alert-dismissable status'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Evento adicionado com sucesso!</strong>
+          </div>
+          ";
+  }
+  else{
+    echo "<div class='alert alert-danger alert-dismissable status'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Erro no cadastro do evento. Tente mais tarde e verifique sua conexão!</strong>
+          </div>";
+  }
+}
+
+
 
 ?>
 
@@ -30,11 +71,12 @@ if (!isset($_SESSION["id"])){
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
-  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
-  
+  <link href="froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="froala/js/froala_editor.pkgd.min.js"></script>  
+  <link  href = "froala/css/froala_style.min.css"  rel = "stylesheet"  type = " text/css "/> 
+  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css"> 
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -163,7 +205,76 @@ if (!isset($_SESSION["id"])){
             <div class="box box-primary" >
               <form role="form" action="" method="POST" id="form-cadastro">
                 <div class="box-body">
-                </div>
+                  <div class="form-group col-md-6">
+                    <label>Turmas</label>
+                    <select class="form-control" name="turma">
+                      <option value="" id="0">Selecione uma turma</option>
+                      <?php if ($_SESSION["tipo"] == "Administrador"){ ?>
+                      <option value="-1" id="todos">TODOS os professores</option>
+                      <option value="-2" id="todos">TODOS os alunos</option>
+                      <?php } ?>
+                      <?php 
+                        if (mysqli_num_rows($results)){
+                          while($turmas = mysqli_fetch_assoc($results)){
+                            echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
+                          }
+                        }                      
+                       ?>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Cores</label>
+                    <select class="form-control" name="cor">
+                      <option value="" id="0">Selecione uma cor</option>
+                      <option value="#ed5959" id="1">Vermelho</option>
+                      <option value="#f4cc00" id="2">Amarelo</option>
+                      <option value="#576ee5" id="3">Azul</option>
+                      <option value="black" id="4">Azul</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="emailUser">Titulo</label>
+                    <input type="text" class="form-control" id="tituloEvent" name="titulo" placeholder="Titulo" required>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="editor">Descrição</label>
+                    <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="matriUser">De:</label>
+                    <input type="date" class="form-control" id="start" name="start" placeholder="Começo" required>
+                  </div>
+                  <div class="bootstrap-timepicker">
+                    <div class="form-group col-md-3">
+                      <label>Hora de inicio</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control timepicker" name="inicio">
+                        <div class="input-group-addon">
+                          <i class="fa fa-clock-o"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="matriUser">Para:</label>
+                    <input type="date" class="form-control" id="end" name="end" placeholder="Final" required>
+                  </div>
+                  <div class="bootstrap-timepicker">
+                    <div class="form-group col-md-3">
+                      <label>Hora de fim</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control timepicker" name="fim">
+                        <div class="input-group-addon">
+                          <i class="fa fa-clock-o"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>    
+                <div class="box-footer ">
+                  <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
+                  <a href="addcalendario.php" class="btn btn-warning" id="cancela">Cancelar</a>
+                </div>           
               </form>
           </div>
         </div>
@@ -179,11 +290,42 @@ if (!isset($_SESSION["id"])){
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
   </div>
+  <script>
+  $(function () {
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
+
+  <script>
   
+    var editor = new FroalaEditor ( '#editor' , {
+      toolbarButtons: {
+      'moreText': {
+        'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor']
+      },
+      'moreParagraph': {
+        'buttons': ['alignLeft', 'alignCenter', 'alignJustify']
+      },
+      'moreRich': {
+        'buttons': ['insertLink'] //'emoticons','html']
+      }
+    },
+
+    // Para telas pequenas
+    toolbarButtonsXS: [['undo', 'redo'], ['bold', 'italic', 'underline']],
+    quickInsertTags: [''],
+    placeholderText: "Digite aqui sua descrição...",
+    })
+    
+  
+  </script>
+
+  <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
   <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>

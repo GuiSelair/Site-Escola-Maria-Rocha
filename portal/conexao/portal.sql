@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 09-Jun-2019 às 02:21
+-- Generation Time: 09-Jun-2019 às 22:14
 -- Versão do servidor: 10.1.40-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -67,7 +67,7 @@ CREATE TABLE `aluno` (
 --
 
 INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `dataNascimento`, `email`, `telefone`) VALUES
-(0, 'guiselair', '202cb962ac59075b964b07152d234b70', 'Guilherme', 'Selair', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545'),
+(0, 'guiselair', '515f349911995d2da0a847b1824066e2', 'Guilherme', 'Selair', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545'),
 (1, 'daniqcosta', 'daniqcosta', 'Daniela', 'Costa', 'Feminino', '1997-11-11', 'guilherme.lima1997@hotmail.coms', '981716709'),
 (2, 'lucasdu', 'lucasdu', 'Lucas', 'Duarte', 'Masculino', '1995-04-11', 'lucasdu@resdes.ufsm.br', '55991174646'),
 (6503, 'testeAluno', '5fed5987a72ba2a05f43cd3362c6ed08', 'teste', 'teste', 'Masculino', '2019-06-05', 'teste@gmail.com', '55555555555');
@@ -107,45 +107,27 @@ CREATE TABLE `avalhacao` (
 
 CREATE TABLE `calendario` (
   `id` int(11) NOT NULL,
-  `idCategoria` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   `color` varchar(100) NOT NULL,
   `start` datetime NOT NULL,
-  `postador` varchar(100) NOT NULL,
   `end` datetime DEFAULT NULL,
   `idTurma` int(11) DEFAULT NULL,
-  `geral` int(11) DEFAULT NULL
+  `geral` int(11) DEFAULT NULL,
+  `postador` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `calendario`
 --
 
-INSERT INTO `calendario` (`id`, `idCategoria`, `title`, `description`, `color`, `start`, `postador`, `end`, `idTurma`, `geral`) VALUES
-(3, 1, 'Prova de Direito', 'Conteudo: ...', 'Red', '2019-06-10 20:00:00', 'Laisa Quadros', '2019-06-10 21:30:00', 411, NULL),
-(4, 3, 'aviso para daniela', NULL, '#f3f3f3', '2019-06-11 14:00:00', 'Guilherme Lima', '2019-06-11 16:00:00', 321, NULL),
-(5, 2, 'Reunião da Turma', 'Espero que todos compareção', 'Blue', '2019-06-20 16:00:00', 'Daniela Costa', '2019-06-20 19:00:00', 411, NULL);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `categorias`
---
-
-CREATE TABLE `categorias` (
-  `idCategoria` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `categorias`
---
-
-INSERT INTO `categorias` (`idCategoria`, `nome`) VALUES
-(1, 'Prova'),
-(2, 'Reunião'),
-(3, 'Lembrete');
+INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`, `idTurma`, `geral`, `postador`) VALUES
+(3, 'Prova de Direito', 'Conteudo: ...', 'Red', '2019-06-10 20:00:00', '2019-06-10 21:30:00', 411, NULL, 'Laisa Quadros'),
+(4, 'aviso para daniela', NULL, '#f3f3f3', '2019-06-11 14:00:00', '2019-06-11 16:00:00', 321, NULL, 'Guilherme Lima'),
+(5, 'Reunião da Turma', 'Espero que todos compareção', 'Blue', '2019-06-20 16:00:00', '2019-06-20 19:00:00', 411, NULL, 'Daniela Costa'),
+(9, 'Prova de Algoritmos', '<p>TODO O CONTEUDO!&nbsp;<span class=\"fr-emoticon fr-deletable fr-emoticon-img\" style=\"background: u', 'yellow', '2019-06-10 00:00:00', '2019-06-11 00:00:00', 411, NULL, 'Jonathan Pippi'),
+(11, 'Prova de Algoritmos', '<p>dasdadasdadasdad</p>', '#f4cc00', '2019-06-13 00:00:00', '2019-06-20 00:00:00', 411, NULL, 'Jonathan Pippi'),
+(12, 'Teste', '<p>teste</p>', '#ed5959', '2019-06-11 06:00:00', '2019-06-11 07:15:00', 411, NULL, 'Jonathan Pippi');
 
 -- --------------------------------------------------------
 
@@ -200,7 +182,7 @@ CREATE TABLE `professor` (
   `email` varchar(100) DEFAULT NULL,
   `telefone` int(11) DEFAULT NULL,
   `login` varchar(10) NOT NULL,
-  `senha` varchar(10) NOT NULL,
+  `senha` varchar(100) NOT NULL,
   `sexo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -209,7 +191,8 @@ CREATE TABLE `professor` (
 --
 
 INSERT INTO `professor` (`idProfessor`, `nome`, `sobrenome`, `email`, `telefone`, `login`, `senha`, `sexo`) VALUES
-(2, 'Jonathan', 'Pippi', 'pippi@gmail.com', 2147483647, 'pippi', '202cb962ac', 'Masculino');
+(2, 'Jonathan', 'Pippi', 'pippi@gmail.com', 2147483647, 'pippi', '202cb962ac59075b964b07152d234b70', ''),
+(3, 'teste', 'teste', 'teste@gmail.com', 555555555, 'testeProfe', '698dc19d489c4e4db73e28a713eab07b', 'Feminino');
 
 -- --------------------------------------------------------
 
@@ -268,6 +251,14 @@ CREATE TABLE `turma-professor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Extraindo dados da tabela `turma-professor`
+--
+
+INSERT INTO `turma-professor` (`idDisciplina`, `idProfessor`, `idTurma`) VALUES
+(1, 2, 411),
+(2, 2, 321);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -304,14 +295,7 @@ ALTER TABLE `avalhacao`
 --
 ALTER TABLE `calendario`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idCategoria` (`idCategoria`),
   ADD KEY `idTurma` (`idTurma`);
-
---
--- Indexes for table `categorias`
---
-ALTER TABLE `categorias`
-  ADD PRIMARY KEY (`idCategoria`);
 
 --
 -- Indexes for table `curso`
@@ -373,13 +357,7 @@ ALTER TABLE `avalhacao`
 -- AUTO_INCREMENT for table `calendario`
 --
 ALTER TABLE `calendario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `categorias`
---
-ALTER TABLE `categorias`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `disciplina`
@@ -416,7 +394,6 @@ ALTER TABLE `avalhacao`
 -- Limitadores para a tabela `calendario`
 --
 ALTER TABLE `calendario`
-  ADD CONSTRAINT `calendario_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`),
   ADD CONSTRAINT `calendario_ibfk_2` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`);
 
 --
