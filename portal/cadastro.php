@@ -552,7 +552,7 @@ if (isset($_GET['id'])){
                   <?php if($id == "1"){ ?>
                   <div class="form-group col-md-3" id = "senhaprofedit">
                     <label for="senhaprof">Senha</label>
-                    <input type="text" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
+                    <input type="password" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
                   </div>
                   <?php } ?>
                   <div class="form-group col-md-4" id ="idMatricula">

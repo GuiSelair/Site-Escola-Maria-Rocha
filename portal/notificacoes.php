@@ -1,6 +1,20 @@
 <?php
 $linha = NULL;
 
+
+if($_SESSION["tipo"] == "Professor"){
+  $sql_code = "SELECT * FROM `calendario` WHERE `geral`= '-1'";	// SELECIONA TODOS OS PROFESSORES
+	$turmaAluno = mysqli_query(DBConecta(), $sql_code);
+  $linha = mysqli_num_rows($turmaAluno);
+  if ($linha){
+    while ($noticeTurmaNum = mysqli_fetch_assoc($turmaAluno)){
+      $noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
+    }
+  }
+
+
+}
+
 if ($_SESSION["tipo"] == "Aluno"){
   $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno`=".$_SESSION["id"];	//ENCONTRA AS TURMAS DO ALUNO
 	$turmaAluno = mysqli_query(DBConecta(), $sql_code);

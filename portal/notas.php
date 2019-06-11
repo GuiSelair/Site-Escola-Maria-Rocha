@@ -10,49 +10,28 @@ if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
-
 if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
 }
 
-
-// PESQUISA DE TURMAS 
-
 if ($_SESSION["tipo"] == "Professor"){
-  $id = $_SESSION["id"];
-  $sql_code = "SELECT `idTurma` FROM `turma-professor` WHERE `idProfessor`=$id";
-  $results = mysqli_query(DBConecta(),$sql_code);
+    $conexao = DBConecta();
+    $id = $_SESSION["id"];
+    $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idProfessor`=$id";
+    $results = mysqli_query($conexao,$sql_code);
+    if (mysqli_num_rows($results)){
+        while($idDisciplinas = mysqli_fetch_assoc($results)){
+            $AllDisciplinas[] = $idDisciplinas;
+        }
+    }
+    for ($i = 0; $i < count($AllDisciplinas); $i++){
+        $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina`=$AllDisciplinas[$i]['idDisciplina']";
+        $results = mysqli_query($conexao,$sql_code);
+        $nameDisciplina = mysqli_fetch_assoc($results);
+        $AllNameDisciplinas[] = $nameDisciplina;
+    }
+    
 }
-
-if (isset($_POST["salva"])){
-  $turma = $_POST["turma"];
-  $cor = $_POST["cor"];
-  $titulo = $_POST["titulo"];
-  $editor = $_POST["editor"];
-  $start = $_POST["start"];
-  $end = $_POST["end"];
-  $postador = $_SESSION["nome"];
-  if ($_SESSION["tipo"] == "Administrador")
-    $sql_code = "INSERT INTO calendario (title,description,color,start,end,geral,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$postador')";
-  else
-    $sql_code = "INSERT INTO calendario (title,description,color,start,end,idTurma,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$postador')";
-  $gera = mysqli_query(DBConecta(), $sql_code);
-  if ($gera){
-    echo "<div class='alert alert-success alert-dismissable status'>
-          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-          <strong>Evento adicionado com sucesso!</strong>
-          </div>
-          ";
-  }
-  else{
-    echo "<div class='alert alert-danger alert-dismissable status'>
-          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-          <strong>Erro no cadastro do evento. Tente mais tarde e verifique sua conexão!</strong>
-          </div>";
-  }
-}
-
-
 
 ?>
 
@@ -71,10 +50,7 @@ if (isset($_POST["salva"])){
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
-  <link href="froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="froala/js/froala_editor.pkgd.min.js"></script>  
-  <link  href = "froala/css/froala_style.min.css"  rel = "stylesheet"  type = " text/css "/> 
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -194,66 +170,84 @@ if (isset($_POST["salva"])){
     <div class="content-wrapper">
       <section class="content-header">
         <h1>
-          ADICIONAR EVENTO AO CALENDÁRIO
+          LANÇAMENTO DE NOTAS
           <!--NOME DA PAGINA-->
         </h1>
       </section>
-      <section class="content">
+
+      <!-- Área com Conteudo -->
+      <section class="content ">
         <div class="col-md-12">
             <div class="box box-primary" >
               <form role="form" action="" method="POST" id="form-cadastro">
                 <div class="box-body">
-                  <div class="form-group col-md-6">
-                    <label>Turmas</label>
-                    <select class="form-control" name="turma">
-                      <option value="" id="0">Selecione uma turma</option>
-                      <?php if ($_SESSION["tipo"] == "Administrador"){ ?>
-                      <option value="-1" id="todos">TODOS os professores</option>
-                      <!--<option value="-2" id="todos">TODOS os alunos</option>-->
-                      <?php } ?>
-                      <?php 
-                        if (mysqli_num_rows($results)){
-                          while($turmas = mysqli_fetch_assoc($results)){
-                            echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
-                          }
-                        }                      
-                       ?>
-                    </select>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label>Cores</label>
-                    <select class="form-control" name="cor">
-                      <option value="" id="0">Selecione uma cor</option>
-                      <option value="#ed5959" id="1">Vermelho</option>
-                      <option value="#f4cc00" id="2">Amarelo</option>
-                      <option value="#576ee5" id="3">Azul</option>
-                      <option value="black" id="4">Preto</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label for="emailUser">Titulo</label>
-                    <input type="text" class="form-control" id="tituloEvent" name="titulo" placeholder="Titulo" required>
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label for="editor">Descrição</label>
-                    <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label for="matriUser">Data e hora inicial:</label>
-                    <input type="datetime-local" class="form-control" id="start" name="start" placeholder="Começo" required>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label for="matriUser">Data e hora final:</label>
-                    <input type="datetime-local" class="form-control" id="end" name="end" placeholder="Final" required>
-                  </div>
-                </div>    
+                    <div class="form-group col-md-2">
+                        <label>Disciplina</label>
+                        <select class="form-control" name="disciplina">
+                        <option value="" id="0">Selecione uma turma</option>
+                        <?php 
+                            for ($i = 0; $i < count($AllDisciplinas); $i++){
+                                echo "<option value=".$AllNameDisciplinas[$i]["nome"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
+                            }             
+                        ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Turmas</label>
+                        <select class="form-control" name="turma">
+
+
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Alunos</label>
+                        <select multiple class="form-control" name="aluno">
+
+
+                        </select>
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                    <label for="matriUser">Data da Avaliação</label>
+                    <input type="date" class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="Data da Avalição" required>
+                    </div>
+                </div>
                 <div class="box-footer ">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
-                  <a href="addcalendario.php" class="btn btn-warning" id="cancela">Cancelar</a>
-                </div>           
+                  <button class="btn btn-success" name="salva" id="salva" style="margin-right: 5px;">Buscar</button>
+                  <a href="notas.php" class="btn btn-warning" id="cancela">Cancelar</a>
+                </div>
               </form>
           </div>
         </div>
+        <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Notas Lançadas</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive ">
+              <table class="table table-hover">
+                <tbody><tr>
+                  <th>ID</th>
+                  <th>Aluno</th>
+                  <th>Data da Avaliação</th>
+                  <th>Mensão</th>
+                  <th>Opção</th>
+                </tr>
+                <tr>
+                  <td>..</td>
+                  <td>Teste</td>
+                  <td>data</td>
+                  <td><span class="label label-success">APTO</span></td>
+                  <td><?php echo "<a class='btn btn-danger' href='deletar.php'><i class='fa fa-trash'></i>Excluir</a>" ?></td>
+                </tr>
+              </tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
       </section>
     </div>
     
@@ -266,31 +260,7 @@ if (isset($_POST["salva"])){
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
   </div>
-
-  <script>
   
-    var editor = new FroalaEditor ( '#editor' , {
-      toolbarButtons: {
-      'moreText': {
-        'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor']
-      },
-      'moreParagraph': {
-        'buttons': ['alignLeft', 'alignCenter', 'alignJustify', 'formatOL', 'formatUL']
-      },
-      'moreRich': {
-        'buttons': ['insertLink'] //'emoticons','html']
-      }
-    },
-
-    // Para telas pequenas
-    toolbarButtonsXS: [['undo', 'redo'], ['bold', 'italic', 'underline']],
-    quickInsertTags: [''],
-    placeholderText: "Digite aqui sua descrição...",
-    })
-    
-  
-  </script>
-
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>

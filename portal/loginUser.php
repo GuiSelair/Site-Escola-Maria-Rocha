@@ -27,8 +27,6 @@
         }
         else{
             $sql_code = "SELECT * FROM `professor` WHERE login = '$login' AND senha = '$cript' ";
-            echo $cript;
-            echo $sql_code1;
             $verifica = mysqli_query($conn, $sql_code);
             if (mysqli_num_rows($verifica)){
                 $dados = mysqli_fetch_assoc($verifica);
