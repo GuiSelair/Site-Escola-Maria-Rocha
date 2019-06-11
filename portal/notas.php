@@ -14,23 +14,25 @@ if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
 }
 
+// BUSCA DISCIPLINAS MINISTRADAS PELO PROFESSOR LOGADO
 if ($_SESSION["tipo"] == "Professor"){
     $conexao = DBConecta();
     $id = $_SESSION["id"];
-    $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idProfessor`=$id";
-    $results = mysqli_query($conexao,$sql_code);
+    $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idProfessor`= $id";
+    $results = mysqli_query($conexao, $sql_code);
     if (mysqli_num_rows($results)){
         while($idDisciplinas = mysqli_fetch_assoc($results)){
-            $AllDisciplinas[] = $idDisciplinas;
+            $AllDisciplinas[] = $idDisciplinas["idDisciplina"];
         }
-    }
-    for ($i = 0; $i < count($AllDisciplinas); $i++){
-        $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina`=$AllDisciplinas[$i]['idDisciplina']";
-        $results = mysqli_query($conexao,$sql_code);
-        $nameDisciplina = mysqli_fetch_assoc($results);
-        $AllNameDisciplinas[] = $nameDisciplina;
-    }
-    
+        for ($i = 0; $i < count($AllDisciplinas); $i++){
+          $sql_code = "SELECT * FROM `disciplina` WHERE `idDisciplina`= $AllDisciplinas[$i]";
+          $results = mysqli_query($conexao, $sql_code);
+          if (mysqli_num_rows($results)){
+            $nameDisciplina = mysqli_fetch_assoc($results);
+            $AllNameDisciplinas[] = $nameDisciplina; 
+          }
+        }
+    }    
 }
 
 ?>
@@ -124,14 +126,14 @@ if ($_SESSION["tipo"] == "Professor"){
         <!-- Menu -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MENU</li>
-          <li class="active"><a href="index.php"><i class="fa fa-home"></i> <span>INICIO</span></a></li>
+          <li><a href="index.php"><i class="fa fa-home"></i> <span>INICIO</span></a></li>
 
           <?php if ($_SESSION['tipo'] == "Aluno"){ ?>
           <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
           <?php } ?>
 
           <?php if ($_SESSION['tipo'] == "Professor"){ ?>
-          <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Lançar notas</span></a></li>
+          <li class="active"><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Lançar notas</span></a></li>
           <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
           <?php } ?>
 
@@ -183,25 +185,24 @@ if ($_SESSION["tipo"] == "Professor"){
                 <div class="box-body">
                     <div class="form-group col-md-2">
                         <label>Disciplina</label>
-                        <select class="form-control" name="disciplina">
-                        <option value="" id="0">Selecione uma turma</option>
+                        <select class="form-control" name="disciplina" id="disciplina">
+                        <option value="" id="0">Selecione abaixo</option>
                         <?php 
                             for ($i = 0; $i < count($AllDisciplinas); $i++){
-                                echo "<option value=".$AllNameDisciplinas[$i]["nome"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
+                                echo "<option value=".$AllNameDisciplinas[$i]["idDisciplina"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
                             }             
                         ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                         <label>Turmas</label>
-                        <select class="form-control" name="turma">
-
-
+                        <select class="form-control" name="turma" id="turma">
+                          <option value="">Selecione uma disciplina</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
                         <label>Alunos</label>
-                        <select multiple class="form-control" name="aluno">
+                        <select multiple class="form-control" name="aluno" id="aluno">
 
 
                         </select>
@@ -218,15 +219,50 @@ if ($_SESSION["tipo"] == "Professor"){
                   <a href="notas.php" class="btn btn-warning" id="cancela">Cancelar</a>
                 </div>
               </form>
+              <script>
+                $(document).ready(function(){
+                  $("#disciplina").on("change", function(){
+                    let idDisciplina = $(this).val();
+                    console.log(idDisciplina);
+                    if (idDisciplina != ""){
+                      $.ajax({
+                          type:'POST',
+                          url:'getDados.php',
+                          data:'idDisciplina='+idDisciplina,
+                          success:function(html){
+                            console.log(html);
+                            
+                            $('#turma').html(html)
+                          }
+                      });
+                    }
+                  })
+                  $("#coluna").on("change", function(){
+                    let idTurma = $(this).val();
+                    if (idTurma != ""){
+                      $.ajax({
+                          type:'POST',
+                          url:'getDados.php',
+                          data:'idTurma='+idTurma,
+                          success:function(html){
+                            $('#aluno').html()
+                          }
+                      });
+                    }
+                  })
+
+                })
+              
+              </script>
           </div>
         </div>
+        <!-- TABELA COM NOTAS LANÇADAS-->
         <div class="row">
         <div class="col-md-12">
           <div class="box box-primary">
             <div class="box-header">
               <h3 class="box-title">Notas Lançadas</h3>
             </div>
-            <!-- /.box-header -->
             <div class="box-body table-responsive ">
               <table class="table table-hover">
                 <tbody><tr>

@@ -6,7 +6,6 @@ include_once("../conexao/function.php");
 
 
 if(isset($_POST["tabela_ID"]) && isset($_POST["coluna_ID"])){
-    //Get all city data
     $tabela = $_POST["tabela_ID"];
     $coluna = $_POST["coluna_ID"];
     $sql_code = "SELECT * FROM $tabela;";
