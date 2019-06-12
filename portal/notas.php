@@ -50,7 +50,8 @@ if ($_SESSION["tipo"] == "Professor"){
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
 </head>
@@ -180,113 +181,173 @@ if ($_SESSION["tipo"] == "Professor"){
       <!-- Área com Conteudo -->
       <section class="content ">
         <div class="col-md-12">
-            <div class="box box-primary" >
-              <form role="form" action="" method="POST" id="form-cadastro">
-                <div class="box-body">
-                    <div class="form-group col-md-2">
-                        <label>Disciplina</label>
-                        <select class="form-control" name="disciplina" id="disciplina">
-                        <option value="" id="0">Selecione abaixo</option>
-                        <?php 
+          <div class="box box-primary">
+
+            <div class="box-body">
+              <div class="form-group col-md-3">
+                <label>Disciplina</label>
+                <select class="form-control" name="disciplina" id="disciplina">
+                  <option value="" id="0">Selecione abaixo</option>
+                  <?php 
                             for ($i = 0; $i < count($AllDisciplinas); $i++){
                                 echo "<option value=".$AllNameDisciplinas[$i]["idDisciplina"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
                             }             
                         ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>Turmas</label>
-                        <select class="form-control" name="turma" id="turma">
-                          <option value="">Selecione uma disciplina</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Alunos</label>
-                        <select multiple class="form-control" name="aluno" id="aluno">
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Turma</label>
+                <select class="form-control" name="turma" id="turma">
+                  <option value="">Selecione uma disciplina</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Alunos</label>
+                <select class="form-control" name="aluno" id="aluno">
 
 
-                        </select>
-                    </div>
-                    
-                    <div class="form-group col-md-3">
-                    <label for="matriUser">Data da Avaliação</label>
-                    <input type="date" class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="Data da Avalição" required>
-                    </div>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="matriUser">Data da Avaliação</label>
+                <input type="date" class="form-control" id="data" name="dataAvaliacao" placeholder="Data da Avalição"
+                  required>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Mensão: </label>
+                <div class="radio">
+                  <label style="margin-right: 5px;">
+                    <input type="radio" id="mensao" value="Apto" name="mensao">
+                    APTO
+                  </label>
+                  <label>
+                    <input type="radio" id="mensao" value="Não Apto" name="mensao">
+                    NÃO APTO
+                  </label>
                 </div>
-                <div class="box-footer ">
-                  <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
-                  <button class="btn btn-success" name="salva" id="salva" style="margin-right: 5px;">Buscar</button>
-                  <a href="notas.php" class="btn btn-warning" id="cancela">Cancelar</a>
-                </div>
-              </form>
-              <script>
-                $(document).ready(function(){
-                  $("#disciplina").on("change", function(){
-                    let idDisciplina = $(this).val();
-                    console.log(idDisciplina);
-                    if (idDisciplina != ""){
-                      $.ajax({
-                          type:'POST',
-                          url:'getDados.php',
-                          data:'idDisciplina='+idDisciplina,
-                          success:function(html){
-                            console.log(html);
-                            
-                            $('#turma').html(html)
-                          }
-                      });
-                    }
-                  })
-                  $("#coluna").on("change", function(){
-                    let idTurma = $(this).val();
-                    if (idTurma != ""){
-                      $.ajax({
-                          type:'POST',
-                          url:'getDados.php',
-                          data:'idTurma='+idTurma,
-                          success:function(html){
-                            $('#aluno').html()
-                          }
-                      });
-                    }
-                  })
+              </div>
 
+              <div class="form-group col-md-2" style="margin-top: 20px;">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="final" id="final" value="1">
+                    Nota Final
+                  </label>
+                </div>
+              </div>
+
+            </div>
+            <div class="box-footer ">
+              <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
+              <button class="btn btn-success" name="salva" id="salva" style="margin-right: 5px;">Buscar</button>
+              <a href="notas.php" class="btn btn-warning" id="cancela">Cancelar</a>
+            </div>
+
+            <script>
+              $(document).ready(function () {
+
+                $("#disciplina").on("change", function () {
+                  let idDisciplina = $(this).val();
+                  console.log(idDisciplina);
+                  if (idDisciplina != "") {
+                    $.ajax({
+                      type: 'POST',
+                      url: 'getDados.php',
+                      data: 'idDisciplina=' + idDisciplina,
+                      success: function (html) {
+                        $('#turma').html(html)
+                      }
+                    });
+                  }
                 })
-              
-              </script>
+                $("#turma").on("change", function () {
+                  let idTurma = $(this).val();
+                  if (idTurma != "") {
+                    $.ajax({
+                      type: 'POST',
+                      url: 'getDados.php',
+                      data: 'idTurma=' + idTurma,
+                      success: function (html) {
+                        $('#aluno').html(html)
+                      }
+                    });
+                  }
+                })
+                $("#salva").on("click", function () {
+                  console.log("EXCETOU");
+                  let idDisciplina = $("#disciplina").val();
+                  let idTurma = $("#turma").val();
+                  let idAluno = $("#aluno").val();
+                  let data = $("#data").val();
+                  let mensao = document.getElementsByName("mensao");
+                  for (let i = 0; i < mensao.length; i++) {
+                    if (mensao[i].checked) {
+                      mensao = mensao[i].value
+                    }
+                  }
+                  let final = document.getElementsByName("final");
+                  for (let i = 0; i < final.length; i++) {
+                    if (final[i].checked) {
+                      final = final[i].value
+                    }
+                  }
+                  if (final != '1') {
+                    final = "0";
+                  }
+
+                  $.ajax({
+                    type: 'POST',
+                    url: 'montaTabela.php',
+                    data: 'idTurma=' + idTurma + '&idDisciplina=' + idDisciplina + '&idAluno=' + idAluno +
+                      '&data=' + data + '&mensao=' + mensao + '&final=' + final,
+                    beforeSend: function () {
+                      $("#salva").html("Enviando...")
+                    },
+                    success: function (html) {
+                      $("#salva").html("Salvar")
+                      console.log(html);
+                      $('#tabela').append(html);
+                    }
+                  });
+                })
+
+              })
+            </script>
           </div>
         </div>
         <!-- TABELA COM NOTAS LANÇADAS-->
+        <div id="oi"></div>
         <div class="row">
-        <div class="col-md-12">
-          <div class="box box-primary">
-            <div class="box-header">
-              <h3 class="box-title">Notas Lançadas</h3>
-            </div>
-            <div class="box-body table-responsive ">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th>ID</th>
-                  <th>Aluno</th>
-                  <th>Data da Avaliação</th>
-                  <th>Mensão</th>
-                  <th>Opção</th>
-                </tr>
-                <tr>
-                  <td>..</td>
-                  <td>Teste</td>
-                  <td>data</td>
-                  <td><span class="label label-success">APTO</span></td>
-                  <td><?php echo "<a class='btn btn-danger' href='deletar.php'><i class='fa fa-trash'></i>Excluir</a>" ?></td>
-                </tr>
-              </tbody></table>
+          <div class="col-md-12">
+            <div class="box box-primary">
+              <div class="box-header">
+                <h3 class="box-title">Notas Lançadas</h3>
+              </div>
+              <div class="box-body table-responsive ">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Aluno</th>
+                      <th>Disciplina</th>
+                      <th>Turma</th>
+                      <th>Data da Avaliação</th>
+                      <th>Mensão</th>
+                      <th>Opção</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabela">
+                  
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </section>
     </div>
-    
+
 
     <!-- Rodapé -->
     <footer class="main-footer">
@@ -296,7 +357,7 @@ if ($_SESSION["tipo"] == "Professor"){
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
   </div>
-  
+
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>

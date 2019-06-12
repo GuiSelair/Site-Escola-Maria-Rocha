@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 09-Jun-2019 às 22:14
+-- Generation Time: 12-Jun-2019 às 18:02
 -- Versão do servidor: 10.1.40-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -68,9 +68,9 @@ CREATE TABLE `aluno` (
 
 INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `dataNascimento`, `email`, `telefone`) VALUES
 (0, 'guiselair', '515f349911995d2da0a847b1824066e2', 'Guilherme', 'Selair', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545'),
-(1, 'daniqcosta', 'daniqcosta', 'Daniela', 'Costa', 'Feminino', '1997-11-11', 'guilherme.lima1997@hotmail.coms', '981716709'),
-(2, 'lucasdu', 'lucasdu', 'Lucas', 'Duarte', 'Masculino', '1995-04-11', 'lucasdu@resdes.ufsm.br', '55991174646'),
-(6503, 'testeAluno', '5fed5987a72ba2a05f43cd3362c6ed08', 'teste', 'teste', 'Masculino', '2019-06-05', 'teste@gmail.com', '55555555555');
+(1, 'daniqcosta', '202cb962ac59075b964b07152d234b70', 'Daniela', 'Costa', 'Feminino', '1997-11-11', 'guilherme.lima1997@hotmail.coms', '981716709'),
+(2, 'lucasdu', '202cb962ac59075b964b07152d234b70', 'Lucas', 'Duarte', 'Masculino', '1995-04-11', 'lucasdu@resdes.ufsm.br', '55991174646'),
+(6503, 'testeAluno', '202cb962ac59075b964b07152d234b70', 'teste', 'teste', 'Masculino', '2019-06-05', 'teste@gmail.com', '55555555555');
 
 -- --------------------------------------------------------
 
@@ -96,8 +96,16 @@ CREATE TABLE `avalhacao` (
   `idTurma` int(11) NOT NULL,
   `idAluno` int(11) NOT NULL,
   `conceito` varchar(100) NOT NULL,
-  `final` tinyint(1) NOT NULL
+  `final` tinyint(1) DEFAULT NULL,
+  `data` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `avalhacao`
+--
+
+INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `conceito`, `final`, `data`) VALUES
+(50, 1, 411, 0, 'Apto', 0, '2019-06-03');
 
 -- --------------------------------------------------------
 
@@ -122,12 +130,8 @@ CREATE TABLE `calendario` (
 --
 
 INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`, `idTurma`, `geral`, `postador`) VALUES
-(3, 'Prova de Direito', 'Conteudo: ...', 'Red', '2019-06-10 20:00:00', '2019-06-10 21:30:00', 411, NULL, 'Laisa Quadros'),
-(4, 'aviso para daniela', NULL, '#f3f3f3', '2019-06-11 14:00:00', '2019-06-11 16:00:00', 321, NULL, 'Guilherme Lima'),
-(5, 'Reunião da Turma', 'Espero que todos compareção', 'Blue', '2019-06-20 16:00:00', '2019-06-20 19:00:00', 411, NULL, 'Daniela Costa'),
-(9, 'Prova de Algoritmos', '<p>TODO O CONTEUDO!&nbsp;<span class=\"fr-emoticon fr-deletable fr-emoticon-img\" style=\"background: u', 'yellow', '2019-06-10 00:00:00', '2019-06-11 00:00:00', 411, NULL, 'Jonathan Pippi'),
-(11, 'Prova de Algoritmos', '<p>dasdadasdadasdad</p>', '#f4cc00', '2019-06-13 00:00:00', '2019-06-20 00:00:00', 411, NULL, 'Jonathan Pippi'),
-(12, 'Teste', '<p>teste</p>', '#ed5959', '2019-06-11 06:00:00', '2019-06-11 07:15:00', 411, NULL, 'Jonathan Pippi');
+(27, 'Prova de Programação A', '<p>Conteudo:&nbsp;</p><ol><li>Condi&ccedil;&otilde;es</li><li>Repeti&ccedil;&otilde;es</li><li>Fun&c', '#f4cc00', '2019-06-19 08:00:00', '2019-06-19 09:30:00', 411, NULL, 'Jonathan Pippi'),
+(28, 'Reunião de Professores', '<p>...</p>', '#576ee5', '2019-06-25 19:00:00', '2019-06-25 21:00:00', NULL, -1, 'Guilherme Selair');
 
 -- --------------------------------------------------------
 
@@ -192,7 +196,7 @@ CREATE TABLE `professor` (
 
 INSERT INTO `professor` (`idProfessor`, `nome`, `sobrenome`, `email`, `telefone`, `login`, `senha`, `sexo`) VALUES
 (2, 'Jonathan', 'Pippi', 'pippi@gmail.com', 2147483647, 'pippi', '202cb962ac59075b964b07152d234b70', ''),
-(3, 'teste', 'teste', 'teste@gmail.com', 555555555, 'testeProfe', '698dc19d489c4e4db73e28a713eab07b', 'Feminino');
+(3, 'teste', 'teste', 'teste@gmail.com', 555555555, 'testeProf', '202cb962ac59075b964b07152d234b70', 'Feminino');
 
 -- --------------------------------------------------------
 
@@ -236,7 +240,8 @@ CREATE TABLE `turma-aluno` (
 INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
 (411, 0, '2019/01'),
 (421, 2, '2019/01'),
-(321, 1, '2018/02');
+(321, 1, '2018/02'),
+(411, 6503, '2019/01');
 
 -- --------------------------------------------------------
 
@@ -351,13 +356,13 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT for table `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `calendario`
 --
 ALTER TABLE `calendario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `disciplina`
