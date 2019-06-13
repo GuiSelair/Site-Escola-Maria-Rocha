@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 12-Jun-2019 às 18:02
+-- Generation Time: 13-Jun-2019 às 17:04
 -- Versão do servidor: 10.1.40-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -70,7 +70,7 @@ INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `
 (0, 'guiselair', '515f349911995d2da0a847b1824066e2', 'Guilherme', 'Selair', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545'),
 (1, 'daniqcosta', '202cb962ac59075b964b07152d234b70', 'Daniela', 'Costa', 'Feminino', '1997-11-11', 'guilherme.lima1997@hotmail.coms', '981716709'),
 (2, 'lucasdu', '202cb962ac59075b964b07152d234b70', 'Lucas', 'Duarte', 'Masculino', '1995-04-11', 'lucasdu@resdes.ufsm.br', '55991174646'),
-(6503, 'testeAluno', '202cb962ac59075b964b07152d234b70', 'teste', 'teste', 'Masculino', '2019-06-05', 'teste@gmail.com', '55555555555');
+(2236, 'vitorHugo', '753bf46b4a1d2b3af41f5c3868ead4cd', 'Vitor Hugo', 'Batista de Lim', 'Masculino', '2002-02-08', 'vitor@hotmail.com', '5599174545');
 
 -- --------------------------------------------------------
 
@@ -81,8 +81,15 @@ INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `
 CREATE TABLE `aluno-disciplina` (
   `idAluno` int(11) NOT NULL,
   `idDisciplina` int(11) NOT NULL,
-  `mensao` varchar(100) DEFAULT NULL
+  `conceito` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `aluno-disciplina`
+--
+
+INSERT INTO `aluno-disciplina` (`idAluno`, `idDisciplina`, `conceito`) VALUES
+(0, 1, 'Apto');
 
 -- --------------------------------------------------------
 
@@ -105,7 +112,9 @@ CREATE TABLE `avalhacao` (
 --
 
 INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `conceito`, `final`, `data`) VALUES
-(50, 1, 411, 0, 'Apto', 0, '2019-06-03');
+(61, 2, 321, 1, 'Apto', 0, '2019-06-03'),
+(66, 1, 411, 0, 'Apto', 1, '2019-06-09'),
+(68, 1, 411, 0, 'Apto', 1, '2019-06-04');
 
 -- --------------------------------------------------------
 
@@ -240,8 +249,7 @@ CREATE TABLE `turma-aluno` (
 INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
 (411, 0, '2019/01'),
 (421, 2, '2019/01'),
-(321, 1, '2018/02'),
-(411, 6503, '2019/01');
+(321, 1, '2018/02');
 
 -- --------------------------------------------------------
 
@@ -356,7 +364,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT for table `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `calendario`
@@ -391,9 +399,9 @@ ALTER TABLE `aluno-disciplina`
 -- Limitadores para a tabela `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  ADD CONSTRAINT `avalhacao_ibfk_1` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`),
   ADD CONSTRAINT `avalhacao_ibfk_3` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`),
-  ADD CONSTRAINT `avalhacao_ibfk_4` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`);
+  ADD CONSTRAINT `avalhacao_ibfk_4` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`),
+  ADD CONSTRAINT `avalhacao_ibfk_5` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `calendario`
@@ -411,7 +419,7 @@ ALTER TABLE `turma`
 -- Limitadores para a tabela `turma-aluno`
 --
 ALTER TABLE `turma-aluno`
-  ADD CONSTRAINT `idAluno` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`),
+  ADD CONSTRAINT `idAluno` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`);
 
 --

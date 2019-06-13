@@ -52,8 +52,6 @@ if (isset($_POST["salva"])){
   }
 }
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -138,7 +136,7 @@ if (isset($_POST["salva"])){
           <div class="pull-left info ">
             <p><?php echo $_SESSION['nome']; ?></p>
             <!--NOME COMPLETO-->
-            <a href="#">
+            <a href="./index.php">
               <i class="fa fa-circle text-success"> <?php echo $_SESSION['tipo']; ?></i>
             </a>
           </div>
@@ -148,7 +146,7 @@ if (isset($_POST["salva"])){
         <!-- Menu -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MENU</li>
-          <li class="active"><a href="index.php"><i class="fa fa-home"></i> <span>INICIO</span></a></li>
+          <li><a href="index.php"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
 
           <?php if ($_SESSION['tipo'] == "Aluno"){ ?>
           <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
@@ -156,11 +154,11 @@ if (isset($_POST["salva"])){
 
           <?php if ($_SESSION['tipo'] == "Professor"){ ?>
           <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Lançar notas</span></a></li>
-          <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
+          <li class="active"><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
           <?php } ?>
 
           <?php if ($_SESSION['tipo'] == "Administrador"){ ?>
-          <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
+          <li class="active"><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
           <li class="treeview">
             <a href="#"><i class="fa fa-plus-square"></i> <span>Cadastros</span>
               <span class="pull-right-container">
@@ -239,13 +237,14 @@ if (isset($_POST["salva"])){
                     <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
                   </div>
                   <div class="form-group col-md-3">
-                    <label for="matriUser">Data e hora inicial:</label>
+                    <label for="matriUser">Data e hora inicial: *</label>
                     <input type="datetime-local" class="form-control" id="start" name="start" placeholder="Começo" required>
                   </div>
                   <div class="form-group col-md-3">
-                    <label for="matriUser">Data e hora final:</label>
+                    <label for="matriUser">Data e hora final: *</label>
                     <input type="datetime-local" class="form-control" id="end" name="end" placeholder="Final" required>
                   </div>
+                  <p class="col-md-12">*OBS: Não esquecer de marcar o horário destido a este evento.</p>
                 </div>    
                 <div class="box-footer ">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
@@ -272,10 +271,10 @@ if (isset($_POST["salva"])){
     var editor = new FroalaEditor ( '#editor' , {
       toolbarButtons: {
       'moreText': {
-        'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor']
+        'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor']
       },
       'moreParagraph': {
-        'buttons': ['alignLeft', 'alignCenter', 'alignJustify', 'formatOL', 'formatUL']
+        'buttons': ['alignLeft', 'alignCenter', 'alignJustify']
       },
       'moreRich': {
         'buttons': ['insertLink'] //'emoticons','html']

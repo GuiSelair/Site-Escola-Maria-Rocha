@@ -57,34 +57,6 @@ if (isset($_POST["idTurma"])){
     }
 }
 
-if (isset($_POST["mensao"]) && isset($_POST["idAluno"])){
-  $conexao = DBConecta();
-  $idTurma = $_POST["idTurma"];
-  $idDisciplina = $_POST["idDisciplina"];
-  $idAluno = $_POST["idAluno"];
-  $mensao = $_POST["mensao"];
-  $final = $_POST["final"];
-  $data = $_POST["data"];
-
-
-  $sql_code = "INSERT INTO `avalhacao`(`idDisciplina`, `idTurma`, `idAluno`, `conceito`, `final`, `data`) VALUES ($idDisciplina,$idTurma,$idAluno,'$mensao',$final, '$data')";
-  $results = mysqli_query($conexao, $sql_code);
-  
-  //if ($results){
-  
-    $sql_code = "SELECT nome FROM aluno WHERE idAluno = $idAluno";
-    $results1 = mysqli_query($conexao, $sql_code);
-    $nomeAluno = mysqli_fetch_assoc($results1);
-    $sql_code = "SELECT nome FROM disciplina WHERE idDisciplina = $idDisciplina";
-    $results1 = mysqli_query($conexao, $sql_code);
-    $nomeDisciplina = mysqli_fetch_assoc($results1);
-    echo "<tr><th>Aluno</th><th>Disciplina</th><th>Turma</th><th>Data da Avaliação</th><th>Mensão</th></tr><tr><td>".$nomeAluno["nome"]."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$data."</td><td><span class='label label-success'>".$mensao."</span></td></tr>";    
-
-  //}
-  //else{
-  //  echo "<p>NÂO DEU</p>";
-  //}*/
-}
 
 
 ?>

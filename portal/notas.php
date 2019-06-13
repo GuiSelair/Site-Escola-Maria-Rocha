@@ -53,7 +53,6 @@ if ($_SESSION["tipo"] == "Professor"){
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -202,7 +201,7 @@ if ($_SESSION["tipo"] == "Professor"){
                 </select>
               </div>
               <div class="form-group col-md-3">
-                <label>Alunos</label>
+                <label>Alunos*</label>
                 <select class="form-control" name="aluno" id="aluno">
 
 
@@ -216,7 +215,7 @@ if ($_SESSION["tipo"] == "Professor"){
               </div>
 
               <div class="form-group col-md-3">
-                <label>Mensão: </label>
+                <label>Conceito: </label>
                 <div class="radio">
                   <label style="margin-right: 5px;">
                     <input type="radio" id="mensao" value="Apto" name="mensao">
@@ -233,15 +232,16 @@ if ($_SESSION["tipo"] == "Professor"){
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" name="final" id="final" value="1">
-                    Nota Final
+                    Conceito Final*
                   </label>
                 </div>
               </div>
-
+              <p class="col-md-12">*OBS: A opção "Conceito Final" só deve ser marcada quando a nota a ser lançada é a final. Desta forma é a nota que define se o aluno está apto ou não apto no semestre.</p>
+              <p class="col-md-12">*OBS: Para realizar buscas de notas já lançadas, não é preciso marcar a seleção "Alunos". Pois a busca realizada é por turma e por data de avaliação.</p>
             </div>
             <div class="box-footer ">
               <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
-              <button class="btn btn-success" name="salva" id="salva" style="margin-right: 5px;">Buscar</button>
+              <button class="btn btn-success" id="buscar" style="margin-right: 5px;">Buscar</button>
               <a href="notas.php" class="btn btn-warning" id="cancela">Cancelar</a>
             </div>
 
@@ -276,7 +276,6 @@ if ($_SESSION["tipo"] == "Professor"){
                   }
                 })
                 $("#salva").on("click", function () {
-                  console.log("EXCETOU");
                   let idDisciplina = $("#disciplina").val();
                   let idTurma = $("#turma").val();
                   let idAluno = $("#aluno").val();
@@ -307,18 +306,40 @@ if ($_SESSION["tipo"] == "Professor"){
                     },
                     success: function (html) {
                       $("#salva").html("Salvar")
-                      console.log(html);
                       $('#tabela').append(html);
                     }
                   });
                 })
+
+                $("#buscar").on("click", function(){
+                  let idDisciplina = $("#disciplina").val();
+                  let idTurma = $("#turma").val();
+                  let data = $("#data").val();
+                  $('#tabela').empty();
+                  $.ajax({
+                    type: "POST",
+                    url: "buscaTabela.php",
+                    data: "idTurma="+idTurma+"&idDisciplina="+idDisciplina+"&data="+data,
+                    beforeSend: function(){
+                      $("#buscar").html("Buscando...")
+                    },
+                    success: function(html){
+                      console.log(html);
+                      
+                      $("#buscar").html("Buscar")
+                      $('#tabela').append(html);
+                    }
+                  })
+
+                })
+
+                
 
               })
             </script>
           </div>
         </div>
         <!-- TABELA COM NOTAS LANÇADAS-->
-        <div id="oi"></div>
         <div class="row">
           <div class="col-md-12">
             <div class="box box-primary">

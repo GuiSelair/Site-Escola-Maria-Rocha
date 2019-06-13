@@ -381,6 +381,7 @@ if (isset($_GET['id'])){
 
     <!-- Titulo da Área com conteudo -->
     <div class="content-wrapper">
+      <div id="status"></div>
       <section class="content-header">
         <h1>
           CADASTRO DE <?php echo $tit; ?>
@@ -404,7 +405,6 @@ if (isset($_GET['id'])){
               url: "buscador.php",
               data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
               success: function(results){
-                console.log(results);
                 <?php if($id < '2'){ ?>
                   document.getElementById("nomeUser").value = results["nome"]
                   document.getElementById("sobrenomeUser").value = results["sobrenome"]
@@ -443,7 +443,7 @@ if (isset($_GET['id'])){
             document.getElementById("buscaSobre").value = "";
           }
           function desabilita(opcao, tipo){
-            console.log(opcao);
+
             let form = document.querySelectorAll("#form-cadastro [id]");
             form.forEach(function(elemento, index){
               //console.log(elemento);
@@ -472,13 +472,33 @@ if (isset($_GET['id'])){
           $(document).ready(function(){
             $('#edita').hide();
             $('#salva').show();
-            <?php if($id == "1") ?>
+            <?php if($id == "1"){ ?>
               $("#idMatricula").hide();
               $("#senhaprofedit").hide();
               
-            <?php if($id == "3") ?>
+            <?php }if($id == "3"){ ?>
               $("#divId").hide();
+            <?php } ?>
           })
+
+          function remove(){
+            let idCadastro = $("#idUser").val();
+            console.log(idCadastro);
+            $.ajax({
+              type: "POST",
+              url: "deleteCadastro.php",
+              data: "idCadastro="+idCadastro+"&idTabela=<?php echo $id; ?>",
+              beforeSend: function(){
+                $("#remove").html("Apagando...");
+              },
+              success: function(html){
+                console.log(html);
+                $("#status").html(html);
+                $("#remove").html("Excluir Cadastro");
+              }
+            })
+
+          }
         </script>
 
         <div class="container text-center mb-4" style="margin-bottom: 30px;">
@@ -498,9 +518,9 @@ if (isset($_GET['id'])){
               </div>
               <?php } ?>
               <div class="col-md-7">
-                  <button type="button" class="btn btn-primary" id="busca" onclick="buscador()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
-                  <button type="button" class="btn btn-warning mb-sm-4" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
-                <button type="button" class="btn btn-danger" id="remove" style="margin: 2px 5px;">Excluir Cadastro</button>
+                <button type="button" class="btn btn-primary" id="busca" onclick="buscador()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
+                <button type="button" class="btn btn-warning mb-sm-4" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
+                <button type="button" class="btn btn-danger" id="remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
               </div>
               
             </div>
@@ -545,18 +565,18 @@ if (isset($_GET['id'])){
                       </label>
                     </div>
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="loginUser">Login</label>
                     <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
                   </div>
                   <?php if($id == "1"){ ?>
-                  <div class="form-group col-md-3" id = "senhaprofedit">
+                  <div class="form-group col-md-4" id = "senhaprofedit">
                     <label for="senhaprof">Senha</label>
                     <input type="password" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
                   </div>
                   <?php } ?>
                   <div class="form-group col-md-4" id ="idMatricula">
-                    <label for="loginUser">ID/Matricula</label>
+                    <label for="loginUser">ID/Matricula*</label>
                     <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
                   </div>
                 </div>
