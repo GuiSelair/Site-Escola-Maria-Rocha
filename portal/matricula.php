@@ -14,6 +14,7 @@ if (isset($_GET['deslogar'])) {
 if (!isset($_SESSION["id"])){
   header("location: ./loginUser.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +32,6 @@ if (!isset($_SESSION["id"])){
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src='js/jquery.min.js'></script>
-  <script src='js/fullcalendar.min.js'></script>
-  <script src="bower_components\fullcalendar\dist\locale\pt-br.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -152,14 +151,140 @@ if (!isset($_SESSION["id"])){
     <div class="content-wrapper">
       <section class="content-header">
         <h1>
-          INICIO
+          Matricula de Aluno
           <!--NOME DA PAGINA-->
         </h1>
       </section>
 
       <!-- Área com Conteudo -->
-      <section class="content ">
+      <section class="content">
+        <div class="col-md-12">
+            <div class="box box-primary" >
+                <div class="box-body">
+                  <div class="form-group col-md-6">
+                    <label>Turmas</label>
+                    <select class="form-control" name="turma">
+                      <option value="" id="0">Selecione uma turma</option>
+                      <?php 
+                        $sql_code = "SELECT `idTurma` FROM `turma`";
+                        $results = mysqli_query(DBConecta(),$sql_code);
+                        if (mysqli_num_rows($results)){
+                          while($turmas = mysqli_fetch_assoc($results)){
+                            echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
+                          }
+                        }                      
+                       ?>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Alunos</label>
+                    <select class="form-control" name="cor">
+                      <option value="" id="0">Selecione um nome</option>
+                      <?php 
+                        $sql_code = "SELECT `idAluno`, `nome`, `sobrenome` FROM `aluno`";
+                        $results = mysqli_query(DBConecta(),$sql_code);
+                        if (mysqli_num_rows($results)){
+                          while($alunos = mysqli_fetch_assoc($results)){
+                            $nomeCompleto = $alunos["nome"]." ".$alunos["sobrenome"]; 
+                            echo "<option value=".$alunos["idAluno"].">".$nomeCompleto."</option>";
+                          }
+                        }                      
+                       ?>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3" >
+                    <label>Semestre: </label>
+                    <div class="radio"  >
+                      <label style="margin-right: 5px;">
+                        <input type="radio" id="1" value="1" name="semestre" >
+                        1º Semestre
+                      </label>
+                      <label>
+                        <input type="radio" id="2" value="2" name="semestre">
+                        2º Semestre
+                      </label>
+                    </div>
+                  </div>
+                </div>    
+                <div class="box-footer ">
+                  <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
+                  <button class="btn btn-success" id="buscar" style="margin-right: 5px;">Buscar</button>
+                  <a href="matricula.php" class="btn btn-warning" id="cancela">Cancelar</a>
+                </div>         
+          </div>
+        </div>
+        <script>
+              $(document).ready(function () {
 
+                $("#salva").on("click", function () {
+                  let idTurma = $("#turma").val();
+                  let idAluno = $("#aluno").val();
+                  let semestre = document.getElementsByName("semestre");
+                  for (let i = 0; i < mensao.length; i++) {
+                    if (semestre[i].checked) {
+                      semestre = semestre[i].value
+                    }
+                  }
+
+                  $.ajax({
+                    type: 'POST',
+                    url: 'montaTabela.php',
+                    data: 'idTurma='+idTurma+'&idAluno='+idAluno,
+                    beforeSend: function () {
+                      $("#salva").html("Enviando...")
+                    },
+                    success: function (html) {
+                      console.log(html);
+                      
+                      $("#salva").html("Salvar")
+                      $('#tabela').append(html);
+                    }
+                  });
+                })
+
+                $("#buscar").on("click", function(){
+                  let idTurma = $("#turma").val();
+                  $('#tabela').empty();
+                  $.ajax({
+                    type: "POST",
+                    url: "buscaTabela.php",
+                    data: "idTurma="+idTurma,
+                    beforeSend: function(){
+                      $("#buscar").html("Buscando...")
+                    },
+                    success: function(html){
+                      console.log(html);
+                      $("#buscar").html("Buscar")
+                      $('#tabela').append(html);
+                    }
+                  })
+
+                })
+              })
+            </script>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-primary">
+              <div class="box-header">
+                <h3 class="box-title">Notas Lançadas</h3>
+              </div>
+              <div class="box-body table-responsive ">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Aluno</th>
+                      <th>Turma</th>
+                      <th>Opção</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabela">
+                  
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
@@ -175,7 +300,6 @@ if (!isset($_SESSION["id"])){
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
   <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>

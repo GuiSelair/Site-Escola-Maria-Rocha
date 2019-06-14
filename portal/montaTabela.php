@@ -10,7 +10,7 @@ if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
 }
 
-if (isset($_POST["mensao"]) && isset($_POST["idAluno"])){
+if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisciplina"]) && isset($_POST["final"]) && isset($_POST["idTurma"])){
     $conexao = DBConecta();
     $idTurma = $_POST["idTurma"];
     $idDisciplina = $_POST["idDisciplina"];
@@ -51,10 +51,27 @@ if (isset($_POST["mensao"]) && isset($_POST["idAluno"])){
 
 
     }
+}
 
+if (isset($_POST["idTurma"]) && isset($_POST["idAluno"])){
+    $conexao = DBConecta();
+    $idTurma = $_POST["idTurma"];
+    $idAluno = $_POST["idAluno"];
+
+    $sql_code = "INSERT INTO `turma-aluno`(`idTurma` `idAluno`) VALUES ($idTurma,$idAluno)";
+    $results = mysqli_query($conexao, $sql_code);
     
+    if ($results){
+    
+        $sql_code = "SELECT nome, sobrenome FROM aluno WHERE idAluno = $idAluno";
+        $results = mysqli_query($conexao, $sql_code);
+        $nomeAluno = mysqli_fetch_assoc($results);
 
-  
+        $nomeCompleto = $nomeAluno["nome"]." ".$nomeAluno["sobrenome"];
+
+        echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td><a class='btn btn-danger' href='deleteNota.php?idTurma=".$idTurma."&idAluno=".$idAluno."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";    
+    }
+
 }
 
 ?>

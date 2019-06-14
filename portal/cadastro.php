@@ -442,6 +442,8 @@ if (isset($_GET['id'])){
             document.getElementById("buscaNome").value = "";
             document.getElementById("buscaSobre").value = "";
           }
+
+
           function desabilita(opcao, tipo){
 
             let form = document.querySelectorAll("#form-cadastro [id]");
@@ -482,7 +484,13 @@ if (isset($_GET['id'])){
           })
 
           function remove(){
-            let idCadastro = $("#idUser").val();
+            <?php if ($id < 2){ ?>
+              let idCadastro = $("#idUser").val();
+            <?php }elseif($id == 2){ ?>
+              let idCadastro = $("#nomeTurma").val();
+            <?php  }else{ ?>
+              let idCadastro = $("#idDisciplina").val();
+            <?php } ?>
             console.log(idCadastro);
             $.ajax({
               type: "POST",
@@ -492,7 +500,6 @@ if (isset($_GET['id'])){
                 $("#remove").html("Apagando...");
               },
               success: function(html){
-                console.log(html);
                 $("#status").html(html);
                 $("#remove").html("Excluir Cadastro");
               }

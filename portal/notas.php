@@ -325,7 +325,6 @@ if ($_SESSION["tipo"] == "Professor"){
                     },
                     success: function(html){
                       console.log(html);
-                      
                       $("#buscar").html("Buscar")
                       $('#tabela').append(html);
                     }

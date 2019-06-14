@@ -69,7 +69,6 @@ if (isset($_POST["salva"])){
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
   <link href="froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="froala/js/froala_editor.pkgd.min.js"></script>  
   <link  href = "froala/css/froala_style.min.css"  rel = "stylesheet"  type = " text/css "/> 
