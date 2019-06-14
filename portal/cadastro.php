@@ -60,7 +60,7 @@ if (isset($_POST['edita'])){
 
       $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', senha = '$cript' WHERE idProfessor = $idUser";
       $execute_sql = mysqli_query(DBConecta(), $sql_code);
-      
+
 
       if (!$execute_sql) {
         echo "<div class='alert alert-danger alert-dismissable'>
@@ -137,7 +137,7 @@ if (isset($_POST['salva'])){
       $cript = md5($senha);
 
       $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript')";
-      
+
       $execute_sql = mysqli_query(DBConecta(), $sql_code);
 
       if (!$execute_sql) {
@@ -263,7 +263,7 @@ if (isset($_GET['id'])){
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -370,8 +370,8 @@ if (isset($_GET['id'])){
               </span>
             </a>
             <ul class="treeview-menu text-center">
-              <li><a href="matricula.php">Aluno na turma</a></li>
-              <li><a href="matricula.php">Professor para disciplina</a></li>
+              <li><a href="matricula.php?id=0">Aluno na turma</a></li>
+              <li><a href="matricula.php?id=1">Professor para disciplina</a></li>
             </ul>
           </li>
           <?php } ?>
@@ -432,10 +432,10 @@ if (isset($_GET['id'])){
                   }
                 <?php }elseif($id == "2"){ ?>
                   document.getElementById("nomeTurma").value = results["idTurma"];
-                  document.getElementById(results["idCurso"]).selected = true;         
+                  document.getElementById(results["idCurso"]).selected = true;
                 <?php }else{ ?>
                   document.getElementById("idDisciplina").value = results["idDisciplina"];
-                  document.getElementById("nomeDisc").value = results["nome"];  
+                  document.getElementById("nomeDisc").value = results["nome"];
                 <?php } ?>
               }
             })
@@ -460,7 +460,7 @@ if (isset($_GET['id'])){
               document.getElementById("cancela").disabled = opcao
 
             }
-            
+
           }
           function edicao(){
             desabilita(false, "editar")
@@ -468,16 +468,16 @@ if (isset($_GET['id'])){
             $("#salva").hide();
             $("#senhaprofedit").show();
             $("#idMatricula").show();
-            
+
           }
-          
+
           $(document).ready(function(){
             $('#edita').hide();
             $('#salva').show();
             <?php if($id == "1"){ ?>
               $("#idMatricula").hide();
               $("#senhaprofedit").hide();
-              
+
             <?php }if($id == "3"){ ?>
               $("#divId").hide();
             <?php } ?>
@@ -529,7 +529,7 @@ if (isset($_GET['id'])){
                 <button type="button" class="btn btn-warning mb-sm-4" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
                 <button type="button" class="btn btn-danger" id="remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
               </div>
-              
+
             </div>
         </div>
         <div class="col-md-12">
@@ -601,7 +601,7 @@ if (isset($_GET['id'])){
                       <option value="3" id="3">Técnico em Contabilidade</option>
                     </select>
                   </div>
-                  
+
                 <?php }elseif($id == "3"){ ?>
                   <div class="form-group col-md-12">
                     <label for="nomeDisc">Nome da Disciplina</label>

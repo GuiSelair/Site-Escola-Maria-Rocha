@@ -10,6 +10,7 @@ if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
 }
 
+// FUNÇÃO SALVA A NOTA DO ALUNO E RETORNA A LINHA INSERIDA PARA SER MOSTRADA NA TABELA
 if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisciplina"]) && isset($_POST["final"]) && isset($_POST["idTurma"])){
     $conexao = DBConecta();
     $idTurma = $_POST["idTurma"];
@@ -21,13 +22,13 @@ if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisci
 
     $sql_code = "INSERT INTO `avalhacao`(`idDisciplina`, `idTurma`, `idAluno`, `conceito`, `final`, `data`) VALUES ($idDisciplina,$idTurma,$idAluno,'$mensao',$final, '$data')";
     $results = mysqli_query($conexao, $sql_code);
-    
+
     if ($results){
         if ($final != "0"){
             $sql_code = "INSERT INTO `aluno-disciplina`(`idAluno`, `idDisciplina`, `conceito`) VALUES ($idAluno,$idDisciplina,'$mensao')";
             $results = mysqli_query($conexao, $sql_code);
         }
-    
+
         $sql_code = "SELECT nome, sobrenome FROM aluno WHERE idAluno = $idAluno";
         $results = mysqli_query($conexao, $sql_code);
         $nomeAluno = mysqli_fetch_assoc($results);
@@ -44,32 +45,35 @@ if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisci
         $idAvalhacao = mysqli_fetch_assoc($results);
 
         if ($mensao == "Apto")
-            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-success'>".$mensao."</span></td><td><a class='btn btn-danger' href='deleteNota.php?idAvalhacao=".$idAvalhacao["idAvalhacao"]."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";    
+            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-success'>".$mensao."</span></td><td><a class='btn btn-danger' href='deleteNota.php?idAvalhacao=".$idAvalhacao["idAvalhacao"]."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
         else
-            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-danger'>".$mensao."</span></td><td><a class='btn btn-danger' href='deleteNota.php?idAvalhacao=".$idAvalhacao["idAvalhacao"]."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";    
+            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-danger'>".$mensao."</span></td><td><a class='btn btn-danger' href='deleteNota.php?idAvalhacao=".$idAvalhacao["idAvalhacao"]."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
 
 
 
     }
 }
 
-if (isset($_POST["idTurma"]) && isset($_POST["idAluno"])){
+// FUNÇÃO SALVA A MATRICULA E RETORNA A LINHA INSERIDA PARA MOSTRAR NA TABELA
+if (isset($_POST["idTurma"]) && isset($_POST["idAluno"]) && isset($_POST["semestre"])){
     $conexao = DBConecta();
     $idTurma = $_POST["idTurma"];
     $idAluno = $_POST["idAluno"];
+    $semestre = $_POST["semestre"];
+    $data = date("Y").".0".$semestre;
 
-    $sql_code = "INSERT INTO `turma-aluno`(`idTurma` `idAluno`) VALUES ($idTurma,$idAluno)";
+    $sql_code = "INSERT INTO `turma-aluno`(`idTurma`,`idAluno`, `dataMatricula`) VALUES ($idTurma,$idAluno,'$data')";
     $results = mysqli_query($conexao, $sql_code);
-    
+
     if ($results){
-    
+
         $sql_code = "SELECT nome, sobrenome FROM aluno WHERE idAluno = $idAluno";
         $results = mysqli_query($conexao, $sql_code);
         $nomeAluno = mysqli_fetch_assoc($results);
 
         $nomeCompleto = $nomeAluno["nome"]." ".$nomeAluno["sobrenome"];
 
-        echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td><a class='btn btn-danger' href='deleteNota.php?idTurma=".$idTurma."&idAluno=".$idAluno."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";    
+        echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td>".$data."</td><td><a class='btn btn-danger' id='apaga' onclick='apaga($idTurma, $idAluno, $data)'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
     }
 
 }

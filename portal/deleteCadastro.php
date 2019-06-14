@@ -10,7 +10,7 @@ if (!isset($_SESSION["id"])){
   header("location: ./loginUser.php");
 }
 
-
+// FUNÇÃO DELETA O CADASTRO DE ALUNO, PROFESSOR, TURMA OU DISCIPLINA
 if (isset($_POST["idCadastro"]) && isset($_POST["idTabela"])){
     $idCadastro = $_POST["idCadastro"];
     $idTabela = $_POST["idTabela"];
@@ -83,5 +83,7 @@ if (isset($_POST["idCadastro"]) && isset($_POST["idTabela"])){
             break;
     }
 }
+
+
 
 ?>

@@ -38,7 +38,7 @@ if (!isset($_SESSION["id"])){
   <script src='js/jquery.min.js'></script>
   <script src='js/fullcalendar.min.js'></script>
   -->
-  
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -145,8 +145,8 @@ if (!isset($_SESSION["id"])){
               </span>
             </a>
             <ul class="treeview-menu text-center">
-              <li><a href="cadastro.php?id=0">Aluno na turma</a></li>
-              <li><a href="cadastro.php?id=1">Professor para disciplina</a></li>
+              <li><a href="matricula.php?id=0">Aluno na turma</a></li>
+              <li><a href="matricula.php?id=1">Professor para disciplina</a></li>
             </ul>
           </li>
           <?php } ?>
@@ -228,7 +228,7 @@ if (!isset($_SESSION["id"])){
 					navLinks: true, // can click day/week names to navigate views
 					editable: false,
           events: "eventos.php",
-          eventLimit: true, 
+          eventLimit: true,
           contentHeight: 500,
           selectable: true,
           eventClick: function(event) {

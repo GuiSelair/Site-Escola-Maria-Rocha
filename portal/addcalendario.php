@@ -16,7 +16,7 @@ if (!isset($_SESSION["id"])){
 }
 
 
-// PESQUISA DE TURMAS 
+// PESQUISA DE TURMAS
 
 if ($_SESSION["tipo"] == "Professor"){
   $id = $_SESSION["id"];
@@ -70,8 +70,8 @@ if (isset($_POST["salva"])){
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <link href="froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="froala/js/froala_editor.pkgd.min.js"></script>  
-  <link  href = "froala/css/froala_style.min.css"  rel = "stylesheet"  type = " text/css "/> 
+  <script type="text/javascript" src="froala/js/froala_editor.pkgd.min.js"></script>
+  <link  href = "froala/css/froala_style.min.css"  rel = "stylesheet"  type = " text/css "/>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -178,8 +178,8 @@ if (isset($_POST["salva"])){
               </span>
             </a>
             <ul class="treeview-menu text-center">
-              <li><a href="cadastro.php?id=0">Aluno na turma</a></li>
-              <li><a href="cadastro.php?id=1">Professor para disciplina</a></li>
+              <li><a href="matricula.php?id=0">Aluno na turma</a></li>
+              <li><a href="matricula.php?id=1">Professor para disciplina</a></li>
             </ul>
           </li>
           <?php } ?>
@@ -208,12 +208,12 @@ if (isset($_POST["salva"])){
                       <option value="-1" id="todos">TODOS os professores</option>
                       <!--<option value="-2" id="todos">TODOS os alunos</option>-->
                       <?php } ?>
-                      <?php 
+                      <?php
                         if (mysqli_num_rows($results)){
                           while($turmas = mysqli_fetch_assoc($results)){
                             echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
                           }
-                        }                      
+                        }
                        ?>
                     </select>
                   </div>
@@ -244,17 +244,17 @@ if (isset($_POST["salva"])){
                     <input type="datetime-local" class="form-control" id="end" name="end" placeholder="Final" required>
                   </div>
                   <p class="col-md-12">*OBS: Não esquecer de marcar o horário destido a este evento.</p>
-                </div>    
+                </div>
                 <div class="box-footer ">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
                   <a href="addcalendario.php" class="btn btn-warning" id="cancela">Cancelar</a>
-                </div>           
+                </div>
               </form>
           </div>
         </div>
       </section>
     </div>
-    
+
 
     <!-- Rodapé -->
     <footer class="main-footer">
@@ -266,7 +266,7 @@ if (isset($_POST["salva"])){
   </div>
 
   <script>
-  
+
     var editor = new FroalaEditor ( '#editor' , {
       toolbarButtons: {
       'moreText': {
@@ -285,8 +285,8 @@ if (isset($_POST["salva"])){
     quickInsertTags: [''],
     placeholderText: "Digite aqui sua descrição...",
     })
-    
-  
+
+
   </script>
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
