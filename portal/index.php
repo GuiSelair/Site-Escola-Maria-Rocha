@@ -115,7 +115,7 @@ if (!isset($_SESSION["id"])){
           <li class="active"><a href="index.php"><i class="fa fa-home"></i> <span>INICIO</span></a></li>
 
           <?php if ($_SESSION['tipo'] == "Aluno"){ ?>
-          <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
+          <li><a href="quadroNotas.php"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
           <?php } ?>
 
           <?php if ($_SESSION['tipo'] == "Professor"){ ?>
@@ -218,7 +218,7 @@ if (!isset($_SESSION["id"])){
   <script>
 			$(document).ready(function() {
 				$('#calendar').fullCalendar({
-          locale: "pt-br",
+          locale: "pt-BR",
 					header: {
 						left: 'prev,next today',
 						center: 'title',
@@ -227,7 +227,7 @@ if (!isset($_SESSION["id"])){
 					defaultDate: Date(),
 					navLinks: true, // can click day/week names to navigate views
 					editable: false,
-          events: "eventos.php",
+          events: "calendario.php",
           eventLimit: true,
           contentHeight: 500,
           selectable: true,

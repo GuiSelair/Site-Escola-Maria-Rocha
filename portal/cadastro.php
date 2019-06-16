@@ -28,7 +28,7 @@ if (isset($_POST['edita'])){
       $sexo = $_POST['sexo'];
       $telefone = $_POST["foneUser"];
 
-      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone WHERE idAluno = $idUser";
+      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone WHERE idAluno = '$idUser'";
       $execute_sql = mysqli_query(DBConecta(), $sql_code);
 
 
@@ -337,7 +337,7 @@ if (isset($_GET['id'])){
         <!-- Menu -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MENU</li>
-          <li><a href="index.php"><i class="fa fa-home"></i> <span>INICIO</span></a></li>
+          <li><a href="index.php"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
 
           <?php if ($_SESSION['tipo'] == "Aluno"){ ?>
           <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
@@ -394,6 +394,8 @@ if (isset($_GET['id'])){
 
         <script type="text/javascript">
           function buscador(){
+            $('#edit').show();
+            $('#remove').show();
             let buscaNome = document.getElementById("buscaNome").value;
             <?php if ($id < '2'){ ?>
             let buscaSobre = document.getElementById("buscaSobre").value;
@@ -424,7 +426,7 @@ if (isset($_GET['id'])){
                     document.getElementById("idUser").value = results["idProfessor"]
                   <?php } ?>
 
-                  if (results["sexo"] == "Masculino"){  /// BUGADOOOOOOOOOOOOOOOOOO!
+                  if (results["sexo"] == "Masculino"){ 
                      document.getElementById("masculino").checked = true;
                   }
                   else{
@@ -443,13 +445,13 @@ if (isset($_GET['id'])){
             document.getElementById("buscaSobre").value = "";
           }
 
-
           function desabilita(opcao, tipo){
 
             let form = document.querySelectorAll("#form-cadastro [id]");
             form.forEach(function(elemento, index){
               //console.log(elemento);
               elemento.disabled = opcao
+              //elemento.reset();
             });
             if (tipo == 0){
               document.getElementById("salva").disabled = opcao
@@ -458,21 +460,28 @@ if (isset($_GET['id'])){
             if (tipo == "editar"){
               document.getElementById("edita").disabled = opcao
               document.getElementById("cancela").disabled = opcao
-
             }
-
+            if (tipo == "limpa"){
+              $("#form-cadastro").each(function(){
+                this.reset();
+              })
+            }
           }
+
           function edicao(){
             desabilita(false, "editar")
             $('#edita').show();
             $("#salva").hide();
             $("#senhaprofedit").show();
-            $("#idMatricula").show();
+            $("#idMatricula").hide();
+            
 
           }
 
           $(document).ready(function(){
             $('#edita').hide();
+            $('#edit').hide();
+            $('#remove').hide();
             $('#salva').show();
             <?php if($id == "1"){ ?>
               $("#idMatricula").hide();
@@ -502,6 +511,7 @@ if (isset($_GET['id'])){
               success: function(html){
                 $("#status").html(html);
                 $("#remove").html("Excluir Cadastro");
+                desabilita(false,"limpa");
               }
             })
 

@@ -9,7 +9,7 @@ if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
 }
 
-
+// FUNÇÃO BUSCA AS TURMAS QUE POSSUAM UMA DETERMINADA DISCIPLINA E PROFESSOR. RETORNE O NOME DA TURMA PARA SER EXIBIDO
 if (isset($_POST["idDisciplina"])){
     $conexao = DBConecta();
     $idDisciplina = $_POST["idDisciplina"];
@@ -31,9 +31,9 @@ if (isset($_POST["idDisciplina"])){
           }
         }
     }    
-
 }
 
+//FUNÇÃO BUSCA ALUNOS DE UMA DETERMINADA TURMA. RETORNE O ID DO ALUNO E O NOME COMPLETO PARA SER EXIBIDO
 if (isset($_POST["idTurma"])){
     $conexao = DBConecta();
     $idTurma = $_POST["idTurma"];
@@ -50,7 +50,7 @@ if (isset($_POST["idTurma"])){
         if (mysqli_num_rows($results)){
           $nameAluno = mysqli_fetch_assoc($results);
           //$AllNameTurmas[] = $nameTurma; 
-          echo "<option value='".$nameAluno["idAluno"]."'>".$nameAluno["nome"]." ".$nameAluno["sobrenome"]."</option>";
+          echo "<option value='".$nameAluno["idAluno"]."'>".$nameAluno["idAluno"]." - ".$nameAluno["nome"]." ".$nameAluno["sobrenome"]."</option>";
         }
       }
 

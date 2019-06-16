@@ -13,7 +13,7 @@
         $cript = md5($senha);
 
 
-        $sql_code = "SELECT * FROM `administrador` WHERE login = '$login' AND senha = '$senha';";
+        $sql_code = "SELECT * FROM `administrador` WHERE login = '$login' AND senha = '$cript';";
         $verifica = mysqli_query($conn, $sql_code);
 
         if (mysqli_num_rows($verifica)){

@@ -15,7 +15,7 @@ if (isset($_POST['atualizar'])) {
   if (!empty($_POST['tabela']) || !empty($_POST['coluna'])){
     $tabela = $_POST['tabela'];
     $coluna = $_POST['coluna'];
-    $ndescricao = $_POST['ndescrição'];
+    $ndescricao = $_POST['editor'];
     // Verificando se há algum campo na tabela
     $verifica = mysqli_query(DBConecta(), "SELECT * FROM $tabela");
     $linhas = mysqli_num_rows($verifica);
@@ -95,13 +95,13 @@ if (isset($_POST['atualizar'])) {
                   let tabela = document.getElementById("tabela").value;
                   var coluna_ID = $(this).val();
                   
+                  
                   if(coluna_ID){
                       $.ajax({
                           type:'POST',
                           url:'getDados.php',
                           data:'tabela_ID='+tabela+'&coluna_ID='+coluna_ID,
                           success:function(html){
-                            editor.cursor.del();
                             editor.html.insert(html, true);
                           }
                       });

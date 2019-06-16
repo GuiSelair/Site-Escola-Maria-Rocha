@@ -18,7 +18,7 @@ if (isset($_POST["idCadastro"]) && isset($_POST["idTabela"])){
 
     switch ($idTabela) {
         case "0":
-            $sql_code = "DELETE FROM `aluno` WHERE `idAluno` = $idCadastro";
+            $sql_code = "DELETE FROM `aluno` WHERE `idAluno` = '$idCadastro'";
             $results = mysqli_query($conexao, $sql_code);
             if ($results){
                 echo "<div class='alert alert-success alert-dismissable'>

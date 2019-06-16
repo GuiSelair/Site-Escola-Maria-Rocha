@@ -17,12 +17,15 @@ if (!isset($_SESSION["id"])){
 // BUSCA DISCIPLINAS MINISTRADAS PELO PROFESSOR LOGADO
 if ($_SESSION["tipo"] == "Professor"){
     $conexao = DBConecta();
+    $AllDisciplinas = [];
     $id = $_SESSION["id"];
     $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idProfessor`= $id";
     $results = mysqli_query($conexao, $sql_code);
     if (mysqli_num_rows($results)){
         while($idDisciplinas = mysqli_fetch_assoc($results)){
+          if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplinas)){
             $AllDisciplinas[] = $idDisciplinas["idDisciplina"];
+          }
         }
         for ($i = 0; $i < count($AllDisciplinas); $i++){
           $sql_code = "SELECT * FROM `disciplina` WHERE `idDisciplina`= $AllDisciplinas[$i]";
@@ -188,10 +191,10 @@ if ($_SESSION["tipo"] == "Professor"){
                 <select class="form-control" name="disciplina" id="disciplina">
                   <option value="" id="0">Selecione abaixo</option>
                   <?php 
-                            for ($i = 0; $i < count($AllDisciplinas); $i++){
-                                echo "<option value=".$AllNameDisciplinas[$i]["idDisciplina"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
-                            }             
-                        ?>
+                    for ($i = 0; $i < count($AllDisciplinas); $i++){
+                        echo "<option value=".$AllNameDisciplinas[$i]["idDisciplina"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
+                    }             
+                    ?>
                 </select>
               </div>
               <div class="form-group col-md-3">
@@ -298,7 +301,7 @@ if ($_SESSION["tipo"] == "Professor"){
 
                   $.ajax({
                     type: 'POST',
-                    url: 'montaTabela.php',
+                    url: 'salvaEMontaTabela.php',
                     data: 'idTurma=' + idTurma + '&idDisciplina=' + idDisciplina + '&idAluno=' + idAluno +
                       '&data=' + data + '&mensao=' + mensao + '&final=' + final,
                     beforeSend: function () {

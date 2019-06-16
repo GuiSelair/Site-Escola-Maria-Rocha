@@ -72,6 +72,7 @@ if (isset($_POST["salva"])){
   <link href="froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="froala/js/froala_editor.pkgd.min.js"></script>
   <link  href = "froala/css/froala_style.min.css"  rel = "stylesheet"  type = " text/css "/>
+  <script type="text/javascript" src="froala/js/languages/pt_br.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -237,13 +238,14 @@ if (isset($_POST["salva"])){
                   </div>
                   <div class="form-group col-md-3">
                     <label for="matriUser">Data e hora inicial: *</label>
-                    <input type="datetime-local" class="form-control" id="start" name="start" placeholder="Começo" required>
+                    <input type="datetime-local" class="form-control" id="start" name="start" placeholder="AAA-MM-DD HH:mm:ss" required>
                   </div>
                   <div class="form-group col-md-3">
                     <label for="matriUser">Data e hora final: *</label>
-                    <input type="datetime-local" class="form-control" id="end" name="end" placeholder="Final" required>
+                    <input type="datetime-local" class="form-control" id="end" name="end" placeholder="AAA-MM-DD HH:mm:ss" required>
                   </div>
                   <p class="col-md-12">*OBS: Não esquecer de marcar o horário destido a este evento.</p>
+                  <p class="col-md-12">*OBS: No navegador FIREFOX preste atenção ao preencher corretamente o campo data e hora*.</p>
                 </div>
                 <div class="box-footer ">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
@@ -268,6 +270,7 @@ if (isset($_POST["salva"])){
   <script>
 
     var editor = new FroalaEditor ( '#editor' , {
+      language: 'pt_br',
       toolbarButtons: {
       'moreText': {
         'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor']

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 13-Jun-2019 às 17:04
+-- Generation Time: 17-Jun-2019 às 00:49
 -- Versão do servidor: 10.1.40-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -42,7 +42,7 @@ CREATE TABLE `administrador` (
 --
 
 INSERT INTO `administrador` (`idAdministrador`, `nome`, `sobrenome`, `login`, `senha`, `email`) VALUES
-(1, 'Guilherme', 'Selair', 'guiADM', 'guiADM', 'guiADM@gmail.com');
+(1, 'Guilherme', 'Selair', 'guiADM', 'e10adc3949ba59abbe56e057f20f883e', 'guiADM@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -51,7 +51,7 @@ INSERT INTO `administrador` (`idAdministrador`, `nome`, `sobrenome`, `login`, `s
 --
 
 CREATE TABLE `aluno` (
-  `idAluno` int(11) NOT NULL,
+  `idAluno` varchar(15) NOT NULL,
   `login` varchar(100) NOT NULL,
   `senha` varchar(100) DEFAULT NULL,
   `nome` varchar(100) NOT NULL,
@@ -67,10 +67,10 @@ CREATE TABLE `aluno` (
 --
 
 INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `dataNascimento`, `email`, `telefone`) VALUES
-(0, 'guiselair', '515f349911995d2da0a847b1824066e2', 'Guilherme', 'Selair', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545'),
-(1, 'daniqcosta', '202cb962ac59075b964b07152d234b70', 'Daniela', 'Costa', 'Feminino', '1997-11-11', 'guilherme.lima1997@hotmail.coms', '981716709'),
-(2, 'lucasdu', '202cb962ac59075b964b07152d234b70', 'Lucas', 'Duarte', 'Masculino', '1995-04-11', 'lucasdu@resdes.ufsm.br', '55991174646'),
-(2236, 'vitorHugo', '753bf46b4a1d2b3af41f5c3868ead4cd', 'Vitor Hugo', 'Batista de Lim', 'Masculino', '2002-02-08', 'vitor@hotmail.com', '5599174545');
+('0', 'guiselair', '202cb962ac59075b964b07152d234b70', 'Guilherme', 'Selair Batista de Lima', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545'),
+('1', 'daniqcosta', '91b3f4671b6b51499ffb9ce34eced7dc', 'Daniela', 'Quadros da Costa', 'Feminino', '1998-03-24', 'daniqcosta@gmail.com', '55992145552'),
+('2', 'lucasdu', 'f9da6024f9867f1c511efa704474a2c8', 'Lucas', 'Duarte', 'Masculino', '1995-03-25', 'lucasduarte@gmail.com', '55991716362'),
+('3', 'vitorHugo', '753bf46b4a1d2b3af41f5c3868ead4cd', 'Vitor Hugo', 'Batista de Lima', 'Masculino', '2002-02-08', 'vitorhugo@gmail.com', '55993456982');
 
 -- --------------------------------------------------------
 
@@ -79,17 +79,10 @@ INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `
 --
 
 CREATE TABLE `aluno-disciplina` (
-  `idAluno` int(11) NOT NULL,
+  `idAluno` varchar(15) NOT NULL,
   `idDisciplina` int(11) NOT NULL,
   `conceito` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `aluno-disciplina`
---
-
-INSERT INTO `aluno-disciplina` (`idAluno`, `idDisciplina`, `conceito`) VALUES
-(0, 1, 'Apto');
 
 -- --------------------------------------------------------
 
@@ -101,20 +94,11 @@ CREATE TABLE `avalhacao` (
   `idAvalhacao` int(11) NOT NULL,
   `idDisciplina` int(11) NOT NULL,
   `idTurma` int(11) NOT NULL,
-  `idAluno` int(11) NOT NULL,
+  `idAluno` varchar(15) NOT NULL,
   `conceito` varchar(100) NOT NULL,
   `final` tinyint(1) DEFAULT NULL,
   `data` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `avalhacao`
---
-
-INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `conceito`, `final`, `data`) VALUES
-(61, 2, 321, 1, 'Apto', 0, '2019-06-03'),
-(66, 1, 411, 0, 'Apto', 1, '2019-06-09'),
-(68, 1, 411, 0, 'Apto', 1, '2019-06-04');
 
 -- --------------------------------------------------------
 
@@ -125,7 +109,7 @@ INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `c
 CREATE TABLE `calendario` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `description` varchar(100) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
   `color` varchar(100) NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime DEFAULT NULL,
@@ -139,8 +123,8 @@ CREATE TABLE `calendario` (
 --
 
 INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`, `idTurma`, `geral`, `postador`) VALUES
-(27, 'Prova de Programação A', '<p>Conteudo:&nbsp;</p><ol><li>Condi&ccedil;&otilde;es</li><li>Repeti&ccedil;&otilde;es</li><li>Fun&c', '#f4cc00', '2019-06-19 08:00:00', '2019-06-19 09:30:00', 411, NULL, 'Jonathan Pippi'),
-(28, 'Reunião de Professores', '<p>...</p>', '#576ee5', '2019-06-25 19:00:00', '2019-06-25 21:00:00', NULL, -1, 'Guilherme Selair');
+(1, 'Reunião de Professores', '<p>Reuni&atilde;o de Professor para come&ccedil;o de ano letivo. Espero a presen&ccedil;a de todos(a', '#ed5959', '2019-06-21 19:00:00', '2019-06-21 21:00:00', NULL, -1, 'Guilherme Selair'),
+(2, 'Prova de Montagem e Manutenção', '<p>N&atilde;o esque&ccedil;am de trazer os materiais.&nbsp;</p><p>Conte&uacute;do da p&aacute;gina 6', '#f4cc00', '2019-06-19 19:00:00', '2019-06-19 21:30:00', 411, NULL, 'Natanael  da Silva Fim');
 
 -- --------------------------------------------------------
 
@@ -178,9 +162,12 @@ CREATE TABLE `disciplina` (
 --
 
 INSERT INTO `disciplina` (`idDisciplina`, `nome`) VALUES
-(1, 'Algoritmos C'),
-(2, 'Algoritmos B'),
-(3, 'Direito e Legislação');
+(4, 'Algoritmos A'),
+(5, 'Algoritmos B'),
+(6, 'Direito e Legislação'),
+(7, 'Banco de Dados'),
+(8, 'Programação Web'),
+(9, 'Montagem e Manutenção');
 
 -- --------------------------------------------------------
 
@@ -193,8 +180,8 @@ CREATE TABLE `professor` (
   `nome` varchar(100) NOT NULL,
   `sobrenome` varchar(100) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `telefone` int(11) DEFAULT NULL,
-  `login` varchar(10) NOT NULL,
+  `telefone` varchar(100) DEFAULT NULL,
+  `login` varchar(15) NOT NULL,
   `senha` varchar(100) NOT NULL,
   `sexo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -204,8 +191,10 @@ CREATE TABLE `professor` (
 --
 
 INSERT INTO `professor` (`idProfessor`, `nome`, `sobrenome`, `email`, `telefone`, `login`, `senha`, `sexo`) VALUES
-(2, 'Jonathan', 'Pippi', 'pippi@gmail.com', 2147483647, 'pippi', '202cb962ac59075b964b07152d234b70', ''),
-(3, 'teste', 'teste', 'teste@gmail.com', 555555555, 'testeProf', '202cb962ac59075b964b07152d234b70', 'Feminino');
+(5, 'Jonathan', 'Pippi', 'jonathanpippi@gmail.com', '55992174545', 'pippi', '1cec415f3725081d65ce9f6aa6b86c49', 'Masculino'),
+(6, 'Laísa', 'Quadros da Costa', 'laisaquadros@hotmail.com', '55992164353', 'laisaquadr', '4b7d2115f6990467b4ac1200352ff54f', 'Feminino'),
+(7, 'Angélica', 'Menegassi da Silveira', 'angelicamenegassi@gmail.com', '53991764252', 'angelicaSi', '8ed2d5b4fa6fcfe09f54dc914a523e2a', 'Feminino'),
+(8, 'Natanael ', 'da Silva Fim', 'natanaelSilva@globo.com', '65981640232', 'natanael', '1a031ff15e7099b2ee232fd94a274f56', 'Masculino');
 
 -- --------------------------------------------------------
 
@@ -226,9 +215,7 @@ INSERT INTO `turma` (`idTurma`, `idCurso`) VALUES
 (411, 1),
 (421, 1),
 (431, 1),
-(441, 1),
-(211, 2),
-(321, 3);
+(441, 1);
 
 -- --------------------------------------------------------
 
@@ -238,18 +225,9 @@ INSERT INTO `turma` (`idTurma`, `idCurso`) VALUES
 
 CREATE TABLE `turma-aluno` (
   `idTurma` int(11) NOT NULL,
-  `idAluno` int(11) NOT NULL,
+  `idAluno` varchar(15) NOT NULL,
   `dataMatricula` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `turma-aluno`
---
-
-INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
-(411, 0, '2019/01'),
-(421, 2, '2019/01'),
-(321, 1, '2018/02');
 
 -- --------------------------------------------------------
 
@@ -260,16 +238,19 @@ INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
 CREATE TABLE `turma-professor` (
   `idDisciplina` int(11) NOT NULL,
   `idProfessor` int(11) NOT NULL,
-  `idTurma` int(11) NOT NULL
+  `idTurma` int(11) NOT NULL,
+  `dataMatricula` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `turma-professor`
 --
 
-INSERT INTO `turma-professor` (`idDisciplina`, `idProfessor`, `idTurma`) VALUES
-(1, 2, 411),
-(2, 2, 321);
+INSERT INTO `turma-professor` (`idDisciplina`, `idProfessor`, `idTurma`, `dataMatricula`) VALUES
+(4, 5, 411, '2019.01'),
+(7, 7, 431, '2019.01'),
+(9, 8, 411, '2019.01'),
+(9, 8, 421, '2019.02');
 
 --
 -- Indexes for dumped tables
@@ -364,25 +345,25 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT for table `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `calendario`
 --
 ALTER TABLE `calendario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `disciplina`
 --
 ALTER TABLE `disciplina`
-  MODIFY `idDisciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idDisciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `professor`
 --
 ALTER TABLE `professor`
-  MODIFY `idProfessor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idProfessor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -392,43 +373,41 @@ ALTER TABLE `professor`
 -- Limitadores para a tabela `aluno-disciplina`
 --
 ALTER TABLE `aluno-disciplina`
-  ADD CONSTRAINT `aluno-disciplina_ibfk_1` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`),
-  ADD CONSTRAINT `aluno-disciplina_ibfk_2` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`);
+  ADD CONSTRAINT `aluno-disciplina_ibfk_2` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `aluno-disciplina_ibfk_3` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  ADD CONSTRAINT `avalhacao_ibfk_3` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`),
-  ADD CONSTRAINT `avalhacao_ibfk_4` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`),
-  ADD CONSTRAINT `avalhacao_ibfk_5` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE;
+  ADD CONSTRAINT `avalhacao_ibfk_3` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `avalhacao_ibfk_4` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `calendario`
 --
 ALTER TABLE `calendario`
-  ADD CONSTRAINT `calendario_ibfk_2` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`);
+  ADD CONSTRAINT `calendario_ibfk_2` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `turma`
 --
 ALTER TABLE `turma`
-  ADD CONSTRAINT `idCurso` FOREIGN KEY (`idCurso`) REFERENCES `curso` (`idCurso`);
+  ADD CONSTRAINT `idCurso` FOREIGN KEY (`idCurso`) REFERENCES `curso` (`idCurso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `turma-aluno`
 --
 ALTER TABLE `turma-aluno`
-  ADD CONSTRAINT `idAluno` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`);
+  ADD CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `turma-professor`
 --
 ALTER TABLE `turma-professor`
-  ADD CONSTRAINT `turma-professor_ibfk_1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`),
-  ADD CONSTRAINT `turma-professor_ibfk_4` FOREIGN KEY (`idProfessor`) REFERENCES `professor` (`idProfessor`),
-  ADD CONSTRAINT `turma-professor_ibfk_5` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`);
+  ADD CONSTRAINT `turma-professor_ibfk_1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `turma-professor_ibfk_4` FOREIGN KEY (`idProfessor`) REFERENCES `professor` (`idProfessor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `turma-professor_ibfk_5` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -209,11 +209,12 @@ if (isset($_GET["id"])){
                         </label>
                       </div>
                     </div>
+                    <p class="text-muted col-md-12">OBS: Para buscar não precisa selecionar Alunos. A busca ocorre só com os valores Turma e Semestre</p>
                   </div>
                   <div class="box-footer ">
                     <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
                     <button class="btn btn-success" id="buscar" style="margin-right: 5px;">Buscar</button>
-                    <a href="matricula.php" class="btn btn-warning" id="cancela">Cancelar</a>
+                    <a href="matricula.php?id=0" class="btn btn-warning" id="cancela">Cancelar</a>
                   </div>
             </div>
           </div>
@@ -230,7 +231,6 @@ if (isset($_GET["id"])){
                     },
                     success: function (html) {
                       $("#buscar").html("Atualizar");
-                      $("#apaga").html("Excluido").css("background-color", "green");
                       $('#status').html(html);
                     }
                   })
@@ -331,7 +331,7 @@ if (isset($_GET["id"])){
                   <div class="box-body">
                     <div class="form-group col-md-6">
                       <label>Professor</label>
-                      <select class="form-control" id="professor" name="professor">
+                      <select class="form-control" id="professor" name="professor" required>
                         <option value="" id="0">Selecione um Professor</option>
                         <?php
                           $sql_code = "SELECT `idProfessor`, `nome`, `sobrenome` FROM `professor`";
@@ -347,7 +347,7 @@ if (isset($_GET["id"])){
                     </div>
                     <div class="form-group col-md-6">
                       <label>Turmas</label>
-                      <select class="form-control" id="turma" name="turma">
+                      <select class="form-control" id="turma" name="turma" required>
                         <option value="" id="0">Selecione uma turma</option>
                         <?php
                           $sql_code = "SELECT `idTurma` FROM `turma`";
@@ -362,7 +362,7 @@ if (isset($_GET["id"])){
                     </div>
                     <div class="form-group col-md-6">
                       <label>Disciplina</label>
-                      <select class="form-control" id="disciplina" name="disciplina">
+                      <select class="form-control" id="disciplina" name="disciplina" required>
                         <option value="" id="0">Selecione uma disciplina</option>
                         <?php
                           $sql_code = "SELECT * FROM `disciplina`";
@@ -375,48 +375,62 @@ if (isset($_GET["id"])){
                          ?>
                       </select>
                     </div>
+                    <div class="form-group col-md-3" >
+                      <label>Semestre: </label>
+                      <div class="radio"  >
+                        <label style="margin-right: 5px;">
+                          <input type="radio" id="1" value="1" name="semestre" >
+                          1º Semestre
+                        </label>
+                        <label>
+                          <input type="radio" id="2" value="2" name="semestre">
+                          2º Semestre
+                        </label>
+                      </div>
+                    </div>
+                    <p class="text-muted col-md-12">OBS: Para buscar não precisa selecionar Professor. A busca ocorre só com os valores Turma, Disciplina e Semestre</p>
                   </div>
                   <div class="box-footer ">
                     <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
                     <button class="btn btn-success" id="buscar" style="margin-right: 5px;">Buscar</button>
-                    <a href="matricula.php" class="btn btn-warning" id="cancela">Cancelar</a>
+                    <a href="matricula.php?id=1" class="btn btn-warning" id="cancela">Cancelar</a>
                   </div>
             </div>
           </div>
 
           <script>
                 // APAGANDO
-                function apaga(turma, aluno, semestre){
+                function apaga(turma, professor, semestre, disciplina){
                   $.ajax({
                     type: 'POST',
                     url: 'deleteMatriculaNota.php',
-                    data: 'idTurma='+turma+'&idAluno='+aluno+'&semestre='+semestre,
+                    data: 'idTurma='+turma+'&idProfessor='+professor+'&semestre='+semestre+'&idDisciplina='+disciplina,
                     beforeSend: function () {
                       $("#apaga").html("Apagando...")
                     },
                     success: function (html) {
                       $("#buscar").html("Atualizar");
-                      $("#apaga").html("Excluido").css("background-color", "green");
                       $('#status').html(html);
                     }
                   })
                 }
                 $(document).ready(function () {
+
                   // SALVANDO
                   $("#salva").on("click", function () {
                     let idTurma = $("#turma").val();
-                    let idAluno = $("#aluno").val();
+                    let idProfessor = $("#professor").val();
+                    let idDisciplina = $("#disciplina").val();
                     let semestre = document.getElementsByName("semestre");
                     for (let i = 0; i < semestre.length; i++) {
                       if (semestre[i].checked) {
                         semestre = semestre[i].value
                       }
                     }
-
                     $.ajax({
                       type: 'POST',
                       url: 'salvaEMontaTabela.php',
-                      data: 'idTurma='+idTurma+'&idAluno='+idAluno+'&semestre='+semestre,
+                      data: 'idTurma='+idTurma+'&idProfessor='+idProfessor+'&semestre='+semestre+'&idDisciplina='+idDisciplina,
                       beforeSend: function () {
                         $("#salva").html("Enviando...")
                       },
@@ -426,9 +440,11 @@ if (isset($_GET["id"])){
                       }
                     });
                   })
+
                   // BUSCANDO
                   $("#buscar").on("click", function(){
                     let idTurma = $("#turma").val();
+                    let idDisciplina = $("#disciplina").val();
                     let semestre = document.getElementsByName("semestre");
                     for (let i = 0; i < semestre.length; i++) {
                       if (semestre[i].checked) {
@@ -439,17 +455,16 @@ if (isset($_GET["id"])){
                     $.ajax({
                       type: "POST",
                       url: "buscaTabela.php",
-                      data: "idTurma="+idTurma+"&semestre="+semestre,
+                      data: "idTurma="+idTurma+"&semestre="+semestre+'&idDisciplina='+idDisciplina,
                       beforeSend: function(){
                         $("#buscar").html("Buscando...")
                       },
                       success: function(html){
                         console.log(html);
-                        $("#buscar").html("Buscar")
+                        $("#buscar").html("Buscar");
                         $('#tabela').append(html);
                       }
                     })
-
                   })
                 })
               </script>
@@ -482,6 +497,7 @@ if (isset($_GET["id"])){
         </section>
       </div>
     <?php } ?>
+    
     <!-- Rodapé -->
     <footer class="main-footer">
       <div class="pull-right hidden-xs">

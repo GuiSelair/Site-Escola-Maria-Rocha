@@ -1,5 +1,7 @@
 <?php
 
+//ARQUIVO PARA EXIBIÇÃO DE EVENTOS NO CALENDARIO (INDEX)
+
 session_start();
 
 
@@ -7,6 +9,7 @@ include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
+//FUNÇÃO CASO O USUARIO SEJA PROFESSOR, VERIFICA SE NÃO HÁ NENHUM REGISTRO NO CALENDARIO QUE MARQUE TODOS PROFESSORES.
 if ($_SESSION["tipo"] == "Professor"){
 	$sql_code = "SELECT * FROM `calendario` WHERE `geral`= '-1'";	// SELECIONA TODOS OS PROFESSORES
 	$turmaAluno = mysqli_query(DBConecta(), $sql_code);
@@ -17,13 +20,11 @@ if ($_SESSION["tipo"] == "Professor"){
 		}
 		echo json_encode($noticeTurmaResults);
   	}
-	
 }
 
+//FUNÇÃO CASO O USUARIO SEJA ALUNO, VERIFICA NÃO HÁ NENHUM REGISTRO COM A TURMA DO ALUNO, CASO TENHA, RETONA O EVENTO PARA SER EXIBIDO
 if ($_SESSION["tipo"] == "Aluno"){
-	//ACHA TURMA(s) DO ALUNO
 	$sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno`=".$_SESSION["id"];	//ENCONTRA AS TURMAS DO ALUNO
-
 	$turmaAluno = mysqli_query(DBConecta(), $sql_code);
 	if (mysqli_num_rows($turmaAluno)){
 		while ($turmaAlunoNum = mysqli_fetch_assoc($turmaAluno)){

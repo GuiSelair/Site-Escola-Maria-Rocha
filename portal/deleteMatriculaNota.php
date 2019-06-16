@@ -48,4 +48,31 @@ if (isset($_POST["idTurma"]) && isset($_POST["idAluno"]) && isset($_POST["semest
     }
 }
 
+// FUNÇÃO EXCLUI MATRICULA DE PROFESSOR AS TURMAS E DISCIPLINAS
+if (isset($_POST["idTurma"]) && isset($_POST["idProfessor"]) && isset($_POST["semestre"]) && isset($_POST["idDisciplina"])){
+    if (!empty($_POST["idTurma"]) && !empty($_POST["idProfessor"]) && !empty($_POST["semestre"]) && !empty($_POST["idDisciplina"])){
+        $conexao = DBConecta();
+        $idTurma = $_POST["idTurma"];
+        $idProfessor = $_POST["idProfessor"];
+        $data = $_POST["semestre"];
+        $idDisciplina = $_POST["idDisciplina"];
+
+        $sql_code = "DELETE FROM `turma-professor` WHERE `idTurma` = $idTurma AND `idProfessor`= $idProfessor AND `dataMatricula` = '$data' AND `idDisciplina` = $idDisciplina";
+        $results = mysqli_query($conexao, $sql_code);
+
+        if ($results){
+            echo "<div class='alert alert-success alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Matricula removida com sucesso! Click no botão ATUALIZAR!</strong>
+            </div>";
+        }
+        else{
+            echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao remover o matricula! Verifique sua conexão ou tente mais tarde!</strong>
+            </div>";
+        }
+    }
+}
+
 ?>
