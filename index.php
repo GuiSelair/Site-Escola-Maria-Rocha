@@ -1,6 +1,8 @@
 <?php
 
-// RERCUSO DO PHP PARA MANTER O USUARIO LOGADO
+//////////////////////////////////////
+////        PÁGINA PRINCIPAL      ////
+//////////////////////////////////////
 
 session_start();
 
@@ -8,6 +10,7 @@ include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
+// LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
 
@@ -26,12 +29,14 @@ if(isset($_POST['entrar'])) {
     }
 }
 
-if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel existe, retorna true e false
+// DESLOGAR
+if (isset($_GET['deslogar'])) {     
     session_destroy();
     header("location: index.php");
 }
 
 ?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -43,8 +48,6 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
     <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
     <meta name="description" content="Escola estadual de ensino médio e tecnico maria rocha">
 
-
-    <!-- Links Boostrap e CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
@@ -54,50 +57,43 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
 
 <body>
 
-    <!--NAVBAR-->
-
+    <!-- IMPORTAÇÃO DA BARRA DE NAVEGAÇÃO-->
     <?php include 'menu.php'; ?>
 
-    <!-- IMAGEM DESTAQUE HEIGHT: 400px -->
-
+    <!--CARROSEL IMAGEM PRINCIPAL-->
     <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
-
             <?php 
-
-        $pasta = "Galeria/";
-        $sql = mysqli_query(DBConecta(),"SELECT nome FROM imagens WHERE categoria = 1;") or die("Erro");
-        $linha = mysqli_num_rows($sql);
-
-        if ($linha == 0){
-          echo "<div class='carousel-item active'>
-            <img class='d-block w-100' src='Galeria/default.jpg' alt='Primeiro slide' />
-          </div>";
-        }
-        else{
-          $n = TRUE;
-          while ($row = mysqli_fetch_assoc($sql)){
-              $nome = $pasta.$row['nome'];
-              if ($n){
-                echo "
-                  <div class='carousel-item active'>
-                    <img class='d-block w-100' src='".$nome."'/>
-                  </div>";
-                $n = FALSE;
-
-              }
-              else{
-                echo "
-                <div class='carousel-item'>
-                  <img class='d-block w-100' src='".$nome."'/>
-                </div>";
-              }
-            }
-        }
-      ?>
-
+                $pasta = "Galeria/";
+                $sql = mysqli_query(DBConecta(),"SELECT nome FROM imagens WHERE categoria = 1;");
+                $linha = mysqli_num_rows($sql);
+                // EXIBIÇÃO DE IMAGEM PADRÃO CASO NÃO TENHA IMAGEM PRINCIPAL
+                if ($linha == 0){
+                    echo "<div class='carousel-item active'>
+                        <img class='d-block w-100' src='Galeria/default.jpg' alt='Primeiro slide' />
+                    </div>";
+                }
+                else{
+                    $n = TRUE;
+                    while ($row = mysqli_fetch_assoc($sql)){
+                        $nome = $pasta.$row['nome'];
+                        if ($n){
+                            echo "
+                            <div class='carousel-item active'>
+                                <img class='d-block w-100' src='".$nome."'/>
+                            </div>";
+                            $n = FALSE;
+                        }
+                        else{
+                            echo "
+                            <div class='carousel-item'>
+                            <img class='d-block w-100' src='".$nome."'/>
+                            </div>";
+                        }
+                    }
+                }
+            ?>
         </div>
-
         <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Anterior</span>
@@ -106,34 +102,30 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Próximo</span>
         </a>
-
     </div>
 
-    <!-- NOTICIAS -->
-
+    <!--NOTICIAS-->
     <div class="jumbotron top-space mt-0 mb-3 pt-5" style="background-color: #f2f2f2;">
         <div class="container-fluid">
             <h4 class="text-center mt-0">ÚLTIMAS NOTICIAS</h4>
             <a href="allpost.php?pagina=0" class="btn btn-primary col-sm col-lg-2 col-md-4">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
             <hr style="border-color: #354698; ">
 
-            <!-- Cabeçalho Noticia -->
-
+            <!--BUSCA DAS NOTICIAS-->
             <?php
-                    $cat = 1; // Categoria a ser filtrada
-                    $quantNotices = 8;
-                    $sql = mysqli_query(DBConecta(), "SELECT * FROM `mr_posts` WHERE `categoria` = $cat ORDER BY `id` DESC LIMIT $quantNotices;") or die("Erro");
-                ?>
-
+                $cat = 1; //CATEGORIA A BUSCAR. LEIA O ARQUIVO CATEGORIAS.TXT PARA SABER MAIS
+                $quantNotices = 8;
+                $sql = mysqli_query(DBConecta(), "SELECT * FROM `mr_posts` WHERE `categoria` = $cat ORDER BY `id` DESC LIMIT $quantNotices;");
+            ?>
 
             <div id="multi-item-example" class="carousel slide carousel-multi-item text-center" data-ride="carousel">
-                <!-- Setas -->
                 <div class="controls-top">
                     <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
                     <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right"></i></a>
                 </div>
-        
+
                 <div class="carousel-inner" role="listbox">
+                    <!--EXIBIÇÃO DAS NOTICIAS EM CARROSEL-->
                     <?php 
                         $quantCardPorLinha = $quantNotices/2;
                         echo "
@@ -254,61 +246,44 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
                             $quantNotices--;
                         }
                         echo "
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                        ";
+                        </div>";
                     ?>
                 </div>
             </div>
         </div>
     </div>
 
-    
-    
-    <!-- BOTÕES -->
-
+    <!--BOTÕES-->
     <div class="container text-center mb-2">
-
         <div class="row text-center">
-
             <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
-
                 <div class="btn-group-vertical btn-block btn-block-lg">
                     <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">UFSM</h6>
                     </a>
                 </div>
             </div>
-
             <hr class="w-100 clearfix d-md-none">
-
             <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
-
                 <div class="btn-group-vertical btn-block btn-block-lg">
-
                     <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">ENEM</h6>
                     </a>
                 </div>
             </div>
-
             <hr class="w-100 clearfix d-md-none">
-
             <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
                 <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://portal.mec.gov.br/" target="_blank" class="btn btn-primary p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
-                        <h6 class="text-uppercase">MEC</h6>
+                    <a href="http://www.blogdonatanael.com/" target="_blank" class="btn btn-primary p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
+                        <h6 class="text-uppercase">Professor do Natanael</h6>
                     </a>
                 </div>
             </div>
-
             <hr class="w-100 clearfix d-md-none">
-
             <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-3">
-
                 <div class="btn-group-vertical btn-block btn-block-lg">
-
                     <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">PROUNI</h6>
                     </a>
@@ -317,22 +292,15 @@ if (isset($_GET['deslogar'])) {     //Parametro isset verifica se a variavel exi
         </div>
     </div>
 
-    <!--FOOTER-->
+    <!--IMPORTAÇÃO DO RODAPÉ-->
+    <?php include_once("footer.php"); ?>
 
-    <?php
-        include_once("footer.php");
-     ?>
+    <!--TELA DE LOGIN MODAL-->
+    <?php include_once("loginAdmin.php"); ?>
 
-    <!--TELA DE LOGIN -->
-    <?php
-        include_once("loginAdmin.php");
-        ?>
-
-    <!-- Links JS, Jquery e Popper -->
+    <!-- LINKS PADRÃO BOOTSTRAP -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-
 </body>
-
 </html>

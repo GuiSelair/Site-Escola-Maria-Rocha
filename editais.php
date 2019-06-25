@@ -1,42 +1,52 @@
 <?php
 
-    session_start();
+//////////////////////////////////////
+////           EDITAIS            ////
+//////////////////////////////////////
 
-    include_once("conexao/config.php");
-    include_once("conexao/conexao.php");
-    include_once("conexao/function.php");
+session_start();
 
-    $noticesbyPages = 6;
-    $pagina = intval($_GET['pagina']); //Pega um valor inteiro
-    $beginningPage = $pagina;
+include_once("conexao/config.php");
+include_once("conexao/conexao.php");
+include_once("conexao/function.php");
 
-    if ($pagina != 0)
-        $beginningPage = $pagina * $noticesbyPages;
+// LOGIN MODAL
+if(isset($_POST['entrar'])) {
+    $conn = DBConecta();
 
-    $sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts WHERE categoria = 0 ORDER BY id DESC  LIMIT $beginningPage, $noticesbyPages");
-    $num = mysqli_num_rows($sql);
+    $login = mysqli_escape_string($conn, $_POST['login']);
+    $senha = mysqli_escape_string($conn, $_POST['senha']);
+    $cript = md5($senha);
 
-    $sql1 = mysqli_query(DBConecta(), "SELECT * FROM mr_posts WHERE categoria = 0");
-    $num_total = mysqli_num_rows($sql1);
+    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
 
-    $num_pages = ceil($num_total/$noticesbyPages);
-
-    if(isset($_POST['entrar'])) {
-        $conn = DBConecta();
-
-        $login = mysqli_escape_string($conn, $_POST['login']);
-        $senha = mysqli_escape_string($conn, $_POST['senha']);
-        $cript = md5($senha);
-
-        $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-
-        if ($conect) {
-            $_SESSION['UsuarioLog'] = true;
-            header("location: painel/painel.php");
-        } else {
-            echo "<script>alert('Usuário ou Senha inválida!')</script>";
-        }
+    if ($conect) {
+        $_SESSION['Logado'] = true;
+        $_SESSION["user"] = $login;
+        header("location: index.php");
+    } else {
+        echo "<script>alert('Usuário ou Senha inválida!')</script>";
     }
+}
+
+// DESLOGAR
+if (isset($_GET['deslogar'])) {     
+    session_destroy();
+    header("location: index.php");
+}
+
+// PAGINAÇÃO E BUSCA DE TODOS OS EDITAIS
+$noticesbyPages = 6;
+$pagina = intval($_GET['pagina']); 
+$beginningPage = $pagina;
+if ($pagina != 0)
+    $beginningPage = $pagina * $noticesbyPages;
+// LEIA O ARQUIVO CATEGORIAS.TXT PARA SABER MAIS SOBRE AS CATEGORIAS.
+$sql = mysqli_query(DBConecta(),"SELECT * FROM mr_posts WHERE categoria = 0 ORDER BY id DESC  LIMIT $beginningPage, $noticesbyPages");
+$num = mysqli_num_rows($sql);
+$sql1 = mysqli_query(DBConecta(), "SELECT * FROM mr_posts WHERE categoria = 0");
+$num_total = mysqli_num_rows($sql1);
+$num_pages = ceil($num_total/$noticesbyPages);
 
 ?>
 <!doctype html>
@@ -49,7 +59,6 @@
     <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
     <meta name="description" content="Escola estadual de ensino médio e tecnico maria rocha">
 
-    <!-- Links Boostrap e CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
@@ -58,39 +67,34 @@
 
 <body>
 
-    <!--NAVBAR-->
-
+    <!-- IMPORTAÇÃO DA BARRA DE NAVEGAÇÃO-->
     <?php include 'menu.php'; ?>
 
-    <!-- POSTAGENS -->
-
+    <!-- EDITAIS -->
     <div class="container">
-
         <div class="row">
-
             <div class="col-lg-12 col-md-12 col-sm-2">
                 <?php
-
-                    while ($dados=mysqli_fetch_assoc($sql)) {
-                      echo '<div class="h2 text-center mt-5">'.$dados ['titulo'].'</div><p>
-                      <hr>';
+                    // CORPO DE CADA EDITAIS
+                    while ($dados = mysqli_fetch_assoc($sql)) {
+                        echo '<div class="h2 text-center mt-5">'.$dados ['titulo'].'</div><p>
+                            <hr>';
                         echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
                         echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'</div>';
                     }
-
                   ?>
             </div>
 
             <!-- Paginação -->
-
             <div class="container my-4 mx-4">
                 <div class="row">
                     <div class="col-12">
-                        <nav aria-label="Page navigation example">
+                        <nav aria-label="Paginacao">
                             <ul class="pagination pagination-sm justify-content-center">
                                 <li class="page-item">
                                     <?php if ($pagina != 0) { ?>
-                                        <a class="page-link" href="editais.php?pagina=<?php echo $pagina-1;?>" aria-label="Previous">
+                                    <a class="page-link" href="editais.php?pagina=<?php echo $pagina-1;?>"
+                                        aria-label="Previous">
                                         <?php }else{ ?>
                                         <a class="page-link" href="editais.php?pagina=0" aria-label="Previous">
                                             <?php } ?>
@@ -109,13 +113,16 @@
                                                 if($pagina == $i)
                                                     $estilo = "class='page-item active'";
                                         ?>
-                                <li <?php echo $estilo; ?>><a class="page-link" href="editais.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
+                                <li <?php echo $estilo; ?>><a class="page-link"
+                                        href="editais.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
                                 <?php } ?>
                                 <li class="page-item">
                                     <?php if ($pagina != $num_pages){ ?>
-                                        <a class="page-link" href="editais.php?pagina=<?php echo $pagina + 1; ?>" aria-label="Next">
+                                    <a class="page-link" href="editais.php?pagina=<?php echo $pagina + 1; ?>"
+                                        aria-label="Next">
                                         <?php }else { ?>
-                                        <a class="page-link" href="editais.php?pagina=<?php echo $num_pages-1; ?>" aria-label="Next">
+                                        <a class="page-link" href="editais.php?pagina=<?php echo $num_pages-1; ?>"
+                                            aria-label="Next">
                                             <?php } ?>
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
@@ -126,25 +133,18 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!--FOOTER-->
+    <!--IMPORTAÇÃO DO RODAPÉ-->
+    <?php include_once("footer.php"); ?>
 
-    <?php
-        include_once("footer.php");
-    ?>
-
-    <!--TELA DE LOGIN -->
-    <?php
-        include_once("loginAdmin.php");
-    ?>
+    <!--TELA DE LOGIN MODAL-->
+    <?php include_once("loginAdmin.php"); ?>
 
 
-    <!-- Links JS, Jquery e Popper -->
+    <!--LINKS PADRÃO BOOTSTRAP-->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 </body>
-
 </html>

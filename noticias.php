@@ -1,19 +1,21 @@
 <?php
 
+/////////////////////////////////////////
+////  LAYOUT DA PÁGINA DE NOTICIAS   ////
+/////////////////////////////////////////
+
 session_start();
 
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
+// LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
-    // Faz login caso seja selecionado
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
-
-    // Faz UPDATE no banco de dados
     $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
     if ($conect) {
         $_SESSION['Logado'] = true;
@@ -24,24 +26,24 @@ if(isset($_POST['entrar'])) {
     }
 }
 
+// DESLOGAR
 if (isset($_GET['deslogar'])) {
     session_destroy();
     header("location: cont.php");
 }
 
+// BUSCA NOTICIA PELO ID DA NOTICIA
 $id = $_GET['id'];
-//BUSCA NOTICIA
 $sql_code = "SELECT * FROM mr_posts WHERE ID = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
 $results = mysqli_fetch_assoc($sql);
-
-//BUSCA IMAGEM
+//BUSCA IMAGEM DA NOTICIA
 $sql_code = "SELECT * FROM imagens WHERE idPosts = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
 $linhas = mysqli_num_rows($sql);
-if ($linhas > 0){
-  $imagem = mysqli_fetch_assoc($sql);
-}
+if ($linhas > 0)
+    $imagem = mysqli_fetch_assoc($sql);
+
 ?>
 
 <!doctype html>
@@ -52,7 +54,6 @@ if ($linhas > 0){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Links Boostrap e CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
@@ -60,14 +61,12 @@ if ($linhas > 0){
 </head>
 
 <body>
-
-    <!--NAVBAR-->
-
+    <!-- IMPORTAÇÃO DA BARRA DE NAVEGAÇÃO-->
     <?php include 'menu.php'; ?>
 
-
+    <!--LAYOUT PARA EXIBIÇÃO DA PÁGINA DE NOTICIAS-->
     <div class="container text-center">
-
+        <!--TITULO DA NOTICIA E POSTADOR-->
         <div class="row">
             <div class="col-12 mb-1">
                 <?php
@@ -78,15 +77,17 @@ if ($linhas > 0){
                 <hr style="border-color: #354698;">
             </div>
         </div>
+        <!--IMAGEM PRINCIPAL DA NOTICIA, SE TIVER-->
         <?php if ($linhas > 0){ ?>
-        <div class="row justify-content-center">
-            <div class="col-6 mb-3">
-                <?php
-                    echo "<img src='./Galeria/".$imagem['nome']."' class='img-fluid my-2' style='max-height: 400px'>";
-                ?>
+            <div class="row justify-content-center">
+                <div class="col-6 mb-3">
+                    <?php
+                        echo "<img src='./Galeria/".$imagem['nome']."' class='img-fluid my-2' style='max-height: 400px'>";
+                    ?>
+                </div>
             </div>
-        </div>
         <?php } ?>
+        <!--DESCRIÇÃO DA NOTICIA (CORPO DA NOTICIA)-->
         <div class="row">
             <div class="col-12 mb-3">
                 <?php
@@ -96,22 +97,15 @@ if ($linhas > 0){
         </div>
     </div>
 
-    <!--FOOTER-->
+    <!--IMPORTAÇÃO DO RODAPÉ-->
+    <?php include_once("footer.php"); ?>
 
-    <?php
-            include_once("footer.php");
-        ?>
+    <!--TELA DE LOGIN MODAL-->
+    <?php include_once("loginAdmin.php"); ?>
 
-    <!--TELA DE LOGIN -->
-    <?php
-            include_once("loginAdmin.php");
-        ?>
-
-
-    <!-- Links JS, Jquery e Popper -->
+    <!--LINKS PADRÃO BOOTSTRAP-->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 </body>
-
 </html>
