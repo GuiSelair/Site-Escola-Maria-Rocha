@@ -1,4 +1,8 @@
-<!-- TELA MODAL LOGIN ADMIN -->
+<?php 
+////////////////////////////////////////////
+////   LOGIN DE ADMINISTRADOR DO SITE    ///
+///////////////////////////////////////////
+?>
 
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
@@ -6,11 +10,10 @@
             <div class="modal-header">
                 <h5 class="modal-title">Login</h5>
                 <button class="close" type="button" data-dismiss="modal">
-                    <span>&times;</span> <!-- Botão X para sair -->
+                    <span>&times;</span> 
                 </button>
             </div>
             <div class="modal-body">
-                <!-- <div class="container"> -->
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-6">
@@ -18,13 +21,11 @@
                                 <div class="form-row mt-4">
                                     <div class="form-group col-sm-12">
                                         <label for="inputLogin">Login</label>
-                                        <input type="text" name="login" class="form-control" id="login"
-                                            placeholder="Usuário">
+                                        <input type="text" name="login" class="form-control" id="login" placeholder="Usuário">
                                     </div>
                                     <div class="form-group col-sm-12">
                                         <label for="inputSenha">Senha</label>
-                                        <input type="password" name="senha" class="form-control" id="senha"
-                                            placeholder="Senha">
+                                        <input type="password" name="senha" class="form-control" id="senha" placeholder="Senha">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -39,7 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <!--</div>-->
             </div>
             <div class="modal-footer">
                 <p class="text-left"><i>Somente para Administradores</i></p>

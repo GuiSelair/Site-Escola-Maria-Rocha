@@ -1,19 +1,21 @@
 <?php
 
+//////////////////////////////////////
+////        PÁGINA DE CURSOS      ////
+//////////////////////////////////////
+
 session_start();
 
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
+// LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
-    // Faz login caso seja selecionado
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
-
-    // Faz UPDATE no banco de dados
     $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
     if ($conect) {
         $_SESSION['Logado'] = true;
@@ -24,16 +26,17 @@ if(isset($_POST['entrar'])) {
     }
 }
 
+// DESLOGAR
 if (isset($_GET['deslogar'])) {
     session_destroy();
     header("location: cursos.php?curso=1");
 }
 
+// FILTRA ATRAVES DO GET QUAL CURSO SERÁ EXIBIDO
 $curso = $_GET['curso'];
-
 switch ($curso) {
     case '0':
-        $icon = "class= 'fa fa-laptop mx-2'";
+        $icon = "class= 'fa fa-bus mx-2'"; 
         $tec = "Médio";
         $sql_code = "SELECT * FROM cursomedio;";
         break;
@@ -53,7 +56,7 @@ switch ($curso) {
         $sql_code = "SELECT * FROM cursosecretariado;";
         break;
     case '4':
-        $icon = "class= 'fa fa-laptop mx-2'";
+        $icon = "class= 'fa fa-laptop mx-2'"; 
         $tec = "Informática Integrado";
         $sql_code = "SELECT * FROM cursointegrado;";
         break;
@@ -62,9 +65,9 @@ switch ($curso) {
         break;
 }
 
-// Após a sair do switch com o sql_code feito, realizada a pesquisa no Banco de Dados
 $sql = mysqli_query(DBConecta(), $sql_code);
 $results = mysqli_fetch_assoc($sql);
+
 ?>
 
 <!doctype html>
@@ -75,7 +78,6 @@ $results = mysqli_fetch_assoc($sql);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Links Boostrap e CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
@@ -84,11 +86,11 @@ $results = mysqli_fetch_assoc($sql);
 
 <body>
 
-    <!--NAVBAR-->
-
+    <!--IMPORTAÇÃO DA BARRA DE NAVEGAÇÃO-->
     <?php include 'menu.php'; ?>
 
-
+    <!--LAYOUT PÁGINA DE CURSOS-->
+    <!--NOME DO CURSO-->
     <div class="container text-center">
         <?php
             if ($tec != "Médio")
@@ -98,7 +100,7 @@ $results = mysqli_fetch_assoc($sql);
         ?>
         <hr style="border-color: #354698;">
     </div>
-
+    <!--DESCRIÇÃO DO CURSO-->
     <div class="container">
         <?php if ($tec != "Médio" && $tec != "Informática Integrado"){ ?>
         <?php if ($results['objetivoCurso'] != "<p><br></p>"){ ?>
@@ -191,22 +193,15 @@ $results = mysqli_fetch_assoc($sql);
         <?php }} ?>
     </div>
 
-    <!--FOOTER-->
+    <!--IMPORTAÇÃO DO RODAPÉ-->
+    <?php include_once("footer.php"); ?>
 
-    <?php
-            include_once("footer.php");
-        ?>
+    <!--TELA DE LOGIN MODAL-->
+    <?php include_once("loginAdmin.php"); ?>
 
-    <!--TELA DE LOGIN -->
-    <?php
-            include_once("loginAdmin.php");
-        ?>
-
-
-    <!-- Links JS, Jquery e Popper -->
+    <!--LINKS PADRÃO BOOTSTRAP-->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/popper.js/dist/umd/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 </body>
-
 </html>

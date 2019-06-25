@@ -1,11 +1,25 @@
-Legenda das Categorias:
-- 1: Escola
-- 0: Editais
-mdbootstrap.com
+
+//////////////////////////////////////
+////          CATEGORIAS          ////
+////     por: Guilherme Selair    ////
+//////////////////////////////////////
+
+////////// NOTICIAS ////////////
+-> Noticias gerais da escola terão categoria 1. 
+-> Noticias com categoria 1, ou seja, NOTICIAS ESCOLARES aparecerão tanto na página principal como na página todas noticias.
+
+///////// EDITAIS /////////////
+-> Editais terão categoria 0.
+-> Noticias com categoria 0, ou seja, EDITAIS aparecerão SOMENTE na página editais.
+
+///////// IMAGENS /////////////
+-> Todas as imagens são baixadas para a pasta Galeria e atraves da categoria deles é possivel selecionar onde cada uma será exibida.
+
+
+
 
 Legenda das Imagens:
 - 0: Imagem normal (Aparece na galeria)
 - 1: Imagem Principal (Não aparece na galeria)
 - 3: Imagem vinculada as noticias (Não aparece na galeria)
 
-Froala editar
