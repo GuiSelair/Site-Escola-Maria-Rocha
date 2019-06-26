@@ -1,9 +1,22 @@
 <?php
 
-    define('HOSTNAME', 'localhost');
-    define('USERNAME', 'root');
-    define('PASSWORD', null);
-    define('DATABASE', 'mr');
-    define('CHARSET', 'utf8');
+///////////////////////////////////////////////
+////  ARQUIVOS DE DEFINIÇÃO DE APELIDOS   ////
+//////////////////////////////////////////////
+
+//LINK DO BANCO DE DADOS
+define('HOSTNAME', 'localhost');
+
+// USUÁRIO COM ACESSO AO BANCO
+define('USERNAME', 'root');
+
+// SENHA DO USUÁRIO
+define('PASSWORD', null);
+
+// NOME DO BANCO DE DADOS
+define('DATABASE', 'mr');
+
+// PRINCIPAL TIPO DE DADO DO BANCO
+define('CHARSET', 'utf8');
 
 ?>

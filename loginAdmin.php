@@ -8,20 +8,23 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Login</h5>
+                <h5 class="modal-title">Acesso ao Portal Acadêmico</h5>
                 <button class="close" type="button" data-dismiss="modal">
                     <span>&times;</span> 
                 </button>
             </div>
             <div class="modal-body">
-                <div class="container-fluid">
+                <div class="container">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12 d-none d-sm-block d-md-none text-center">
+                            <img src="img/Login.png" alt="Logo Pequno" class="img-fluid" width="100">
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
                             <form name="loginForm" method="POST">
                                 <div class="form-row mt-4">
                                     <div class="form-group col-sm-12">
-                                        <label for="inputLogin">Login</label>
-                                        <input type="text" name="login" class="form-control" id="login" placeholder="Usuário">
+                                        <label for="inputLogin">Usuário</label>
+                                        <input type="text" name="login" class="form-control" id="login" placeholder="Login">
                                     </div>
                                     <div class="form-group col-sm-12">
                                         <label for="inputSenha">Senha</label>
@@ -35,14 +38,14 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-6 text-center">
-                            <img src="img/Login.png" class="mr-auto ml-5 mb-4" width="70%">
+                        <div class="col-lg-6 d-none d-lg-block d-xl-block text-center">
+                            <img src="img/Login.png" class="mb-2 img-fluid" width="200">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <p class="text-left"><i>Somente para Administradores</i></p>
+                <p class="text-left"><i>Somente para <b>Administradores</b></i></p>
             </div>
         </div>
     </div>

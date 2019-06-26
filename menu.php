@@ -15,7 +15,7 @@
         <div class="col-sm-2 col-md-6 col-lg-6 col-xl-6 ">
             <div class="text-center">
                 <!--LINK PARA O FACEBOOK DA ESCOLA-->
-                <a href="https://www.facebook.com/@mariarochaescola"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
+                <a href="https://www.facebook.com/MariaRochaEscola/"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
                 <?php
                     if (!isset($_SESSION['Logado'])) {
                 ?>
