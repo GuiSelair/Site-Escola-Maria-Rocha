@@ -65,9 +65,9 @@ if ($linhas > 0)
     <?php include 'menu.php'; ?>
 
     <!--LAYOUT PARA EXIBIÇÃO DA PÁGINA DE NOTICIAS-->
-    <div class="container text-center">
+    <div class="container">
         <!--TITULO DA NOTICIA E POSTADOR-->
-        <div class="row">
+        <div class="row text-center">
             <div class="col-12 mb-1">
                 <?php
                     echo "<h5 class='display-4 my-3'>".$results['titulo']."</h5>";
@@ -79,7 +79,7 @@ if ($linhas > 0)
         </div>
         <!--IMAGEM PRINCIPAL DA NOTICIA, SE TIVER-->
         <?php if ($linhas > 0){ ?>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center text-center">
                 <div class="col-6 mb-3">
                     <?php
                         echo "<img src='./Galeria/".$imagem['nome']."' class='img-fluid my-2' style='max-height: 400px'>";
@@ -89,9 +89,9 @@ if ($linhas > 0)
         <?php } ?>
         <!--DESCRIÇÃO DA NOTICIA (CORPO DA NOTICIA)-->
         <div class="row">
-            <div class="col-12 mb-3">
+            <div class="col-12 mb-3 text-center">
                 <?php
-                    echo "<p class='text-justify'>".$results['descricao']."</p>";
+                    echo $results['descricao'];
                 ?>
             </div>
         </div>

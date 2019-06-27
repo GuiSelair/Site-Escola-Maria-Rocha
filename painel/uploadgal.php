@@ -1,11 +1,16 @@
 <?php
 
+//////////////////////////////////////
+////    PAINEL ADMINISTRATIVO     ////
+//////////////////////////////////////
+
+session_start();
+
 include_once("../conexao/conexao.php");
 include_once("../conexao/config.php");
 include_once("../conexao/function.php");
 
-session_start();
-
+// VERIFICA SE O USUÁRIO ESTÁ LOGADO
 if (!isset($_SESSION['Logado'])) {
     header("Location: ../index.php");
     session_destroy();
@@ -13,80 +18,72 @@ if (!isset($_SESSION['Logado'])) {
 
 $diretorio = "../Galeria/";
 
+// FAZ O UPLOAD DA IMAGEM 
 if (isset($_POST['postar'])) {
-
     $foto = $_FILES['arquivo'];
     $dimensoes = getimagesize($foto['tmp_name']);
+    // ALTURA MÁXIMA PERMITIDA PARA POSTAR IMAGENS NA PÁGINA PRINCIPAL
     $altura = 500;
 
-    if (!is_dir($diretorio)){    // VERFICA A EXISTENCIA DA PASTA
-        echo "Pasta $diretorio nao existe";
+    if (!is_dir($diretorio)){    
+        echo "<div class='alert alert-danger alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                <strong>NÃO ENCONTRAMOS A PASTA GALERIA. POR FAVOR, CRIE.</strong>
+            </div>";
     }
     else {
         if (isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) {
             $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
             $nome = $_FILES[ 'arquivo' ][ 'name' ];
-
-            // Pega a extensão
+            // PEGA A EXTEÇÃO DO ARQUIVO E VERIFICA A EXTENÇÃO É VALIDA
             $extensao = pathinfo ( $nome, PATHINFO_EXTENSION );
-
-            // Converte a extensão para minúsculo
             $extensao = strtolower ( $extensao );
-
             if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
                 $novoNome = uniqid ( time () ) . '.' . $extensao;
-
-                // Concatena a pasta com o nome
                 $destino = '../Galeria/' . $novoNome;
+                // VERIFIQUE O ARQUIVO CATEGORIAS.TXT PARA SABER MAIS
                 $cat = $_POST["cat"];
 
-                // Verifica se a imagem tem mais que a altura máxima.
-                if ($cat == 1 && $dimensoes[1] >= $altura){
+                // VERIFICA SE A IMAGEM TEM MAIS QUE O TAMANHO MÁXIMO
+                if ($cat == 1 && $dimensoes[1] > $altura){
                     echo "<div class='alert alert-danger alert-dismissable'>
-                      <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                                <strong>Imagem deve ter no máximo 500px de altura</strong>
-                                </div>
-                                ";
+                            <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                            <strong>Imagem deve ter no máximo 500px de altura</strong>
+                        </div>";
                 }
                 else{
-                    // tenta mover o arquivo para o destino
                     if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
                         $conn = DBConecta();
                         $up = mysqli_query($conn, "INSERT INTO imagens (categoria, nome) VALUES ('$cat', '$novoNome');");
-
                         echo "<div class='alert alert-success alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                        <strong>Upload efetuado com sucesso!</strong>
-                        </div>
-                        ";
+                                <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                                <strong>Upload efetuado com sucesso!</strong>
+                            </div>";
                     }
                     else
                         echo "<div class='alert alert-danger alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                        <strong>Erro ao fazer Upload!</strong>
-                        </div>
-                        ";
+                                <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                                <strong>Erro ao fazer Upload! Verifique sua conexão ou tente mais tarde.</strong>
+                            </div>";
                 }
             }
             else
                 echo "<div class='alert alert-danger alert-dismissable'>
-          <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
-                    <strong>Você só pode fazer upload de imagens</strong>
-                    </div>
-                    ";
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                        <strong>Você só pode fazer upload de imagens</strong>
+                    </div>";
         }
         else
             echo "<div class='alert alert-danger alert-dismissable'>
-          <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+                    <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
                     <strong>Você não selecionou nenhuma imagem</strong>
-                    </div>
-                    ";
+                </div>";
 
     }
-
 }
 
-$sql = mysqli_query(DBConecta(),"SELECT * FROM imagens WHERE categoria = 1;") or die("Erro");
+// BUSCA TODAS IMAGENS COM CATEGORIA 1
+$sql = mysqli_query(DBConecta(),"SELECT * FROM imagens WHERE categoria = 1;");
 $linha = mysqli_num_rows($sql);
 
 ?>
@@ -97,23 +94,16 @@ $linha = mysqli_num_rows($sql);
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
     <link rel="shortcut icon" href="../Img/favicon.ico" />
-
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-
     <link href="componentes/css/bootstrap.min.css" rel="stylesheet" />
-
     <link href="componentes/css/animate.min.css" rel="stylesheet" />
-
     <link href="componentes/css/painel.css" rel="stylesheet" />
-
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="componentes/css/icons.css" rel="stylesheet" />
-
 </head>
 
 <body>

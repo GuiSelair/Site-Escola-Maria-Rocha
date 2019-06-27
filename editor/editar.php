@@ -10,17 +10,20 @@ include_once("../conexao/function.php");
 
 session_start();
 
+// VERICA SE O USUÁRIO ESTA LOGADO
 if (!isset($_SESSION{'Logado'})) {
     header("location: ../index.php");
     session_destroy();
 }
 
+// BUSCA A NOTICIA PARA SER EDITADA
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
     $res = mysqli_query(DBConecta(), "SELECT * FROM mr_posts WHERE id = '$id'");
     $row = mysqli_fetch_array($res);
 }
 
+// ATUALIZADA O BANCO DE DADOS COM A NOTIFICA EDITADA
 if (isset($_POST['atualizar'])) {
     $conn = DBConecta();
     $ntitulo = $_POST['ntitulo'];
@@ -29,7 +32,6 @@ if (isset($_POST['atualizar'])) {
     $sql_code = "UPDATE mr_posts SET titulo = '$ntitulo', descricao = '$ndescricao' WHERE id = '$id' ";
     $results = mysqli_query($conn, $sql_code);
     if ($results) {
-        echo "<script>alert('Publicação atualizada com Sucesso!')</script>";
         header("Location: ../painel/painel.php");
     }
 }
@@ -51,11 +53,18 @@ if (isset($_POST['atualizar'])) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <!--
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <link rel="stylesheet" href="dist/summernote-bs4.css">
     <script src="dist/summernote-bs4.min.js"></script>
+    -->
+    <link href="../portal/froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../portal/froala/js/froala_editor.pkgd.min.js"></script>
+    <link href="../portal/froala/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../portal/froala/js/languages/pt_br.js"></script>
+
 </head>
 
 <body>
@@ -69,16 +78,16 @@ if (isset($_POST['atualizar'])) {
             <div class="col-12">
                 <form action="" method="POST" enctype="multipart/form-data" id="postForm">
                     <!--TITULO DA NOTICIA-->
-                    <input type="text" name="ntitulo" id="ntitulo" placeholder="Titulo" class="form-control" value="<?php echo $row['titulo'] ?>">
+                    <input type="text" name="ntitulo" id="ntitulo" placeholder="Titulo" class="form-control my-2" value="<?php echo $row['titulo'] ?>">
                     <!--CORPO DA NOTICIA-->
-                    <textarea class="form-control" name="ndescrição" id="summernote"><?php echo $row['descricao'] ?></textarea>
-                    <button type="submit" class="btn btn-primary btn-block" name="atualizar">Atualizar Publicação</button>
-                    <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark">Voltar ao Painel de Controle</button>
+                    <textarea class="form-control" name="ndescrição" id="editor"><?php echo $row['descricao'] ?></textarea>
+                    <button type="submit" class="btn btn-primary btn-block my-2" name="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
+                    <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark my-2" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</button>
                 </form>
             </div>
         </div>
     </div>
-    
+
     <script>
         function confirmExclusao() {
             if (confirm("Tem certeza que deseja sair desta postagem?")) {
@@ -87,7 +96,35 @@ if (isset($_POST['atualizar'])) {
         }
     </script>
 
-    <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO (SUMMERNOTE)-->
+    <!--SCRIPT DE CONFIGURAÇÃO DO EDITOR-->
+    <script>
+        var editor = new FroalaEditor('#editor', {
+            language: 'pt_br',
+            toolbarButtons: {
+                'moreText': {
+                    'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor']
+                },
+                'moreParagraph': {
+                    'buttons': ['alignLeft', 'alignCenter', 'alignJustify', 'formatOL', 'formatUL', 'outdent',
+                        'indent'
+                    ]
+                },
+                'moreRich': {
+                    'buttons': ['insertLink', 'insertImage', 'insertTable', 'insertHR']
+                }
+            },
+
+            // Para telas pequenas
+            toolbarButtonsXS: [
+                ['undo', 'redo'],
+                ['bold', 'italic', 'underline']
+            ],
+            quickInsertTags: [''],
+            placeholderText: "Digite aqui sua descrição...",
+        })
+    </script>
+
+    <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVO (SUMMERNOTE)
     <script type="text/javascript">
         $(document).ready(function () {
             $('#summernote').summernote({
@@ -113,11 +150,13 @@ if (isset($_POST['atualizar'])) {
             var content = $('textarea[name="descrição"]').html($('#summernote').code());
         }
     </script>
-    <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../painel/componentes/js/painel-admin.js"></script>
     <link rel="stylesheet" href="dist/summernote-bs4.css">
     <script src="dist/summernote-bs4.js"></script>
     <script src="dist/lang/summernote-pt-BR.js"></script>
+    -->
+
+    <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
+
 </html>

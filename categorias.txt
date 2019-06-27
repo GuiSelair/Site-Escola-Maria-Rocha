@@ -13,13 +13,7 @@
 -> Noticias com categoria 0, ou seja, EDITAIS aparecerão SOMENTE na página editais.
 
 ///////// IMAGENS /////////////
--> Todas as imagens são baixadas para a pasta Galeria e atraves da categoria deles é possivel selecionar onde cada uma será exibida.
-
-
-
-
-Legenda das Imagens:
-- 0: Imagem normal (Aparece na galeria)
-- 1: Imagem Principal (Não aparece na galeria)
-- 3: Imagem vinculada as noticias (Não aparece na galeria)
-
+-> Todas as imagens são baixadas para a pasta Galeria e atraves da categoria delas é possivel selecionar onde cada uma será exibida.
+-> Imagem de capa de noticía terão categoria 3. Estas imagens somente serão exibidas na página principal na capa de noticias com categoria 1.
+-> Imagens normais para serem visualizada na galeria deverão tem categoria 0. 
+-> Imagens principais, ou seja, imagens que serão exibidas na tela principal no carrosel de imagens terão categoria 1.
