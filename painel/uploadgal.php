@@ -1,7 +1,7 @@
 <?php
 
 //////////////////////////////////////
-////    PAINEL ADMINISTRATIVO     ////
+////      UPLOAD DE IMAGENS       ////
 //////////////////////////////////////
 
 session_start();
@@ -107,160 +107,91 @@ $linha = mysqli_num_rows($sql);
 </head>
 
 <body>
-
-    <div class="wrapper ">
-
+    <div class="wrapper">
         <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
-
-            <div class="sidebar-wrapper ">
-
+            <div class="sidebar-wrapper">
                 <div class="logo">
-
                     <a href="../index.php" class="simple-text">
                         Maria Rocha
                     </a>
-
                 </div>
-
-                <ul class="nav ">
-
+                <!--PAINEL DE NAVEGAÇÃO LATERAL-->
+                <ul class="nav">
                     <li>
-
                         <a href="painel.php">
-
                             <i class="pe-7s-graph"></i>
                             <p>Painel de controle</p>
-
                         </a>
-
                     </li>
-
                     <li>
-
                         <a href="posts.php">
-
                             <i class="pe-7s-pin"></i>
-                            <p>Posts</p>
-
+                            <p>Todas Notícias</p>
                         </a>
-
                     </li>
-
                     <li>
-
                         <a href="../editor/publicar.php">
-
                             <i class="pe-7s-pen"></i>
                             <p>Publicar notícia</p>
-
                         </a>
-
                     </li>
-
                     <li>
-
                         <a href="../editor/editarCursos.php">
-
                             <i class="pe-7s-id"></i>
                             <p>Editar página cursos</p>
-
                         </a>
-
                     </li>
-
                     <li class="active">
-
                         <a href="uploadgal.php">
-
                             <i class="pe-7s-cloud-upload"></i>
-                            <p>Upload de Imagens</p>
-
+                            <p>Postar Imagens</p>
                         </a>
-
                     </li>
-
                     <li>
-
                         <a href="usuario.php">
-
                             <i class="pe-7s-user"></i>
                             <p>Criar Usuário</p>
-
                         </a>
-
                     </li>
-
                     <li>
-
                         <a href="../index.php">
-
                             <i class="pe-7s-home"></i>
                             <p>Pagina Inicial</p>
-
                         </a>
-
                     </li>
-
                 </ul>
-
             </div>
-
         </div>
-
+        <!--MENU PARA APARELHOS MÓVEIS-->
         <div class="main-panel">
-
             <nav class="navbar navbar-default navbar-fixed">
-
                 <div class="container-fluid">
-
                     <div class="navbar-header">
-
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navegação">
-
                             <span class="sr-only">Mostrar navegação</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
-
                         </button>
-
                         <a class="navbar-brand" href="#">Painel de Controle</a>
-
                     </div>
-
-                    <div class="collapse navbar-collapse">
-
-                    </div>
-
+                    <div class="collapse navbar-collapse"></div>
                 </div>
-
             </nav>
 
-
             <div class="content">
-
                 <div class="container-fluid">
-
                     <div class="row">
-
                         <div class="col-sm-12">
-
                             <div class="card">
-
                                 <div class="header">
-
                                     <h4 class="title text">Upload de Imagens</h4>
-
                                 </div>
-
                                 <div class="content">
-
                                     <div>
-
                                         <form action="" method="POST" enctype="multipart/form-data" id="postForm">
-
                                             <input class="form-check-input" type="file" name="arquivo"
-                                                multiple="multiple" style="font-size: 15px;" />
+                                                multiple="multiple" style="font-size: 15px;"/>
                                             <br><br>
                                             <fieldset>
                                                 <legend>Opções</legend>
@@ -284,9 +215,8 @@ $linha = mysqli_num_rows($sql);
                                             <h6 class="my-5">OBS: A altura desta imagem deve ser no máximo 500px
                                             </h6>
                                             <br>
-                                            <?php
-                                            if ($linha != 0){
-                                        ?>
+                                            <!--EXIBIÇÃO DE IMAGENS PRINCIPAIS POSTADAS-->
+                                            <?php if ($linha != 0){ ?>
                                             <fieldset>
                                                 <legend>Imagens Principais Ativas</legend>
                                                 <div class="container">
@@ -294,8 +224,11 @@ $linha = mysqli_num_rows($sql);
                                                     while ($row = mysqli_fetch_assoc($sql)){
                                                         echo "
                                                             <div class='text-center my-5'>
-                                                                <img src='".$diretorio.$row['nome']."' class='img-thumbnail mb-2'>
-                                                                <a class='btn btn-danger btn-block my-3' href='deleteImagePrincipal.php?id=".$row['id']."'><i class='fa fa-angle-double-up'></i>Excluir</a>
+                                                                <img src='".$diretorio.$row['nome']."' width='700'>
+                                                                <div class='row my-3'>
+                                                                    <br>
+                                                                    <a class='btn btn-danger' href='deleteImagePrincipal.php?id=".$row['id']."'><i class='fa fa-angle-double-up'></i>Excluir</a>
+                                                                </div>
                                                             </div>
                                                             <br>
                                                         ";
@@ -305,89 +238,26 @@ $linha = mysqli_num_rows($sql);
                                                 </div>
                                                 <br>
                                             </fieldset>
-
-                                            <button type="submit" class="btn btn-primary btn-block mt-5" name="postar"
-                                                href="../painel/painel.php">Enviar
-                                                Imagem</button>
-                                            <a href="../painel/painel.php" class="btn btn-block btn-dark">Voltar ao
-                                                Painel de Controle</a>
-
+                                            <button type="submit" class="btn btn-primary  mt-5" name="postar" href="../painel/painel.php">Enviar Imagem</button>
+                                            <a href="../painel/painel.php" class="btn btn-dark">Voltar ao Painel de Controle</a>
                                         </form>
-
-
-
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
 
-                <footer class="footer">
-
-                    <div class="container-fluid">
-
-                        <nav class="pull-left">
-
-                            <ul>
-                                <li>
-                                    <a href="painel.php">
-                                        Painel
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="posts.php">
-                                        Posts
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="publicar.php">
-                                        Publicar
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        Upload Galeria
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="usuario.php">
-                                        Criar usuário
-                                    </a>
-                                </li>
-
-                            </ul>
-
-                        </nav>
-                        <p class="copyright pull-right">
-                            &copy; 2019 <a href="../index.php">Maria Rocha</a>
-                        </p>
-
-                    </div>
-
-                </footer>
+               <!--IMPORTAÇÃO DO RODAPÉ-->
+               <?php include_once("footer.php"); ?>
 
             </div>
-
         </div>
-
     </div>
-
-</body>
-
 
 <script src="componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
 <script src="componentes/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="componentes/js/painel-admin.js"></script>
 
-
+</body>
 </html>

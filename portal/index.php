@@ -4,7 +4,6 @@ session_start();
 
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
-include_once("conexao/function.php");
 
 if (isset($_GET['deslogar'])) {
   session_destroy();
@@ -34,10 +33,8 @@ if (!isset($_SESSION["id"])){
   <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
-  <!--
-  <script src='js/jquery.min.js'></script>
-  <script src='js/fullcalendar.min.js'></script>
-  -->
+  <script src="bower_components/moment/src/moment.js"></script>
+  <script src="bower_components/moment/src/locale/pt-br.js"></script>
 
 </head>
 
@@ -218,7 +215,7 @@ if (!isset($_SESSION["id"])){
   <script>
 			$(document).ready(function() {
 				$('#calendar').fullCalendar({
-          locale: "pt-BR",
+          lang: "pt-br",
 					header: {
 						left: 'prev,next today',
 						center: 'title',

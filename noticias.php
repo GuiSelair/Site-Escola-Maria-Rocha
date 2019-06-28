@@ -20,7 +20,7 @@ if(isset($_POST['entrar'])) {
     if ($conect) {
         $_SESSION['Logado'] = true;
         $_SESSION["user"] = $login;
-        header("location: cont.php");
+        header("location: index.php");
     } else {
         echo "<script>alert('Usuário ou Senha inválida!')</script>";
     }
@@ -29,7 +29,7 @@ if(isset($_POST['entrar'])) {
 // DESLOGAR
 if (isset($_GET['deslogar'])) {
     session_destroy();
-    header("location: cont.php");
+    header("location: index.php");
 }
 
 // BUSCA NOTICIA PELO ID DA NOTICIA
