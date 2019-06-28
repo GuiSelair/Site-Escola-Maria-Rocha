@@ -117,19 +117,19 @@ $con = mysqli_query(DBConecta(),$consulta);
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title text">TODAS AS NOTÍCIAS</h4>
+                                    <h4 class="title text">Todas as noticías</h4>
                                 </div>
                                 <div class="content">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <td scope="col">Título</td>
-                                                <td scope="col">Data</td>
-                                                <td scope="col">Postador</td>
-                                                <td scope="col">Ações</td>
+                                                <td scope="col-3">Título</td>
+                                                <td scope="col-3">Data</td>
+                                                <td scope="col-3">Postador</td>
+                                                <td scope="col-3">Ações</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -146,8 +146,8 @@ $con = mysqli_query(DBConecta(),$consulta);
                                                 </td>
                                                 <td><?php echo $row['data']; ?></td>
                                                 <td><?php echo $row['postador']; ?></td>
-                                                <td><?php echo "<a class='btn btn-primary' href='../editor/editar.php?edit=".$row['id']."'><i class='fa fa-edit'></i>Editar</a>" ?>
-                                                    <?php echo "<a class='btn btn-danger' href='deletar.php?id=".$row['id']."'><i class='fa fa-trash'></i>Excluir</a>" ?>
+                                                <td><?php echo "<a class='btn btn-primary btn-sm' href='../editor/editar.php?edit=".$row['id']."'><i class='fa fa-edit'></i>Editar</a>" ?>
+                                                    <?php echo "<a class='btn btn-danger btn-sm' href='deletar.php?id=".$row['id']."'><i class='fa fa-trash'></i>Excluir</a>" ?>
                                                 <td>
                                             </tr>
                                             <?php } ?>

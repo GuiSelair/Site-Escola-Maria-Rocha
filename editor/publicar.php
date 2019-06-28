@@ -45,7 +45,7 @@ if(isset($_POST['postar'])) {
          // REALIZA O DOWNLOAD DA IMAGEM DE CAPA DA NOTICIA (SE EXISTIR)
         $foto = $_FILES['arquivo'];
         $diretorio = "../Galeria/";
-        if (!is_dir($diretorio)){    
+        if (!is_dir($diretorio)){
             echo "<div class='alert alert-warning alert-dismissable'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro no Upload da imagem. Verifique a existencia da pasta 'Galeria'.</strong>
@@ -94,17 +94,17 @@ if(isset($_POST['postar'])) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <!--LINKS PARA EDITOR ALTERNATIVO
     <link href="../portal/froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="../portal/froala/js/froala_editor.pkgd.min.js"></script>
     <link href="../portal/froala/css/froala_style.min.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="../portal/froala/js/languages/pt_br.js"></script>
-    <!-- LINKS PARA EDITOR ALTERNATIVO
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <link rel="stylesheet" href="dist/summernote-bs4.css">
-        <script src="dist/summernote-bs4.min.js"></script>
     -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+    <link rel="stylesheet" href="dist/summernote-bs4.css">
+    <script src="dist/summernote-bs4.min.js"></script>
+
 </head>
 
 <body>
@@ -147,7 +147,7 @@ if(isset($_POST['postar'])) {
         }
     </script>
 
-    <!--SCRIPT DE CONFIGURAÇÃO DO EDITOR-->
+    <!--SCRIPT DE CONFIGURAÇÃO DO EDITOR
     <script>
         var editor = new FroalaEditor('#editor', {
             language: 'pt_br',
@@ -170,41 +170,43 @@ if(isset($_POST['postar'])) {
             ],
             quickInsertTags: [''],
             placeholderText: "Digite aqui sua descrição...",
+            enter: FroalaEditor.ENTER_BR,
+            imageUploadParam: 'file_name',
         })
     </script>
-
-    <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVA (SUMMERNOTE)
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'hr']],
-                    ['view', ['fullscreen', 'codeview']],
-                ],
-                height: 300,
-                minHeight: null,
-                maxHeight: null,
-                focus: true,
-                lang: 'pt-BR'
-            });
-        });
-        var postForm = function () {
-            var content = $('textarea[name="descrição"]').html($('#summernote').code());
-        }
-    </script>
-
-    <link rel="stylesheet" href="dist/summernote-bs4.css">
-    <script src="dist/summernote-bs4.js"></script>
-    <script src="dist/lang/summernote-pt-BR.js"></script>
     -->
-    <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVA (SUMMERNOTE)-->
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $('#editor').summernote({
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'hr']],
+                        ['view', ['fullscreen', 'codeview']],
+                    ],
+                    height: 300,
+                    minHeight: null,
+                    maxHeight: null,
+                    focus: true,
+                    lang: 'pt-BR'
+                });
+            });
+            var postForm = function() {
+                var content = $('textarea[name="descricao"]').html($('#editor').code());
+            }
+        </script>
+
+        <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
+        <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="dist/summernote-bs4.css">
+        <script src="dist/summernote-bs4.js"></script>
+        <script src="dist/lang/summernote-pt-BR.js"></script>
 </body>
 </html>

@@ -110,7 +110,7 @@ if (isset($_POST['atualizar'])) {
                     ]
                 },
                 'moreRich': {
-                    'buttons': ['insertLink', 'insertImage', 'insertTable', 'insertHR']
+                    'buttons': ['insertLink', 'insertTable', 'insertHR']
                 }
             },
 
@@ -119,8 +119,11 @@ if (isset($_POST['atualizar'])) {
                 ['undo', 'redo'],
                 ['bold', 'italic', 'underline']
             ],
+            imageUpload: false,
+            videoUpload: false,
             quickInsertTags: [''],
             placeholderText: "Digite aqui sua descrição...",
+            enter: FroalaEditor.ENTER_BR,
         })
     </script>
 

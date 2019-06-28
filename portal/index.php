@@ -215,7 +215,19 @@ if (!isset($_SESSION["id"])){
   <script>
 			$(document).ready(function() {
 				$('#calendar').fullCalendar({
-          lang: "pt-br",
+          locale: "pt-br",
+          monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+          monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+          dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+          dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+          buttonText: {
+            prev: "<",
+            next: ">",
+            today: "Hoje",
+            month: "Mês",
+            week: "Semana",
+            day: "Dia"
+          },
 					header: {
 						left: 'prev,next today',
 						center: 'title',
