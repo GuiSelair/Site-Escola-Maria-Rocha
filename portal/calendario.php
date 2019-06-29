@@ -7,7 +7,7 @@ session_start();
 
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
-include_once("conexao/function.php");
+
 
 //FUNÇÃO CASO O USUARIO SEJA PROFESSOR, VERIFICA SE NÃO HÁ NENHUM REGISTRO NO CALENDARIO QUE MARQUE TODOS PROFESSORES.
 if ($_SESSION["tipo"] == "Professor"){

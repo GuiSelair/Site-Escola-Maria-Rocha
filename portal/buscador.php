@@ -2,7 +2,7 @@
 //Include database configuration file
 include_once("conexao/conexao.php");
 include_once("conexao/config.php");
-include_once("conexao/function.php");
+
 
 // METODO DE BUSCA: NOME COMPLETO
 if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && !empty($_POST["nome"]) ){

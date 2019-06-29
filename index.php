@@ -258,7 +258,7 @@ if (isset($_GET['deslogar'])) {
     <!--BOTÕES-->
     <div class="container text-center mb-2">
         <div class="row text-center">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
                 <div class="btn-group-vertical btn-block btn-block-lg">
                     <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">UFSM</h6>
@@ -266,7 +266,7 @@ if (isset($_GET['deslogar'])) {
                 </div>
             </div>
             <hr class="w-100 clearfix d-md-none">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
                 <div class="btn-group-vertical btn-block btn-block-lg">
                     <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">ENEM</h6>
@@ -274,7 +274,7 @@ if (isset($_GET['deslogar'])) {
                 </div>
             </div>
             <hr class="w-100 clearfix d-md-none">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
                 <div class="btn-group-vertical btn-block btn-block-lg">
                     <a href="http://www.blogdonatanael.com/" target="_blank" class="btn btn-primary p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">Professor do Natanael</h6>
@@ -282,7 +282,7 @@ if (isset($_GET['deslogar'])) {
                 </div>
             </div>
             <hr class="w-100 clearfix d-md-none">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-3">
+            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-3 mb-2">
                 <div class="btn-group-vertical btn-block btn-block-lg">
                     <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
                         <h6 class="text-uppercase">PROUNI</h6>

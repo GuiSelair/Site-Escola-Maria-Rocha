@@ -3,7 +3,7 @@
 
     include_once("conexao/config.php");
     include_once("conexao/conexao.php");
-    include_once("conexao/function.php");
+    
 
     if(isset($_POST['envia'])) {
 

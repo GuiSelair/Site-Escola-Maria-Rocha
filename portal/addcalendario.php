@@ -4,7 +4,6 @@ session_start();
 
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
-include_once("conexao/function.php");
 
 if (isset($_GET['deslogar'])) {
   session_destroy();
@@ -69,10 +68,13 @@ if (isset($_POST["salva"])){
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <link href="froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+  <link href="froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css"/>
   <script type="text/javascript" src="froala/js/froala_editor.pkgd.min.js"></script>
-  <link  href = "froala/css/froala_style.min.css"  rel = "stylesheet"  type = " text/css "/>
+  <link  href = "froala/css/froala_style.min.css" rel ="stylesheet" type = "text/css"/>
   <script type="text/javascript" src="froala/js/languages/pt_br.js"></script>
+  <script src="bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+  <link rel="stylesheet" href="bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+  <script src="bower_components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt-BR.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -134,7 +136,7 @@ if (isset($_POST["salva"])){
             <i class="fa fa-user fa-3x" style="color: white;"></i>
           </div>
           <div class="pull-left info ">
-            <p><?php echo $_SESSION['nome']; ?></p>
+            <p><?php echo substr($_SESSION['nome'],0,20)."..."; ?></p>
             <!--NOME COMPLETO-->
             <a href="./index.php">
               <i class="fa fa-circle text-success"> <?php echo $_SESSION['tipo']; ?></i>
@@ -237,15 +239,17 @@ if (isset($_POST["salva"])){
                     <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
                   </div>
                   <div class="form-group col-md-3">
-                    <label for="matriUser">Data e hora inicial: *</label>
-                    <input type="datetime-local" class="form-control" id="start" name="start" placeholder="AAA-MM-DD HH:mm:ss" required>
+                      <label for="matriUser">Data e hora inicial: *</label>
+                      <input size="16" type="text"  class="form-control form_datetime" id="start" name="start" placeholder="AAA-MM-DD HH:mm:ss" required>
+                      <span class="add-on"><i class="icon-th"></i></span>
                   </div>
                   <div class="form-group col-md-3">
-                    <label for="matriUser">Data e hora final: *</label>
-                    <input type="datetime-local" class="form-control" id="end" name="end" placeholder="AAA-MM-DD HH:mm:ss" required>
-                  </div>
+                      <label for="matriUser">Data e hora final: *</label>
+                      <input size="16" type="text"  class="form-control form_datetime" id="end" name="end" placeholder="AAA-MM-DD HH:mm:ss" required>
+                      <span class="add-on"><i class="icon-remove"></i></span>
+                      <span class="add-on"><i class="icon-th"></i></span>
+                  </div>    
                   <p class="col-md-12">*OBS: Não esquecer de marcar o horário destido a este evento.</p>
-                  <p class="col-md-12">*OBS: No navegador FIREFOX preste atenção ao preencher corretamente o campo data e hora*.</p>
                 </div>
                 <div class="box-footer ">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
@@ -268,6 +272,13 @@ if (isset($_POST["salva"])){
   </div>
 
   <script>
+    $(".form_datetime").datetimepicker({
+        language:  'pt-BR',
+        format: "yyyy-mm-dd hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: 'top-left',
+    });
 
     var editor = new FroalaEditor ( '#editor' , {
       language: 'pt_br',
