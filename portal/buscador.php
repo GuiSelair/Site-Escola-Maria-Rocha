@@ -49,8 +49,8 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && !empty($_POST["nome"])
 
 /*
 // METODO DE BUSCA: ID
-if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"]) && !empty($_POST["idUser"]){
-    $idUser = $_POST["idUser"];
+if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && !empty($_POST["nome"]) ){
+    $idUser = $_POST["nome"];
     $id = $_POST["tabela_ID"];
     switch ($id) {
         case '0':
@@ -70,7 +70,7 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"]) && !empty($_POST["idUse
             $idTabela = "idDisciplina";
             break;
     }
-    $sql_code = "SELECT * FROM $tabela WHERE $idTabela = '$idUser';";
+    $sql_code = "SELECT * FROM $tabela WHERE $idTabela = $idUser;";
     $sql = mysqli_query(DBConecta(), $sql_code);
     $row = mysqli_fetch_assoc($sql);
     $cadastro = json_encode($row);

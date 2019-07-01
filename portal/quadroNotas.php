@@ -220,71 +220,71 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                 </div>
                 
                 <div class="tab-pane" id="tab_2">
-                <div class="box-body table-responsive ">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Disciplina</th>
-                          <th>Conceito</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tabela">
-                        <?php 
-                            $conexao = DBConecta();
-                            $AllTurmas = [];
-                            $idAluno = $_SESSION["id"];
-                            // BUSCANDO TURMAS QUE O USUARIO ESTA MATRICULADO
-                            $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno` = '$idAluno'";
-                            $results = mysqli_query($conexao, $sql_code);
-                            if ($results && mysqli_num_rows($results)){
-                              while($idTurmas = mysqli_fetch_assoc($results)){
-                                if (!in_array($idTurmas["idTurma"], $AllTurmas)){
-                                  $AllTurmas[] = $idTurmas["idTurma"];
+                  <div class="box-body table-responsive ">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Disciplina</th>
+                            <th>Conceito</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tabela">
+                          <?php 
+                              $conexao = DBConecta();
+                              $AllTurmas = [];
+                              $idAluno = $_SESSION["id"];
+                              // BUSCANDO TURMAS QUE O USUARIO ESTA MATRICULADO
+                              $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno` = '$idAluno'";
+                              $results = mysqli_query($conexao, $sql_code);
+                              if ($results && mysqli_num_rows($results)){
+                                while($idTurmas = mysqli_fetch_assoc($results)){
+                                  if (!in_array($idTurmas["idTurma"], $AllTurmas)){
+                                    $AllTurmas[] = $idTurmas["idTurma"];
+                                  }
                                 }
-                              }
-                              for ($i = 0; $i < count($AllTurmas); $i++){
                                 $AllDisciplina = [];
-                                // BUSCANDO DISCIPLINAS DAS TURMAS QUE O USUARIO ESTA MATRICULADO
-                                $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idTurma`=".$AllTurmas[$i];
-                                $results0 = mysqli_query($conexao, $sql_code);
-                                if ($results0 && mysqli_num_rows($results0)){
-                                  while($idDisciplinas = mysqli_fetch_assoc($results0)){
-                                    if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplina)){
-                                      $AllDisciplina[] = $idDisciplinas["idDisciplina"];
+                                for ($i = 0; $i < count($AllTurmas); $i++){
+                                  // BUSCANDO DISCIPLINAS DAS TURMAS QUE O USUARIO ESTA MATRICULADO
+                                  $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idTurma`=".$AllTurmas[$i];
+                                  $results0 = mysqli_query($conexao, $sql_code);
+                                  if ($results0 && mysqli_num_rows($results0)){
+                                    while($idDisciplinas = mysqli_fetch_assoc($results0)){
+                                      if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplina)){
+                                        $AllDisciplina[] = $idDisciplinas["idDisciplina"];
+                                      }
+                                    }
+                                  }
+                                }
+
+                                // BUSCANDO NOMES DAS DISCIPLINAS
+                                if (!empty($AllDisciplina)){
+                                  for ($i = 0; $i < count($AllDisciplina); $i++){
+                                    $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$AllDisciplina[$i];
+                                    $results0 = mysqli_query($conexao, $sql_code);
+                                    $nomeDisciplina = mysqli_fetch_assoc($results0);
+
+                                    // VERIFICANDO SE O ALUNO ESTA APROVADO NA DISCIPLINA
+                                    $sql_code = "SELECT `conceito` FROM `aluno-disciplina` WHERE `idDisciplina`=".$AllDisciplina[$i]." AND `idAluno` = '$idAluno'";
+                                    $results0 = mysqli_query($conexao, $sql_code);
+                                    if (mysqli_num_rows($results0)){
+                                      $conceito = mysqli_fetch_assoc($results0);
+                                      if ($conceito["conceito"] == "Apto")
+                                        echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$conceito["conceito"]."</span></td></tr>";
+                                      else
+                                        echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$conceito["conceito"]."</span></td></tr>";
+                                    }
+                                    else{
+                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
                                     }
                                   }
                                 }
                               }
 
-                              // BUSCANDO NOMES DAS DISCIPLINAS
-                              if (!empty($AllDisciplina)){
-                                for ($i = 0; $i < count($AllDisciplina); $i++){
-                                  $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$AllDisciplina[$i];
-                                  $results0 = mysqli_query($conexao, $sql_code);
-                                  $nomeDisciplina = mysqli_fetch_assoc($results0);
-
-                                  // VERIFICANDO SE O ALUNO ESTA APROVADO NA DISCIPLINA
-                                  $sql_code = "SELECT `conceito` FROM `aluno-disciplina` WHERE `idDisciplina`=".$AllDisciplina[$i]." AND `idAluno` = '$idAluno'";
-                                  $results0 = mysqli_query($conexao, $sql_code);
-                                  if (mysqli_num_rows($results0)){
-                                    $conceito = mysqli_fetch_assoc($results0);
-                                    if ($conceito["conceito"] == "Apto")
-                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$conceito["conceito"]."</span></td></tr>";
-                                    else
-                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$conceito["conceito"]."</span></td></tr>";
-                                  }
-                                  else{
-                                    echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
-                                  }
-                                }
-                              }
-                            }
-
-                          
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
+                            
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
                 </div>
               </div>
             </div>

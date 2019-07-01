@@ -365,7 +365,7 @@ if (isset($_GET["id"])){
                       <select class="form-control" id="disciplina" name="disciplina" required>
                         <option value="" id="0">Selecione uma disciplina</option>
                         <?php
-                          $sql_code = "SELECT * FROM `disciplina`";
+                          $sql_code = "SELECT * FROM `disciplina` ORDER BY nome asc";
                           $results = mysqli_query(DBConecta(),$sql_code);
                           if (mysqli_num_rows($results)){
                             while($disciplinas = mysqli_fetch_assoc($results)){

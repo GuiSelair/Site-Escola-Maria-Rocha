@@ -212,9 +212,13 @@ if (isset($_POST["salva"])){
                       <!--<option value="-2" id="todos">TODOS os alunos</option>-->
                       <?php } ?>
                       <?php
+                        $AllTurmas = [];
                         if (mysqli_num_rows($results)){
                           while($turmas = mysqli_fetch_assoc($results)){
+                            if (!in_array($turmas["idTurma"], $AllTurmas)){
                             echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
+                            $AllTurmas[] = $turmas["idTurma"];
+                            }
                           }
                         }
                        ?>
@@ -248,7 +252,40 @@ if (isset($_POST["salva"])){
                       <input size="16" type="text"  class="form-control form_datetime" id="end" name="end" placeholder="AAA-MM-DD HH:mm:ss" required>
                       <span class="add-on"><i class="icon-remove"></i></span>
                       <span class="add-on"><i class="icon-th"></i></span>
-                  </div>    
+                  </div>
+                  <?php if ($_SESSION["tipo"] == "Professor"){ ?>
+                    <div class="form-group col-md-3">
+                      <label>Disciplina</label>
+                      <select class="form-control" name="disciplina">
+                        <option value="" id="0">Selecione sua disciplina</option>
+                        <?php 
+                          $conexao = DBConecta();
+                          $AllDisciplinas = [];
+                          $id = $_SESSION["id"];
+                          $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idProfessor`= $id";
+                          $results = mysqli_query($conexao, $sql_code);
+                          if (mysqli_num_rows($results)){
+                            while($idDisciplinas = mysqli_fetch_assoc($results)){
+                              if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplinas)){
+                                $AllDisciplinas[] = $idDisciplinas["idDisciplina"];
+                              }
+                            }
+                            for ($i = 0; $i < count($AllDisciplinas); $i++){
+                              $sql_code = "SELECT * FROM `disciplina` WHERE `idDisciplina`= $AllDisciplinas[$i]";
+                              $results = mysqli_query($conexao, $sql_code);
+                              if (mysqli_num_rows($results)){
+                                $nameDisciplina = mysqli_fetch_assoc($results);
+                                $AllNameDisciplinas[] = $nameDisciplina; 
+                              }
+                            }
+                          }
+                          for ($i = 0; $i < count($AllDisciplinas); $i++){
+                            echo "<option value=".$AllNameDisciplinas[$i]["idDisciplina"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
+                          }     
+                        ?>
+                      </select>
+                    </div>
+                  <?php } ?>
                   <p class="col-md-12">*OBS: Não esquecer de marcar o horário destido a este evento.</p>
                 </div>
                 <div class="box-footer ">

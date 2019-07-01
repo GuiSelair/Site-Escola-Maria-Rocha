@@ -156,7 +156,7 @@ if (isset($_GET['deslogar'])) {
                                     echo "              <div style='max-height: 180px; overflow: hidden;'>
                                                             <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'  >
                                                         </div>
-                                                        <div class='card-body'>
+                                                        <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
@@ -173,7 +173,7 @@ if (isset($_GET['deslogar'])) {
                                 echo "                  <div style='max-height: 180px; overflow: hidden;'>
                                                             <img class='card-img-top img-fluid' src='Galeria/08.png'>
                                                         </div>
-                                                        <div class='card-body'>
+                                                        <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
@@ -215,7 +215,7 @@ if (isset($_GET['deslogar'])) {
                                     echo "              <div style='max-height: 180px; overflow: hidden;'>
                                                             <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."' >
                                                         </div>
-                                                        <div class='card-body'>
+                                                        <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
@@ -233,7 +233,7 @@ if (isset($_GET['deslogar'])) {
                                     echo "              <div style='max-height: 180px; overflow: hidden;'>
                                                             <img class='card-img-top img-fluid' src='Galeria/08.png'>
                                                         </div>
-                                                        <div class='card-body'>
+                                                        <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2 '>Leia mais</a>
                                                         </div>

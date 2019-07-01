@@ -15,7 +15,7 @@
         <div class="col-sm-2 col-md-6 col-lg-6 col-xl-6 ">
             <div class="text-center">
                 <!--LINK PARA O FACEBOOK DA ESCOLA-->
-                <a href="https://www.facebook.com/MariaRochaEscola/"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
+                <a href="https://www.facebook.com/MariaRochaEscola/" target="_blank"><i class="fa fa-facebook mx-3" style="color: black;"></i></a>
                 <?php
                     if (!isset($_SESSION['Logado'])) {
                 ?>
@@ -74,6 +74,8 @@
                         <li><a href="./cursos.php?curso=2" class="dropdown-item">Técnico em Contabilidade</a></li>
                         <li><a href="./cursos.php?curso=3" class="dropdown-item">Técnico em Secretariado</a></li>
                         <li><a href="./cursos.php?curso=4" class="dropdown-item">Técnico em Informática Integrado</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a href="painel/ModeloTCCTecnicos.docx" class="dropdown-item">Modelo TCC - Cursos Técnicos</a></li>
                     </ul>
                 </li>
                 <li class="nav-item mx-2">

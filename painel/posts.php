@@ -126,10 +126,10 @@ $con = mysqli_query(DBConecta(),$consulta);
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <td scope="col-3">Título</td>
-                                                <td scope="col-3">Data</td>
-                                                <td scope="col-3">Postador</td>
-                                                <td scope="col-3">Ações</td>
+                                                <th scope="col-3">Título</th>
+                                                <th scope="col-3">Data</th>
+                                                <th scope="col-3">Postador</th>
+                                                <th scope="col-3">Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>

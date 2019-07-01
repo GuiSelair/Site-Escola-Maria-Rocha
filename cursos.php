@@ -103,7 +103,7 @@ $results = mysqli_fetch_assoc($sql);
     <!--DESCRIÇÃO DO CURSO-->
     <div class="container">
         <?php if ($tec != "Médio" && $tec != "Informática Integrado"){ ?>
-        <?php if ($results['objetivoCurso'] != "<p><br></p>"){ ?>
+        <?php if ($results['objetivoCurso'] != ""){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivos do Curso</h5>
@@ -114,7 +114,7 @@ $results = mysqli_fetch_assoc($sql);
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['criteriosAvaliacao'] != "<p><br></p>"){ ?>
+        <?php if ($results['criteriosAvaliacao'] != ""){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Critérios de Avaliação</h5>
@@ -125,7 +125,7 @@ $results = mysqli_fetch_assoc($sql);
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['estagio'] != "<p><br></p>"){ ?>
+        <?php if ($results['estagio'] != ""){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Estágio</h5>
@@ -136,7 +136,7 @@ $results = mysqli_fetch_assoc($sql);
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['perfilConclusao'] != "<p><br></p>"){ ?>
+        <?php if ($results['perfilConclusao'] != ""){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Perfil Profissional de Conclusão</h5>
@@ -147,7 +147,7 @@ $results = mysqli_fetch_assoc($sql);
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['gradeCurricular'] != "<p><br></p>"){ ?>
+        <?php if ($results['gradeCurricular'] != ""){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Grade Curricular</h5>
@@ -160,16 +160,22 @@ $results = mysqli_fetch_assoc($sql);
         <?php } 
           }
         else{ 
-            if ($tec == "Informática Integrado"){?>
+            if ($tec == "Informática Integrado"){
+                if ($results['objetivocurso'] != ""){
+            ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivo do Curso</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['objetivocurso']."</p>"
+                    
+                    echo "<p>".$results['objetivocurso']."</p>";
                 ?>
             </div>
         </div>
+                <?php } 
+                if ($results['perfilconclusao'] != ""){
+                ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Perfil de Formação Profissional</h5>
@@ -180,7 +186,9 @@ $results = mysqli_fetch_assoc($sql);
             </div>
         </div>
         <?php }
-            else{?>
+            }else{
+                if ($results['objetivocurso'] != ""){
+        ?>
         <div class="row">
             <div class="col-12 text-center mb-3">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivos</h5>
@@ -190,7 +198,7 @@ $results = mysqli_fetch_assoc($sql);
                 ?>
             </div>
         </div>
-        <?php }} ?>
+        <?php }}} ?>
     </div>
 
     <!--IMPORTAÇÃO DO RODAPÉ-->

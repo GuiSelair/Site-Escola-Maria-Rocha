@@ -11,6 +11,7 @@ if($_SESSION["tipo"] == "Professor"){
       $noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
     }
   }
+  $linha1 = 0;
 
 
 }
@@ -29,7 +30,19 @@ if ($_SESSION["tipo"] == "Aluno"){
       $linha = mysqli_num_rows($noticeTurma);
   		if ($linha){
   			while ($noticeTurmaNum = mysqli_fetch_assoc($noticeTurma)){
-  				$noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
+          $sql_code = "SELECT * FROM `aluno-disciplina` WHERE idDisciplina = ".$noticeTurmaNum["idDisciplina"]." AND `idAluno`=".$_SESSION["id"];
+          $results = mysqli_query(DBConecta(), $sql_code);
+          if ($results && mysqli_num_rows($results)){
+            $conceito = mysqli_fetch_assoc($results);
+            if ($conceito["conceito"] != "Apto"){
+              $noticeTurmaResults[] = $noticeTurmaNum;
+              $linha1 = 1;
+            }
+          }
+          else{
+            $noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
+            $linha1 = 1;
+          }
   			}
   		}
   	}
@@ -47,11 +60,11 @@ if ($_SESSION["tipo"] == "Aluno"){
 <li class="dropdown notifications-menu" >
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="desabilita()">
     <i class="fa fa-bell-o"></i>
-    <span class="label label-danger" id="conta"><?php if ($linha != 0) echo $linha; ?></span>
+    <span class="label label-danger" id="conta"><?php if ($linha != 0 && $linha1 != 0) echo $linha1; ?></span>
     <!--QUANDO HÁ NOTIFICAÇÕES NÃO LIDAS-->
   </a>
   <ul class="dropdown-menu">
-    <li class="header">Você tem <?php if ($linha != 0) echo $linha; else echo 0; ?> notificações</li>
+    <li class="header">Você tem <?php if ($linha != 0 && $linha1 != 0) echo $linha1; else echo 0; ?> notificações</li>
     <?php if($linha){ ?>
     <li>
       <ul class="menu">
@@ -59,7 +72,7 @@ if ($_SESSION["tipo"] == "Aluno"){
           <?php if($linha){
             for ($i = 0; $i < count($noticeTurmaResults) || $i > 3; $i++){
           ?>
-          <a href="#">
+          <a>
             <i class="fa fa-users text-aqua"></i> <?php echo $noticeTurmaResults[$i]["title"]." - ".date("d/m/Y", strtotime($noticeTurmaResults[$i]["start"])); ?>
           </a>
           <?php }} ?>

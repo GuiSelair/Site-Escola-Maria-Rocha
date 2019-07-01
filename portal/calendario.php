@@ -35,8 +35,18 @@ if ($_SESSION["tipo"] == "Aluno"){
 			$noticeTurma = mysqli_query(DBConecta(), $sql_code);
 			if (mysqli_num_rows($noticeTurma)){
 				while ($noticeTurmaNum = mysqli_fetch_assoc($noticeTurma)){
-					$noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
-				}
+					$sql_code = "SELECT * FROM `aluno-disciplina` WHERE idDisciplina = ".$noticeTurmaNum["idDisciplina"]." AND `idAluno`=".$_SESSION["id"];
+					$results = mysqli_query(DBConecta(), $sql_code);
+					if ($results && mysqli_num_rows($results)){
+					  $conceito = mysqli_fetch_assoc($results);
+					  if ($conceito["conceito"] != "Apto"){
+						$noticeTurmaResults[] = $noticeTurmaNum;
+					  }
+					}
+					else{
+					  $noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
+					}
+						}
 			}
 		}
 		echo json_encode($noticeTurmaResults);

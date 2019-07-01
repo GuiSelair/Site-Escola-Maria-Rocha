@@ -35,7 +35,7 @@
                 <div class="text-center text-md-right">
                     <ul class="list-unstyled list-inline">
                         <li class="list-inline-item">
-                            <a href="https://www.facebook.com/MariaRochaEscola/">
+                            <a href="https://www.facebook.com/MariaRochaEscola/" target="_blank">
                                 <i class="fa fa-facebook fa-2x mx-3" style="color: white;"></i>
                             </a>
                         </li>

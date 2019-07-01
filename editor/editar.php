@@ -76,6 +76,7 @@ if (isset($_POST['atualizar'])) {
         </div>
         <div class="row">
             <div class="col-12">
+                <p class="text-muted">*Não adicionar nenhuma imagem nesta ferramenta, a não ser se a imagem estiver hospedado em outro servidor</p>
                 <form action="" method="POST" enctype="multipart/form-data" id="postForm">
                     <!--TITULO DA NOTICIA-->
                     <input type="text" name="ntitulo" id="ntitulo" placeholder="Titulo" class="form-control my-2" value="<?php echo $row['titulo'] ?>">

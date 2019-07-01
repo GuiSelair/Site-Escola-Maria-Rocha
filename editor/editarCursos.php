@@ -173,9 +173,11 @@ if (isset($_POST['atualizar'])) {
                 ['undo', 'redo'],
                 ['bold', 'italic', 'underline']
             ],
+            pluginsDisable: ["quickInsert"],
             quickInsertTags: [''],
             placeholderText: "Digite aqui sua descrição...",
-            enter: FroalaEditor.ENTER_BR,
+            //enter: FroalaEditor.ENTER_BR,
+           
         })
     </script>
     <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>

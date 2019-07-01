@@ -91,7 +91,7 @@ if ($linhas > 0)
         <div class="row">
             <div class="col-12 mb-3 text-center">
                 <?php
-                    echo "<p><pre>".$results['descricao']."</pre></p>";
+                    echo "<pre>".$results['descricao']."</pre>";
                 ?>
             </div>
         </div>

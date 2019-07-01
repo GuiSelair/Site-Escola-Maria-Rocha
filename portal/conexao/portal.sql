@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 17-Jun-2019 às 00:49
+-- Generation Time: 01-Jul-2019 às 05:27
 -- Versão do servidor: 10.1.40-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -114,6 +114,7 @@ CREATE TABLE `calendario` (
   `start` datetime NOT NULL,
   `end` datetime DEFAULT NULL,
   `idTurma` int(11) DEFAULT NULL,
+  `idDisciplina` int(11) DEFAULT NULL,
   `geral` int(11) DEFAULT NULL,
   `postador` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -122,9 +123,11 @@ CREATE TABLE `calendario` (
 -- Extraindo dados da tabela `calendario`
 --
 
-INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`, `idTurma`, `geral`, `postador`) VALUES
-(1, 'Reunião de Professores', '<p>Reuni&atilde;o de Professor para come&ccedil;o de ano letivo. Espero a presen&ccedil;a de todos(a', '#ed5959', '2019-06-21 19:00:00', '2019-06-21 21:00:00', NULL, -1, 'Guilherme Selair'),
-(2, 'Prova de Montagem e Manutenção', '<p>N&atilde;o esque&ccedil;am de trazer os materiais.&nbsp;</p><p>Conte&uacute;do da p&aacute;gina 6', '#f4cc00', '2019-06-19 19:00:00', '2019-06-19 21:30:00', 411, NULL, 'Natanael  da Silva Fim');
+INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`, `idTurma`, `idDisciplina`, `geral`, `postador`) VALUES
+(1, 'Conselho de Classe', '<p>Conselho de classe para aprova&ccedil;&atilde;o de alunos. Espero todos &agrave;s 21:00</p>', '#576ee5', '2019-07-05 21:00:00', '2019-07-05 22:00:00', NULL, NULL, -1, 'Guilherme Selair'),
+(2, 'Reunião de Professores', '<p>Reuni&atilde;o para escolha de turmas para o segundo semestre de 2019.</p>', '#576ee5', '2019-07-06 09:30:00', '2019-07-06 11:00:00', NULL, NULL, -1, 'Guilherme Selair'),
+(3, 'Prova de Programação 1', '<p>....</p>', '#ed5959', '2019-07-10 19:00:00', '2019-07-10 21:00:00', 411, 11, NULL, 'Jonathan Pippi'),
+(4, 'Atividade Prática', '<p>Tragam os mat&eacute;rias para a aula de sexta. Soldador, alicates, estanho..... Tudo.</p>', '#f4cc00', '2019-07-05 19:30:00', '2019-07-05 22:00:00', 411, 14, NULL, 'Natanael  da Silva Fim');
 
 -- --------------------------------------------------------
 
@@ -154,20 +157,64 @@ INSERT INTO `curso` (`idCurso`, `nome`) VALUES
 
 CREATE TABLE `disciplina` (
   `idDisciplina` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL
+  `nome` varchar(100) NOT NULL,
+  `prerequisito` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `disciplina`
 --
 
-INSERT INTO `disciplina` (`idDisciplina`, `nome`) VALUES
-(4, 'Algoritmos A'),
-(5, 'Algoritmos B'),
-(6, 'Direito e Legislação'),
-(7, 'Banco de Dados'),
-(8, 'Programação Web'),
-(9, 'Montagem e Manutenção');
+INSERT INTO `disciplina` (`idDisciplina`, `nome`, `prerequisito`) VALUES
+(11, 'Programação 1', NULL),
+(12, 'Programação 2', 11),
+(13, 'Programação 3', 12),
+(14, 'Montagem e Manutenção 1', NULL),
+(15, 'Montagem e Manutenção 2', 14),
+(16, 'Montagem e Manutenção 3', 15),
+(17, 'Sistemas Aplicativos 1', NULL),
+(18, 'Sistemas Aplicativos 2', 17),
+(19, 'Editoração Gráfica', NULL),
+(20, 'Internet', NULL),
+(21, 'Contabilidade Geral', NULL),
+(22, 'Ética e Relações Humanas', NULL),
+(23, 'Português Instrumental 1', NULL),
+(24, 'Programação Web 1', NULL),
+(25, 'Fundamentos da Administração', NULL),
+(26, 'Direito e Legislação 1', NULL),
+(27, 'Metodologia de Pesquisa 1', NULL),
+(28, 'Segurança do Trabalho', NULL),
+(29, 'Linux e Aplicativos ', NULL),
+(30, 'Inglês Instrumental', NULL),
+(31, 'Estatística ', NULL),
+(32, 'Português Instrumental 2', 23),
+(33, 'Programação Web 2', 24),
+(34, 'Metodologia de Pesquisa 2', 27),
+(35, 'Metodologia de Pesquisa 3', 34),
+(36, 'Orientação de Estágio ', NULL),
+(37, 'Prática Supervisionada', NULL),
+(38, 'Organização e Técnicas Comerciais 1', NULL),
+(39, 'Estatística Aplicada a Contabilidade 1', NULL),
+(40, 'Matemática Financeira 1', NULL),
+(41, 'Informática Aplicada a Contabilidade 1', NULL),
+(42, 'Empreendedorismo ', NULL),
+(43, 'Contabilidade Comercial', 21),
+(44, 'Contabilidade Pública', NULL),
+(45, 'Direito e Legislação 2', 26),
+(46, 'Organização e Técnicas Comerciais 2', 38),
+(48, 'Estatística Aplicada a Contabilidade 2', 39),
+(49, 'Matemática Financeira 2', 40),
+(50, 'Informática Aplicada a Contabilidade 2', 41),
+(51, 'Gestão Empresarial', NULL),
+(52, 'Economia e Mercado 1', NULL),
+(53, 'Contabilidade Industrial ', 43),
+(54, 'Direito e Legislação 3', 45),
+(55, 'Organização e Técnicas Comerciais 3', 46),
+(56, 'Português Instrumental 3', 32),
+(57, 'Analise de Balanços', NULL),
+(58, 'Gestão Pública', NULL),
+(59, 'Economia e Mercado 2', 52),
+(60, 'Orientação de Prática Supervisionada', NULL);
 
 -- --------------------------------------------------------
 
@@ -215,7 +262,10 @@ INSERT INTO `turma` (`idTurma`, `idCurso`) VALUES
 (411, 1),
 (421, 1),
 (431, 1),
-(441, 1);
+(441, 1),
+(311, 3),
+(321, 3),
+(331, 3);
 
 -- --------------------------------------------------------
 
@@ -228,6 +278,17 @@ CREATE TABLE `turma-aluno` (
   `idAluno` varchar(15) NOT NULL,
   `dataMatricula` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `turma-aluno`
+--
+
+INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
+(411, '0', '2019.01'),
+(411, '1', '2019.01'),
+(411, '2', '2019.01'),
+(421, '3', '2019.02'),
+(411, '3', '2019.02');
 
 -- --------------------------------------------------------
 
@@ -247,10 +308,18 @@ CREATE TABLE `turma-professor` (
 --
 
 INSERT INTO `turma-professor` (`idDisciplina`, `idProfessor`, `idTurma`, `dataMatricula`) VALUES
-(4, 5, 411, '2019.01'),
-(7, 7, 431, '2019.01'),
-(9, 8, 411, '2019.01'),
-(9, 8, 421, '2019.02');
+(11, 5, 411, '2019.01'),
+(26, 6, 411, '2019.01'),
+(14, 8, 411, '2019.01'),
+(13, 7, 431, '2019.01'),
+(13, 7, 431, '2019.02'),
+(11, 5, 411, '2019.02'),
+(14, 8, 411, '2019.02'),
+(15, 8, 421, '2019.01'),
+(15, 8, 421, '2019.02'),
+(16, 8, 431, '2019.01'),
+(16, 8, 431, '2019.02'),
+(26, 6, 411, '2019.02');
 
 --
 -- Indexes for dumped tables
@@ -289,7 +358,8 @@ ALTER TABLE `avalhacao`
 --
 ALTER TABLE `calendario`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idTurma` (`idTurma`);
+  ADD KEY `idTurma` (`idTurma`),
+  ADD KEY `idDisciplina` (`idDisciplina`);
 
 --
 -- Indexes for table `curso`
@@ -301,7 +371,8 @@ ALTER TABLE `curso`
 -- Indexes for table `disciplina`
 --
 ALTER TABLE `disciplina`
-  ADD PRIMARY KEY (`idDisciplina`);
+  ADD PRIMARY KEY (`idDisciplina`),
+  ADD KEY `prerequisito` (`prerequisito`);
 
 --
 -- Indexes for table `professor`
@@ -345,19 +416,19 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT for table `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `calendario`
 --
 ALTER TABLE `calendario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `disciplina`
 --
 ALTER TABLE `disciplina`
-  MODIFY `idDisciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idDisciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `professor`
@@ -387,7 +458,14 @@ ALTER TABLE `avalhacao`
 -- Limitadores para a tabela `calendario`
 --
 ALTER TABLE `calendario`
-  ADD CONSTRAINT `calendario_ibfk_2` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `calendario_ibfk_2` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `calendario_ibfk_3` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `disciplina`
+--
+ALTER TABLE `disciplina`
+  ADD CONSTRAINT `disciplina_ibfk_1` FOREIGN KEY (`prerequisito`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `turma`
@@ -399,7 +477,8 @@ ALTER TABLE `turma`
 -- Limitadores para a tabela `turma-aluno`
 --
 ALTER TABLE `turma-aluno`
-  ADD CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `turma-aluno_ibfk_1` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`);
 
 --
 -- Limitadores para a tabela `turma-professor`

@@ -94,11 +94,11 @@ $num_pages = ceil($num_total/$noticesbyPages);
                             </a>
                         </li>
                         <?php
-                    for($i = 0; $i < $num_pages; $i++){
-                        $estilo = "class='page-item'";
-                        if($pagina == $i)
-                            $estilo = "class='page-item active'";
-                    ?>
+                            for($i = 0; $i < $num_pages; $i++){
+                                $estilo = "class='page-item'";
+                                if($pagina == $i)
+                                    $estilo = "class='page-item active'";
+                        ?>
                         <li <?php echo $estilo; ?>><a class="page-link"
                                 href="allpost.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
                         <?php } ?>

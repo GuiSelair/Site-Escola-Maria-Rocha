@@ -93,8 +93,7 @@ $num_pages = ceil($num_total/$noticesbyPages);
                             <ul class="pagination pagination-sm justify-content-center">
                                 <li class="page-item">
                                     <?php if ($pagina != 0) { ?>
-                                    <a class="page-link" href="editais.php?pagina=<?php echo $pagina-1;?>"
-                                        aria-label="Previous">
+                                        <a class="page-link" href="editais.php?pagina=<?php echo $pagina-1;?>" aria-label="Previous">
                                         <?php }else{ ?>
                                         <a class="page-link" href="editais.php?pagina=0" aria-label="Previous">
                                             <?php } ?>
@@ -102,17 +101,11 @@ $num_pages = ceil($num_total/$noticesbyPages);
                                         </a>
                                 </li>
                                 <?php
-                                            if ($pagina+1 < 3){
-                                                $i = $pagina;
-                                            }
-                                            else{
-                                                $i = $pagina-2;
-                                            }
-                                            for(; $i < $pagina+3; $i++){
-                                                $estilo = "class='page-item'";
-                                                if($pagina == $i)
-                                                    $estilo = "class='page-item active'";
-                                        ?>
+                                    for($i = 0; $i < $num_pages; $i++){
+                                        $estilo = "class='page-item'";
+                                        if($pagina == $i)
+                                            $estilo = "class='page-item active'";
+                                ?>
                                 <li <?php echo $estilo; ?>><a class="page-link"
                                         href="editais.php?pagina=<?php echo $i; ?>"><?php echo $i+1; ?></a></li>
                                 <?php } ?>

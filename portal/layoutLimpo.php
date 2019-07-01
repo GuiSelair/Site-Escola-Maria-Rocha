@@ -14,6 +14,13 @@ if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
 }
 
+echo "<div class='alert alert-danger alert-dismissible my-0'>
+      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+      <h4><i class='icon fa fa-ban'></i> Alert!</h4>
+      Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire
+      soul, like these sweet mornings of spring which I enjoy with my whole heart.
+      </div>";
+
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +44,7 @@ if (!isset($_SESSION["id"])){
   
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini my-0 py-0" style="margin-top: 0px;">
   <div class="wrapper">
 
     <!-- Barra cabeçalho -->

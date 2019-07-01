@@ -39,7 +39,7 @@ if (isset($_POST['edita'])){
             </div>
             ";
       } else {
-        echo "<div class='alert alert-success alert-dismissable'>
+        echo "<div class='alert alert-success alert-dismissable my-0'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Operação efetuada com sucesso!</strong>
             </div>
@@ -99,7 +99,12 @@ if (isset($_POST['edita'])){
     case '3':
       $nomeDisc = $_POST['nomeDisc'];
       $idDisc = $_POST["idDisciplina"];
-      $sql_code = "UPDATE disciplina SET nome = '$nomeDisc' WHERE idDisciplina = $idDisc;";
+      $DiscPre = $_POST["DiscPre"];
+      if ($DiscPre != ""){
+        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', prerequisito = $DiscPre WHERE idDisciplina = $idDisc;";
+      }else{
+        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc' WHERE idDisciplina = $idDisc;";
+      }
       $execute_sql = mysqli_query(DBConecta(), $sql_code);
       if (!$execute_sql) {
         echo "<div class='alert alert-danger alert-dismissable'>
@@ -136,22 +141,33 @@ if (isset($_POST['salva'])){
       $senha = substr($login,0,2).substr($dataNascimento,0,4);
       $cript = md5($senha);
 
-      $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript')";
+      $sql_code = "SELECT idAluno FROM aluno WHERE nome = '$nome' AND sobrenome = '$sobrenome' AND dataNascimento = '$dataNascimento' AND email = '$email' AND login = '$login'";
+      $results = mysqli_query(DBConecta(), $sql_code);
+      if ($results && !mysqli_num_rows($results)){
+        $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript')";
 
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+        $execute_sql = mysqli_query(DBConecta(), $sql_code);
 
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
+        if (!$execute_sql) {
+          echo "<div class='alert alert-danger alert-dismissable'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Erro ao Salvar!</strong>
+              </div>
+              ";
+        } else {
+          echo "<div class='alert alert-success alert-dismissable my-0'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Operação efetuada com sucesso!</strong>
+              </div>
+              ";
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Cadastro já existente!</strong>
+        </div>
+        ";
       }
       break;
     case '1':
@@ -164,59 +180,119 @@ if (isset($_POST['salva'])){
       $senha = substr($login,0,2).substr($email,0,4);
       $cript = md5($senha);
 
-      $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript')";
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      $sql_code = "SELECT idProfessor FROM professor WHERE nome = '$nome' AND sobrenome = '$sobrenome' AND email = '$email' AND login = '$login'";
+      $results = mysqli_query(DBConecta(), $sql_code);
+      if ($results && !mysqli_num_rows($results)){
+        $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript')";
+        $execute_sql = mysqli_query(DBConecta(), $sql_code);
 
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
+        if (!$execute_sql) {
+          echo "<div class='alert alert-danger alert-dismissable'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Erro ao Salvar!</strong>
+              </div>
+              ";
+        } else {
+          echo "<div class='alert alert-success alert-dismissable'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Operação efetuada com sucesso!</strong>
+              </div>
+              ";
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Cadastro já existente!</strong>
+        </div>
+        ";
       }
       break;
     case '2':
       $nomeTurma = $_POST['nomeTurma'];
       $cursoTurma = $_POST['cursoTurma'];
 
-      $sql_code = "INSERT INTO turma (idTurma, idCurso) VALUES ('$nomeTurma','$cursoTurma')";
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
+      $sql_code = "SELECT idTurma FROM turma WHERE idTurma = '$nomeTurma' AND idCurso = '$cursoTurma'";
+      $results = mysqli_query(DBConecta(), $sql_code);
+      if ($results && !mysqli_num_rows($results)){
+        if ($nomeTurma != " "){
+          $sql_code = "INSERT INTO turma (idTurma, idCurso) VALUES ('$nomeTurma','$cursoTurma')";
+          $execute_sql = mysqli_query(DBConecta(), $sql_code);
+          if (!$execute_sql) {
+            echo "<div class='alert alert-danger alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao Salvar!</strong>
+                </div>
+                ";
+          } else {
+            echo "<div class='alert alert-success alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Operação efetuada com sucesso!</strong>
+                </div>
+                ";
+          }
+        }else{
+          echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
+          </div>
+          ";
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Cadastro já existente!</strong>
+        </div>
+        ";
       }
       break;
     case '3':
       $nomeDisc = $_POST['nomeDisc'];
-      $sql_code = "INSERT INTO disciplina (nome) VALUES ('$nomeDisc')";
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
+      if (!isset($_POST["DiscPre"])){
+        $DiscPre = "";
+      }
+      else{
+        $DiscPre = $_POST["DiscPre"];
+      }
+
+      $sql_code = "SELECT idDisciplina FROM disciplina WHERE nome = '$nomeDisc'";
+      $results = mysqli_query(DBConecta(), $sql_code);
+      if ($results && !mysqli_num_rows($results)){
+        if ($nomeDisc != " "){
+          if ($DiscPre != ""){
+            $sql_code = "INSERT INTO disciplina (nome, prerequisito) VALUES ('$nomeDisc', $DiscPre)";
+          }else{
+            $sql_code = "INSERT INTO disciplina (nome) VALUES ('$nomeDisc')";
+          }
+          $execute_sql = mysqli_query(DBConecta(), $sql_code);
+          if (!$execute_sql) {
+            echo "<div class='alert alert-danger alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao Salvar!</strong>
+                </div>
+                ";
+          } else {
+            echo "<div class='alert alert-success alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Operação efetuada com sucesso!</strong>
+                </div>
+                ";
+          }
+        }else{
+          echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
+          </div>
+          ";
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Cadastro já existente!</strong>
+        </div>
+        ";
       }
       break;
 
@@ -407,6 +483,8 @@ if (isset($_GET['id'])){
               url: "buscador.php",
               data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
               success: function(results){
+                console.log(results);
+                
                 <?php if($id < '2'){ ?>
                   document.getElementById("nomeUser").value = results["nome"]
                   document.getElementById("sobrenomeUser").value = results["sobrenome"]
@@ -438,6 +516,14 @@ if (isset($_GET['id'])){
                 <?php }else{ ?>
                   document.getElementById("idDisciplina").value = results["idDisciplina"];
                   document.getElementById("nomeDisc").value = results["nome"];
+                  if (results["prerequisito"] == null){
+                    document.getElementById("DiscPre").value = "";
+                    document.getElementById("DiscPre").disabled = true;
+                  }
+                  else{
+                    document.getElementById("DiscPre").value = results["prerequisito"];
+                    document.getElementById("prerequisito").checked = true;
+                  }
                 <?php } ?>
               }
             })
@@ -489,8 +575,13 @@ if (isset($_GET['id'])){
 
             <?php }if($id == "3"){ ?>
               $("#divId").hide();
+              document.getElementById("DiscPre").disabled = true
             <?php } ?>
           })
+
+          function habilitaSelect(){
+            document.getElementById("DiscPre").disabled = false
+          }
 
           function remove(){
             <?php if ($id < 2){ ?>
@@ -564,73 +655,173 @@ if (isset($_GET['id'])){
                         <label for="matriUser">Data de Nascimento</label>
                         <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" placeholder="Data de Nascimento" required>
                       </div>
-                  <?php } ?>
-                  <div class="form-group col-md-6">
-                    <label for="foneUser">Telefone</label>
-                    <input type="text" class="form-control" id="foneUser" name = "foneUser" placeholder="Telefone" required>
-                  </div>
-                  <div class="form-group col-md-3" >
-                    <label>Sexo: </label>
-                    <div class="radio"  >
-                      <label style="margin-right: 5px;">
-                        <input type="radio" id="masculino" value="Masculino" name="sexo" >
-                        Masculino
-                      </label>
+                    <?php } ?>
+                    <div class="form-group col-md-6">
+                      <label for="foneUser">Telefone</label>
+                      <input type="text" class="form-control" id="foneUser" name = "foneUser" placeholder="Telefone" required>
+                    </div>
+                    <div class="form-group col-md-3" >
+                      <label>Sexo: </label>
+                      <div class="radio"  >
+                        <label style="margin-right: 5px;">
+                          <input type="radio" id="masculino" value="Masculino" name="sexo" >
+                          Masculino
+                        </label>
+                        <label>
+                          <input type="radio" id="feminino" value="Feminino" name="sexo">
+                          Feminino
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="loginUser">Login</label>
+                      <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
+                    </div>
+                    <?php if($id == "1"){ ?>
+                    <div class="form-group col-md-4" id = "senhaprofedit">
+                      <label for="senhaprof">Senha</label>
+                      <input type="password" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
+                    </div>
+                    <?php } ?>
+                    <div class="form-group col-md-4" id ="idMatricula">
+                      <label for="loginUser">ID/Matricula*</label>
+                      <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
+                    </div>
+                    </div>
+                  <?php }elseif($id == "2"){ ?>
+                    <div class="form-group col-md-12">
+                      <label for="nomeTurma">Nome da Turma</label>
+                      <input type="text" class="form-control" id="nomeTurma" name="nomeTurma" placeholder="Nome" required />
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label>Curso</label>
+                      <select class="form-control" name="cursoTurma">
+                        <option value="" id="0">Selecione um curso</option>
+                        <option value="1" id="1">Técnico em Informática</option>
+                        <option value="2" id="2">Técnico em Secretariado</option>
+                        <option value="3" id="3">Técnico em Contabilidade</option>
+                      </select>
+                    </div>
+
+                  <?php }elseif($id == "3"){ ?>
+                    <div class="form-group col-md-6">
+                      <label for="nomeDisc">Nome da Disciplina</label>
+                      <input type="text" class="form-control" id="nomeDisc" name="nomeDisc" placeholder="Nome" required/>
+                    </div>
+                    <div class="checkbox col-md-2 form-group" style="margin-top: 30px;">
                       <label>
-                        <input type="radio" id="feminino" value="Feminino" name="sexo">
-                        Feminino
+                        <input type="checkbox" name="prerequisito" id="prerequisito" onclick="habilitaSelect()"> *Pré-requisito
                       </label>
                     </div>
-                  </div>
-                  <div class="form-group col-md-4">
-                    <label for="loginUser">Login</label>
-                    <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
-                  </div>
-                  <?php if($id == "1"){ ?>
-                  <div class="form-group col-md-4" id = "senhaprofedit">
-                    <label for="senhaprof">Senha</label>
-                    <input type="password" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
-                  </div>
-                  <?php } ?>
-                  <div class="form-group col-md-4" id ="idMatricula">
-                    <label for="loginUser">ID/Matricula*</label>
-                    <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
-                  </div>
-                </div>
-                <?php }elseif($id == "2"){ ?>
-                  <div class="form-group col-md-12">
-                    <label for="nomeTurma">Nome da Turma</label>
-                    <input type="text" class="form-control" id="nomeTurma" name="nomeTurma" placeholder="Nome" required />
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label>Curso</label>
-                    <select class="form-control" name="cursoTurma">
-                      <option value="" id="0">Selecione um curso</option>
-                      <option value="1" id="1">Técnico em Informática</option>
-                      <option value="2" id="2">Técnico em Secretariado</option>
-                      <option value="3" id="3">Técnico em Contabilidade</option>
-                    </select>
-                  </div>
-
-                <?php }elseif($id == "3"){ ?>
-                  <div class="form-group col-md-12">
-                    <label for="nomeDisc">Nome da Disciplina</label>
-                    <input type="text" class="form-control" id="nomeDisc" name="nomeDisc" placeholder="Nome" required/>
-                  </div>
-                  <div class="form-group col-md-12" id="divId">
-                    <label for="idDisciplina">ID/Matricula</label>
-                    <input type="text" class="form-control" id="idDisciplina" name="idDisciplina" placeholder="ID">
-                  </div>
+                    <div class="form-group col-md-4">
+                      <label>*Disciplina que tranca</label>
+                      <select class="form-control" name="DiscPre" id="DiscPre">
+                          <option value=""></option>
+                        <?php
+                          $conexao = DBConecta();
+                          $sql_code = "SELECT `idDisciplina`, `nome` FROM disciplina ORDER BY nome asc;";
+                          $results = mysqli_query($conexao, $sql_code);
+                          if ($results && mysqli_num_rows($results)){
+                            while ($disciplinas = mysqli_fetch_assoc($results)){
+                              echo "<option value=".$disciplinas["idDisciplina"].">".$disciplinas["nome"]."</option>";
+                            }
+                          }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-12" id="divId">
+                      <label for="idDisciplina">ID/Matricula</label>
+                      <input type="text" class="form-control" id="idDisciplina" name="idDisciplina" placeholder="ID">
+                    </div>
                 <?php } ?>
+
                 <div class="box-footer ">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
                   <button type="submit" class="btn btn-primary" name="edita" id="edita" style="margin-right: 5px;">Salvar Edição</button>
                   <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-warning" id="cancela">Cancelar</a>
                 </div>
               </form>
+            </div>
           </div>
-        </div>
-      </section>
+          </section>
+          <?php if($id == "3"){ ?>
+          <section class="content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box box-primary">
+                  <div class="box-header">
+                    <h3 class="box-title">Disciplinas Cadastradas</h3>
+                  </div>
+                  <div class="box-body table-responsive ">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Disciplina</th>
+                          <th>Pré-Requisito(ID)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                          $sql_code = "SELECT * FROM disciplina ORDER BY nome asc;";
+                          $results = mysqli_query($conexao, $sql_code);
+                          if ($results && mysqli_num_rows($results)){
+                            while ($disciplinas = mysqli_fetch_assoc($results)){
+                              if ($disciplinas["prerequisito"])
+                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$disciplinas["prerequisito"]."</td></tr>";
+                              else 
+                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
+                            }
+                          }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+            <?php }?>
+          <?php if($id == "2"){ ?>
+          <section class="content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box box-primary">
+                  <div class="box-header">
+                    <h3 class="box-title">Turmas Cadastradas</h3>
+                  </div>
+                  <div class="box-body table-responsive ">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Turma</th>
+                          <th>Curso</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                          $sql_code = "SELECT * FROM turma;";
+                          $results = mysqli_query(DBConecta(), $sql_code);
+                          if ($results && mysqli_num_rows($results)){
+                            while ($turma = mysqli_fetch_assoc($results)){
+                              $sql_code = "SELECT nome FROM curso WHERE idCurso=".$turma["idCurso"];
+                              $results1 = mysqli_query(DBConecta(), $sql_code);
+                              $nomeCurso = mysqli_fetch_assoc($results1);
+                                echo "<tr><td>".$turma["idTurma"]."</td><td>".$nomeCurso["nome"]."</td><td>-</td></tr>";
+                            }
+                          }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <?php }?>
+          
+        
+      
     </div>
 
     <!-- Rodapé -->
@@ -645,7 +836,6 @@ if (isset($_GET['id'])){
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
   <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>

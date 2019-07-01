@@ -21,22 +21,22 @@ if(isset($_POST['postar'])) {
     $conn = DBConecta();
     $tit = $_POST['titulo'];
     $desc = $_POST['descricao'];
-    $post = $_SESSION["user"];
+    $postador = $_SESSION["user"];
     date_default_timezone_set('America/Sao_Paulo');
     $data = date('d/m/Y H:i:s');
     // SALVA A NOTICIA COM CATEGORIA INFORMADA. LEIA O ARQUIVO CATEGORIAS.TXT PARA SABER MAIS SOBRE.
     $cat = $_POST['cat'];
-    $post = mysqli_query($conn, "INSERT INTO mr_posts (titulo, descricao, postador, categoria, data) VALUES ('$tit', '$desc', '$post', '$cat','$data')");
+    $post = mysqli_query($conn, "INSERT INTO mr_posts (titulo, descricao, postador, categoria, data) VALUES ('$tit', '$desc', '$postador', '$cat','$data')");
 
     if (!$post) {
-        echo "<div class='alert alert-danger alert-dismissable'>
+        echo "<div class='alert alert-danger alert-dismissable my-0'>
   <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro ao publicar! Verifique sua conexão ou tente mais tarde.</strong>
             </div>
             ";
     }else {
         echo "
-        <div class='alert alert-success alert-dismissable'>
+        <div class='alert alert-success alert-dismissable my-0'>
   <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Publicação efetuada com sucesso!</strong>
             </div>
@@ -46,22 +46,23 @@ if(isset($_POST['postar'])) {
         $foto = $_FILES['arquivo'];
         $diretorio = "../Galeria/";
         if (!is_dir($diretorio)){
-            echo "<div class='alert alert-warning alert-dismissable'>
+            echo "<div class='alert alert-warning alert-dismissable my-0'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro no Upload da imagem. Verifique a existencia da pasta 'Galeria'.</strong>
             </div>
             ";
         }
         else {
-            if (isset($_FILES[ 'arquivo' ][ 'name' ]) && $_FILES['arquivo']['error'] == 0 ) {
+            if (isset($_FILES[ 'arquivo' ][ 'name' ]) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) {
                 $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
                 $nome = $_FILES[ 'arquivo' ][ 'name' ];
                 // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
                 $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
                 $extensao = strtolower ($extensao);
                 if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
+                    //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
                     $novoNome = uniqid ( time () ) . '.' . $extensao;
-                    $destino = '../Galeria/' . $novoNome;
+                    $destino = '../Galeria/'.$novoNome;
                     if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
                         // ADICIONA A IMAGEM AO BANCO DE DADOS
                         $select = mysqli_query($conn, "SELECT * FROM mr_posts ORDER BY id DESC LIMIT 1");
@@ -69,6 +70,13 @@ if(isset($_POST['postar'])) {
                         $id = $row["id"];
                         $cat1 = 3;
                         $up = mysqli_query($conn, "INSERT INTO imagens (idPosts, categoria, nome) VALUES ('$id' ,' $cat1', '$novoNome');");
+                    }
+                    else{
+                        echo "<div class='alert alert-warning alert-dismissable my-0'>
+                            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                            <strong>Erro no Upload da imagem.</strong>
+                        </div>
+                        ";
                     }
 
                 }
@@ -191,7 +199,7 @@ if(isset($_POST['postar'])) {
                         ['insert', ['link', 'picture', 'hr']],
                         ['view', ['fullscreen', 'codeview']],
                     ],
-                    height: 300,
+                    height: 200,
                     minHeight: null,
                     maxHeight: null,
                     focus: true,
