@@ -30,11 +30,12 @@ if (isset($_POST["salva"])){
   $editor = $_POST["editor"];
   $start = $_POST["start"];
   $end = $_POST["end"];
+  $idDisciplina = $_POST["disciplina"];
   $postador = $_SESSION["nome"];
   if ($_SESSION["tipo"] == "Administrador")
     $sql_code = "INSERT INTO calendario (title,description,color,start,end,geral,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$postador')";
   else
-    $sql_code = "INSERT INTO calendario (title,description,color,start,end,idTurma,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$postador')";
+    $sql_code = "INSERT INTO calendario (title,description,color,start,end,idTurma,idDisciplina,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$idDisciplina','$postador')";
   $gera = mysqli_query(DBConecta(), $sql_code);
   if ($gera){
     echo "<div class='alert alert-success alert-dismissable status'>

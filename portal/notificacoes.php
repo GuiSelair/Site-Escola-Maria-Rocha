@@ -60,11 +60,11 @@ if ($_SESSION["tipo"] == "Aluno"){
 <li class="dropdown notifications-menu" >
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="desabilita()">
     <i class="fa fa-bell-o"></i>
-    <span class="label label-danger" id="conta"><?php if ($linha != 0 && $linha1 != 0) echo $linha1; ?></span>
+    <span class="label label-danger" id="conta"><?php if ($linha != 0 && $linha1 != 0) echo "!"; ?></span>
     <!--QUANDO HÁ NOTIFICAÇÕES NÃO LIDAS-->
   </a>
   <ul class="dropdown-menu">
-    <li class="header">Você tem <?php if ($linha != 0 && $linha1 != 0) echo $linha1; else echo 0; ?> notificações</li>
+    <!--<li class="header">Você tem <?php if ($linha != 0 && $linha1 != 0) echo $linha1; else echo 0; ?> notificações</li>-->
     <?php if($linha){ ?>
     <li>
       <ul class="menu">

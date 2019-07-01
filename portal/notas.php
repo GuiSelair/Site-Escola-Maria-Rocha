@@ -267,12 +267,15 @@ if ($_SESSION["tipo"] == "Professor"){
                 })
                 $("#turma").on("change", function () {
                   let idTurma = $(this).val();
+                  let idDisciplina = $("#disciplina").val();
                   if (idTurma != "") {
                     $.ajax({
                       type: 'POST',
                       url: 'getDados.php',
-                      data: 'idTurma=' + idTurma,
+                      data: 'idTurma=' + idTurma +'idDisciplina ='+ idDisciplina,
                       success: function (html) {
+                        console.log(html);
+                        
                         $('#aluno').html(html)
                       }
                     });
