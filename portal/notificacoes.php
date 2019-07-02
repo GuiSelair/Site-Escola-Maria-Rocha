@@ -29,7 +29,7 @@ if ($_SESSION["tipo"] == "Aluno"){
   		$noticeTurma = mysqli_query(DBConecta(), $sql_code);
       $linha = mysqli_num_rows($noticeTurma);
   		if ($linha){
-  			while ($noticeTurmaNum = mysqli_fetch_assoc($noticeTurma)){
+  			  $noticeTurmaNum = mysqli_fetch_assoc($noticeTurma);
           $sql_code = "SELECT * FROM `aluno-disciplina` WHERE idDisciplina = ".$noticeTurmaNum["idDisciplina"]." AND `idAluno`=".$_SESSION["id"];
           $results = mysqli_query(DBConecta(), $sql_code);
           if ($results && mysqli_num_rows($results)){
@@ -43,7 +43,7 @@ if ($_SESSION["tipo"] == "Aluno"){
             $noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
             $linha1 = 1;
           }
-  			}
+  			
   		}
   	}
 	}

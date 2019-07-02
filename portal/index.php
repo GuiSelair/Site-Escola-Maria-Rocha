@@ -181,6 +181,8 @@ if (!isset($_SESSION["id"])){
               <dd id="descricao"></dd>
               <dt>Postado por:</dt>
               <dd id="postador"></dd>
+              <dt>Disciplina:</dt>
+              <dd id="disciplina"></dd>
               <dt>De: </dt>
               <dd id="start"></dd>
               <dt>Até: </dt>
@@ -241,6 +243,7 @@ if (!isset($_SESSION["id"])){
           $("#visualiza #descricao").html(event.description)
           $("#visualiza #start").text(event.start.format("DD/MM/YYYY HH:mm"))
           $("#visualiza #end").text(event.end.format("DD/MM/YYYY HH:mm"))
+          $("#visualiza #disciplina").text(event.idDisciplina)
           $("#visualiza #postador").text(event.postador)
           $('#visualiza').modal('show')
         }

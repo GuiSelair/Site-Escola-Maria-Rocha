@@ -46,7 +46,7 @@ if ($_SESSION["tipo"] == "Aluno"){
 					else{
 					  $noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
 					}
-						}
+				}
 			}
 		}
 		echo json_encode($noticeTurmaResults);
