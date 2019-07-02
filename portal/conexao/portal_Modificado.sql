@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 02-Jul-2019 às 01:52
--- Versão do servidor: 5.6.17
--- PHP Version: 5.5.12
+-- Host: localhost
+-- Generation Time: 02-Jul-2019 às 05:22
+-- Versão do servidor: 10.1.40-MariaDB
+-- versão do PHP: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `portal`
@@ -26,15 +28,14 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `administrador`
 --
 
-CREATE TABLE IF NOT EXISTS `administrador` (
-  `idAdministrador` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `administrador` (
+  `idAdministrador` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `sobrenome` varchar(100) NOT NULL,
   `login` varchar(100) NOT NULL,
   `senha` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  PRIMARY KEY (`idAdministrador`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `email` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `administrador`
@@ -49,7 +50,7 @@ INSERT INTO `administrador` (`idAdministrador`, `nome`, `sobrenome`, `login`, `s
 -- Estrutura da tabela `aluno`
 --
 
-CREATE TABLE IF NOT EXISTS `aluno` (
+CREATE TABLE `aluno` (
   `idAluno` varchar(15) NOT NULL,
   `login` varchar(100) NOT NULL,
   `senha` varchar(100) DEFAULT NULL,
@@ -58,8 +59,7 @@ CREATE TABLE IF NOT EXISTS `aluno` (
   `sexo` varchar(100) NOT NULL,
   `dataNascimento` date DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `telefone` varchar(20) NOT NULL,
-  PRIMARY KEY (`idAluno`)
+  `telefone` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -78,12 +78,10 @@ INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `
 -- Estrutura da tabela `aluno-disciplina`
 --
 
-CREATE TABLE IF NOT EXISTS `aluno-disciplina` (
+CREATE TABLE `aluno-disciplina` (
   `idAluno` varchar(15) NOT NULL,
   `idDisciplina` int(11) NOT NULL,
-  `conceito` varchar(100) DEFAULT NULL,
-  KEY `idAluno` (`idAluno`),
-  KEY `idDisciplina` (`idDisciplina`)
+  `conceito` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -110,19 +108,15 @@ INSERT INTO `aluno-disciplina` (`idAluno`, `idDisciplina`, `conceito`) VALUES
 -- Estrutura da tabela `avalhacao`
 --
 
-CREATE TABLE IF NOT EXISTS `avalhacao` (
-  `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `avalhacao` (
+  `idAvalhacao` int(11) NOT NULL,
   `idDisciplina` int(11) NOT NULL,
   `idTurma` int(11) NOT NULL,
   `idAluno` varchar(15) NOT NULL,
   `conceito` varchar(100) NOT NULL,
   `final` tinyint(1) DEFAULT NULL,
-  `data` date NOT NULL,
-  PRIMARY KEY (`idAvalhacao`),
-  KEY `idDisciplina` (`idDisciplina`),
-  KEY `idTurma` (`idTurma`),
-  KEY `idAluno` (`idAluno`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+  `data` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `avalhacao`
@@ -160,8 +154,8 @@ INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `c
 -- Estrutura da tabela `calendario`
 --
 
-CREATE TABLE IF NOT EXISTS `calendario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `calendario` (
+  `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `color` varchar(100) NOT NULL,
@@ -170,11 +164,8 @@ CREATE TABLE IF NOT EXISTS `calendario` (
   `idTurma` int(11) DEFAULT NULL,
   `idDisciplina` int(11) DEFAULT NULL,
   `geral` int(11) DEFAULT NULL,
-  `postador` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idTurma` (`idTurma`),
-  KEY `idDisciplina` (`idDisciplina`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+  `postador` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `calendario`
@@ -186,8 +177,9 @@ INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`,
 (3, 'Prova de Programação 1', '<p>....</p>', '#ed5959', '2019-07-10 19:00:00', '2019-07-10 21:00:00', 411, 11, NULL, 'Jonathan Pippi'),
 (4, 'Atividade Prática', '<p>Tragam os mat&eacute;rias para a aula de sexta. Soldador, alicates, estanho..... Tudo.</p>', '#f4cc00', '2019-07-05 19:30:00', '2019-07-05 22:00:00', 411, 14, NULL, 'Natanael  da Silva Fim'),
 (5, 'Prova de Programação 1 - Segunda Prova', '<p>Conte&uacute;do: Condi&ccedil;&atilde;o SE, Repeat, e WHILE</p>', '#f4cc00', '2019-07-15 19:00:00', '2019-07-15 21:00:00', 411, 11, NULL, 'Jonathan Pippi'),
-(6, 'Lançamento das notas finais', '', 'black', '2019-07-19 19:00:00', '2019-07-19 21:00:00', 411, 14, NULL, 'Natanael  da Silva Fim'),
-(7, 'Lançamento de notas finais', '...', 'black', '2019-07-19 19:00:00', '2019-07-19 19:10:00', 411, 26, NULL, 'Laísa Quadros da Costa');
+(7, 'Lançamento de notas finais', '...', 'black', '2019-07-19 19:00:00', '2019-07-19 19:10:00', 411, 26, NULL, 'Laísa Quadros da Costa'),
+(8, 'Trabalho com consulta', '<p>O trabalho ser&aacute; realizado na pr&oacute;xima aula para aqueles que n&atilde;o foram bem na primeira prova. N&atilde;o faltem.</p>', '#576ee5', '2019-07-29 19:00:00', '2019-07-29 21:00:00', 421, 12, NULL, 'Jonathan Pippi'),
+(9, 'Portfólio', '<p>Portf&oacute;lio sobre crimes cibern&eacute;ticos. Temas: .....</p>', '#ed5959', '2019-07-29 21:30:00', '2019-07-29 22:30:00', 411, 26, NULL, 'Laísa Quadros da Costa');
 
 -- --------------------------------------------------------
 
@@ -195,10 +187,9 @@ INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`,
 -- Estrutura da tabela `curso`
 --
 
-CREATE TABLE IF NOT EXISTS `curso` (
+CREATE TABLE `curso` (
   `idCurso` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  PRIMARY KEY (`idCurso`)
+  `nome` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -216,13 +207,11 @@ INSERT INTO `curso` (`idCurso`, `nome`) VALUES
 -- Estrutura da tabela `disciplina`
 --
 
-CREATE TABLE IF NOT EXISTS `disciplina` (
-  `idDisciplina` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `disciplina` (
+  `idDisciplina` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `prerequisito` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idDisciplina`),
-  KEY `prerequisito` (`prerequisito`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
+  `prerequisito` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `disciplina`
@@ -285,17 +274,16 @@ INSERT INTO `disciplina` (`idDisciplina`, `nome`, `prerequisito`) VALUES
 -- Estrutura da tabela `professor`
 --
 
-CREATE TABLE IF NOT EXISTS `professor` (
-  `idProfessor` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `professor` (
+  `idProfessor` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `sobrenome` varchar(100) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `telefone` varchar(100) DEFAULT NULL,
   `login` varchar(150) NOT NULL,
   `senha` varchar(100) NOT NULL,
-  `sexo` varchar(100) NOT NULL,
-  PRIMARY KEY (`idProfessor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  `sexo` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `professor`
@@ -313,11 +301,9 @@ INSERT INTO `professor` (`idProfessor`, `nome`, `sobrenome`, `email`, `telefone`
 -- Estrutura da tabela `turma`
 --
 
-CREATE TABLE IF NOT EXISTS `turma` (
+CREATE TABLE `turma` (
   `idTurma` int(11) NOT NULL,
-  `idCurso` int(11) NOT NULL,
-  PRIMARY KEY (`idTurma`),
-  KEY `idCurso` (`idCurso`)
+  `idCurso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -339,12 +325,10 @@ INSERT INTO `turma` (`idTurma`, `idCurso`) VALUES
 -- Estrutura da tabela `turma-aluno`
 --
 
-CREATE TABLE IF NOT EXISTS `turma-aluno` (
+CREATE TABLE `turma-aluno` (
   `idTurma` int(11) NOT NULL,
   `idAluno` varchar(15) NOT NULL,
-  `dataMatricula` varchar(100) NOT NULL,
-  KEY `idTurma` (`idTurma`),
-  KEY `idAluno` (`idAluno`)
+  `dataMatricula` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -355,7 +339,6 @@ INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
 (411, '0', '2019.01'),
 (411, '1', '2019.01'),
 (411, '2', '2019.01'),
-(421, '3', '2019.02'),
 (411, '3', '2019.02'),
 (421, '0', '2019.02'),
 (421, '1', '2019.02'),
@@ -368,14 +351,11 @@ INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
 -- Estrutura da tabela `turma-professor`
 --
 
-CREATE TABLE IF NOT EXISTS `turma-professor` (
+CREATE TABLE `turma-professor` (
   `idDisciplina` int(11) NOT NULL,
   `idProfessor` int(11) NOT NULL,
   `idTurma` int(11) NOT NULL,
-  `dataMatricula` varchar(100) NOT NULL,
-  KEY `idDisciplina` (`idDisciplina`),
-  KEY `idProfessor` (`idProfessor`),
-  KEY `idTurma` (`idTurma`)
+  `dataMatricula` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -396,6 +376,121 @@ INSERT INTO `turma-professor` (`idDisciplina`, `idProfessor`, `idTurma`, `dataMa
 (16, 8, 431, '2019.02'),
 (26, 6, 411, '2019.02'),
 (12, 5, 421, '2019.02');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `administrador`
+--
+ALTER TABLE `administrador`
+  ADD PRIMARY KEY (`idAdministrador`);
+
+--
+-- Indexes for table `aluno`
+--
+ALTER TABLE `aluno`
+  ADD PRIMARY KEY (`idAluno`);
+
+--
+-- Indexes for table `aluno-disciplina`
+--
+ALTER TABLE `aluno-disciplina`
+  ADD KEY `idAluno` (`idAluno`),
+  ADD KEY `idDisciplina` (`idDisciplina`);
+
+--
+-- Indexes for table `avalhacao`
+--
+ALTER TABLE `avalhacao`
+  ADD PRIMARY KEY (`idAvalhacao`),
+  ADD KEY `idDisciplina` (`idDisciplina`),
+  ADD KEY `idTurma` (`idTurma`),
+  ADD KEY `idAluno` (`idAluno`);
+
+--
+-- Indexes for table `calendario`
+--
+ALTER TABLE `calendario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idTurma` (`idTurma`),
+  ADD KEY `idDisciplina` (`idDisciplina`);
+
+--
+-- Indexes for table `curso`
+--
+ALTER TABLE `curso`
+  ADD PRIMARY KEY (`idCurso`);
+
+--
+-- Indexes for table `disciplina`
+--
+ALTER TABLE `disciplina`
+  ADD PRIMARY KEY (`idDisciplina`),
+  ADD KEY `prerequisito` (`prerequisito`);
+
+--
+-- Indexes for table `professor`
+--
+ALTER TABLE `professor`
+  ADD PRIMARY KEY (`idProfessor`);
+
+--
+-- Indexes for table `turma`
+--
+ALTER TABLE `turma`
+  ADD PRIMARY KEY (`idTurma`),
+  ADD KEY `idCurso` (`idCurso`);
+
+--
+-- Indexes for table `turma-aluno`
+--
+ALTER TABLE `turma-aluno`
+  ADD KEY `idTurma` (`idTurma`),
+  ADD KEY `idAluno` (`idAluno`);
+
+--
+-- Indexes for table `turma-professor`
+--
+ALTER TABLE `turma-professor`
+  ADD KEY `idDisciplina` (`idDisciplina`),
+  ADD KEY `idProfessor` (`idProfessor`),
+  ADD KEY `idTurma` (`idTurma`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `administrador`
+--
+ALTER TABLE `administrador`
+  MODIFY `idAdministrador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `avalhacao`
+--
+ALTER TABLE `avalhacao`
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `calendario`
+--
+ALTER TABLE `calendario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `disciplina`
+--
+ALTER TABLE `disciplina`
+  MODIFY `idDisciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT for table `professor`
+--
+ALTER TABLE `professor`
+  MODIFY `idProfessor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -448,6 +543,7 @@ ALTER TABLE `turma-professor`
   ADD CONSTRAINT `turma-professor_ibfk_1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `turma-professor_ibfk_4` FOREIGN KEY (`idProfessor`) REFERENCES `professor` (`idProfessor`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `turma-professor_ibfk_5` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
