@@ -10,7 +10,7 @@ if (!isset($_SESSION["id"])){
 }
 
 // FUNÇÃO BUSCA AS TURMAS QUE POSSUAM UMA DETERMINADA DISCIPLINA E PROFESSOR. RETORNE O NOME DA TURMA PARA SER EXIBIDO
-if (isset($_POST["idDisciplina"])){
+if (isset($_POST["idDisciplina"]) && !isset($_POST["idTurma"])){
     $conexao = DBConecta();
     $idDisciplina = $_POST["idDisciplina"];
     $idProfessor = $_SESSION["id"];
@@ -37,7 +37,7 @@ if (isset($_POST["idDisciplina"])){
 }
 
 //FUNÇÃO BUSCA ALUNOS DE UMA DETERMINADA TURMA. RETORNE O ID DO ALUNO E O NOME COMPLETO PARA SER EXIBIDO
-if (isset($_POST["idTurma"])){
+if (isset($_POST["idTurma"]) && isset($_POST["idDisciplina"])){
     $conexao = DBConecta();
     $idDisciplina = $_POST["idDisciplina"];
     $idTurma = $_POST["idTurma"];
@@ -52,9 +52,8 @@ if (isset($_POST["idTurma"])){
         $sql_code = "SELECT * FROM `aluno` WHERE `idAluno`= $AllAlunos[$i]";
         $results = mysqli_query($conexao, $sql_code);
         if (mysqli_num_rows($results)){
-          while($nameAluno = mysqli_fetch_assoc($results)){
+            $nameAluno = mysqli_fetch_assoc($results);
             $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idDisciplina` = ".$idDisciplina." AND `idAluno`=".$nameAluno["idAluno"];
-            echo $sql_code;
             $results0 = mysqli_query($conexao, $sql_code);
             if ($results0 && mysqli_num_rows($results0)){
               $conceito = mysqli_fetch_assoc($results0);
@@ -67,7 +66,7 @@ if (isset($_POST["idTurma"])){
 
             }
 
-          }
+          
           //$AllNameTurmas[] = $nameTurma; 
         }
       }

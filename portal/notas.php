@@ -253,7 +253,6 @@ if ($_SESSION["tipo"] == "Professor"){
 
                 $("#disciplina").on("change", function () {
                   let idDisciplina = $(this).val();
-                  console.log(idDisciplina);
                   if (idDisciplina != "") {
                     $.ajax({
                       type: 'POST',
@@ -272,10 +271,9 @@ if ($_SESSION["tipo"] == "Professor"){
                     $.ajax({
                       type: 'POST',
                       url: 'getDados.php',
-                      data: 'idTurma=' + idTurma +'idDisciplina ='+ idDisciplina,
+                      data: 'idTurma='+idTurma +'&idDisciplina='+idDisciplina,
                       success: function (html) {
                         console.log(html);
-                        
                         $('#aluno').html(html)
                       }
                     });

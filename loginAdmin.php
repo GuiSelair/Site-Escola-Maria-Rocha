@@ -8,7 +8,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Acesso ao Portal Acadêmico</h5>
+                <h5 class="modal-title">Acesso ao Portal Administrativo</h5>
                 <button class="close" type="button" data-dismiss="modal">
                     <span>&times;</span> 
                 </button>
