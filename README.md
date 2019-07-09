@@ -1,3 +1,3 @@
-# Escola Maria Rocha
+# Escola Estadual de Ensino Médio Professora Maria Rocha
 
-fisojdifis
+Este branch é destinada há teste de atualizações.

@@ -53,17 +53,28 @@ if (isset($_POST['atualizar'])) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <!--
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <link rel="stylesheet" href="dist/summernote-bs4.css">
-    <script src="dist/summernote-bs4.min.js"></script>
+
+    <!-- EDITOR SUMMERNOTE 
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <link rel="stylesheet" href="dist/summernote-bs4.css">
+        <script src="dist/summernote-bs4.min.js"></script>
     -->
-    <link href="../portal/froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="../portal/froala/js/froala_editor.pkgd.min.js"></script>
-    <link href="../portal/froala/css/froala_style.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="../portal/froala/js/languages/pt_br.js"></script>
+
+    <!-- EDITOR CKEDITOR
+        <script src="ckeditor/ckeditor.js"></script>
+        <script src="ckeditor/styles.js"></script>
+        <script src="ckeditor/config.js"></script>
+    -->
+
+    <!-- EDITOR QUILL-->
+        <!-- Theme included stylesheets -->
+        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+        <!-- Main Quill library -->
+        <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+        <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
 </head>
 
@@ -81,7 +92,10 @@ if (isset($_POST['atualizar'])) {
                     <!--TITULO DA NOTICIA-->
                     <input type="text" name="ntitulo" id="ntitulo" placeholder="Titulo" class="form-control my-2" value="<?php echo $row['titulo'] ?>">
                     <!--CORPO DA NOTICIA-->
-                    <textarea class="form-control" name="ndescrição" id="editor"><?php echo $row['descricao'] ?></textarea>
+                    <!--<textarea class="form-control" name="ndescrição" id="editor" col="30"><p style="word-wrap: break-word;"><?php echo $row['descricao'] ?></p></textarea>-->
+                    <div id="editor" >
+                        <p name="ndescrição"><?php echo $row['descricao'] ?></p>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block my-2" name="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
                     <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark my-2" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</button>
                 </form>
@@ -97,70 +111,79 @@ if (isset($_POST['atualizar'])) {
         }
     </script>
 
-    <!--SCRIPT DE CONFIGURAÇÃO DO EDITOR-->
-    <script>
-        var editor = new FroalaEditor('#editor', {
-            language: 'pt_br',
-            toolbarButtons: {
-                'moreText': {
-                    'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor']
-                },
-                'moreParagraph': {
-                    'buttons': ['alignLeft', 'alignCenter', 'alignJustify', 'formatOL', 'formatUL', 'outdent',
-                        'indent'
-                    ]
-                },
-                'moreRich': {
-                    'buttons': ['insertLink', 'insertTable', 'insertHR']
-                }
-            },
-
-            // Para telas pequenas
-            toolbarButtonsXS: [
-                ['undo', 'redo'],
-                ['bold', 'italic', 'underline']
-            ],
-            imageUpload: false,
-            videoUpload: false,
-            quickInsertTags: [''],
-            placeholderText: "Digite aqui sua descrição...",
-            enter: FroalaEditor.ENTER_BR,
-        })
-    </script>
+    
 
     <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVO (SUMMERNOTE)
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'hr']],
-                    ['view', ['fullscreen', 'codeview']],
-                ],
-                height: 300,
-                minHeight: null,
-                maxHeight: null,
-                focus: true,
-                lang: 'pt-BR'
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#editor').summernote({
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'hr']],
+                        ['view', ['fullscreen', 'codeview']],
+                    ],
+                    height: 300,
+                    minHeight: null,
+                    maxHeight: null,
+                    focus: true,
+                    lang: 'pt-BR'
+                });
             });
-        });
-        var postForm = function () {
-            var content = $('textarea[name="descrição"]').html($('#summernote').code());
-        }
-    </script>
-    <link rel="stylesheet" href="dist/summernote-bs4.css">
-    <script src="dist/summernote-bs4.js"></script>
-    <script src="dist/lang/summernote-pt-BR.js"></script>
+            var postForm = function () {
+                var content = $('textarea[name="descrição"]').html($('#summernote').code());
+            }
+        </script>
+        <link rel="stylesheet" href="dist/summernote-bs4.css">
+        <script src="dist/summernote-bs4.js"></script>
+        <script src="dist/lang/summernote-pt-BR.js"></script>
     -->
+
+    <!--SCRIPT DE INICIALIZAÇÃO DO EDITOR DE TEXTO CKEDITO (CONFIGURAÇÕES NO ARQUIVO CONFIG.JS)
+        <script>
+            CKEDITOR.replace('editor');
+        </script>
+    -->
+
+    <script>
+        var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+
+        ['clean'],                                       // remove formatting button
+        ['link', 'image']
+        ];        
+        var quill = new Quill('#editor', {
+            placeholder: 'Digite aqui sua descrição...',
+            theme: 'snow',
+            modules: {
+                // Equivalent to { toolbar: { container: '#toolbar' }}
+                toolbar: toolbarOptions
+            }
+        });
+    </script>
 
     <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 
 </html>
+
