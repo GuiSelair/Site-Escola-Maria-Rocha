@@ -30,7 +30,7 @@ if(isset($_POST['entrar'])) {
 }
 
 // DESLOGAR
-if (isset($_GET['deslogar'])) {     
+if (isset($_GET['deslogar'])) {
     session_destroy();
     header("location: index.php");
 }
@@ -63,7 +63,7 @@ if (isset($_GET['deslogar'])) {
     <!--CARROSEL IMAGEM PRINCIPAL-->
     <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
-            <?php 
+            <?php
                 $pasta = "Galeria/";
                 $sql = mysqli_query(DBConecta(),"SELECT nome FROM imagens WHERE categoria = 1;");
                 $linha = mysqli_num_rows($sql);
@@ -126,7 +126,7 @@ if (isset($_GET['deslogar'])) {
 
                 <div class="carousel-inner" role="listbox">
                     <!--EXIBIÇÃO DAS NOTICIAS EM CARROSEL-->
-                    <?php 
+                    <?php
                         $quantCardPorLinha = $quantNotices/2;
                         echo "
                                 <div class='carousel-item active'>
@@ -154,7 +154,7 @@ if (isset($_GET['deslogar'])) {
                                         $tit = $dados['titulo'];
                                     }
                                     echo "              <div style='max-height: 180px; overflow: hidden;'>
-                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'  >
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
@@ -171,7 +171,7 @@ if (isset($_GET['deslogar'])) {
                                         $tit = $dados['titulo'];
                                     }
                                 echo "                  <div style='max-height: 180px; overflow: hidden;'>
-                                                            <img class='card-img-top img-fluid' src='Galeria/08.png'>
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/08.png'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
@@ -213,7 +213,7 @@ if (isset($_GET['deslogar'])) {
                                         $tit = $dados['titulo'];
                                     }
                                     echo "              <div style='max-height: 180px; overflow: hidden;'>
-                                                            <img class='card-img-top img-fluid' src='Galeria/".$image['nome']."' >
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."' ></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
@@ -231,7 +231,7 @@ if (isset($_GET['deslogar'])) {
                                         $tit = $dados['titulo'];
                                     }
                                     echo "              <div style='max-height: 180px; overflow: hidden;'>
-                                                            <img class='card-img-top img-fluid' src='Galeria/08.png'>
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/08.png'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
@@ -277,7 +277,7 @@ if (isset($_GET['deslogar'])) {
             <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
                 <div class="btn-group-vertical btn-block btn-block-lg">
                     <a href="http://www.blogdonatanael.com/" target="_blank" class="btn btn-primary p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
-                        <h6 class="text-uppercase">Professor do Natanael</h6>
+                        <h6 class="text-uppercase">Professor Natanael</h6>
                     </a>
                 </div>
             </div>

@@ -27,7 +27,7 @@ if (isset($_GET['edit'])) {
 if (isset($_POST['atualizar'])) {
     $conn = DBConecta();
     $ntitulo = $_POST['ntitulo'];
-    $ndescricao = $_POST['ndescrição'];
+    $ndescricao = $_POST['descricao'];
     $id =  $_GET['edit'];
     $sql_code = "UPDATE mr_posts SET titulo = '$ntitulo', descricao = '$ndescricao' WHERE id = '$id' ";
     $results = mysqli_query($conn, $sql_code);
@@ -45,36 +45,19 @@ if (isset($_POST['atualizar'])) {
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
-    <link rel="shortcut icon" href="../Img/favicon.ico" />
+    <link rel="shortcut icon" href="../img/favicon.ico" />
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 
-    <!-- EDITOR SUMMERNOTE 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <link rel="stylesheet" href="dist/summernote-bs4.css">
-        <script src="dist/summernote-bs4.min.js"></script>
-    -->
-
-    <!-- EDITOR CKEDITOR
-        <script src="ckeditor/ckeditor.js"></script>
-        <script src="ckeditor/styles.js"></script>
-        <script src="ckeditor/config.js"></script>
-    -->
-
-    <!-- EDITOR QUILL-->
-        <!-- Theme included stylesheets -->
-        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
-        <!-- Main Quill library -->
-        <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
-        <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <!-- EDITOR SUMMERNOTE -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+    <link rel="stylesheet" href="dist/summernote-bs4.css">
+    <script src="dist/summernote-bs4.min.js"></script>
 
 </head>
 
@@ -92,10 +75,7 @@ if (isset($_POST['atualizar'])) {
                     <!--TITULO DA NOTICIA-->
                     <input type="text" name="ntitulo" id="ntitulo" placeholder="Titulo" class="form-control my-2" value="<?php echo $row['titulo'] ?>">
                     <!--CORPO DA NOTICIA-->
-                    <!--<textarea class="form-control" name="ndescrição" id="editor" col="30"><p style="word-wrap: break-word;"><?php echo $row['descricao'] ?></p></textarea>-->
-                    <div id="editor" >
-                        <p name="ndescrição"><?php echo $row['descricao'] ?></p>
-                    </div>
+                    <textarea class="form-control" name="descricao" id="editor" cols="30"><?php echo $row['descricao'] ?></textarea>
                     <button type="submit" class="btn btn-primary btn-block my-2" name="atualizar" style="background-color: #354698; border:none;">Atualizar Publicação</button>
                     <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark my-2" style="background-color: #232323; border:none;">Voltar ao Painel de Controle</button>
                 </form>
@@ -111,79 +91,54 @@ if (isset($_POST['atualizar'])) {
         }
     </script>
 
-    
-
-    <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVO (SUMMERNOTE)
+    <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVO (SUMMERNOTE)-->
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#editor').summernote({
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript']],
                         ['fontname', ['fontname']],
                         ['fontsize', ['fontsize']],
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'hr']],
-                        ['view', ['fullscreen', 'codeview']],
+                        ['insert', ['link', 'picture', 'hr', 'video']],
+                        ['view', ['codeview', 'help']],
                     ],
+                    tableClassName: function()
+                    {
+                        $(this).addClass('table table-bordered')
+
+                        .attr('cellpadding', 12)
+                        .attr('cellspacing', 0)
+                        .attr('border', 1)
+                        .css('borderCollapse', 'collapse');
+
+                        $(this).find('td')
+                        .css('borderColor', 'black')
+                        .css('padding', '15px');
+                    },
                     height: 300,
                     minHeight: null,
                     maxHeight: null,
                     focus: true,
-                    lang: 'pt-BR'
+                    lang: 'pt-BR',
+                    codeviewFilter: false,
+                    codeviewIframeFilter: true
+
                 });
             });
             var postForm = function () {
-                var content = $('textarea[name="descrição"]').html($('#summernote').code());
+                var content = $('textarea[name="descricao"]').html($('#editor').code());
             }
         </script>
-        <link rel="stylesheet" href="dist/summernote-bs4.css">
-        <script src="dist/summernote-bs4.js"></script>
-        <script src="dist/lang/summernote-pt-BR.js"></script>
-    -->
-
-    <!--SCRIPT DE INICIALIZAÇÃO DO EDITOR DE TEXTO CKEDITO (CONFIGURAÇÕES NO ARQUIVO CONFIG.JS)
-        <script>
-            CKEDITOR.replace('editor');
-        </script>
-    -->
-
-    <script>
-        var toolbarOptions = [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        ['blockquote', 'code-block'],
-
-        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-        [{ 'direction': 'rtl' }],                         // text direction
-
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-        [{ 'font': [] }],
-        [{ 'align': [] }],
-
-        ['clean'],                                       // remove formatting button
-        ['link', 'image']
-        ];        
-        var quill = new Quill('#editor', {
-            placeholder: 'Digite aqui sua descrição...',
-            theme: 'snow',
-            modules: {
-                // Equivalent to { toolbar: { container: '#toolbar' }}
-                toolbar: toolbarOptions
-            }
-        });
-    </script>
 
     <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="dist/summernote-bs4.css">
+    <script src="dist/summernote-bs4.js"></script>
+    <script src="dist/lang/summernote-pt-BR.js"></script>
 </body>
 
 </html>
-

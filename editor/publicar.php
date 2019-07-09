@@ -102,6 +102,7 @@ if(isset($_POST['postar'])) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <!-- EDITOR SUMMERNOTE -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     <link rel="stylesheet" href="dist/summernote-bs4.css">
@@ -155,20 +156,35 @@ if(isset($_POST['postar'])) {
                 $('#editor').summernote({
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript']],
                         ['fontname', ['fontname']],
                         ['fontsize', ['fontsize']],
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'hr']],
-                        ['view', ['fullscreen', 'codeview']],
+                        ['insert', ['link', 'picture', 'hr', 'video']],
+                        ['view', ['codeview', 'help']],
                     ],
-                    height: 200,
+                    height: 300,
                     minHeight: null,
                     maxHeight: null,
                     focus: true,
-                    lang: 'pt-BR'
+                    lang: 'pt-BR',
+                    codeviewFilter: false,
+                    codeviewIframeFilter: true,
+                    tableClassName: function()
+                    {
+                        $(this).addClass('table table-bordered')
+
+                        .attr('cellpadding', 12)
+                        .attr('cellspacing', 0)
+                        .attr('border', 1)
+                        .css('borderCollapse', 'collapse');
+
+                        $(this).find('td')
+                        .css('borderColor', 'black')
+                        .css('padding', '15px');
+                    },
                 });
             });
             var postForm = function() {

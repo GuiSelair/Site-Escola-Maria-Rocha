@@ -13,10 +13,13 @@ include_once("conexao/function.php");
 // LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
+
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
+
     $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+
     if ($conect) {
         $_SESSION['Logado'] = true;
         $_SESSION["user"] = $login;
@@ -89,7 +92,7 @@ if ($linhas > 0)
         <?php } ?>
         <!--DESCRIÇÃO DA NOTICIA (CORPO DA NOTICIA)-->
         <div class="row">
-            <div class="col-12 mb-3 text-center">
+            <div class="col-12 mb-3 text-justify" style="word-wrap: break-word;">
                 <?php
                     echo $results['descricao'];
                 ?>
