@@ -255,7 +255,7 @@ if (isset($_GET['deslogar'])) {
         </div>
     </div>
 
-    <!--BOTÕES-->
+    <!--BOTÕES
     <div class="container text-center mb-2">
         <div class="row text-center">
             <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
@@ -291,6 +291,7 @@ if (isset($_GET['deslogar'])) {
             </div>
         </div>
     </div>
+    -->
 
     <!--IMPORTAÇÃO DO RODAPÉ-->
     <?php include_once("footer.php"); ?>
