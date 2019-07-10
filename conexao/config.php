@@ -4,7 +4,7 @@
 ////  ARQUIVOS DE DEFINIÇÃO DE APELIDOS   ////
 //////////////////////////////////////////////
 
-/* HOSPEDADO
+/* HOSPEDADO 
 //LINK DO BANCO DE DADOS
 define('HOSTNAME', 'mysql.mariarocha.org.br');
 
@@ -21,7 +21,7 @@ define('DATABASE', 'mariarocha');
 define('CHARSET', 'utf8');
 */
 
-//LOCAL
+/* LOCAL*/
 //LINK DO BANCO DE DADOS
 define('HOSTNAME', 'localhost');
 
@@ -36,5 +36,6 @@ define('DATABASE', 'mr');
 
 // PRINCIPAL TIPO DE DADO DO BANCO
 define('CHARSET', 'utf8');
+
 
 ?>

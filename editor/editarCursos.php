@@ -176,7 +176,20 @@ if (isset($_POST['atualizar'])) {
                 minHeight: null,
                 maxHeight: null,
                 focus: true,
-                lang: 'pt-BR'
+                lang: 'pt-BR',
+                tableClassName: function()
+                    {
+                        $(this).addClass('table table-bordered')
+
+                        .attr('cellpadding', 12)
+                        .attr('cellspacing', 0)
+                        .attr('border', 1)
+                        .css('borderCollapse', 'collapse');
+
+                        $(this).find('td')
+                        .css('borderColor', 'black')
+                        .css('padding', '15px');
+                    },
             });
         });
         var postForm = function () {

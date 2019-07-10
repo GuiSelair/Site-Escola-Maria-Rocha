@@ -39,13 +39,18 @@ if (isset($_GET['deslogar'])) {
 $id = $_GET['id'];
 $sql_code = "SELECT * FROM mr_posts WHERE ID = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
-$results = mysqli_fetch_assoc($sql);
+$retornoNoticia = mysqli_num_rows($sql);
+if ($retornoNoticia > 0){
+    $results = mysqli_fetch_assoc($sql);
+}
+
 //BUSCA IMAGEM DA NOTICIA
 $sql_code = "SELECT * FROM imagens WHERE idPosts = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
 $linhas = mysqli_num_rows($sql);
-if ($linhas > 0)
+if ($linhas > 0){
     $imagem = mysqli_fetch_assoc($sql);
+}
 
 ?>
 
@@ -73,9 +78,11 @@ if ($linhas > 0)
         <div class="row text-center">
             <div class="col-12 mb-1">
                 <?php
-                    echo "<h5 class='display-4 my-3'>".$results['titulo']."</h5>";
-                    $data = substr($results['data'], 0, 10);
-                    echo "<p class='text-left font-italic text-muted'>Postado por ".$results['postador']." em ".$data;
+                    if ($retornoNoticia > 0){
+                        echo "<h5 class='display-4 my-3'>".$results['titulo']."</h5>";
+                        $data = substr($results['data'], 0, 10);
+                        echo "<p class='text-left font-italic text-muted'>Postado por ".$results['postador']." em ".$data;
+                    }
                 ?>
                 <hr style="border-color: #354698;">
             </div>
@@ -94,7 +101,9 @@ if ($linhas > 0)
         <div class="row">
             <div class="col-12 mb-3 text-justify" style="word-wrap: break-word;">
                 <?php
-                    echo $results['descricao'];
+                    if ($retornoNoticia > 0){
+                        echo $results['descricao'];
+                    }
                 ?>
             </div>
         </div>
