@@ -74,6 +74,7 @@ if ($linhas > 0){
 
     <!--LAYOUT PARA EXIBIÇÃO DA PÁGINA DE NOTICIAS-->
     <div class="container">
+        <?php if ($retornoNoticia > 0){ ?>
         <!--TITULO DA NOTICIA E POSTADOR-->
         <div class="row text-center">
             <div class="col-12 mb-1">
@@ -107,6 +108,12 @@ if ($linhas > 0){
                 ?>
             </div>
         </div>
+        <?php }else{?>
+        <div class='alert alert-danger alert-dismissable my-5 text-center py-5'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+            <strong class="h3">Infelizmente não encontramos a notícia solicitada... Tente busca-la por aqui: <a href="http://www.mariarocha.org.br/allpost.php?pagina=0">Clique aqui!</a></strong>
+        </div>
+        <?php }?>
     </div>
 
     <!--IMPORTAÇÃO DO RODAPÉ-->

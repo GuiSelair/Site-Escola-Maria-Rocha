@@ -42,7 +42,6 @@ if (isset($_GET['deslogar'])) {
 
 <head>
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
-    <meta http-equiv="refresh" content="30">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
@@ -107,7 +106,7 @@ if (isset($_GET['deslogar'])) {
     <!--NOTICIAS-->
     <div class="jumbotron top-space mt-0 mb-3 pt-5" style="background-color: #f2f2f2;">
         <div class="container-fluid">
-            <h4 class="text-center mt-0">ÚLTIMAS NOTICIAS</h4>
+            <!--<h4 class="text-center mt-0">ÚLTIMAS NOTICIAS</h4>-->
             <a href="allpost.php?pagina=0" class="btn btn-primary col-sm col-lg-2 col-md-4">TODAS NOTICIAS <i class="fa fa-search ml-2"></i></a>
             <hr style="border-color: #354698; ">
 
@@ -147,34 +146,22 @@ if (isset($_GET['deslogar'])) {
 
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
-                                    if (strlen($dados['titulo']) > 25){
-                                        $tit = substr($dados['titulo'], 0, 25).' ...';
-                                    }
-                                    else{
-                                        $tit = $dados['titulo'];
-                                    }
-                                    echo "              <div style='max-height: 180px; overflow: hidden;'>
+                                    echo "              <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
                                                             <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
-                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                     ";
                                 }else{
-                                    if (strlen($dados['titulo']) > 25){
-                                        $tit = substr($dados['titulo'], 0, 25).' ...';
-                                    }
-                                    else{
-                                        $tit = $dados['titulo'];
-                                    }
-                                echo "                  <div style='max-height: 180px; overflow: hidden;'>
+                                echo "                  <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
                                                             <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/08.png'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
-                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -206,17 +193,11 @@ if (isset($_GET['deslogar'])) {
 
                                 if ($linha != 0){
                                     $image = mysqli_fetch_assoc($buscaImage);
-                                    if (strlen($dados['titulo']) > 25){
-                                        $tit = substr($dados['titulo'], 0, 25).' ...';
-                                    }
-                                    else{
-                                        $tit = $dados['titulo'];
-                                    }
-                                    echo "              <div style='max-height: 180px; overflow: hidden;'>
+                                    echo "              <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
                                                             <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."' ></a>
                                                         </div>
                                                         <div class='card-body text-center'>
-                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2'>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -224,17 +205,11 @@ if (isset($_GET['deslogar'])) {
                                             <hr class='w-100 clearfix d-md-none'>
                                     ";
                                 }else{
-                                    if (strlen($dados['titulo']) > 25){
-                                        $tit = substr($dados['titulo'], 0, 25).' ...';
-                                    }
-                                    else{
-                                        $tit = $dados['titulo'];
-                                    }
-                                    echo "              <div style='max-height: 180px; overflow: hidden;'>
+                                    echo "              <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
                                                             <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/08.png'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
-                                                            <h5 class='card-title text-truncate' style='max-width: 300px;'>".$dados['titulo']."</h5>
+                                                            <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>
                                                             <a href='noticias.php?id=".$dados['id']."' class='btn btn-primary mt-2 '>Leia mais</a>
                                                         </div>
                                                     </div>
@@ -254,44 +229,6 @@ if (isset($_GET['deslogar'])) {
             </div>
         </div>
     </div>
-
-    <!--BOTÕES
-    <div class="container text-center mb-2">
-        <div class="row text-center">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
-                <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://www.ufsm.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
-                        <h6 class="text-uppercase">UFSM</h6>
-                    </a>
-                </div>
-            </div>
-            <hr class="w-100 clearfix d-md-none">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
-                <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="https://enem.inep.gov.br/#/antes?_k=4k5apg" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
-                        <h6 class="text-uppercase">ENEM</h6>
-                    </a>
-                </div>
-            </div>
-            <hr class="w-100 clearfix d-md-none">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-2">
-                <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://www.blogdonatanael.com/" target="_blank" class="btn btn-primary p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
-                        <h6 class="text-uppercase">Professor Natanael</h6>
-                    </a>
-                </div>
-            </div>
-            <hr class="w-100 clearfix d-md-none">
-            <div class="col-sm col-md-6 col-lg-3 col-xl-3 mx-auto mb-3 mb-2">
-                <div class="btn-group-vertical btn-block btn-block-lg">
-                    <a href="http://prouniportal.mec.gov.br/" target="_blank" class="btn btn-primary  p-4 rounded" style="display: flex; justify-content: center;align-items: center;">
-                        <h6 class="text-uppercase">PROUNI</h6>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
 
     <!--IMPORTAÇÃO DO RODAPÉ-->
     <?php include_once("footer.php"); ?>
