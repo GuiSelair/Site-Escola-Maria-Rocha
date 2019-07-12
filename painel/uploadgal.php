@@ -4,6 +4,7 @@
 ////      UPLOAD DE IMAGENS       ////
 //////////////////////////////////////
 
+session_cache_expire(10);
 session_start();
 
 include_once("../conexao/conexao.php");
@@ -16,16 +17,22 @@ if (!isset($_SESSION['Logado'])) {
     session_destroy();
 }
 
+// VERIFICAÇÃO DE SEGURANÇA
+$tokenUser = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+if ($_SESSION["donoDaSessao"] != $tokenUser){
+  header("location:../index.php");
+}
+
 $diretorio = "../Galeria/";
 
-// FAZ O UPLOAD DA IMAGEM 
+// FAZ O UPLOAD DA IMAGEM
 if (isset($_POST['postar'])) {
     $foto = $_FILES['arquivo'];
     $dimensoes = getimagesize($foto['tmp_name']);
     // ALTURA MÁXIMA PERMITIDA PARA POSTAR IMAGENS NA PÁGINA PRINCIPAL
     $altura = 500;
 
-    if (!is_dir($diretorio)){    
+    if (!is_dir($diretorio)){
         echo "<div class='alert alert-danger alert-dismissable'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
                 <strong>NÃO ENCONTRAMOS A PASTA GALERIA. POR FAVOR, CRIE.</strong>

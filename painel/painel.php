@@ -4,6 +4,7 @@
 ////    PAINEL ADMINISTRATIVO     ////
 //////////////////////////////////////
 
+session_cache_expire(10);
 session_start();
 
 include_once("../conexao/conexao.php");
@@ -14,6 +15,12 @@ include_once("../conexao/function.php");
 if (!isset($_SESSION['Logado'])) {
     header("Location: ../index.php");
     session_destroy();
+}
+
+// VERIFICAÇÃO DE SEGURANÇA
+$tokenUser = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+if ($_SESSION["donoDaSessao"] != $tokenUser){
+  header("location:../index.php");
 }
 
 // BUSCA PELAS 5 ULTIMAS NOTICIAS

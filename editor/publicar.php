@@ -16,6 +16,12 @@ if (!isset($_SESSION{'Logado'})) {
     session_destroy();
 }
 
+// VERIFICAÇÃO DE SEGURANÇA
+$tokenUser = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+if ($_SESSION["donoDaSessao"] != $tokenUser){
+  header("location:../index.php");
+}
+
 // SALVA A NOTICIA NO BANCO DE DADOS E FAZ O DOWNLOAD DA IMAGEM (SE TIVER)
 if(isset($_POST['postar'])) {
     $conn = DBConecta();

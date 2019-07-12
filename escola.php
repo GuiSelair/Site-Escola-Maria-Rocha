@@ -4,6 +4,7 @@
 ////       PÁGINA HISTÓRIA        ////
 //////////////////////////////////////
 
+session_cache_expire(10);
 session_start();
 
 include_once("conexao/config.php");
@@ -19,6 +20,7 @@ if(isset($_POST['entrar'])) {
     $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
     if ($conect) {
         $_SESSION['Logado'] = true;
+        $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
         $_SESSION["user"] = $login;
         header("location: escola.php");
     } else {

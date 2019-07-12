@@ -1,4 +1,4 @@
-<?php 
+<?php
 ////////////////////////////////////////////
 ////   LOGIN DE ADMINISTRADOR DO SITE    ///
 ///////////////////////////////////////////
@@ -8,9 +8,9 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Acesso ao Portal Administrativo</h5>
+                <h5 class="modal-title">Acesso ao Painel Administrativo</h5>
                 <button class="close" type="button" data-dismiss="modal">
-                    <span>&times;</span> 
+                    <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -30,6 +30,13 @@
                                         <label for="inputSenha">Senha</label>
                                         <input type="password" name="senha" class="form-control" id="senha" placeholder="Senha">
                                     </div>
+                                </div>
+                                <div class="form-group col-sm-12 text-center">
+                                  <img src="captcha.php?l=150&a=50&tf=20&ql=5">
+                                  <form action="validar.php" name="form" method="POST">
+                                     <input type="text" name="palavra"/>
+                                     <input type="submit" value="Validar Captcha"/>
+                                  </form>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">

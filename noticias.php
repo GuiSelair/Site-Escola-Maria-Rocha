@@ -3,7 +3,7 @@
 /////////////////////////////////////////
 ////  LAYOUT DA PÁGINA DE NOTICIAS   ////
 /////////////////////////////////////////
-
+session_cache_expire(10);
 session_start();
 
 include_once("conexao/config.php");
@@ -22,6 +22,7 @@ if(isset($_POST['entrar'])) {
 
     if ($conect) {
         $_SESSION['Logado'] = true;
+        $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
         $_SESSION["user"] = $login;
         header("location: index.php");
     } else {

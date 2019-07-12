@@ -4,6 +4,7 @@
 ////        PÁGINA PRINCIPAL      ////
 //////////////////////////////////////
 
+session_cache_expire(10);
 session_start();
 
 include_once("conexao/config.php");
@@ -13,7 +14,7 @@ include_once("conexao/function.php");
 // LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
-
+    $erros = 0;
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
@@ -22,9 +23,11 @@ if(isset($_POST['entrar'])) {
 
     if ($conect) {
         $_SESSION['Logado'] = true;
+        $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
         $_SESSION["user"] = $login;
         header("location: index.php");
     } else {
+        $erros = $erros + 1;
         echo "<script>alert('Usuário ou Senha inválida!')</script>";
     }
 }
