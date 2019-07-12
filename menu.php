@@ -9,7 +9,7 @@
     <div class="row align-items-center">
         <div class="col-sm-10 col-md-6 col-lg-6 col-xl-6  ">
             <div class="text-center mb-0 pb-0">
-                <a href="portal/loginUser.php" target="_blank" class="btn btn-info p-1  my-0 rounded-0" ><i class="fa fa-graduation-cap mx-2"></i>Portal Acadêmico</a>
+                <!--<a href="#" target="_blank" class="btn btn-info p-1  my-0 rounded-0" ><i class="fa fa-graduation-cap mx-2"></i>Portal Acadêmico</a>-->
             </div>
         </div>
         <div class="col-sm-2 col-md-6 col-lg-6 col-xl-6 ">
@@ -66,7 +66,7 @@
                     <a href="galeria.php" class="nav-link h7 text-white">Galeria</a>
                 </li>
                 <li class="nav-item dropdown mx-2">
-                    <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Ensino</a>  
+                    <a href="#" class="nav-link dropdown-toggle h7 text-white" data-toggle="dropdown" id="navDrop">Ensino</a>
                     <ul class="dropdown-menu">
                         <li><a href="./cursos.php?curso=0" class="dropdown-item">Ensino Médio</a></li>
                         <div class="dropdown-divider"></div>

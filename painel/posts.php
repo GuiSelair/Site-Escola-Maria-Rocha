@@ -42,7 +42,7 @@ $con = mysqli_query(DBConecta(),$consulta);
 
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-color="dark" data-image="../Galeria/04.png">
+        <div class="sidebar" data-color="dark" data-image="../Galeria/08.png">
             <div class="sidebar-wrapper ">
                 <div class="logo">
                     <a href="../index.php" class="simple-text">

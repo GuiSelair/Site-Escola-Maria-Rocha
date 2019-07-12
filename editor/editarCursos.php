@@ -20,7 +20,7 @@ if (isset($_POST['atualizar'])) {
   if (!empty($_POST['tabela']) || !empty($_POST['coluna'])){
     $tabela = $_POST['tabela'];
     $coluna = $_POST['coluna'];
-    $ndescricao = $_POST['editor'];
+    $ndescricao = $_POST['descricao'];
     // VERIFICANDO SE HÁ ALGUMA NO TÓPICO ESCOLHIDO
     $verifica = mysqli_query(DBConecta(), "SELECT * FROM $tabela");
     if (mysqli_num_rows($verifica)){
@@ -61,15 +61,18 @@ if (isset($_POST['atualizar'])) {
     <link rel="shortcut icon" href="../img/favicon.ico" />
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <link href="../portal/froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="../portal/froala/js/froala_editor.pkgd.min.js"></script>
-    <link href="../portal/froala/css/froala_style.min.css" rel="stylesheet" type="text/css"/>
+    <!-- EDITOR SUMMERNOTE -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <link rel="stylesheet" href="dist/summernote-bs4.css">
+    <script src="dist/summernote-bs4.min.js"></script>
+
     <!--REQUISIÇÃO AJAX PARA ATUALIZAR O EDITOR DE TEXTO-->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -95,14 +98,14 @@ if (isset($_POST['atualizar'])) {
             $('#coluna').on('change', function(){
                 let tabela = $("#tabela").val();
                 var coluna_ID = $(this).val();
+                $('#editor').summernote('reset');
                 if (coluna_ID != "") {
-                    editor.html.set("");
                     $.ajax({
                         type: 'POST',
                         url: 'getDados.php',
                         data: 'tabela_ID=' + tabela + '&coluna_ID=' + coluna_ID,
                         success: function (data) {
-                            editor.html.insert(data, true);
+                            $('#editor').summernote('code', data);
                         }
                     });
                 }
@@ -136,7 +139,7 @@ if (isset($_POST['atualizar'])) {
                         </select>
                     </div>
                     <hr>
-                    <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
+                    <textarea name="descricao" id="editor"></textarea>
                     <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" id="atualizar"
                         style="background-color: #354698; border:none;">Atualizar Publicação</button>
                     <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark"
@@ -154,33 +157,49 @@ if (isset($_POST['atualizar'])) {
         }
     </script>
 
-    <!--SCRIPT DE CONFIGURAÇÃO DO EDITOR-->
-    <script>
-        var editor = new FroalaEditor('#editor', {
-            toolbarButtons: {
-                'moreText': {
-                    'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor']
-                },
-                'moreParagraph': {
-                    'buttons': ['alignLeft', 'alignCenter', 'alignJustify']
-                },
-                'moreRich': {
-                    'buttons': ['insertLink']
-                }
-            },
-            // Para telas pequenas
-            toolbarButtonsXS: [
-                ['undo', 'redo'],
-                ['bold', 'italic', 'underline']
-            ],
-            quickInsertTags: [''],
-            placeholderText: "Digite aqui sua descrição...",
-            enter: FroalaEditor.ENTER_BR,
-           
-        })
+    <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVO (SUMMERNOTE)-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#editor').summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'hr', 'video']],
+                    ['view', ['codeview', 'help']],
+                ],
+                height: 300,
+                minHeight: null,
+                maxHeight: null,
+                focus: true,
+                lang: 'pt-BR',
+                tableClassName: function()
+                    {
+                        $(this).addClass('table table-bordered')
+
+                        .attr('cellpadding', 12)
+                        .attr('cellspacing', 0)
+                        .attr('border', 1)
+                        .css('borderCollapse', 'collapse');
+
+                        $(this).find('td')
+                        .css('borderColor', 'black')
+                        .css('padding', '15px');
+                    },
+            });
+        });
+        var postForm = function () {
+            var content = $('textarea[name="descricao"]').html($('#editor').code());
+        }
     </script>
     <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../painel/componentes/js/painel-admin.js"></script>
+    <link rel="stylesheet" href="dist/summernote-bs4.css">
+    <script src="dist/summernote-bs4.js"></script>
+    <script src="dist/lang/summernote-pt-BR.js"></script>
 </body>
 </html>

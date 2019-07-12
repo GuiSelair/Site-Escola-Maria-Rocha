@@ -13,10 +13,13 @@ include_once("conexao/function.php");
 // LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
+
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
+
     $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+
     if ($conect) {
         $_SESSION['Logado'] = true;
         $_SESSION["user"] = $login;
@@ -36,13 +39,18 @@ if (isset($_GET['deslogar'])) {
 $id = $_GET['id'];
 $sql_code = "SELECT * FROM mr_posts WHERE ID = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
-$results = mysqli_fetch_assoc($sql);
+$retornoNoticia = mysqli_num_rows($sql);
+if ($retornoNoticia > 0){
+    $results = mysqli_fetch_assoc($sql);
+}
+
 //BUSCA IMAGEM DA NOTICIA
 $sql_code = "SELECT * FROM imagens WHERE idPosts = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
 $linhas = mysqli_num_rows($sql);
-if ($linhas > 0)
+if ($linhas > 0){
     $imagem = mysqli_fetch_assoc($sql);
+}
 
 ?>
 
@@ -66,13 +74,16 @@ if ($linhas > 0)
 
     <!--LAYOUT PARA EXIBIÇÃO DA PÁGINA DE NOTICIAS-->
     <div class="container">
+        <?php if ($retornoNoticia > 0){ ?>
         <!--TITULO DA NOTICIA E POSTADOR-->
         <div class="row text-center">
             <div class="col-12 mb-1">
                 <?php
-                    echo "<h5 class='display-4 my-3'>".$results['titulo']."</h5>";
-                    $data = substr($results['data'], 0, 10);
-                    echo "<p class='text-left font-italic text-muted'>Postado por ".$results['postador']." em ".$data;
+                    if ($retornoNoticia > 0){
+                        echo "<h5 class='display-4 my-3'>".$results['titulo']."</h5>";
+                        $data = substr($results['data'], 0, 10);
+                        echo "<p class='text-left font-italic text-muted'>Postado por ".$results['postador']." em ".$data;
+                    }
                 ?>
                 <hr style="border-color: #354698;">
             </div>
@@ -89,12 +100,20 @@ if ($linhas > 0)
         <?php } ?>
         <!--DESCRIÇÃO DA NOTICIA (CORPO DA NOTICIA)-->
         <div class="row">
-            <div class="col-12 mb-3 text-center">
+            <div class="col-12 mb-3 text-justify" style="word-wrap: break-word;">
                 <?php
-                    echo "<pre>".$results['descricao']."</pre>";
+                    if ($retornoNoticia > 0){
+                        echo $results['descricao'];
+                    }
                 ?>
             </div>
         </div>
+        <?php }else{?>
+        <div class='alert alert-danger alert-dismissable my-5 text-center py-5'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'></a>
+            <strong class="h3">Infelizmente não encontramos a notícia solicitada... Tente busca-la por aqui: <a href="http://www.mariarocha.org.br/allpost.php?pagina=0">Clique aqui!</a></strong>
+        </div>
+        <?php }?>
     </div>
 
     <!--IMPORTAÇÃO DO RODAPÉ-->

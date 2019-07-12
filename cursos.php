@@ -36,7 +36,7 @@ if (isset($_GET['deslogar'])) {
 $curso = $_GET['curso'];
 switch ($curso) {
     case '0':
-        $icon = "class= 'fa fa-bus mx-2'"; 
+        $icon = "class= 'fa fa-bus mx-2'";
         $tec = "Médio";
         $sql_code = "SELECT * FROM cursomedio;";
         break;
@@ -56,7 +56,7 @@ switch ($curso) {
         $sql_code = "SELECT * FROM cursosecretariado;";
         break;
     case '4':
-        $icon = "class= 'fa fa-laptop mx-2'"; 
+        $icon = "class= 'fa fa-laptop mx-2'";
         $tec = "Informática Integrado";
         $sql_code = "SELECT * FROM cursointegrado;";
         break;
@@ -103,98 +103,98 @@ $results = mysqli_fetch_assoc($sql);
     <!--DESCRIÇÃO DO CURSO-->
     <div class="container">
         <?php if ($tec != "Médio" && $tec != "Informática Integrado"){ ?>
-        <?php if ($results['objetivoCurso'] != ""){ ?>
+        <?php if ($results['objetivoCurso'] != "<p><br></p>"){ ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivos do Curso</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['objetivoCurso']."</p>"
+                    echo $results['objetivoCurso'];
                 ?>
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['criteriosAvaliacao'] != ""){ ?>
+        <?php if ($results['criteriosAvaliacao'] != "<p><br></p>"){ ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Critérios de Avaliação</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['criteriosAvaliacao']."</p>"
+                    echo $results['criteriosAvaliacao'];
                 ?>
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['estagio'] != ""){ ?>
+        <?php if ($results['estagio'] != "<p><br></p>" ){ ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Estágio</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['estagio']."</p>"
+                    echo $results['estagio'];
                 ?>
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['perfilConclusao'] != ""){ ?>
+        <?php if ($results['perfilConclusao'] != "<p><br></p>"){ ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Perfil Profissional de Conclusão</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['perfilConclusao']."</p>"
+                    echo $results['perfilConclusao'];
                 ?>
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['gradeCurricular'] != ""){ ?>
+        <?php if ($results['gradeCurricular'] != "<p><br></p>"){ ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Grade Curricular</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['gradeCurricular']."</p>"
+                    echo $results['gradeCurricular'];
                 ?>
             </div>
         </div>
-        <?php } 
+        <?php }
           }
-        else{ 
+        else{
             if ($tec == "Informática Integrado"){
-                if ($results['objetivocurso'] != ""){
+                if ($results['objetivocurso'] != "<p><br></p>"){
             ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivo do Curso</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    
-                    echo "<p>".$results['objetivocurso']."</p>";
+
+                    echo $results['objetivocurso'];
                 ?>
             </div>
         </div>
-                <?php } 
-                if ($results['perfilconclusao'] != ""){
+                <?php }
+                if ($results['perfilconclusao'] != "<p><br></p>"){
                 ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Perfil de Formação Profissional</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['perfilconclusao']."</p>"
+                    echo $results['perfilconclusao'];
                 ?>
             </div>
         </div>
         <?php }
             }else{
-                if ($results['objetivocurso'] != ""){
+                if ($results['objetivocurso'] != "<p><br></p>"){
         ?>
         <div class="row">
-            <div class="col-12 text-center mb-3">
+            <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Objetivos</h5>
                 <hr class="text-left" style="border-color: #b2b2b2;">
                 <?php
-                    echo "<p>".$results['objetivocurso']."</p>"
+                    echo $results['objetivocurso'];
                 ?>
             </div>
         </div>

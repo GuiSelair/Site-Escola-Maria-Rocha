@@ -102,12 +102,7 @@ if(isset($_POST['postar'])) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <!--LINKS PARA EDITOR ALTERNATIVO
-    <link href="../portal/froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="../portal/froala/js/froala_editor.pkgd.min.js"></script>
-    <link href="../portal/froala/css/froala_style.min.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="../portal/froala/js/languages/pt_br.js"></script>
-    -->
+    <!-- EDITOR SUMMERNOTE -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     <link rel="stylesheet" href="dist/summernote-bs4.css">
@@ -155,55 +150,41 @@ if(isset($_POST['postar'])) {
         }
     </script>
 
-    <!--SCRIPT DE CONFIGURAÇÃO DO EDITOR
-    <script>
-        var editor = new FroalaEditor('#editor', {
-            language: 'pt_br',
-            toolbarButtons: {
-                'moreText': {
-                    'buttons': ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'textColor']
-                },
-                'moreParagraph': {
-                    'buttons': ['alignLeft', 'alignCenter', 'alignJustify','formatOL', 'formatUL', 'outdent', 'indent']
-                },
-                'moreRich': {
-                    'buttons': ['insertLink', 'insertImage', 'insertTable', 'insertHR']
-                }
-            },
-
-            // Para telas pequenas
-            toolbarButtonsXS: [
-                ['undo', 'redo'],
-                ['bold', 'italic', 'underline']
-            ],
-            quickInsertTags: [''],
-            placeholderText: "Digite aqui sua descrição...",
-            enter: FroalaEditor.ENTER_BR,
-            imageUploadParam: 'file_name',
-        })
-    </script>
-    -->
-
     <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVA (SUMMERNOTE)-->
     <script type="text/javascript">
             $(document).ready(function() {
                 $('#editor').summernote({
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript']],
                         ['fontname', ['fontname']],
                         ['fontsize', ['fontsize']],
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'hr']],
-                        ['view', ['fullscreen', 'codeview']],
+                        ['insert', ['link', 'picture', 'hr', 'video']],
+                        ['view', ['codeview', 'help']],
                     ],
-                    height: 200,
+                    height: 300,
                     minHeight: null,
                     maxHeight: null,
                     focus: true,
-                    lang: 'pt-BR'
+                    lang: 'pt-BR',
+                    codeviewFilter: false,
+                    codeviewIframeFilter: true,
+                    tableClassName: function()
+                    {
+                        $(this).addClass('table table-bordered')
+
+                        .attr('cellpadding', 12)
+                        .attr('cellspacing', 0)
+                        .attr('border', 1)
+                        .css('borderCollapse', 'collapse');
+
+                        $(this).find('td')
+                        .css('borderColor', 'black')
+                        .css('padding', '15px');
+                    },
                 });
             });
             var postForm = function() {

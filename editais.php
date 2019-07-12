@@ -30,14 +30,14 @@ if(isset($_POST['entrar'])) {
 }
 
 // DESLOGAR
-if (isset($_GET['deslogar'])) {     
+if (isset($_GET['deslogar'])) {
     session_destroy();
     header("location: index.php");
 }
 
 // PAGINAÇÃO E BUSCA DE TODOS OS EDITAIS
 $noticesbyPages = 6;
-$pagina = intval($_GET['pagina']); 
+$pagina = intval($_GET['pagina']);
 $beginningPage = $pagina;
 if ($pagina != 0)
     $beginningPage = $pagina * $noticesbyPages;
@@ -79,7 +79,7 @@ $num_pages = ceil($num_total/$noticesbyPages);
                     while ($dados = mysqli_fetch_assoc($sql)) {
                         echo '<div class="h2 text-center mt-5">'.$dados ['titulo'].'</div><p>
                             <hr>';
-                        echo '<div class="descricao text-center">'.$dados['descricao'].'</div></p>';
+                        echo '<div class="descricao text-center" style="word-wrap: break-word;">'.$dados['descricao'].'</div></p>';
                         echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'</div>';
                     }
                   ?>
