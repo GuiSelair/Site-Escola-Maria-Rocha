@@ -18,15 +18,18 @@ if(isset($_POST['entrar'])) {
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
 
-    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-
-    if ($conect) {
-        $_SESSION['Logado'] = true;
-        $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
-        $_SESSION["user"] = $login;
-        header("location: index.php");
-    } else {
-        echo "<script>alert('Usuário ou Senha inválida!')</script>";
+    if (isset($_POST["palavra"]) && $_POST["palavra"] == $_SESSION["palavra"]){
+        $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+        if ($conect) {
+            $_SESSION['Logado'] = true;
+            $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+            $_SESSION["user"] = $login;
+            header("location: noticias.php?id=".$_GET['id']);
+        } else {
+            echo "<script>alert('Usuário ou Senha inválida!')</script>";
+        }
+    }else{
+        echo "<script>alert('Erro de validação de Captcha!')</script>";
     }
 }
 
@@ -40,18 +43,25 @@ if (isset($_GET['deslogar'])) {
 $id = $_GET['id'];
 $sql_code = "SELECT * FROM mr_posts WHERE ID = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
-$retornoNoticia = mysqli_num_rows($sql);
-if ($retornoNoticia > 0){
-    $results = mysqli_fetch_assoc($sql);
+$retornoNoticia = 0;
+if ($sql){
+    $retornoNoticia = mysqli_num_rows($sql);
+    if ($retornoNoticia > 0){
+        $results = mysqli_fetch_assoc($sql);
+    }
 }
 
 //BUSCA IMAGEM DA NOTICIA
 $sql_code = "SELECT * FROM imagens WHERE idPosts = $id;";
 $sql = mysqli_query(DBConecta(), $sql_code);
-$linhas = mysqli_num_rows($sql);
-if ($linhas > 0){
-    $imagem = mysqli_fetch_assoc($sql);
+$linhas = 0;
+if ($sql){
+    $linhas = mysqli_num_rows($sql);
+    if ($linhas > 0){
+        $imagem = mysqli_fetch_assoc($sql);
+    }
 }
+
 
 ?>
 
@@ -62,7 +72,7 @@ if ($linhas > 0){
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">

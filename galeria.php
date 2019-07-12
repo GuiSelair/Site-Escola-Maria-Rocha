@@ -17,14 +17,18 @@ if(isset($_POST['entrar'])) {
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
-    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-    if ($conect) {
-        $_SESSION['Logado'] = true;
-        $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
-        $_SESSION["user"] = $login;
-        header("location: galeria.php");
-    } else {
-        echo "<script>alert('Usuário ou Senha inválida!')</script>";
+    if (isset($_POST["palavra"]) && $_POST["palavra"] == $_SESSION["palavra"]){
+        $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+        if ($conect) {
+            $_SESSION['Logado'] = true;
+            $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+            $_SESSION["user"] = $login;
+            header("location: galeria.php");
+        } else {
+            echo "<script>alert('Usuário ou Senha inválida!')</script>";
+        }
+    }else{
+        echo "<script>alert('Erro de validação de Captcha!')</script>";
     }
 }
 
@@ -42,7 +46,7 @@ if (isset($_GET['deslogar'])) {
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/lb/lightbox.css">

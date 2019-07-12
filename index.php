@@ -11,24 +11,26 @@ include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
+
 // LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
-    $erros = 0;
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
 
-    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-
-    if ($conect) {
-        $_SESSION['Logado'] = true;
-        $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
-        $_SESSION["user"] = $login;
-        header("location: index.php");
-    } else {
-        $erros = $erros + 1;
-        echo "<script>alert('Usuário ou Senha inválida!')</script>";
+    if (isset($_POST["palavra"]) && $_POST["palavra"] == $_SESSION["palavra"]){
+        $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+        if ($conect) {
+            $_SESSION['Logado'] = true;
+            $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+            $_SESSION["user"] = $login;
+            header("location: index.php");
+        } else {
+            echo "<script>alert('Usuário ou Senha inválida!')</script>";
+        }
+    }else{
+        echo "<script>alert('Erro de validação de Captcha!')</script>";
     }
 }
 
@@ -49,7 +51,7 @@ if (isset($_GET['deslogar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
     <meta name="description" content="Escola estadual de ensino médio e tecnico maria rocha">
-
+    <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">

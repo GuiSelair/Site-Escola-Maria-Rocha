@@ -17,14 +17,18 @@ if(isset($_POST['entrar'])) {
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
-    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-    if ($conect) {
-        $_SESSION['Logado'] = true;
-        $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
-        $_SESSION["user"] = $login;
-        header("location: escola.php");
-    } else {
-        echo "<script>alert('Usuário ou Senha inválida!')</script>";
+    if (isset($_POST["palavra"]) && $_POST["palavra"] == $_SESSION["palavra"]){
+        $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+        if ($conect) {
+            $_SESSION['Logado'] = true;
+            $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+            $_SESSION["user"] = $login;
+            header("location: escola.php");
+        } else {
+            echo "<script>alert('Usuário ou Senha inválida!')</script>";
+        }
+    }else{
+        echo "<script>alert('Erro de validação de Captcha!')</script>";
     }
 }
 
@@ -43,7 +47,7 @@ if (isset($_GET['deslogar'])) {
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+    <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css" />
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css" />
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" />
@@ -64,7 +68,7 @@ if (isset($_GET['deslogar'])) {
     <!-- IMPORTAÇÃO DA BARRA DE NAVEGAÇÃO-->
     <?php include 'menu.php'; ?>
 
-    <!--HISTÓRIA DA ESCOLA-->
+    <!--HISTÓRIA DA ESCOLA
     <div class="jumbotron">
         <div class="container">
             <div class="row">
@@ -98,7 +102,7 @@ if (isset($_GET['deslogar'])) {
             </div>
         </div>
     </div>
-    <!--
+    
     <div class="container my-2">
         <div class="row">
             <div class="col-12 text-center">
@@ -108,7 +112,14 @@ if (isset($_GET['deslogar'])) {
         </div>
     </div>
     -->
-
+    <div class="container-fluid my-5">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-lg-12 text-center">
+                <h1 class="display-4">Em breve histórico atualizado...</h1>
+                <hr style="border-color: #354698; ">
+            </div>
+        </div>
+    </div>
     <!--LINKS PARA PÁGINAS DOS CURSOS-->
     <div class="jumbotron">
         <div class="container-fluid mx-auto">

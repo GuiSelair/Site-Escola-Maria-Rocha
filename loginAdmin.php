@@ -24,20 +24,18 @@
                                 <div class="form-row mt-4">
                                     <div class="form-group col-sm-12">
                                         <label for="inputLogin">Usuário</label>
-                                        <input type="text" name="login" class="form-control" id="login" placeholder="Login">
+                                        <input type="text" name="login" class="form-control" id="login" placeholder="Login" required>
                                     </div>
                                     <div class="form-group col-sm-12">
                                         <label for="inputSenha">Senha</label>
-                                        <input type="password" name="senha" class="form-control" id="senha" placeholder="Senha">
+                                        <input type="password" name="senha" class="form-control" id="senha" placeholder="Senha" required>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-12 text-center">
-                                  <img src="captcha.php?l=150&a=50&tf=20&ql=5">
-                                  <form action="validar.php" name="form" method="POST">
-                                     <input type="text" name="palavra"/>
-                                     <input type="submit" value="Validar Captcha"/>
-                                  </form>
-                                </div>
+                                <!--FORMULARIO CAPTCHA-->
+                                    <div class="form-group col-sm-12 text-center">
+                                        <img src="geraCaptcha.php?l=150&a=50&tf=20&ql=5">
+                                        <input class="form-control my-2" type="text" name="palavra" required placeholder="Digite o código"/>
+                                    </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <button class="btn btn-primary" name="entrar" type="submit">Entrar</button>
