@@ -49,13 +49,13 @@ if (isset($_GET['deslogar'])) {
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
+    <meta name="keywords" content="Escola Estadual de Ensino Médio Professora Maria Rocha, maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
     <meta name="description" content="Escola estadual de ensino médio e tecnico maria rocha">
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="shortcut icon" href="img/favicon.ico" />
 </head>
 
