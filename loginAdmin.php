@@ -32,13 +32,16 @@
                                     </div>
                                 </div>
                                 <!--FORMULARIO CAPTCHA-->
-                                    <div class="form-group col-sm-12 text-center">
-                                        <img src="geraCaptcha.php?l=150&a=50&tf=20&ql=5">
-                                        <input class="form-control my-2" type="text" name="palavra" required placeholder="Digite o código"/>
+                                    <div class="form-group">
+                                        <img src="geraCaptcha.php?l=150&a=50&tf=20&ql=5" class="pull-right">
+                                        <input class="form-control my-2 col-sm-6 " type="text" name="palavra" required placeholder="Digite o código"/>
                                     </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <button class="btn btn-primary" name="entrar" type="submit">Entrar</button>
+                                    </div>
+                                    <div class="col-sm-6 pull-left">
+                                        <a href="./recupera.php">Esqueceu sua senha?</a>
                                     </div>
                                 </div>
                             </form>
