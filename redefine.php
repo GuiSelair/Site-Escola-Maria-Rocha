@@ -1,7 +1,41 @@
 <?php
 //////////////////////////////////////
-////        RECUPERA SENHA        ////
+////        REDEFINE SENHA        ////
 //////////////////////////////////////
+
+include_once("conexao/config.php");
+include_once("conexao/conexao.php");
+include_once("conexao/function.php");
+
+$conexao = DBConecta();
+
+if (!isset($_GET["hash"]) || !VerificaHash($conexao, $_GET["hash"])){
+    header("location: ./index.php");
+}
+
+$hash = $_GET["hash"];
+$email = $_GET["email"];
+if (isset($_POST["redefine"]) && $_POST["senha"] != " "){
+    $senha = mysqli_escape_string($conexao, $_POST['senha']);
+    $senhaConfirma = mysqli_escape_string($conexao, $_POST['senhaConfirma']);
+    if ($senha === $senhaConfirma){
+        $cript = md5($senha);
+        if(InsereNovaSenha($conexao, $cript, "mr_usuarios", $email)){
+            echo "<div class='alert alert-success alert-dismissable status'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Senha alterada com sucesso!</strong>
+            </div>";
+            RemoveHashEEmail($conexao, $email);
+            Redireciona("index.php");
+        }else{
+            echo "<div class='alert alert-warning alert-dismissable status'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao salvar senha. Tente mair tarde</strong>
+            </div>";
+            Redireciona("index.php");
+        }
+    }
+}
 ?>
 
 <!doctype html>
@@ -11,7 +45,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="shortcut icon" href="img/favicon.ico" />
         <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
-        <title>Recupera senha</title>
+        <title>Redefine senha</title>
         <script src="./node_modules/jquery/dist/jquery.min.js"></script>
 
         <style>
@@ -79,33 +113,21 @@
     </head>
     <body class="text-center">
         <div class="status"></div>
-        <div class="container-fluid text-center form-signin">
-            <div class="col-sm-12">
-                <img class="mb-4" src="./img/Login.png" alt="" width="120" height="150">
-                <h3 class="h4 mb-3 font-weight-normal">Recuperação de Senha</h3>
-                <input type="email" id="email" class="form-control rounded" placeholder="Email" name="email" required>
-                <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" name="envia" id="envia">Enviar</button>
-                <a href="./index.php" class="btn btn-lg btn-primary btn-block rounded" >Voltar</a>
-            </div>
-        </div>
+        <form class="form-signin" method="POST" action="">
+            <img class="mb-4" src="./img/Login.png" alt="" width="120" height="150">
+            <h3 class="h4 mb-3 font-weight-normal">Redefinição de Senha</h3>
+            <input type="password" id="senha" class="form-control rounded" placeholder="Sua nova senha" name="senha" required id="senha">
+            <input type="password" id="senhaConfirma" class="form-control rounded" placeholder="Repita sua senha" name="senhaConfirma" required id="senhaConfirma">
+            <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" name="redefine" id="redefine">Redefinir</button>
+            <a href="./index.php" class="btn btn-lg btn-primary btn-block rounded" >Voltar</a>
+        </form>
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#envia").on("click", function(){
-                    let email = document.querySelector("#email").value;        
-                    $.ajax({
-                    type: "POST",
-                    url: "enviaEmail.php",
-                    data: "email="+email+"&tipo=escola",
-                    beforeSend: function(){
-                        $("#envia").html("Enviando...");
-                    },
-                    success: function(html){                
-                        $(".status").html(html);
-                        $("#envia").html("Enviar");
-                        document.querySelector("#email").value = "";
-                    }
-                    });
+                $("#senhaConfirma").on("change", function(){
+                    if($("#senha").val() != $("#senhaConfirma").val()){
+                        $(".status").html("<div class='alert alert-danger alert-dismissable status'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Suas senhas estão diferentes!</strong></div>");
+                    }                    
                 })
             })
         </script>

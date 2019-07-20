@@ -38,9 +38,9 @@
                                     </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <button class="btn btn-primary" name="entrar" type="submit">Entrar</button>
+                                        <button class="btn btn-primary mt-4" name="entrar" type="submit">Entrar</button>
                                     </div>
-                                    <div class="col-sm-6 pull-left">
+                                    <div class="col-sm-6 pull-left mt-4">
                                         <a href="./recupera.php">Esqueceu sua senha?</a>
                                     </div>
                                 </div>

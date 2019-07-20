@@ -1,5 +1,7 @@
 <?php
 
+    // =========== CONEXÃO BANCO DE DADOS ===========
+
     function DBQuery($tabela, $parametro = null, $colunas = "*") {
         $parametro = ($parametro) ? "{$parametro}" : null;
         $colunas = ($colunas) ? " {$colunas}" : "*";
@@ -25,5 +27,58 @@
         DBClose($conn);
         
         return $resultado;
+    }
+    // ============================================================
+
+    // =========== HASH (RECUPERAÇÃO DE SENHA) ===========
+
+    function AddHash($conexao, $hash, $email){
+        $sql_code = "INSERT INTO recuperaSegurança (hash, email) VALUES ('$hash', '$email');";
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results) 
+            return true;
+        else  
+            return false;
+
+    }
+
+    function RemoveHashEEmail($conexao, $email){
+        $sql_code = "DELETE FROM recuperaSegurança WHERE email = '$email'";
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results)
+            return true;
+        else   
+            return false;
+
+    }
+
+    function VerificaHash($conexao, $hash){
+        $sql_code = "SELECT * FROM recuperaSegurança WHERE hash = '$hash'";
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results)
+            return true;
+        else  
+            return false;
+    }
+
+    // ============================================================
+
+    // =========== ATUALIZAÇÕES NO BANCO DE DADOS ===========
+
+    function InsereNovaSenha($conexao, $cript, $nomeTabela, $email){
+        $sql_code = "UPDATE $nomeTabela SET senha = '$cript' WHERE email = '$email'";
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results)
+            return true;
+        else  
+            return false;
+    }
+
+    //=============================================================
+
+    // =========== REDIRECIONAMENTO ===========
+
+    function Redireciona($dir){
+        echo "<meta http-equiv='refresh' content='5; url={$dir}'>";
     }
 ?>
