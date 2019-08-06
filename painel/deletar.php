@@ -16,19 +16,30 @@ if (!isset($_SESSION{'Logado'})) {
 }
 
 if (isset($_GET["id"])){
+    $error = false;
     $id_post = $_GET['id'];
-    $sql = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$id_post';");
+    $conexao = DBConecta();
+    $sql = mysqli_query($conexao, "SELECT * FROM mr_posts WHERE id = '$id_post'");
+    $results = mysqli_fetch_assoc($sql);
     // CASO A NOTICIA NÃO TENHA IMAGEM DE CAPA
-    if (!mysqli_num_rows($sql)){
+    if (!mysqli_num_rows($sql) || !isset($results["thumbnail"]) || !isset($results["arquivo"])){
         $sql_code = "DELETE FROM mr_posts WHERE id = '$id_post'";
-        $sql_query = mysqli_query(DBConecta(), $sql_code) or die("Erro");
+        $sql_query = mysqli_query($conexao, $sql_code) or die("Erro");
     }
     else{
-        $imageName = mysqli_fetch_assoc($sql);
-        $imagePath = "../Galeria/".$imageName['nome'];
-        if (unlink($imagePath)){        
+        if (isset($results["thumbnail"])){
+            $imagePath = "../Galeria/".$results['thumbnail'];
+            if (!unlink($imagePath))
+                $error = true;
+        }
+        if (isset($results["arquivo"]) && !$error){
+            $arquivoPath = "../arquivo/".$results['arquivo'];
+            if (!unlink($arquivoPath))
+                $error = true;
+        }        
+        if (!$error){        
             $sql_code = "DELETE FROM mr_posts WHERE id = '$id_post'";
-            $sql_query = mysqli_query(DBConecta(), $sql_code) or die("Erro");
+            $sql_query = mysqli_query($conexao, $sql_code) or die("Erro");
         }
     }
     if ($sql_query) {

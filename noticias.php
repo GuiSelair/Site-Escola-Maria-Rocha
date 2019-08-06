@@ -51,18 +51,6 @@ if ($sql){
     }
 }
 
-//BUSCA IMAGEM DA NOTICIA
-$sql_code = "SELECT * FROM imagens WHERE idPosts = $id;";
-$sql = mysqli_query(DBConecta(), $sql_code);
-$linhas = 0;
-if ($sql){
-    $linhas = mysqli_num_rows($sql);
-    if ($linhas > 0){
-        $imagem = mysqli_fetch_assoc($sql);
-    }
-}
-
-
 ?>
 
 <!doctype html>
@@ -93,18 +81,20 @@ if ($sql){
                     if ($retornoNoticia > 0){
                         echo "<h5 class='display-4 my-3'>".$results['titulo']."</h5>";
                         $data = substr($results['data'], 0, 10);
-                        echo "<p class='text-left font-italic text-muted'>Postado por ".$results['postador']." em ".$data;
+                        echo "<p class='text-left font-italic text-muted'>Postado por ".$results['postador']." em ".$data."</p>";
+                        if (isset($results["arquivo"]))
+                            echo "<a class='btn btn-primary col-sm col-lg-2 col-md-4 pull-right my-2' href='./arquivo/".$results["arquivo"]."'>Arquivo da notícia</a>";
                     }
                 ?>
                 <hr style="border-color: #354698;">
             </div>
         </div>
         <!--IMAGEM PRINCIPAL DA NOTICIA, SE TIVER-->
-        <?php if ($linhas > 0){ ?>
+        <?php if (isset($results["thumbnail"])){ ?>
             <div class="row justify-content-center text-center">
                 <div class="col-6 mb-3">
                     <?php
-                        echo "<img src='./Galeria/".$imagem['nome']."' class='img-fluid my-2' style='max-height: 400px'>";
+                        echo "<img src='./Galeria/".$results['thumbnail']."' class='img-fluid my-2' style='max-height: 400px'>";
                     ?>
                 </div>
             </div>

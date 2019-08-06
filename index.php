@@ -145,14 +145,10 @@ if (isset($_GET['deslogar'])) {
                                             <div class='col-md-6 col-lg-3  mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
-                                $idNoticia = $dados["id"];
-                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
-                                $linha = mysqli_num_rows($buscaImage);
 
-                                if ($linha != 0){
-                                    $image = mysqli_fetch_assoc($buscaImage);
+                                if (isset($dados["thumbnail"])){
                                     echo "              <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
-                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'></a>
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$dados['thumbnail']."'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>
@@ -192,14 +188,10 @@ if (isset($_GET['deslogar'])) {
                                             <div class='col-md-6 col-lg-3 mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
-                                $idNoticia = $dados["id"];
-                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
-                                $linha = mysqli_num_rows($buscaImage);
-
-                                if ($linha != 0){
-                                    $image = mysqli_fetch_assoc($buscaImage);
+                                if (isset($dados["thumbnail"])){
+    
                                     echo "              <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
-                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."' ></a>
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$dados['thumbnail']."' ></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>

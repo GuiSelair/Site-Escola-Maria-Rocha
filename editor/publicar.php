@@ -32,60 +32,157 @@ if(isset($_POST['postar'])) {
     $data = date('d/m/Y H:i:s');
     // SALVA A NOTICIA COM CATEGORIA INFORMADA. LEIA O ARQUIVO CATEGORIAS.TXT PARA SABER MAIS SOBRE.
     $cat = $_POST['cat'];
-    $post = mysqli_query($conn, "INSERT INTO mr_posts (titulo, descricao, postador, categoria, data) VALUES ('$tit', '$desc', '$postador', '$cat','$data')");
-
-    if (!$post) {
-        echo "<div class='alert alert-danger alert-dismissable my-0'>
-  <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao publicar! Verifique sua conexão ou tente mais tarde.</strong>
-            </div>
-            ";
-    }else {
-        echo "
-        <div class='alert alert-success alert-dismissable my-0'>
-  <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Publicação efetuada com sucesso!</strong>
-            </div>
-            ";
-
-         // REALIZA O DOWNLOAD DA IMAGEM DE CAPA DA NOTICIA (SE EXISTIR)
-        $foto = $_FILES['arquivo'];
-        $diretorio = "../Galeria/";
-        if (!is_dir($diretorio)){
-            echo "<div class='alert alert-warning alert-dismissable my-0'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro no Upload da imagem. Verifique a existencia da pasta 'Galeria'.</strong>
-            </div>
-            ";
-        }
-        else {
-            if (isset($_FILES[ 'arquivo' ][ 'name' ]) && $_FILES[ 'arquivo' ][ 'error' ] == 0 ) {
-                $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
-                $nome = $_FILES[ 'arquivo' ][ 'name' ];
-                // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
-                $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
-                $extensao = strtolower ($extensao);
-                if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
-                    //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
-                    $novoNome = uniqid ( time () ) . '.' . $extensao;
-                    $destino = '../Galeria/'.$novoNome;
-                    if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
-                        // ADICIONA A IMAGEM AO BANCO DE DADOS
-                        $select = mysqli_query($conn, "SELECT * FROM mr_posts ORDER BY id DESC LIMIT 1");
-                        $row = mysqli_fetch_assoc($select);
-                        $id = $row["id"];
-                        $cat1 = 3;
-                        $up = mysqli_query($conn, "INSERT INTO imagens (idPosts, categoria, nome) VALUES ('$id' ,' $cat1', '$novoNome');");
+    // REALIZA O DOWNLOAD DA THUMBNAIL E ARQUIVO DA NOTICIA (SE EXISTIR)
+    $foto = $_FILES['thumbnail'];
+    $diretorio = "../Galeria/";
+    if (!is_dir($diretorio)){
+        echo "<div class='alert alert-warning alert-dismissable my-0'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Erro no Upload da imagem. Verifique a existencia da pasta 'Galeria'.</strong>
+        </div>
+        ";
+    }
+    else {
+        // SALVA E BAIXA SOMENTE A THUMBNAIL
+        if (isset($_FILES[ 'thumbnail' ][ 'name' ]) && $_FILES[ 'thumbnail' ][ 'error' ] == 0 && !isset($_FILES[ 'arquivo' ][ 'name' ]) ) {
+            $arquivo_tmp = $_FILES[ 'thumbnail' ][ 'tmp_name' ];
+            $nome = $_FILES[ 'thumbnail' ][ 'name' ];
+            // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+            $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+            $extensao = strtolower ($extensao);
+            if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
+                //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                $novoNomeThumbnail = uniqid (time()) . '.' . $extensao;
+                $destino = '../Galeria/'.$novoNomeThumbnail;
+                if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                    // ADICIONA A IMAGEM AO BANCO DE DADOS
+                    $sql_code = "INSERT INTO mr_posts (titulo, descricao, postador, categoria, data, thumbnail) VALUES ('$tit', '$desc', '$postador', ' $cat', '$data', '$novoNomeThumbnail');";
+                    $results = mysqli_query($conn, $sql_code);
+                    if ($results){
+                        echo "<div class='alert alert-success alert-dismissable my-0'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Notícia postada com sucesso</strong></div>";
                     }
                     else{
-                        echo "<div class='alert alert-warning alert-dismissable my-0'>
-                            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                            <strong>Erro no Upload da imagem.</strong>
-                        </div>
-                        ";
+                        echo "<div class='alert alert-danger alert-dismissable my-0'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Erro na postagem da notícia. Verifique sua conexão.</strong></div>";
                     }
-
                 }
+                else{
+                    echo "<div class='alert alert-warning alert-dismissable my-0'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Erro no Upload da imagem.</strong>
+                    </div>
+                    ";
+                }
+
+            }
+        }
+        // SALVA E BAIXA SOMENTE O ARQUIVO PDF
+        elseif(isset($_FILES[ 'arquivo' ][ 'name' ]) && $_FILES[ 'arquivo' ][ 'error' ] == 0 && !isset($_FILES[ 'thumbnail' ][ 'name' ]) ){
+            $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
+            $nome = $_FILES[ 'arquivo' ][ 'name' ];
+            // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+            $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+            $extensao = strtolower ($extensao);
+            if (strstr ( '.pdf', $extensao)) {
+                //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                $novoNomeArquivo = uniqid (time()) . '.' . $extensao;
+                $destino = '../arquivo/'.$novoNomeArquivo;
+                if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                    // ADICIONA A IMAGEM AO BANCO DE DADOS
+                    $sql_code = "INSERT INTO mr_posts (titulo, descricao, postador, categoria, data, arquivo) VALUES ('$tit', '$desc', '$postador', ' $cat', '$data', '$novoNomeArquivo');";
+                    $results = mysqli_query($conn, $sql_code);
+                    if ($results){
+                        echo "<div class='alert alert-success alert-dismissable my-0'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Notícia postada com sucesso</strong></div>";
+                    }
+                    else{
+                        echo "<div class='alert alert-danger alert-dismissable my-0'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Erro na postagem da notícia. Verifique sua conexão.</strong></div>";
+                    }
+                }
+                else{
+                    echo "<div class='alert alert-warning alert-dismissable my-0'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Erro no Upload da imagem.</strong>
+                    </div>
+                    ";
+                }
+            }
+        }
+        // SALVA E BAIXA THUMBNAIL E ARQUIVO DA NOTICIA
+        elseif(isset($_FILES[ 'arquivo' ][ 'name' ]) && $_FILES[ 'arquivo' ][ 'error' ] == 0 && isset($_FILES[ 'thumbnail' ][ 'name' ]) && $_FILES[ 'thumbnail' ][ 'error' ] == 0 ){
+            
+            $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
+            $nome = $_FILES[ 'arquivo' ][ 'name' ];
+            // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+            $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+            $extensao = strtolower ($extensao);
+            if (strstr ( '.pdf', $extensao)) {
+                //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                $novoNomeArquivo = uniqid (time()) . '.' . $extensao;
+                $destino = '../arquivo/'.$novoNomeArquivo;
+                if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                    $arquivo_tmp = $_FILES[ 'thumbnail' ][ 'tmp_name' ];
+                    $nome = $_FILES[ 'thumbnail' ][ 'name' ];
+                    // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+                    $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+                    $extensao = strtolower ($extensao);
+                    if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
+                        //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                        $novoNomeThumbnail = uniqid (time()) . '.' . $extensao;
+                        $destino = '../Galeria/'.$novoNomeThumbnail;
+                        if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                            // ADICIONA A IMAGEM AO BANCO DE DADOS
+                            $sql_code = "INSERT INTO mr_posts (titulo, descricao, postador, categoria, data, thumbnail, arquivo) VALUES ('$tit', '$desc', '$postador', ' $cat', '$data', '$novoNomeThumbnail', '$novoNomeArquivo');";
+                            $results = mysqli_query($conn, $sql_code);
+                            if ($results){
+                                echo "<div class='alert alert-success alert-dismissable my-0'>
+                                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                                <strong>Notícia postada com sucesso</strong></div>";
+                            }
+                            else{
+                                echo "<div class='alert alert-danger alert-dismissable my-0'>
+                                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                                <strong>Erro na postagem da notícia. Verifique sua conexão.</strong></div>";
+                            }
+                        }
+                        else{
+                            echo "<div class='alert alert-warning alert-dismissable my-0'>
+                                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                                <strong>Erro no Upload da imagem.</strong>
+                            </div>
+                            ";
+                        }
+
+                    }
+                }
+                else{
+                    echo "<div class='alert alert-warning alert-dismissable my-0'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Erro no Upload do Arquivo.</strong>
+                    </div>
+                    ";
+                }
+            }
+
+        }
+        else{
+            $sql_code = "INSERT INTO mr_posts (titulo, descricao, postador, categoria, data, thumbnail, arquivo) VALUES ('$tit', '$desc', '$postador', ' $cat', '$data', '$novoNomeThumbnail', '$novoNomeArquivo');";
+            $results = mysqli_query($conn, $sql_code);
+            if ($results){
+                echo "<div class='alert alert-success alert-dismissable my-0'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Notícia postada com sucesso</strong></div>";
+            }
+            else{
+                echo "<div class='alert alert-danger alert-dismissable my-0'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro na postagem da notícia. Verifique sua conexão.</strong></div>";
             }
         }
     }
@@ -130,10 +227,13 @@ if(isset($_POST['postar'])) {
                     <textarea class="form-control" name="descricao" id="editor" required></textarea>
                     <fieldset class="my-3">
                         <h6>Foto de capa para a notícia</h6>
-                        <hr />
+                        <hr color="#cfcfcf"/>
+                        <input class="form-check ml-3 my-3" type="file" name="thumbnail" style="font-size: 15px;" />
+                        <h6>Arquivo PDF</h6>
+                        <hr color="#cfcfcf" />
                         <input class="form-check ml-3" type="file" name="arquivo" style="font-size: 15px;" />
                         <h6 class="my-3">Categoria da notícia:</h6>
-                        <hr />
+                        <hr color="#cfcfcf" />
                         <div class="form-check ml-5">
                             <input class="form-check-input" type="radio" name="cat" value="1" checked> Escola
                         </div>
