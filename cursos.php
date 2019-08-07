@@ -107,6 +107,10 @@ $results = mysqli_fetch_assoc($sql);
                 echo "<h2 class='display-4 my-5'>Ensino ".$tec."</h2>";
         ?>
         <hr style="border-color: #354698;">
+        <?php
+            if (isset($results["horario"]))
+                echo "<div class='row justify-content-end'><a class='btn btn-primary col-sm col-lg-2 col-md-4 my-2' href='./arquivo/".$results["horario"]."'>Grade de horários</a></div>";
+        ?>
     </div>
     <!--DESCRIÇÃO DO CURSO-->
     <div class="container">
@@ -133,7 +137,7 @@ $results = mysqli_fetch_assoc($sql);
             </div>
         </div>
         <?php } ?>
-        <?php if ($results['estagio'] != "<p><br></p>" ){ ?>
+        <?php if ($results['estagio'] != "" ){ ?>
         <div class="row">
             <div class="col-12 text-center mb-3" style="word-wrap: break-word;">
                 <h5 class="text-left display-4 my-3" style="font-size: 30pt;"><i <?php echo $icon; ?>></i>Estágio</h5>

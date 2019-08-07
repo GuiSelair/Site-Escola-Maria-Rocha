@@ -33,7 +33,6 @@ if(isset($_POST['postar'])) {
     // SALVA A NOTICIA COM CATEGORIA INFORMADA. LEIA O ARQUIVO CATEGORIAS.TXT PARA SABER MAIS SOBRE.
     $cat = $_POST['cat'];
     // REALIZA O DOWNLOAD DA THUMBNAIL E ARQUIVO DA NOTICIA (SE EXISTIR)
-    $foto = $_FILES['thumbnail'];
     $diretorio = "../Galeria/";
     if (!is_dir($diretorio)){
         echo "<div class='alert alert-warning alert-dismissable my-0'>

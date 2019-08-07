@@ -24,18 +24,95 @@ if ($_SESSION["donoDaSessao"] != $tokenUser){
 
 if (isset($_POST['atualizar'])) {
   if (!empty($_POST['tabela']) || !empty($_POST['coluna'])){
+    $conexao = DBConecta();
     $tabela = $_POST['tabela'];
     $coluna = $_POST['coluna'];
     $ndescricao = $_POST['descricao'];
+    $error = false;
+    $diretorio = "../arquivo/";
+    
     // VERIFICANDO SE HÁ ALGUMA NO TÓPICO ESCOLHIDO
-    $verifica = mysqli_query(DBConecta(), "SELECT * FROM $tabela");
+    $verifica = mysqli_query($conexao, "SELECT * FROM $tabela");
+
+    // ATUALIZANDO DADOS JÁ EXISTENTES
     if (mysqli_num_rows($verifica)){
-        $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
+        if (!is_dir($diretorio)){
+            echo "<div class='alert alert-warning alert-dismissable my-0'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro no Upload da imagem. Verifique a existencia da pasta 'arquivo'.</strong>
+            </div>
+            ";
+        }
+        else{
+            if (isset($_FILES[ 'horario' ][ 'name' ]) && $_FILES[ 'horario' ][ 'error' ] == 0){
+                $arquivo_tmp = $_FILES[ 'horario' ][ 'tmp_name' ];
+                $nome = $_FILES[ 'horario' ][ 'name' ];
+                // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+                $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+                $extensao = strtolower ($extensao);
+                if (strstr ( '.jpg;.jpeg;.png', $extensao)) {
+                    //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                    $novoNomeHorario = uniqid (time()) . '.' . $extensao;
+                    $destino = '../arquivo/'.$novoNomeHorario;
+                    if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                        $results = mysqli_fetch_assoc($verifica);
+                        if (isset($results["horario"])){
+                            $horarioPath = "../arquivo/".$results["horario"];
+                            if (unlink($horarioPath)){
+                                $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao', horario = '$novoNomeHorario';";
+                            }
+                        }
+                    }
+                    else{
+                        $error = true;
+                    }
+                }
+            }
+            else{
+                $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
+            }
+        }
+        
     }
+    // SALVANDO PRIMEIRA VEZ NO BANCO DE DADOS
     else{
-        $sql_code = "INSERT INTO $tabela ($coluna) VALUES ('$ndescricao');";
+        if (!is_dir($diretorio)){
+            echo "<div class='alert alert-warning alert-dismissable my-0'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro no Upload da imagem. Verifique a existencia da pasta 'arquivo'.</strong>
+            </div>
+            ";
+        }
+        else{
+            if (isset($_FILES[ 'horario' ][ 'name' ]) && $_FILES[ 'horario' ][ 'error' ] == 0){
+                $arquivo_tmp = $_FILES[ 'horario' ][ 'tmp_name' ];
+                $nome = $_FILES[ 'horario' ][ 'name' ];
+                // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+                $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+                $extensao = strtolower ($extensao);
+                if (strstr ( '.jpg;.jpeg;.png', $extensao)) {
+                    //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                    $novoNomeHorario = uniqid (time()) . '.' . $extensao;
+                    $destino = '../arquivo/'.$novoNomeHorario;
+                    if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+                        $sql_code = "INSERT INTO $tabela ($coluna, horario) VALUES ('$ndescricao', '$novoNomeHorario');";
+                    }
+                    else{
+                        $error = true;
+                    }
+                }
+            }
+        }
     }
-    $results = mysqli_query(DBConecta(), $sql_code);
+    if (!$error)
+        $results = mysqli_query($conexao, $sql_code);
+    else{
+        echo "<div class='alert alert-danger alert-dismissable'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Erro ao atualizar.</strong>
+          </div>
+          ";
+    }
 
     if ($results) {
         header("location: editarCursos.php");
@@ -146,6 +223,11 @@ if (isset($_POST['atualizar'])) {
                     </div>
                     <hr>
                     <textarea name="descricao" id="editor"></textarea>
+                    <div class="mt-3">
+                        <h6>Grade de Horario do Curso:</label>
+                        <hr>
+                        <input class="form-check ml-3 my-3" type="file" name="horario" style="font-size: 15px;" />
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" id="atualizar"
                         style="background-color: #354698; border:none;">Atualizar Publicação</button>
                     <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark"

@@ -68,50 +68,6 @@ if (isset($_GET['deslogar'])) {
     <!-- IMPORTAÇÃO DA BARRA DE NAVEGAÇÃO-->
     <?php include 'menu.php'; ?>
 
-    <!--HISTÓRIA DA ESCOLA
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-sm-8 col-lg-4 mb-2">
-                    <img src="./img/profMariaRocha.jpg" alt="Professora Maria Rocha" class="rounded float-left img-fluid mx-5 w-75">
-                </div>
-                <div class="col-md-6 col-sm-6 col-lg-8 text-center">
-                    <h1 class="display-4">Professora Maria Rocha</h1>
-                    <hr style="border-color: #354698; ">
-                    <p class="lead">Maria Manoela Rocha nasceu em 23 de dezembro de 1904. Em 1926, concluiu os estudos
-                        na Escola Complementar em Porto Alegre, tornando-se professora. Passou a lecionar no Colégio
-                        Elementar Farroupilha, atual Instituto de Educação Olavo Bilac. Foi professora dedicada por 32
-                        anos. Vítima de câncer, faleceu em 1º de outubro de 1958.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container my-2">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="display-4">Nossa História</h1>
-                <hr style="border-color: #354698; ">
-                <p class="lead mb-4">A Escola Maria Rocha nasceu dentro do atual Instituto de Educação Olavo Bilac. Em
-                    1941, foi criado o Curso Ginasial (1º Ciclo do Curso Secundário) na Escola Normal Olavo Bilac. Este
-                    curso foi desanexado desta Escola em 08 de fevereiro de 1957. Em 1958, o Ginásio passa a
-                    denominar-se Ginásio Estadual Caetano Pagliuca. Em 1962, com a criação de 2º Ciclo do Secundário
-                    (atual Ensino Médio), a Escola passa a denominar-se Colégio Estadual Caetano Pagliuca. Em 21 de
-                    janeiro de 1963, após intensa mobilização dos professores e funcionários, finalmente, recebe a
-                    denominação de Colégio Estadual Professora Maria Rocha - atualmente Escola de Ensino Médio PROF.ª
-                    Maria Rocha.</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container my-2">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="display-4">Direção e Coordenação</h1>
-                <hr style="border-color: #354698; ">
-            </div>
-        </div>
-    </div>
-    -->
     <div class="container-fluid my-5">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-lg-12 text-center">

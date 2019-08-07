@@ -84,6 +84,8 @@ $num_pages = ceil($num_total/$noticesbyPages);
                     while ($dados = mysqli_fetch_assoc($sql)) {
                         echo '<div class="h2 text-center mt-5">'.$dados ['titulo'].'</div><p>
                             <hr>';
+                        if (isset($dados["arquivo"]))
+                            echo "<a class='btn btn-primary col-sm col-lg-2 col-md-4 pull-right my-2' href='./arquivo/".$dados["arquivo"]."'>Arquivo da notícia</a>";
                         echo '<div class="descricao text-center" style="word-wrap: break-word;">'.$dados['descricao'].'</div></p>';
                         echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'</div>';
                     }
