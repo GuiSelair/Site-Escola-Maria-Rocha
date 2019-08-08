@@ -9,7 +9,8 @@ include_once("conexao/function.php");
 
 $conexao = DBConecta();
 
-if (!isset($_GET["hash"]) || !VerificaHash($conexao, $_GET["hash"])){
+// VERIFICA SE A HASH ESTÁ NO BD
+if (!isset($_GET["hash"]) || VerificaHash($conexao, $_GET["hash"])){
     header("location: ./index.php");
 }
 
@@ -125,9 +126,15 @@ if (isset($_POST["redefine"]) && $_POST["senha"] != " "){
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#senhaConfirma").on("change", function(){
-                    if($("#senha").val() != $("#senhaConfirma").val()){
-                        $(".status").html("<div class='alert alert-danger alert-dismissable status'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Suas senhas estão diferentes!</strong></div>");
-                    }                    
+                    if ($("#senha").val() != "" && $("#senhaConfirma").val() != ""){
+                        if($("#senha").val() != $("#senhaConfirma").val()){
+                            $("#senha").css("border-color", "red");
+                            $("#senhaConfirma").css("border-color", "red");
+                        }else{
+                            $("#senha").css("border-color", "green");
+                            $("#senhaConfirma").css("border-color", "green");
+                        }
+                    }
                 })
             })
         </script>

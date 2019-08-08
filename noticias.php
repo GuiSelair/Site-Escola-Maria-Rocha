@@ -41,13 +41,17 @@ if (isset($_GET['deslogar'])) {
 
 // BUSCA NOTICIA PELO ID DA NOTICIA
 $id = $_GET['id'];
-$sql_code = "SELECT * FROM mr_posts WHERE ID = $id;";
-$sql = mysqli_query(DBConecta(), $sql_code);
+$conn = DBConecta();
 $retornoNoticia = 0;
-if ($sql){
-    $retornoNoticia = mysqli_num_rows($sql);
-    if ($retornoNoticia > 0){
-        $results = mysqli_fetch_assoc($sql);
+
+if (validaID($conn, $id)){
+    $sql_code = "SELECT * FROM mr_posts WHERE ID = $id;";
+    $sql = mysqli_query($conn, $sql_code);
+    if ($sql){
+        $retornoNoticia = mysqli_num_rows($sql);
+        if ($retornoNoticia > 0){
+            $results = mysqli_fetch_assoc($sql);
+        }
     }
 }
 

@@ -28,6 +28,13 @@
         
         return $resultado;
     }
+
+    function BuscaTodosIDs($conn){
+        $sql_code = "SELECT id FROM mr_posts ORDER BY id DESC";
+        return mysqli_query($conn, $sql_code);
+        
+        
+    }
     // ============================================================
 
     // =========== HASH (RECUPERAÇÃO DE SENHA) ===========
@@ -81,4 +88,23 @@
     function Redireciona($dir){
         echo "<meta http-equiv='refresh' content='5; url={$dir}'>";
     }
+
+    //=============================================================
+
+    // =========== VALIDAÇÕES ===============
+
+    function validaID($conn, $id){
+        if(!empty($id)){
+            $result = BuscaTodosIDs($conn);
+            while ($ids = mysqli_fetch_assoc($result)){
+                if ($id == $ids["id"]){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    //=============================================================
+
 ?>
