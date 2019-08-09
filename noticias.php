@@ -40,7 +40,7 @@ if (isset($_GET['deslogar'])) {
 }
 
 // BUSCA NOTICIA PELO ID DA NOTICIA
-$id = $_GET['id'];
+$id = ValidaURL($_GET['id']);
 $conn = DBConecta();
 $retornoNoticia = 0;
 
