@@ -105,6 +105,56 @@
         }
     }
 
+    function UploadArquivos($arquivo, $name, $tipoArquivo, $destinoArquivo){
+        switch ($tipoArquivo) {
+            case "imagem":
+                $arquivo_tmp = $_FILES[ $name ][ 'tmp_name' ];
+                $nome = $_FILES[ $name ][ 'name' ];
+                // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+                $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+                $extensao = strtolower ($extensao);
+                if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao)) {
+                    //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                    $novoNomeThumbnail = uniqid (time()) . '.' . $extensao;
+                    if (VerificaDiretorio($destinoArquivo)){
+                        $destino = $destinoArquivo.$novoNomeThumbnail;
+                        if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) 
+                            return $novoNomeThumbnail;
+                        return "ErroUpload";
+                    }
+                }
+                return "ArquivoIncompativel";
+                break;
+                
+            case "arquivo":
+                $arquivo_tmp = $_FILES[ $name ][ 'tmp_name' ];
+                $nome = $_FILES[ $name ][ 'name' ];
+                // SELECIONA SOMENTE A EXTENSÃO E VERIFICA SE ESTÁ DENTRO DAS EXTENSÕES ESPERADA
+                $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+                $extensao = strtolower ($extensao);
+                if (strstr ( '.pdf', $extensao)) {
+                    //CRIA UM NOVO ALEATÓRIO PARA O ARQUIVO
+                    $novoNomeThumbnail = uniqid (time()) . '.' . $extensao;
+                    if (VerificaDiretorio($destinoArquivo)){
+                        $destino = $destinoArquivo.$novoNomeThumbnail;
+                        if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) 
+                            return $novoNomeThumbnail;
+                        return "ErroUpload";
+                    }
+                }
+                return "ArquivoIncompativel";
+                break;
+            default:
+                return false;
+        }
+    }
+
+    function VerificaDiretorio($diretorio){
+        if (!is_dir($diretorio)){
+            return false;
+        }
+        return true;
+    }
     //=============================================================
 
 ?>
