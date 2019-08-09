@@ -176,7 +176,9 @@
             $tbl = array_flip($tbl);
             $str = addslashes($str);
             $str = strip_tags($str);
-            return strtr($str, $tbl);
+            if (filter_var($str, FILTER_VALIDATE_INT)) {
+                return strtr($str, $tbl);
+            } 
         }
         else return $str;
     }
