@@ -168,10 +168,10 @@ if (!isset($_SESSION["id"])){
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="visualiza">Informações sobre a postagem:</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
+            <h4 class="modal-title" id="visualiza">Informações sobre a postagem:</h4>
           </div>
           <div class="modal-body">
             <dl class="dl-horizontal">
@@ -195,6 +195,7 @@ if (!isset($_SESSION["id"])){
         </div>
       </div>
     </div>
+    
 
     <!-- RODAPÉ -->
     <footer class="main-footer">
