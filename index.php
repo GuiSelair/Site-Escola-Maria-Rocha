@@ -11,7 +11,6 @@ include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
-
 // LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();

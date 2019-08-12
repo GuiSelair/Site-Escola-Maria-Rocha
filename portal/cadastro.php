@@ -1,7 +1,7 @@
 <?php
 
-session_start();
 
+session_start();
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 

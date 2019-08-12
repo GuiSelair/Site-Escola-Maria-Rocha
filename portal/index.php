@@ -4,10 +4,11 @@
 ////        PÁGINA PRINCIPAL      ////
 //////////////////////////////////////
 
+session_cache_expire(20);
 session_start();
-
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
+include_once("../conexao/function.php");
 
 
 // DESLOGAR
@@ -28,30 +29,33 @@ if (!isset($_SESSION["id"])){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Portal Acadêmico</title>
+  <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <link rel="shortcut icon" href="../img/favicon.ico" />
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  
+  <!-- IMPORTAÇÃO FULLCALENDAR -->
   <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
   <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
-    <!--CABEÇALHO-->
+    <!-- CABEÇALHO -->
     <header class="main-header">
       <a href="index.php" class="logo">
         <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
         <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Portal Acadêmico</span>
       </a>
+
       <!--MENU DISPOSITIVOS MÓVEIS-->
       <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -73,7 +77,7 @@ if (!isset($_SESSION["id"])){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="./redefine.php" class="btn btn-default btn-flat">Senha</a>
+                    <a href="redefine.php" class="btn btn-default btn-flat">Alterar Senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -139,22 +143,19 @@ if (!isset($_SESSION["id"])){
               </ul>
             </li>
           <?php } ?>
+
         </ul>
       </section>
     </aside>
 
     <!--ÁREA DE CONTEÚDO-->
     <div class="content-wrapper">
-      <section class="content-header">
-        <h1>
-          INICIO    
-        </h1>
-      </section>
-      <section class="content ">
+      <section class="content">
         <div class="row ">
           <div class="col-md-10 col-lg-12">
             <div class="box box-primary">
               <div class="box-body no-padding">
+                <!-- INCLUSÃO CALENDARIO -->
                 <div id="calendar"></div>
               </div>
             </div>
@@ -169,7 +170,7 @@ if (!isset($_SESSION["id"])){
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true">X</span>
             </button>
             <h4 class="modal-title" id="visualiza">Informações sobre a postagem:</h4>
           </div>
@@ -196,7 +197,6 @@ if (!isset($_SESSION["id"])){
       </div>
     </div>
     
-
     <!-- RODAPÉ -->
     <footer class="main-footer">
       <div class="pull-right hidden-xs">
@@ -256,7 +256,6 @@ if (!isset($_SESSION["id"])){
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/moment/moment.js"></script>
   <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
-  <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>
