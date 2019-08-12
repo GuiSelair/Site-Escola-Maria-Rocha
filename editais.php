@@ -4,6 +4,7 @@
 ////           EDITAIS            ////
 //////////////////////////////////////
 
+session_cache_expire(10);
 session_start();
 
 include_once("conexao/config.php");
@@ -18,14 +19,18 @@ if(isset($_POST['entrar'])) {
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
 
-    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-
-    if ($conect) {
-        $_SESSION['Logado'] = true;
-        $_SESSION["user"] = $login;
-        header("location: index.php");
-    } else {
-        echo "<script>alert('Usuário ou Senha inválida!')</script>";
+    if (isset($_POST["palavra"]) && $_POST["palavra"] == $_SESSION["palavra"]){
+        $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+        if ($conect) {
+            $_SESSION['Logado'] = true;
+            $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+            $_SESSION["user"] = $login;
+            header("location: editais.php?pagina=".$_GET["pagina"]);
+        } else {
+            echo "<script>alert('Usuário ou Senha inválida!')</script>";
+        }
+    }else{
+        echo "<script>alert('Erro de validação de Captcha!')</script>";
     }
 }
 
@@ -58,7 +63,7 @@ $num_pages = ceil($num_total/$noticesbyPages);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
     <meta name="description" content="Escola estadual de ensino médio e tecnico maria rocha">
-
+    <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
@@ -79,6 +84,8 @@ $num_pages = ceil($num_total/$noticesbyPages);
                     while ($dados = mysqli_fetch_assoc($sql)) {
                         echo '<div class="h2 text-center mt-5">'.$dados ['titulo'].'</div><p>
                             <hr>';
+                        if (isset($dados["arquivo"]))
+                            echo "<a class='btn btn-primary col-sm col-lg-2 col-md-4 pull-right my-2' href='./arquivo/".$dados["arquivo"]."'>Arquivo da notícia</a>";
                         echo '<div class="descricao text-center" style="word-wrap: break-word;">'.$dados['descricao'].'</div></p>';
                         echo '<div><b><span class="fa fa-user"></span> Postado por</b> <i>'.$dados ['postador'].'</i><i> em</i> '.$dados['data'].'</div>';
                     }

@@ -16,30 +16,105 @@ if (!isset($_SESSION{'Logado'})) {
     session_destroy();
 }
 
+// VERIFICAÇÃO DE SEGURANÇA
+$tokenUser = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+if ($_SESSION["donoDaSessao"] != $tokenUser){
+  header("location:../index.php");
+}
+
 if (isset($_POST['atualizar'])) {
   if (!empty($_POST['tabela']) || !empty($_POST['coluna'])){
+    $conexao = DBConecta();
     $tabela = $_POST['tabela'];
     $coluna = $_POST['coluna'];
     $ndescricao = $_POST['descricao'];
+    $error = false;
+    
     // VERIFICANDO SE HÁ ALGUMA NO TÓPICO ESCOLHIDO
-    $verifica = mysqli_query(DBConecta(), "SELECT * FROM $tabela");
-    if (mysqli_num_rows($verifica)){
-        $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
-    }
-    else{
-        $sql_code = "INSERT INTO $tabela ($coluna) VALUES ('$ndescricao');";
-    }
-    $results = mysqli_query(DBConecta(), $sql_code);
+    $verifica = mysqli_query($conexao, "SELECT * FROM $tabela");
 
-    if ($results) {
-        header("location: editarCursos.php");
+    // ATUALIZANDO DADOS JÁ EXISTENTES
+    if (mysqli_num_rows($verifica)){
+        if (isset($_FILES[ 'horario' ][ 'name' ]) && $_FILES[ 'horario' ][ 'error' ] == 0){
+            $response = UploadArquivos($_FILES["horario"], "horario", "imagem", "../arquivo/");
+            if ($respose === "ArquivoIncompativel") {
+                echo "<div class='alert alert-danger alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao atualizar informações. Arquivo enviado incompativel. Envia um arquivo do tipo imagem.</strong>
+                </div>
+                ";
+                $error = true;
+            }
+            elseif ($response === "ErrorUpload"){
+                echo "<div class='alert alert-danger alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao atualizar informações. Erro no Upload da imagem. Verifique sua conexão.</strong>
+                </div>
+                ";
+                $error = true;
+            }
+            else{
+                $results = mysqli_fetch_assoc($verifica);
+                if (isset($results["horario"])){
+                    $horarioPath = "../arquivo/".$results["horario"];
+                    if (unlink($horarioPath)){
+                        $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao', horario = '$response';";
+                    }
+                    else{
+                        echo "<div class='alert alert-danger alert-dismissable'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Erro ao atualizar informações. Arquivo anterior não encontrado.</strong>
+                        </div>
+                        "; 
+                    }
+                }
+            }
+        }
+        else{
+            $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
+        }
     }
+    // SALVANDO PRIMEIRA VEZ NO BANCO DE DADOS
     else{
-      echo "<div class='alert alert-danger alert-dismissable'>
-          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-          <strong>Erro ao editar!</strong>
-          </div>
-          ";
+        if (isset($_FILES[ 'horario' ][ 'name' ]) && $_FILES[ 'horario' ][ 'error' ] == 0){
+            $response = UploadArquivos($_FILES["horario"], "horario", "imagem", "../arquivo/");
+            if ($respose === "ArquivoIncompativel") {
+                echo "<div class='alert alert-danger alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao atualizar informações. Arquivo enviado incompativel. Envia um arquivo do tipo imagem.</strong>
+                </div>
+                ";
+                $error = true;
+            }
+            elseif ($response === "ErrorUpload"){
+                echo "<div class='alert alert-danger alert-dismissable'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao atualizar informações. Erro no Upload da imagem. Verifique sua conexão.</strong>
+                </div>
+                ";
+                $error = true;
+            }
+            else{
+                $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao', horario = '$response';";
+            }
+        }
+        else{
+            $sql_code = "UPDATE $tabela SET $coluna = '$ndescricao';";
+        }
+    }
+
+    if (!$error){
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results) {
+            header("location: editarCursos.php");
+        }
+        else{
+            echo "<div class='alert alert-danger alert-dismissable'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Erro ao editar. Verifique sua conexão.</strong>
+            </div>
+            ";
+        }
     }
   }
   else {
@@ -140,6 +215,11 @@ if (isset($_POST['atualizar'])) {
                     </div>
                     <hr>
                     <textarea name="descricao" id="editor"></textarea>
+                    <div class="mt-3">
+                        <h6>Grade de Horario do Curso:</label>
+                        <hr>
+                        <input class="form-check ml-3 my-3" type="file" name="horario" style="font-size: 15px;" />
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block mt-3" name="atualizar" id="atualizar"
                         style="background-color: #354698; border:none;">Atualizar Publicação</button>
                     <button type="button" id="sair" onclick="confirmExclusao()" class="btn btn-block btn-dark"

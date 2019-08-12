@@ -1,4 +1,4 @@
-<?php 
+<?php
 ////////////////////////////////////////////
 ////   LOGIN DE ADMINISTRADOR DO SITE    ///
 ///////////////////////////////////////////
@@ -8,9 +8,9 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Acesso ao Portal Administrativo</h5>
+                <h5 class="modal-title">Acesso ao Painel Administrativo</h5>
                 <button class="close" type="button" data-dismiss="modal">
-                    <span>&times;</span> 
+                    <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -24,16 +24,24 @@
                                 <div class="form-row mt-4">
                                     <div class="form-group col-sm-12">
                                         <label for="inputLogin">Usuário</label>
-                                        <input type="text" name="login" class="form-control" id="login" placeholder="Login">
+                                        <input type="text" name="login" class="form-control" id="login" placeholder="Login" required>
                                     </div>
                                     <div class="form-group col-sm-12">
                                         <label for="inputSenha">Senha</label>
-                                        <input type="password" name="senha" class="form-control" id="senha" placeholder="Senha">
+                                        <input type="password" name="senha" class="form-control" id="senha" placeholder="Senha" required>
                                     </div>
                                 </div>
+                                <!--FORMULARIO CAPTCHA-->
+                                    <div class="form-group">
+                                        <img src="geraCaptcha.php?l=150&a=50&tf=20&ql=5" class="pull-right">
+                                        <input class="form-control my-2 col-sm-6 " type="text" name="palavra" required placeholder="Digite o código"/>
+                                    </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <button class="btn btn-primary" name="entrar" type="submit">Entrar</button>
+                                        <button class="btn btn-primary mt-4" name="entrar" type="submit">Entrar</button>
+                                    </div>
+                                    <div class="col-sm-6 pull-left mt-4">
+                                        <a href="./recupera.php">Esqueceu sua senha?</a>
                                     </div>
                                 </div>
                             </form>

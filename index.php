@@ -4,28 +4,33 @@
 ////        PÁGINA PRINCIPAL      ////
 //////////////////////////////////////
 
+session_cache_expire(10);
 session_start();
 
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
 include_once("conexao/function.php");
 
+
 // LOGIN MODAL
 if(isset($_POST['entrar'])) {
     $conn = DBConecta();
-
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
     $cript = md5($senha);
 
-    $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
-
-    if ($conect) {
-        $_SESSION['Logado'] = true;
-        $_SESSION["user"] = $login;
-        header("location: index.php");
-    } else {
-        echo "<script>alert('Usuário ou Senha inválida!')</script>";
+    if (isset($_POST["palavra"]) && $_POST["palavra"] == $_SESSION["palavra"]){
+        $conect = DBQuery('mr_usuarios', " WHERE login = '$login' AND senha = '$cript' ");
+        if ($conect) {
+            $_SESSION['Logado'] = true;
+            $_SESSION["donoDaSessao"] = md5("seg".$_SERVER["REMOTE_ADDR"].$_SERVER["HTTP_USER_AGENT"]);
+            $_SESSION["user"] = $login;
+            header("location: index.php");
+        } else {
+            echo "<script>alert('Usuário ou Senha inválida!')</script>";
+        }
+    }else{
+        echo "<script>alert('Erro de validação de Captcha!')</script>";
     }
 }
 
@@ -44,13 +49,13 @@ if (isset($_GET['deslogar'])) {
     <title>&nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="keywords" content="maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
+    <meta name="keywords" content="Escola Estadual de Ensino Médio Professora Maria Rocha, maria rocha, escola maria rocha, escola professora maria rocha, escola profª maria rocha, santa maria, RS">
     <meta name="description" content="Escola estadual de ensino médio e tecnico maria rocha">
-
+    <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
     <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="shortcut icon" href="img/favicon.ico" />
 </head>
 
@@ -140,14 +145,10 @@ if (isset($_GET['deslogar'])) {
                                             <div class='col-md-6 col-lg-3  mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
-                                $idNoticia = $dados["id"];
-                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
-                                $linha = mysqli_num_rows($buscaImage);
 
-                                if ($linha != 0){
-                                    $image = mysqli_fetch_assoc($buscaImage);
+                                if (isset($dados["thumbnail"])){
                                     echo "              <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
-                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."'></a>
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$dados['thumbnail']."'></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>
@@ -187,14 +188,10 @@ if (isset($_GET['deslogar'])) {
                                             <div class='col-md-6 col-lg-3 mx-auto mt-3'>
                                                 <div class='card mb-2 text-center'>
                                 ";
-                                $idNoticia = $dados["id"];
-                                $buscaImage = mysqli_query(DBConecta(), "SELECT * FROM imagens WHERE idPosts = '$idNoticia';") or die("Erro");
-                                $linha = mysqli_num_rows($buscaImage);
-
-                                if ($linha != 0){
-                                    $image = mysqli_fetch_assoc($buscaImage);
+                                if (isset($dados["thumbnail"])){
+    
                                     echo "              <div style='max-height: 180px; min-height: 180px; overflow: hidden;'>
-                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$image['nome']."' ></a>
+                                                            <a href='noticias.php?id=".$dados['id']."'><img class='card-img-top img-fluid' src='Galeria/".$dados['thumbnail']."' ></a>
                                                         </div>
                                                         <div class='card-body text-center'>
                                                             <h5 class='card-title text-truncate'>".$dados['titulo']."</h5>
