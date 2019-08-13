@@ -177,7 +177,7 @@ if (isset($_POST['atualizar'])) {
                 if (coluna_ID != "") {
                     $.ajax({
                         type: 'POST',
-                        url: 'getDados.php',
+                        url: 'buscaDadosdeTabela.php',
                         data: 'tabela_ID=' + tabela + '&coluna_ID=' + coluna_ID,
                         success: function (data) {
                             $('#editor').summernote('code', data);

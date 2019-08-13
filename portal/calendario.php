@@ -13,7 +13,7 @@ if (!isset($_SESSION["id"])){
 	header("location: ./loginUser.php");
 }
 
-$conexao = DBConecta():
+$conexao = DBConecta();
 
 //FUNÇÃO CASO O USUARIO SEJA PROFESSOR, VERIFICA SE NÃO HÁ NENHUM REGISTRO NO CALENDARIO QUE MARQUE TODOS PROFESSORES.
 if ($_SESSION["tipo"] == "Professor" || $_SESSION["tipo"] == "Administrador"){
@@ -37,11 +37,11 @@ if ($_SESSION["tipo"] == "Aluno"){
 		}
 		for ($i = 0; $i < count($turmaAlunoResults); $i++){
 			$sql_code = "SELECT * FROM `calendario` WHERE `idTurma`=".$turmaAlunoResults[$i]["idTurma"];	// ENCONTRA AS NOTICIAS LIGADAS A TURMA
-			$noticeTurma = mysqli_query(DBConecta(), $sql_code);
+			$noticeTurma = mysqli_query($conexao, $sql_code);
 			if (mysqli_num_rows($noticeTurma)){
 				while ($noticeTurmaNum = mysqli_fetch_assoc($noticeTurma)){
 					$sql_code = "SELECT * FROM `aluno-disciplina` WHERE idDisciplina = ".$noticeTurmaNum["idDisciplina"]." AND `idAluno`=".$_SESSION["id"];
-					$results = mysqli_query(DBConecta(), $sql_code);
+					$results = mysqli_query($conexao, $sql_code);
 					if ($results && mysqli_num_rows($results)){
 					  $conceito = mysqli_fetch_assoc($results);
 					  if ($conceito["conceito"] != "Apto"){

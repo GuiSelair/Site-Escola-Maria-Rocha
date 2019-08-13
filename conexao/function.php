@@ -32,7 +32,16 @@
     function BuscaTodosIDs($conn){
         $sql_code = "SELECT id FROM mr_posts ORDER BY id DESC";
         return mysqli_query($conn, $sql_code);
-        
+    }
+
+    function BuscaNomes($conn, $parametro, $tabela){
+        $sql_code = "SELECT nome FROM $tabela WHERE `idDisciplina` = $parametro";
+        $query = mysqli_query($conn, $sql_code);
+        if ($query && mysqli_num_rows($query))
+            return mysqli_fetch_assoc($query);
+    }
+
+    function BuscaTodosCursos($conn, $idAluno){
         
     }
     // ============================================================
@@ -159,9 +168,6 @@
     function ValidaURL( $str ){
         /**
         * Função para retornar uma string protegida contra SQL/Blind/XSS Injection
-        * @param Mixed str
-        * @access public
-        * @return string
         */
         if( !is_array( $str ) ) {
             $str = preg_replace("/(from|select|insert|delete|where|drop table|show tables)/i","",$str);
@@ -182,6 +188,7 @@
         }
         else return $str;
     }
+
     //=============================================================
 
 ?>

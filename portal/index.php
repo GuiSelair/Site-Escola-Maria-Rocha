@@ -31,11 +31,11 @@ if (!isset($_SESSION["id"])){
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" href="../img/favicon.ico" />
 
   <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="shortcut icon" href="../img/favicon.ico" />
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -77,7 +77,7 @@ if (!isset($_SESSION["id"])){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="redefine.php" class="btn btn-default btn-flat">Alterar Senha</a>
+                    <a href="redefine.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>

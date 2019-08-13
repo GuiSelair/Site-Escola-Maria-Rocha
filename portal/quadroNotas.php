@@ -5,15 +5,16 @@
 //////////////////////////////////////
 
 session_start();
-
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
+include_once("../conexao/function.php");
 
 // VERIFICA SE O USUÁRIO ESTÁ LOGADO
 if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
+
 // VERIFICA SE O USUÁRIO É ALUNO
 if (!isset($_SESSION["tipo"]) == "Aluno"){
     header("location: ./loginUser.php");
@@ -23,20 +24,18 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Quadro de notas</title>
+  <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" href="../img/favicon.ico" />
+
+  <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <link rel="shortcut icon" href="../img/favicon.ico" />
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 
@@ -49,6 +48,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
         <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
         <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Portal Acadêmico</span>
       </a>
+
       <!--MENU DISPOSITIVOS MÓVEIS-->
       <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -70,7 +70,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="./redefine.php" class="btn btn-default btn-flat">Senha</a>
+                    <a href="./redefine.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -154,6 +154,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
         <div class="row">
           <div class="col-md-12">
             <div class="nav-tabs-custom">
+
             <!--ABAS DE OPÇÕES-->
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">NOTAS LANÇADAS</a></li>
@@ -167,6 +168,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                     <table class="table table-hover">
                       <thead>
                         <tr>
+                          <th>Nome da Avaliação</th>
                           <th>Disciplina</th>
                           <th>Turma</th>
                           <th>Data da Avaliação</th>
@@ -183,7 +185,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                             if ($results && mysqli_num_rows($results)){
                                 while ($avaliacoes = mysqli_fetch_assoc($results)){
                                   // VERIFICA SE O ALUNO JA ESTÁ APROVADO NA DISCIPLINA DA AVALIAÇÃO E MOSTRA CASO NÃO ESTIVER
-                                  $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idAluno` = $idAluno AND `idDisciplina` =".$avaliacoes['idDisciplina'];
+                                  $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idAluno` = $idAluno AND `idDisciplina` = ".$avaliacoes["idDisciplina"];
                                   $buscaAprovacao = mysqli_query($conexao, $sql_code);
                                   if ($buscaAprovacao && mysqli_num_rows($buscaAprovacao)){
                                       $verificaAprovacao = mysqli_fetch_assoc($buscaAprovacao);
@@ -197,15 +199,12 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                                 }
                                 if (!empty($DiscNaoAprovadas)){
                                     for ($i = 0; $i < count($DiscNaoAprovadas); $i++){
-                                        // BUSCA NOME DA DISCIPLINA
-                                        $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$DiscNaoAprovadas[$i]["idDisciplina"];
-                                        $results0 = mysqli_query($conexao, $sql_code);
-                                        $nomeDisciplina = mysqli_fetch_assoc($results0);
+                                        $nomeDisciplina = BuscaNomes($conexao, $DiscNaoAprovadas[$i]["idDisciplina"], "disciplina");
                                         // IMPRIME LINHA DA TABELA
                                         if ($DiscNaoAprovadas[$i]["conceito"] == "Apto")
-                                          echo "<tr><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-success'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
+                                          echo "<tr><th></th><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-success'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
                                         else  
-                                          echo "<tr><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-danger'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
+                                          echo "<tr><th></th><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-danger'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
                                       }
                                 }
                                 else{
@@ -232,56 +231,67 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                         </tr>
                       </thead>
                       <tbody id="tabela">
-                        <?php 
-                              //$conexao = DBConecta();
-                              $AllTurmas = [];
-                              $AllDisciplina = [];
-                              $idAluno = $_SESSION["id"];
-                              // BUSCANDO TURMAS QUE O USUARIO ESTA MATRICULADO
-                              $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno` = '$idAluno'";
-                              $results = mysqli_query($conexao, $sql_code);
-                              if ($results && mysqli_num_rows($results)){
-                                while($idTurmas = mysqli_fetch_assoc($results)){
-                                  if (!in_array($idTurmas["idTurma"], $AllTurmas)){
-                                    $AllTurmas[] = $idTurmas["idTurma"];
-                                  }
-                                }
-                                for ($i = 0; $i < count($AllTurmas); $i++){
-                                  // BUSCANDO DISCIPLINAS DAS TURMAS QUE O USUARIO ESTA MATRICULADO
-                                  $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idTurma`=".$AllTurmas[$i];
-                                  $results0 = mysqli_query($conexao, $sql_code);
-                                  if ($results0 && mysqli_num_rows($results0)){
-                                    while($idDisciplinas = mysqli_fetch_assoc($results0)){
-                                      if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplina)){
-                                        $AllDisciplina[] = $idDisciplinas["idDisciplina"];
-                                      }
-                                    }
-                                  }
-                                }
+                        <?php           
+                            $AllTurmas = [];
+                            $AllDisciplina = [];
+                            $AllCursos = [];
 
-                                // BUSCANDO NOMES DAS DISCIPLINAS
-                                if (!empty($AllDisciplina)){
-                                  for ($i = 0; $i < count($AllDisciplina); $i++){
-                                    $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$AllDisciplina[$i];
-                                    $results0 = mysqli_query($conexao, $sql_code);
-                                    $nomeDisciplina = mysqli_fetch_assoc($results0);
-
-                                    // VERIFICANDO SE O ALUNO ESTA APROVADO NA DISCIPLINA
-                                    $sql_code = "SELECT `conceito` FROM `aluno-disciplina` WHERE `idDisciplina`=".$AllDisciplina[$i]." AND `idAluno` = '$idAluno'";
-                                    $results0 = mysqli_query($conexao, $sql_code);
-                                    if (mysqli_num_rows($results0)){
-                                      $conceito = mysqli_fetch_assoc($results0);
-                                      if ($conceito["conceito"] == "Apto")
-                                        echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$conceito["conceito"]."</span></td></tr>";
-                                      else
-                                        echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$conceito["conceito"]."</span></td></tr>";
-                                    }
-                                    else{
-                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
+                            // BUSCANDO TODOS OS CURSOS DO USUÁRIO
+                            
+                            
+                            // EXIBINDO TODAS AS DISCIPLINAS DO CURSO
+                            $sql_code = "SELECT * FROM `disciplina` WHERE `idCurso` = 1";
+                            $query = mysqli_query($conexao, $sql_code);
+                            if ($query){
+                              while ($results = mysqli_fetch_assoc($query))
+                                echo "<tr><td>".$results["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
+                            }
+                            
+                            // BUSCANDO TURMAS QUE O USUARIO ESTA MATRICULADO
+                            $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno` = '$idAluno'";
+                            $results = mysqli_query($conexao, $sql_code);
+                            if ($results && mysqli_num_rows($results)){
+                              while($idTurmas = mysqli_fetch_assoc($results)){
+                                if (!in_array($idTurmas["idTurma"], $AllTurmas)){
+                                  $AllTurmas[] = $idTurmas["idTurma"];
+                                }
+                              }
+                              for ($i = 0; $i < count($AllTurmas); $i++){
+                                // BUSCANDO DISCIPLINAS DAS TURMAS QUE O USUARIO ESTA MATRICULADO
+                                $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idTurma`=".$AllTurmas[$i];
+                                $results0 = mysqli_query($conexao, $sql_code);
+                                if ($results0 && mysqli_num_rows($results0)){
+                                  while($idDisciplinas = mysqli_fetch_assoc($results0)){
+                                    if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplina)){
+                                      $AllDisciplina[] = $idDisciplinas["idDisciplina"];
                                     }
                                   }
                                 }
                               }
+
+                              // BUSCANDO NOMES DAS DISCIPLINAS
+                              if (!empty($AllDisciplina)){
+                                for ($i = 0; $i < count($AllDisciplina); $i++){
+                                  $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$AllDisciplina[$i];
+                                  $results0 = mysqli_query($conexao, $sql_code);
+                                  $nomeDisciplina = mysqli_fetch_assoc($results0);
+
+                                  // VERIFICANDO SE O ALUNO ESTA APROVADO NA DISCIPLINA
+                                  $sql_code = "SELECT `conceito` FROM `aluno-disciplina` WHERE `idDisciplina`=".$AllDisciplina[$i]." AND `idAluno` = '$idAluno'";
+                                  $results0 = mysqli_query($conexao, $sql_code);
+                                  if (mysqli_num_rows($results0)){
+                                    $conceito = mysqli_fetch_assoc($results0);
+                                    if ($conceito["conceito"] == "Apto")
+                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$conceito["conceito"]."</span></td></tr>";
+                                    else
+                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$conceito["conceito"]."</span></td></tr>";
+                                  }
+                                  else{
+                                    echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
+                                  }
+                                }
+                              }
+                            }
                           ?>
                       </tbody>
                     </table>
