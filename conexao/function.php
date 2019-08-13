@@ -35,7 +35,7 @@
     }
 
     function BuscaNomes($conn, $parametro, $tabela){
-        $sql_code = "SELECT nome FROM $tabela WHERE `idDisciplina` = $parametro";
+        $sql_code = "SELECT * FROM $tabela WHERE `idDisciplina` = $parametro";
         $query = mysqli_query($conn, $sql_code);
         if ($query && mysqli_num_rows($query))
             return mysqli_fetch_assoc($query);

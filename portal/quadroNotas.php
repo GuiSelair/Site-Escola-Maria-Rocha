@@ -20,6 +20,36 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
     header("location: ./loginUser.php");
 }
 
+//  VERIFICA SE A DISCIPLINA PASSADA JÁ FOI CURSADA OU NÃO E
+function ConfereAprovacao ($conexao, $idDisciplina, $idAluno){
+  $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idDisciplina` = ".$idDisciplina." AND `idAluno` = ".$idAluno;
+  $query = mysqli_query($conexao, $sql_code);     
+
+  // BUSCA POR DISCIPLINAS JÁ CONCLUÍDAS
+  if ($query && mysqli_num_rows($query)){
+    $response = mysqli_fetch_assoc($query);
+
+    // DISCIPLINAS NÃO APROVADAS OU AUSENTES
+    if ($response["conceito"] != "Apto"){
+      $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina");
+      $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$response["conceito"]."</span></td></tr>";
+    }
+    //  DISCIPLINAS APROVADAS
+    else{
+      $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina");
+      $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$response["conceito"]."</span></td></tr>";
+    }  
+  }
+  //  DISCIPLINAS AINDA NÃO CURSADAS
+  else{
+    $nomeDisciplina = BuscaNomes($conexao, $idDisciplina, "disciplina");
+    $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+    echo "<tr><td>".$nomeDisciplina["nome"].$prerequisito."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
+  }                                
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -232,72 +262,18 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                       </thead>
                       <tbody id="tabela">
                         <?php           
-                            $AllTurmas = [];
-                            $AllDisciplina = [];
-                            $AllCursos = [];
-
-                            // BUSCANDO TODOS OS CURSOS DO USUÁRIO
-                            
-                            
-                            // EXIBINDO TODAS AS DISCIPLINAS DO CURSO
                             $sql_code = "SELECT * FROM `disciplina` WHERE `idCurso` = 1";
                             $query = mysqli_query($conexao, $sql_code);
-                            if ($query){
-                              while ($results = mysqli_fetch_assoc($query))
-                                echo "<tr><td>".$results["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
-                            }
-                            
-                            // BUSCANDO TURMAS QUE O USUARIO ESTA MATRICULADO
-                            $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno` = '$idAluno'";
-                            $results = mysqli_query($conexao, $sql_code);
-                            if ($results && mysqli_num_rows($results)){
-                              while($idTurmas = mysqli_fetch_assoc($results)){
-                                if (!in_array($idTurmas["idTurma"], $AllTurmas)){
-                                  $AllTurmas[] = $idTurmas["idTurma"];
-                                }
-                              }
-                              for ($i = 0; $i < count($AllTurmas); $i++){
-                                // BUSCANDO DISCIPLINAS DAS TURMAS QUE O USUARIO ESTA MATRICULADO
-                                $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idTurma`=".$AllTurmas[$i];
-                                $results0 = mysqli_query($conexao, $sql_code);
-                                if ($results0 && mysqli_num_rows($results0)){
-                                  while($idDisciplinas = mysqli_fetch_assoc($results0)){
-                                    if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplina)){
-                                      $AllDisciplina[] = $idDisciplinas["idDisciplina"];
-                                    }
-                                  }
-                                }
-                              }
-
-                              // BUSCANDO NOMES DAS DISCIPLINAS
-                              if (!empty($AllDisciplina)){
-                                for ($i = 0; $i < count($AllDisciplina); $i++){
-                                  $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$AllDisciplina[$i];
-                                  $results0 = mysqli_query($conexao, $sql_code);
-                                  $nomeDisciplina = mysqli_fetch_assoc($results0);
-
-                                  // VERIFICANDO SE O ALUNO ESTA APROVADO NA DISCIPLINA
-                                  $sql_code = "SELECT `conceito` FROM `aluno-disciplina` WHERE `idDisciplina`=".$AllDisciplina[$i]." AND `idAluno` = '$idAluno'";
-                                  $results0 = mysqli_query($conexao, $sql_code);
-                                  if (mysqli_num_rows($results0)){
-                                    $conceito = mysqli_fetch_assoc($results0);
-                                    if ($conceito["conceito"] == "Apto")
-                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$conceito["conceito"]."</span></td></tr>";
-                                    else
-                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$conceito["conceito"]."</span></td></tr>";
-                                  }
-                                  else{
-                                    echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
-                                  }
-                                }
-                              }
-                            }
-                          ?>
+                            if ($query && mysqli_num_rows($query)){
+                              while ($response = mysqli_fetch_assoc($query)){
+                                ConfereAprovacao($conexao, $response["idDisciplina"], $_SESSION["id"]);  
+                              } 
+                            }                                                     
+                          ?> 
                       </tbody>
                     </table>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
