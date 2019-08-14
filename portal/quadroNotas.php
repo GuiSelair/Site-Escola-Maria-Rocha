@@ -20,36 +20,6 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
     header("location: ./loginUser.php");
 }
 
-//  VERIFICA SE A DISCIPLINA PASSADA JÁ FOI CURSADA OU NÃO E
-function ConfereAprovacao ($conexao, $idDisciplina, $idAluno){
-  $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idDisciplina` = ".$idDisciplina." AND `idAluno` = ".$idAluno;
-  $query = mysqli_query($conexao, $sql_code);     
-
-  // BUSCA POR DISCIPLINAS JÁ CONCLUÍDAS
-  if ($query && mysqli_num_rows($query)){
-    $response = mysqli_fetch_assoc($query);
-
-    // DISCIPLINAS NÃO APROVADAS OU AUSENTES
-    if ($response["conceito"] != "Apto"){
-      $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina");
-      $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
-      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$response["conceito"]."</span></td></tr>";
-    }
-    //  DISCIPLINAS APROVADAS
-    else{
-      $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina");
-      $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
-      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$response["conceito"]."</span></td></tr>";
-    }  
-  }
-  //  DISCIPLINAS AINDA NÃO CURSADAS
-  else{
-    $nomeDisciplina = BuscaNomes($conexao, $idDisciplina, "disciplina");
-    $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
-    echo "<tr><td>".$nomeDisciplina["nome"].$prerequisito."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
-  }                                
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -215,31 +185,23 @@ function ConfereAprovacao ($conexao, $idDisciplina, $idAluno){
                             if ($results && mysqli_num_rows($results)){
                                 while ($avaliacoes = mysqli_fetch_assoc($results)){
                                   // VERIFICA SE O ALUNO JA ESTÁ APROVADO NA DISCIPLINA DA AVALIAÇÃO E MOSTRA CASO NÃO ESTIVER
-                                  $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idAluno` = $idAluno AND `idDisciplina` = ".$avaliacoes["idDisciplina"];
-                                  $buscaAprovacao = mysqli_query($conexao, $sql_code);
-                                  if ($buscaAprovacao && mysqli_num_rows($buscaAprovacao)){
-                                      $verificaAprovacao = mysqli_fetch_assoc($buscaAprovacao);
-                                      // CASO O ALUNO NÃO ESTEJA APTO NA DISCIPLINA
-                                      if ($verificaAprovacao["conceito"] != "Apto")
-                                        $DiscNaoAprovadas[] = $avaliacoes;
-                                  }elseif (!mysqli_num_rows($buscaAprovacao)){
-                                    // CASO O ALUNO NÃO TENHA CONCLUIDO PELO MENOS UMAS VEZ A DISCIPLINA
-                                    $DiscNaoAprovadas[] = $avaliacoes;
+                                  $dados = ConfereAprovacao($conexao, $avaliacoes["idDisciplina"], $idAluno);
+                                  if ($dados["conceitoDisciplina"] != "APTO"){
+                                    switch ($avaliacoes["conceito"]) {
+                                      case 'Apto':
+                                        echo "<tr><td></td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-success'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        break;
+                                      case "Não Apto":
+                                        echo "<tr><td></td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-danger'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        break;
+                                      case "Ausente":
+                                        echo "<tr><td></td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-dark'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        break;
+                                      
+                                    }
                                   }
                                 }
-                                if (!empty($DiscNaoAprovadas)){
-                                    for ($i = 0; $i < count($DiscNaoAprovadas); $i++){
-                                        $nomeDisciplina = BuscaNomes($conexao, $DiscNaoAprovadas[$i]["idDisciplina"], "disciplina");
-                                        // IMPRIME LINHA DA TABELA
-                                        if ($DiscNaoAprovadas[$i]["conceito"] == "Apto")
-                                          echo "<tr><th></th><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-success'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
-                                        else  
-                                          echo "<tr><th></th><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-danger'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
-                                      }
-                                }
-                                else{
-                                  echo "<p class='text-muted'>Nenhuma nota disponível...</p>";
-                                }
+                                
                             }
                             else{
                               echo "<p class='text-muted'>Nenhuma nota disponível...</p>";
@@ -261,14 +223,34 @@ function ConfereAprovacao ($conexao, $idDisciplina, $idAluno){
                         </tr>
                       </thead>
                       <tbody id="tabela">
-                        <?php           
-                            $sql_code = "SELECT * FROM `disciplina` WHERE `idCurso` = 1";
-                            $query = mysqli_query($conexao, $sql_code);
-                            if ($query && mysqli_num_rows($query)){
-                              while ($response = mysqli_fetch_assoc($query)){
-                                ConfereAprovacao($conexao, $response["idDisciplina"], $_SESSION["id"]);  
-                              } 
-                            }                                                     
+                        <?php
+                            $idAluno = $_SESSION["id"];
+                            $AllCursos = BuscaTodosCursos($conexao, $idAluno);
+                            foreach ($AllCursos as $curso => $idCurso) {
+                              $nomeCurso = BuscaNomes($conexao, $idCurso, "curso", "idCurso");
+                              echo '<h4> -- Curso '.$nomeCurso["nome"].' --</h4>';
+                              $sql_code = "SELECT * FROM `disciplina` WHERE `idCurso` = 1";
+                              $query = mysqli_query($conexao, $sql_code);
+                              if ($query && mysqli_num_rows($query)){
+                                while ($response = mysqli_fetch_assoc($query)){
+                                  $dados = ConfereAprovacao($conexao, $response["idDisciplina"], $idAluno); 
+                                  switch ($dados["conceitoDisciplina"]) {
+                                    case 'APTO':
+                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-success'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                      break;
+                                    case "NÃO APTO":
+                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-danger'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                      break;
+                                    case "AUSENTE":
+                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-dark'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                      break;                             
+                                    default:
+                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-warning'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                      break;
+                                  }
+                                } 
+                              }  
+                            };                                               
                           ?> 
                       </tbody>
                     </table>
@@ -293,8 +275,6 @@ function ConfereAprovacao ($conexao, $idDisciplina, $idAluno){
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
-  <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>

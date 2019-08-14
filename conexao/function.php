@@ -34,16 +34,63 @@
         return mysqli_query($conn, $sql_code);
     }
 
-    function BuscaNomes($conn, $parametro, $tabela){
-        $sql_code = "SELECT * FROM $tabela WHERE `idDisciplina` = $parametro";
+    function BuscaNomes($conn, $parametro, $tabela, $coluna){
+        $sql_code = "SELECT * FROM $tabela WHERE $coluna = $parametro";
         $query = mysqli_query($conn, $sql_code);
         if ($query && mysqli_num_rows($query))
             return mysqli_fetch_assoc($query);
     }
 
-    function BuscaTodosCursos($conn, $idAluno){
-        
+    function BuscaTodosCursos($conexao, $idAluno){
+        $sql_code = "SELECT `turma`.`idCurso` FROM `turma-aluno`, `turma` WHERE `turma-aluno`.`idAluno`= $idAluno AND `turma-aluno`.`idTurma`=`turma`.`idTurma`";
+        $query = mysqli_query($conexao, $sql_code);
+        if ($query && mysqli_num_rows($query)){
+            return mysqli_fetch_assoc($query);
+        }
+        return null;
     }
+
+    function VerificaPrerequisito($conexao, $idDisciplina){
+        $sql_code = "SELECT prerequisito FROM disciplina WHERE idDisciplina = ".$idDisciplina;
+        $query = mysqli_query($conexao, $sql_code);
+        if ($query && mysqli_num_rows($query)){
+            $response = mysqli_fetch_assoc($query);
+            if ($response["prerequisito"] != null)
+                return $response;
+            return false;
+        }
+        return false;
+    }
+
+    function ConfereAprovacao($conexao, $idDisciplina, $idAluno){
+        $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idDisciplina` = ".$idDisciplina." AND `idAluno` = ".$idAluno;
+        $query = mysqli_query($conexao, $sql_code);     
+      
+        // BUSCA POR DISCIPLINAS JÁ CONCLUÍDAS
+        if ($query && mysqli_num_rows($query)){
+          $response = mysqli_fetch_assoc($query);
+      
+          // DISCIPLINAS NÃO APROVADAS OU AUSENTES
+          if ($response["conceito"] != "Apto"){
+            $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina", "idDisciplina");
+            $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+            return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "NÃO APTO");
+          }
+          //  DISCIPLINAS APROVADAS
+          else{
+            $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina", "idDisciplina");
+            $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+            return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "APTO");
+          }  
+        }
+        //  DISCIPLINAS AINDA NÃO CURSADAS
+        else{
+          $nomeDisciplina = BuscaNomes($conexao, $idDisciplina, "disciplina", "idDisciplina");
+          $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+          return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "PENDENTE");
+        }                                
+      }
+
     // ============================================================
 
     // =========== HASH (RECUPERAÇÃO DE SENHA) ===========

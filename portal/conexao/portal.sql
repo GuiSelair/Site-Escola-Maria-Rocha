@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 12-Ago-2019 às 22:19
--- Versão do servidor: 10.1.38-MariaDB
--- versão do PHP: 7.3.3
+-- Host: localhost
+-- Generation Time: 14-Ago-2019 às 06:18
+-- Versão do servidor: 10.1.40-MariaDB
+-- versão do PHP: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -146,7 +146,8 @@ INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `c
 (23, 26, 411, '0', 'Não Apto', 1, '2019-07-19'),
 (24, 26, 411, '1', 'Apto', 1, '2019-07-19'),
 (25, 26, 411, '2', 'Apto', 1, '2019-07-19'),
-(26, 26, 411, '3', 'Apto', 1, '2019-07-19');
+(26, 26, 411, '3', 'Apto', 1, '2019-07-19'),
+(27, 12, 421, '0', 'Apto', 0, '2019-08-21');
 
 -- --------------------------------------------------------
 
@@ -219,31 +220,31 @@ CREATE TABLE `disciplina` (
 --
 
 INSERT INTO `disciplina` (`idDisciplina`, `nome`, `prerequisito`, `idCurso`) VALUES
-(11, 'Programação 1', NULL, NULL),
-(12, 'Programação 2', 11, NULL),
-(13, 'Programação 3', 12, NULL),
-(14, 'Montagem e Manutenção 1', NULL, NULL),
-(15, 'Montagem e Manutenção 2', 14, NULL),
-(16, 'Montagem e Manutenção 3', 15, NULL),
-(17, 'Sistemas Aplicativos 1', NULL, NULL),
-(18, 'Sistemas Aplicativos 2', 17, NULL),
-(19, 'Editoração Gráfica', NULL, NULL),
-(20, 'Internet', NULL, NULL),
-(21, 'Contabilidade Geral', NULL, NULL),
-(22, 'Ética e Relações Humanas', NULL, NULL),
-(23, 'Português Instrumental 1', NULL, NULL),
-(24, 'Programação Web 1', NULL, NULL),
-(25, 'Fundamentos da Administração', NULL, NULL),
-(26, 'Direito e Legislação 1', NULL, NULL),
-(27, 'Metodologia de Pesquisa 1', NULL, NULL),
-(28, 'Segurança do Trabalho', NULL, NULL),
-(29, 'Linux e Aplicativos ', NULL, NULL),
-(30, 'Inglês Instrumental', NULL, NULL),
-(31, 'Estatística ', NULL, NULL),
-(32, 'Português Instrumental 2', 23, NULL),
-(33, 'Programação Web 2', 24, NULL),
-(34, 'Metodologia de Pesquisa 2', 27, NULL),
-(35, 'Metodologia de Pesquisa 3', 34, NULL),
+(11, 'Programação 1', NULL, 1),
+(12, 'Programação 2', 11, 1),
+(13, 'Programação 3', 12, 1),
+(14, 'Montagem e Manutenção 1', NULL, 1),
+(15, 'Montagem e Manutenção 2', 14, 1),
+(16, 'Montagem e Manutenção 3', 15, 1),
+(17, 'Sistemas Aplicativos 1', NULL, 1),
+(18, 'Sistemas Aplicativos 2', 17, 1),
+(19, 'Editoração Gráfica', NULL, 1),
+(20, 'Internet', NULL, 1),
+(21, 'Contabilidade Geral', NULL, 1),
+(22, 'Ética e Relações Humanas', NULL, 1),
+(23, 'Português Instrumental 1', NULL, 1),
+(24, 'Programação Web 1', NULL, 1),
+(25, 'Fundamentos da Administração', NULL, 1),
+(26, 'Direito e Legislação 1', NULL, 1),
+(27, 'Metodologia de Pesquisa 1', NULL, 1),
+(28, 'Segurança do Trabalho', NULL, 1),
+(29, 'Linux e Aplicativos ', NULL, 1),
+(30, 'Inglês Instrumental', NULL, 1),
+(31, 'Estatística ', NULL, 1),
+(32, 'Português Instrumental 2', 23, 1),
+(33, 'Programação Web 2', 24, 1),
+(34, 'Metodologia de Pesquisa 2', 27, 1),
+(35, 'Metodologia de Pesquisa 3', 34, 1),
 (36, 'Orientação de Estágio ', NULL, NULL),
 (37, 'Prática Supervisionada', NULL, NULL),
 (38, 'Organização e Técnicas Comerciais 1', NULL, NULL),
@@ -429,8 +430,8 @@ ALTER TABLE `curso`
 --
 ALTER TABLE `disciplina`
   ADD PRIMARY KEY (`idDisciplina`),
-  ADD UNIQUE KEY `idCurso` (`idCurso`),
-  ADD KEY `prerequisito` (`prerequisito`);
+  ADD KEY `prerequisito` (`prerequisito`),
+  ADD KEY `idCurso` (`idCurso`);
 
 --
 -- Indexes for table `professor`
@@ -474,7 +475,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT for table `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `calendario`
@@ -524,7 +525,7 @@ ALTER TABLE `calendario`
 --
 ALTER TABLE `disciplina`
   ADD CONSTRAINT `disciplina_ibfk_1` FOREIGN KEY (`prerequisito`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `disciplina_ibfk_2` FOREIGN KEY (`idCurso`) REFERENCES `curso` (`idCurso`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `disciplina_ibfk_2` FOREIGN KEY (`idCurso`) REFERENCES `curso` (`idCurso`);
 
 --
 -- Limitadores para a tabela `turma`
