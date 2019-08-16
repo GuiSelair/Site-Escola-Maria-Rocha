@@ -10,7 +10,7 @@ include_once("../conexao/function.php");
 $conexao = DBConecta();
 
 // VERIFICA SE A HASH ESTÁ NO BD
-if (!isset($_GET["hash"]) || VerificaHash($conexao, $_GET["hash"])){
+if (!isset($_GET["hash"]) || !VerificaHash($conexao, $_GET["hash"])){
     header("location: ./index.php");
 }
 
