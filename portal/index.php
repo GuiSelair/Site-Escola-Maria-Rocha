@@ -32,6 +32,7 @@ if (!isset($_SESSION["id"])){
   <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -76,7 +77,7 @@ if (!isset($_SESSION["id"])){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="redefine.php" class="btn btn-default btn-flat">Alterar senha</a>
+                    <a href="redefineSenhaPortal.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -232,7 +233,7 @@ if (!isset($_SESSION["id"])){
         defaultDate: Date(),
         navLinks: true,
         editable: false,
-        events: "calendario.php", //ARQUIVO QUE BUSCA OS EVENTOS
+        events: "eventosCalendario.php", //ARQUIVO QUE BUSCA OS EVENTOS
         eventLimit: true,
         contentHeight: 500,
         selectable: true,

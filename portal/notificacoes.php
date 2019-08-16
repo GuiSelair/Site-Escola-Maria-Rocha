@@ -1,8 +1,10 @@
 <?php
+
+
 $linha = NULL;
 
 
-if($_SESSION["tipo"] == "Professor"){
+if($_SESSION["tipo"] == "Professor" || $_SESSION["tipo"] == "Administrador"){
   $sql_code = "SELECT * FROM `calendario` WHERE `geral`= '-1'";	// SELECIONA TODOS OS PROFESSORES
 	$turmaAluno = mysqli_query(DBConecta(), $sql_code);
   $linha = mysqli_num_rows($turmaAluno);

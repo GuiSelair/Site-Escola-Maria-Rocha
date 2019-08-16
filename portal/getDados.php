@@ -58,7 +58,7 @@ if (isset($_POST["idTurma"]) && isset($_POST["idDisciplina"])){
         if ($conferePrerequisito && $conferePrerequisito["conceitoDisciplina"] == "APTO"){
           $confereDisciplinaAtual = ConfereAprovacao($conexao, $idDisciplina, $idAluno["idAluno"]);
           if ($confereDisciplinaAtual && $confereDisciplinaAtual["conceitoDisciplina"] != "APTO"){
-            $nomeAluno = BuscaNomes($conexao, $idAluno["idAluno"], "aluno", "idAluno");
+            $nomeAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno["idAluno"]);
             echo "<option value='".$nomeAluno["idAluno"]."'>".$nomeAluno["idAluno"]." - ".$nomeAluno["nome"]." ".$nomeAluno["sobrenome"]."</option>";
           }
         }
@@ -67,7 +67,7 @@ if (isset($_POST["idTurma"]) && isset($_POST["idDisciplina"])){
       else{
         $confereDisciplinaAtual = ConfereAprovacao($conexao, $idDisciplina, $idAluno["idAluno"]);
         if ($confereDisciplinaAtual["conceitoDisciplina"] != "APTO"){
-          $nomeAluno = BuscaNomes($conexao, $idAluno["idAluno"], "aluno", "idAluno");
+          $nomeAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno["idAluno"]);
           echo "<option value='".$nomeAluno["idAluno"]."'>".$nomeAluno["idAluno"]." - ".$nomeAluno["nome"]." ".$nomeAluno["sobrenome"]."</option>";
         }
       }

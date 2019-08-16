@@ -227,7 +227,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                             $idAluno = $_SESSION["id"];
                             $AllCursos = BuscaTodosCursos($conexao, $idAluno);
                             foreach ($AllCursos as $curso => $idCurso) {
-                              $nomeCurso = BuscaNomes($conexao, $idCurso, "curso", "idCurso");
+                              $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $idCurso);
                               echo '<h4> -- Curso '.$nomeCurso["nome"].' --</h4>';
                               $sql_code = "SELECT * FROM `disciplina` WHERE `idCurso` = 1";
                               $query = mysqli_query($conexao, $sql_code);

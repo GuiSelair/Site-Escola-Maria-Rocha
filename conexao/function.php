@@ -34,11 +34,22 @@
         return mysqli_query($conn, $sql_code);
     }
 
-    function BuscaNomes($conn, $parametro, $tabela, $coluna){
+    function BuscaRetornaQuery($conn, $tabela, $coluna, $parametro){
+        $sql_code = "SELECT * FROM $tabela WHERE $coluna = $parametro";
+        $query = mysqli_query($conn, $sql_code);
+        if ($query && mysqli_num_rows($query))
+            return $query;
+        else
+            return false;
+    }
+
+    function BuscaRetornaResponse($conn, $tabela, $coluna, $parametro){
         $sql_code = "SELECT * FROM $tabela WHERE $coluna = $parametro";
         $query = mysqli_query($conn, $sql_code);
         if ($query && mysqli_num_rows($query))
             return mysqli_fetch_assoc($query);
+        else
+            return false;
     }
 
     function BuscaTodosCursos($conexao, $idAluno){
@@ -73,20 +84,20 @@
       
           // DISCIPLINAS NÃO APROVADAS OU AUSENTES
           if ($response["conceito"] != "Apto"){
-            $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina", "idDisciplina");
+            $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $response["idDisciplina"]);
             $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
             return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "NÃO APTO");
           }
           //  DISCIPLINAS APROVADAS
           else{
-            $nomeDisciplina = BuscaNomes($conexao, $response["idDisciplina"], "disciplina", "idDisciplina");
+            $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $response["idDisciplina"]);
             $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
             return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "APTO");
           }  
         }
         //  DISCIPLINAS AINDA NÃO CURSADAS
         else{
-          $nomeDisciplina = BuscaNomes($conexao, $idDisciplina, "disciplina", "idDisciplina");
+          $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $idDisciplina);
           $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
           return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "PENDENTE");
         }                                
