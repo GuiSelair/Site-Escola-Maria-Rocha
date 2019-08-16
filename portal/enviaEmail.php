@@ -4,16 +4,17 @@
 ////      PÁGINA ENVIA EMAIL      ////
 //////////////////////////////////////
  
- include_once("conexao/config.php");
- include_once("conexao/conexao.php");
- include_once("conexao/function.php");
+include_once("conexao/config.php");
+include_once("conexao/conexao.php");
+include_once("../conexao/function.php");
 
- require_once("./node_modules/PHPMailer/PHPMailerAutoload.php");
+require_once("../node_modules/PHPMailer/PHPMailerAutoload.php");
 
- if (isset($_POST["tipo"]) && $_POST["tipo"] == "escola" && isset($_POST["email"])){
+if(isset($_POST["tipo"]) && $_POST["tipo"] == "portal" && isset($_POST["email"]) && !empty($_POST["email"])){
     $emailDestino = $_POST["email"];
     $conexao = DBConecta();
-    $sql_code = "SELECT * FROM mr_usuarios WHERE email='$emailDestino'";
+    $tipoUsuario = ConfereTipoUsuario($conexao,null,null,$emailDestino);
+    $sql_code = "SELECT * FROM $tipoUsuario WHERE email='$emailDestino'";
     $results = mysqli_query($conexao, $sql_code);
     
     // EXISTE O EMAIL NO BANCO DE DADOS
@@ -47,7 +48,7 @@
             $mail->Body = "<h3>Você solicitou recuperação de senha?</h3>
                             <hr/>
                             <strong>Para redefinir sua senha, </strong>
-                            <a href='http://localhost/MariaRocha/redefine.php?hash=".$hash."&email=".$emailDestino."'>Clique Aqui!</a>
+                            <a href='http://localhost/MariaRocha/portal/redefineSenhaEmail.php?hash=".$hash."&email=".$emailDestino."'>Clique Aqui!</a>
                             <br><br>
                             <p style='font-size: 12px;'><i>Não responda esta mensagem. Está mensagem é automática e não será respondida.</i></p>"; // Texto da mensagem
 
@@ -67,13 +68,17 @@
                     </div>";
             }
         }
-    }else{
-        echo "<div class='alert alert-danger alert-dismissable status'>
-        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-        <strong>Email não cadastrado. Tente novamente.</strong>
-        </div>";
+
+    }
+    else{
+    echo "<div class='alert alert-danger alert-dismissable status'>
+    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+    <strong>Email não cadastrado. Tente novamente.</strong>
+    </div>";
     }
  }
  else{
-     header("location: index.php");
- }
+    header("location: index.php");
+}
+
+?>

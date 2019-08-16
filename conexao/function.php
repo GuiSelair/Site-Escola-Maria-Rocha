@@ -63,11 +63,12 @@
     }
 
     function ConfereAprovacao($conexao, $idDisciplina, $idAluno){
-        $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idDisciplina` = ".$idDisciplina." AND `idAluno` = ".$idAluno;
+        $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idDisciplina` = ".$idDisciplina." AND `idAluno` = $idAluno ORDER BY `idAprovacao` DESC";
         $query = mysqli_query($conexao, $sql_code);     
       
         // BUSCA POR DISCIPLINAS JÁ CONCLUÍDAS
         if ($query && mysqli_num_rows($query)){
+            
           $response = mysqli_fetch_assoc($query);
       
           // DISCIPLINAS NÃO APROVADAS OU AUSENTES
@@ -89,6 +90,59 @@
           $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
           return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "PENDENTE");
         }                                
+      }
+
+      function ConfereTipoUsuario($conexao, $login, $senha, $email = null){
+        if(!empty($login) && !empty($senha)){
+            $sql_code = "SELECT * FROM `administrador` WHERE `login` = '$login' AND `senha` = '$senha';";
+            $query = mysqli_query($conexao, $sql_code);
+            // TESTE DE ADMINISTRADOR
+            if (mysqli_num_rows($query)){
+                $response = mysqli_fetch_assoc($query);
+                return array("tipo" => "Administrador", "id" => $response["idAdministrador"], "nome" => $response["nome"], "sobrenome" => $response["sobrenome"]);
+            }
+            else{
+                $sql_code = "SELECT * FROM `professor` WHERE `login` = '$login' AND `senha` = '$senha' ";
+                $query = mysqli_query($conexao, $sql_code);
+                if (mysqli_num_rows($query)){
+                    $response = mysqli_fetch_assoc($query);
+                    return array("tipo" => "Professor", "id" => $response["idProfessor"], "nome" => $response["nome"], "sobrenome" => $response["sobrenome"]);
+                }
+                else{
+                    $sql_code = "SELECT * FROM `aluno` WHERE `login` = '$login' AND `senha` = '$senha';";
+                    $query = mysqli_query($conexao, $sql_code);
+                    if (mysqli_num_rows($query)){
+                        $response = mysqli_fetch_assoc($query);
+                        return array("tipo" => "Aluno", "id" => $response["idAluno"], "nome" => $response["nome"], "sobrenome" => $response["sobrenome"]);
+                    }
+                }       
+            } 
+        }elseif(!empty($email)){
+            $sql_code = "SELECT * FROM `administrador` WHERE `email` = '$email';";
+            $query = mysqli_query($conexao, $sql_code);
+            // TESTE DE ADMINISTRADOR
+            if (mysqli_num_rows($query)){
+                $response = mysqli_fetch_assoc($query);
+                return "administrador";
+            }
+            else{
+                $sql_code = "SELECT * FROM `professor` WHERE `email` = '$email' ";
+                $query = mysqli_query($conexao, $sql_code);
+                if (mysqli_num_rows($query)){
+                    $response = mysqli_fetch_assoc($query);
+                    return "professor";
+                }
+                else{
+                    $sql_code = "SELECT * FROM `aluno` WHERE `email` = '$email';";
+                    $query = mysqli_query($conexao, $sql_code);
+                    if (mysqli_num_rows($query)){
+                        $response = mysqli_fetch_assoc($query);
+                        return "aluno";
+                    }
+                }       
+            } 
+        }
+        else return array("tipo" => false);
       }
 
     // ============================================================

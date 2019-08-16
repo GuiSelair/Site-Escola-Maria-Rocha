@@ -43,7 +43,6 @@ if (!isset($_SESSION["id"])){
   <!-- IMPORTAÇÃO FULLCALENDAR -->
   <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css">
   <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
-  <script src="bower_components/fullcalendar/dist/locale/pt-br.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -112,7 +111,7 @@ if (!isset($_SESSION["id"])){
           <?php } ?>
 
           <?php if ($_SESSION['tipo'] == "Professor"){ ?>
-            <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span class="text-uppercase">Lançar notas</span></a></li>
+            <li><a href="lancamentoDeNotas.php"><i class="fa fa-clipboard"></i> <span class="text-uppercase">Lançar notas</span></a></li>
             <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span class="text-uppercase">Adicionar Calendario</span></a></li>
           <?php } ?>
 

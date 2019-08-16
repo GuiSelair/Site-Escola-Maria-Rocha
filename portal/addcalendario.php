@@ -156,7 +156,7 @@ if (isset($_POST["salva"])){
           <?php } ?>
 
           <?php if ($_SESSION['tipo'] == "Professor"){ ?>
-          <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Lançar notas</span></a></li>
+          <li><a href="lancamentoDeNotas.php"><i class="fa fa-clipboard"></i> <span>Lançar notas</span></a></li>
           <li class="active"><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
           <?php } ?>
 
