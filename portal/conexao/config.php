@@ -14,7 +14,7 @@ define('USERNAME', 'root');
 define('PASSWORD', null);
 
 // NOME DO BANCO DE DADOS
-define('DATABASE', 'portal1');
+define('DATABASE', 'portal');
 
 // PRINCIPAL TIPO DE DADO DO BANCO
 define('CHARSET', 'utf8');
