@@ -49,7 +49,7 @@ if(isset($_POST['entrar'])) {
     </head>
     <body class="text-center">
         <form class="form-signin" action="" method="POST">
-            <img class="mb-4" src="../img/Login.png" alt="" width="120" height="150">
+            <img class="mb-4" src="../img/Login1.png" alt="" width="170" height="170">
             <h3 class="h4 mb-3 font-weight-normal">Entrar no Portal Acadêmico</h3>
             <input type="text" id="inputEmail" class="form-control mb-2 rounded" placeholder="Login" name="login" required autofocus>
             <input type="password" id="inputPassword" class="form-control rounded" placeholder="Senha" name="senha" required>

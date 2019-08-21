@@ -21,6 +21,8 @@ if (!isset($_SESSION["id"])){
   header("location: ./loginUser.php");
 }
 
+$conexao = DBConecta();
+
 if (isset($_POST['edita'])){
   $id = $_GET['id'];
 
@@ -349,7 +351,6 @@ if (isset($_GET['id'])){
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -462,7 +463,6 @@ if (isset($_GET['id'])){
           CADASTRO DE <?php echo $tit; ?>
         </h1>
       </section>
-
       <section class="content">
 
         <!-- PESQUISA DE CADASTROS -->
@@ -491,12 +491,11 @@ if (isset($_GET['id'])){
                 
                 <div class="col-md-6">
                   <div class="box-footer ">
-                    <button type="button" class="btn btn-primary " id="busca" onclick="buscador()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
-                    <button type="button" class="btn btn-warning mb-sm-4" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
+                    <button type="button" class="btn btn-primary" id="busca" onclick="buscador()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
+                    <button type="button" class="btn btn-warning" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
                     <button type="button" class="btn btn-danger" id="remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
                   </div>  
                 </div>
-
               </div>
           </div>
         </div>
@@ -551,21 +550,18 @@ if (isset($_GET['id'])){
                       <label for="loginUser">Login</label>
                       <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
                     </div>
-                    <?php if($id == "1"){ ?>
-                      <div class="form-group col-md-4" id = "senhaprofedit">
-                        <label for="senhaprof">Senha</label>
-                        <input type="password" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
-                      </div>
-                    <?php } ?>
                     <div class="form-group col-md-4" id ="idMatricula">
                       <label for="loginUser">ID/Matricula*</label>
                       <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
                     </div>
                     </div>
-                  <?php }elseif($id == "2"){ ?>
+                  <?php }
+
+                  // CADASTRO DE TURMAS
+                  elseif($id == "2"){ ?>
                     <div class="form-group col-md-12">
                       <label for="nomeTurma">Nome da Turma</label>
-                      <input type="text" class="form-control" id="nomeTurma" name="nomeTurma" placeholder="Nome" required />
+                      <input type="text" class="form-control" id="nomeTurma" name="nomeTurma" placeholder="Turma" required />
                     </div>
                     <div class="form-group col-md-12">
                       <label>Curso</label>
@@ -577,10 +573,13 @@ if (isset($_GET['id'])){
                       </select>
                     </div>
 
-                  <?php }elseif($id == "3"){ ?>
+                  <?php }
+                  
+                  // CADASTRO DE DISCIPLINAS
+                  elseif($id == "3"){ ?>
                     <div class="form-group col-md-6">
                       <label for="nomeDisc">Nome da Disciplina</label>
-                      <input type="text" class="form-control" id="nomeDisc" name="nomeDisc" placeholder="Nome" required/>
+                      <input type="text" class="form-control" id="nomeDisc" name="nomeDisc" placeholder="Disciplina" required/>
                     </div>
                     <div class="checkbox col-md-2 form-group" style="margin-top: 30px;">
                       <label>
@@ -592,11 +591,9 @@ if (isset($_GET['id'])){
                       <select class="form-control" name="DiscPre" id="DiscPre">
                           <option value=""></option>
                         <?php
-                          $conexao = DBConecta();
-                          $sql_code = "SELECT `idDisciplina`, `nome` FROM disciplina ORDER BY nome asc;";
-                          $results = mysqli_query($conexao, $sql_code);
-                          if ($results && mysqli_num_rows($results)){
-                            while ($disciplinas = mysqli_fetch_assoc($results)){
+                          $query = BuscaRetornaQuery($conexao, "disciplina");
+                          if ($query){
+                            while ($disciplinas = mysqli_fetch_assoc($query)){
                               echo "<option value=".$disciplinas["idDisciplina"].">".$disciplinas["nome"]."</option>";
                             }
                           }
@@ -612,98 +609,97 @@ if (isset($_GET['id'])){
                 <div class="box-footer">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
                   <button type="submit" class="btn btn-primary" name="edita" id="edita" style="margin-right: 5px;">Salvar Edição</button>
-                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-warning" id="cancela">Cancelar</a>
+                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-light" id="cancela">Cancelar</a>
                 </div>
               </form>
             </div>
-          </div>
-          </section>
-          <?php if($id == "3"){ ?>
-          <section class="content">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="box box-primary">
-                  <div class="box-header">
-                    <h3 class="box-title">Disciplinas Cadastradas</h3>
-                  </div>
-                  <div class="box-body table-responsive ">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Disciplina</th>
-                          <th>Pré-Requisito(ID)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                          $sql_code = "SELECT * FROM disciplina ORDER BY nome asc;";
-                          $results = mysqli_query($conexao, $sql_code);
-                          if ($results && mysqli_num_rows($results)){
-                            while ($disciplinas = mysqli_fetch_assoc($results)){
-                              if ($disciplinas["prerequisito"])
-                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$disciplinas["prerequisito"]."</td></tr>";
-                              else 
-                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
-                            }
-                          }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-            <?php }?>
-          <?php if($id == "2"){ ?>
-          <section class="content">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="box box-primary">
-                  <div class="box-header">
-                    <h3 class="box-title">Turmas Cadastradas</h3>
-                  </div>
-                  <div class="box-body table-responsive ">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Turma</th>
-                          <th>Curso</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                          $sql_code = "SELECT * FROM turma;";
-                          $results = mysqli_query(DBConecta(), $sql_code);
-                          if ($results && mysqli_num_rows($results)){
-                            while ($turma = mysqli_fetch_assoc($results)){
-                              $sql_code = "SELECT nome FROM curso WHERE idCurso=".$turma["idCurso"];
-                              $results1 = mysqli_query(DBConecta(), $sql_code);
-                              $nomeCurso = mysqli_fetch_assoc($results1);
-                                echo "<tr><td>".$turma["idTurma"]."</td><td>".$nomeCurso["nome"]."</td><td>-</td></tr>";
-                            }
-                          }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <?php }?>
-    </div>
+        </div>
+      </section>
+    
+    <!-- TABELA DE EXIBIÇÃO COM TODAS AS DISCIPLINAS E TURMAS -->
+    <?php if($id > "1"){ ?>
+      <section class="content">
+        <div class="row">
 
-    <!-- Rodapé -->
-    <footer class="main-footer">
-      <div class="pull-right hidden-xs">
-        <i>Todos os direitos reservados</i>
-      </div>
-      <strong>Copyright &copy; 2019 Guilherme Selair</strong>
-    </footer>
+          <!-- DISCIPLINAS -->
+          <div class="col-md-6">
+            <div class="box box-primary">
+              <div class="box-header">
+                <h3 class="box-title text-uppercase">Disciplinas Cadastradas</h3>
+              </div>
+              <div class="box-body table-responsive ">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Disciplina</th>
+                      <th>Pré-Requisito(ID)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $query = BuscaRetornaQuery($conexao, "disciplina");
+                      if ($query){
+                        while ($disciplinas = mysqli_fetch_assoc($query)){
+                          if ($disciplinas["prerequisito"]){
+                            $nomeDisciplinaPreRequisito = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $disciplinas["prerequisito"]);
+                            echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$nomeDisciplinaPreRequisito["nome"]."</td></tr>";
+                          }
+                          else 
+                            echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
+                        }
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TURMAS -->
+          <div class="col-md-6">
+            <div class="box box-primary">
+              <div class="box-header">
+                <h3 class="box-title text-uppercase">Turmas Cadastradas</h3>
+              </div>
+              <div class="box-body table-responsive ">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Turma</th>
+                      <th>Curso</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $query = BuscaRetornaQuery($conexao, "turma");
+                      if ($query){
+                        while ($turma = mysqli_fetch_assoc($query)){
+                          $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $turma["idCurso"]);
+                          echo "<tr><td>".$turma["idTurma"]."</td><td>".$nomeCurso["nome"]."</td></tr>";
+                        }
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    <?php }?>
   </div>
 
+  <!-- RODAPÉ -->
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <i>Todos os direitos reservados</i>
+    </div>
+    <strong>Copyright &copy; 2019 Guilherme Selair</strong>
+  </footer>
+
+  <!-- SCRIPTS DE AUTOMATIZAÇÃO DA PÁGINA -->
   <script type="text/javascript">
           function buscador(){
             $('#edit').show();
@@ -848,8 +844,6 @@ if (isset($_GET['id'])){
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
-  <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>

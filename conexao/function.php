@@ -20,7 +20,7 @@
         }
     }
 
-    function DBExecute($sql) {
+    function DBExecute($conn, $sql) {
         $conn = DBConecta();
         
         $resultado = mysqli_query($conn, $sql) or die (mysqli_error($conn));
@@ -34,13 +34,23 @@
         return mysqli_query($conn, $sql_code);
     }
 
-    function BuscaRetornaQuery($conn, $tabela, $coluna, $parametro){
-        $sql_code = "SELECT * FROM `$tabela` WHERE `$coluna` = $parametro";
-        $query = mysqli_query($conn, $sql_code);
-        if ($query && mysqli_num_rows($query))
-            return $query;
-        else
-            return false;
+    function BuscaRetornaQuery($conn, $tabela, $coluna = null, $parametro = null){
+        if (!empty($coluna) && !empty($parametro)){
+            $sql_code = "SELECT * FROM `$tabela` WHERE `$coluna` = $parametro";
+            $query = mysqli_query($conn, $sql_code);
+            if ($query && mysqli_num_rows($query))
+                return $query;
+            else
+                return false;
+        }else{
+            $sql_code = "SELECT * FROM `$tabela`";
+            $query = mysqli_query($conn, $sql_code);
+            if ($query && mysqli_num_rows($query))
+                return $query;
+            else
+                return false;
+        }
+
     }
 
     function BuscaRetornaResponse($conn, $tabela, $coluna, $parametro){

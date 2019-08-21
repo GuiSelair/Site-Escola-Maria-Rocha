@@ -81,7 +81,7 @@
         <div class="status"></div>
         <div class="container-fluid text-center form-signin">
             <div class="col-sm-12">
-                <img class="mb-4" src="../img/Login.png" alt="" width="120" height="150">
+                <img class="mb-4" src="../img/Login1.png" alt="" width="150">
                 <h3 class="h4 mb-3 font-weight-normal">Recuperação de Senha</h3>
                 <input type="email" id="email" class="form-control rounded" placeholder="Email" name="email" required>
                 <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" name="envia" id="envia">Enviar</button>

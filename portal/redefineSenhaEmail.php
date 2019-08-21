@@ -116,7 +116,7 @@ if (isset($_POST["redefine"]) && $_POST["senha"] != " "){
     <body class="text-center">
         <div class="status"></div>
         <form class="form-signin" method="POST" action="">
-            <img class="mb-4" src="../img/Login.png" alt="" width="120" height="150">
+            <img class="mb-4" src="../img/Login1.png" alt="" width="150">
             <h3 class="h4 mb-3 font-weight-normal">Redefinição de Senha</h3>
             <input type="password" id="senha" class="form-control rounded" placeholder="Sua nova senha" name="senha" required id="senha">
             <input type="password" id="senhaConfirma" class="form-control rounded" placeholder="Repita sua senha" name="senhaConfirma" required id="senhaConfirma">

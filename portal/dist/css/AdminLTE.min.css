@@ -2628,14 +2628,14 @@ a:focus {
 }
 
 .btn-info {
-    background-color: #00c0ef;
-    border-color: #00acd6
+    background-color: #126db3;
+    border-color: #126db3
 }
 
 .btn-info:hover,
 .btn-info:active,
 .btn-info.hover {
-    background-color: #00acd6
+    background-color: #126db3
 }
 
 .btn-danger {
