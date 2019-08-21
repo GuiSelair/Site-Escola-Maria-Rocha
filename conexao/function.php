@@ -35,7 +35,7 @@
     }
 
     function BuscaRetornaQuery($conn, $tabela, $coluna, $parametro){
-        $sql_code = "SELECT * FROM $tabela WHERE $coluna = $parametro";
+        $sql_code = "SELECT * FROM `$tabela` WHERE `$coluna` = $parametro";
         $query = mysqli_query($conn, $sql_code);
         if ($query && mysqli_num_rows($query))
             return $query;
@@ -207,7 +207,7 @@
     // =========== REDIRECIONAMENTO ===========
 
     function Redireciona($dir){
-        echo "<meta http-equiv='refresh' content='5; url={$dir}'>";
+        echo "<meta http-equiv='refresh' content='3; url={$dir}'>";
     }
 
     //=============================================================

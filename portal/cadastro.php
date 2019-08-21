@@ -1,15 +1,22 @@
 <?php
 
+////////////////////////////////////////////////////
+////   CADASTRO DE USUÁRIOS/TURMAS/DISCIPLINAS  ////
+////////////////////////////////////////////////////
 
+session_cache_expire(10);
 session_start();
+
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
+include_once("../conexao/function.php");
 
 
 if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
+
 if (!isset($_SESSION["id"])){
   header("location: ./loginUser.php");
 }
@@ -300,6 +307,7 @@ if (isset($_POST['salva'])){
 
 }
 
+//  DEFINIÇÃO QUAL PÁGINA DE CADASTRO MOSTRAR
 if (isset($_GET['id'])){
     $id = $_GET['id'];
 
@@ -328,16 +336,18 @@ if (isset($_GET['id'])){
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Portal Acadêmico</title>
+  <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
 </head>
@@ -345,38 +355,35 @@ if (isset($_GET['id'])){
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
-    <!-- Barra cabeçalho -->
+    <!-- CABEÇALHO -->
     <header class="main-header">
-      <!-- Logo -->
       <a href="index.php" class="logo">
-        <!-- Logo abreviada -->
-        <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
-        <span class="logo-lg">Portal Acadêmico</span>
+      <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
+        <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Portal Acadêmico</span>
       </a>
-      <!-- Toggle Hamburguer -->
+
+      <!-- MENU DISPOSITIVOS MÓVEIS -->
       <nav class="navbar navbar-static-top" role="navigation">
-        <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
           <span class="sr-only">Toggle navigation</span>
         </a>
-        <!-- Notificações e Usuario -->
+
+        <!-- NOTIFICAÇÕES E USUÁRIOS -->
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
 
-            <!-- Notificações -->
+            <!--IMPORTANDO O ARQUIVO DE NOTIFICAÇÕES-->
             <?php include_once("notificacoes.php") ?>
 
-            <!-- Conta do usuario -->
             <li class="dropdown user user-menu ">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user mx-5"></i>
                 <span class="hidden-xs"><?php echo $_SESSION['nome']; ?></span>
-                <!--NOME COMPLETO DO USUARIO-->
               </a>
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Senha</a>
+                    <a href="#" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -384,16 +391,17 @@ if (isset($_GET['id'])){
                 </li>
               </ul>
             </li>
-            <!-- Botão Toggle de ADM
+
+            <!-- CADASTRO ADMINISTRADORES-->
             <li>
               <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-            </li>-->
+            </li>
           </ul>
         </div>
       </nav>
     </header>
 
-    <!-- Barra Lateral Links -->
+    <!-- MENU LATERAL -->
     <aside class="main-sidebar">
       <section class="sidebar">
         <div class="user-panel">
@@ -402,7 +410,6 @@ if (isset($_GET['id'])){
           </div>
           <div class="pull-left info ">
             <p><?php echo $_SESSION['nome']; ?></p>
-            <!--NOME COMPLETO-->
             <a href="#">
               <i class="fa fa-circle text-success"> <?php echo $_SESSION['tipo']; ?></i>
             </a>
@@ -410,65 +417,294 @@ if (isset($_GET['id'])){
 
         </div>
 
-        <!-- Menu -->
+        <!-- OPÇÕES DE MENU PARA CADA TIPO DE USUÁRIO -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MENU</li>
-          <li><a href="index.php"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
+          <li><a href="index.php"><i class="fa fa-home"></i> <span class="text-uppercase">Inicio</span></a></li>
 
-          <?php if ($_SESSION['tipo'] == "Aluno"){ ?>
-          <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
-          <?php } ?>
-
-          <?php if ($_SESSION['tipo'] == "Professor"){ ?>
-          <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Lançar notas</span></a></li>
-          <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
-          <?php } ?>
-
+          <!-- OPÇÕES APENAS DE ADMINISTRADORES -->
           <?php if ($_SESSION['tipo'] == "Administrador"){ ?>
-          <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
-          <li class="treeview active">
-            <a href="#"><i class="fa fa-plus-square"></i> <span>Cadastros</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu text-center">
-              <li <?php if ($id == "0") echo "class='active'" ?>><a href="cadastro.php?id=0">Aluno</a></li>
-              <li <?php if ($id == "1") echo "class='active'" ?>><a href="cadastro.php?id=1">Professor</a></li>
-              <li <?php if ($id == "2") echo "class='active'" ?>><a href="cadastro.php?id=2">Turma</a></li>
-              <li <?php if ($id == "3") echo "class='active'" ?>><a href="cadastro.php?id=3">Disciplina</a></li>
-            </ul>
-          </li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-id-badge"></i><span>Matricula</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu text-center">
-              <li><a href="matricula.php?id=0">Aluno na turma</a></li>
-              <li><a href="matricula.php?id=1">Professor para disciplina</a></li>
-            </ul>
-          </li>
+            <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span class="text-uppercase">Adicionar Calendario</span></a></li>
+            <li class="treeview active">
+              <a href="#"><i class="fa fa-plus-square"></i> <span class="text-uppercase">Cadastros</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu text-center">
+                <li <?php if ($id == "0") echo "class='active'" ?>><a href="cadastro.php?id=0" class="text-uppercase">Aluno</a></li>
+                <li <?php if ($id == "1") echo "class='active'" ?>><a href="cadastro.php?id=1" class="text-uppercase">Professor</a></li>
+                <li <?php if ($id == "2") echo "class='active'" ?>><a href="cadastro.php?id=2" class="text-uppercase">Turma</a></li>
+                <li <?php if ($id == "3") echo "class='active'" ?>><a href="cadastro.php?id=3"class="text-uppercase">Disciplina</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-id-badge"></i><span class="text-uppercase">Matricula</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu text-center">
+                <li><a href="matricula.php?id=0" class="text-uppercase">Aluno na turma</a></li>
+                <li><a href="matricula.php?id=1" class="text-uppercase">Professor para disciplina</a></li>
+              </ul>
+            </li>
           <?php } ?>
         </ul>
       </section>
     </aside>
 
-    <!-- Titulo da Área com conteudo -->
+    <!--ÁREA DE CONTEÚDO-->
     <div class="content-wrapper">
       <div id="status"></div>
       <section class="content-header">
         <h1>
           CADASTRO DE <?php echo $tit; ?>
-          <!--NOME DA PAGINA-->
         </h1>
       </section>
 
-      <!-- Área com Conteudo -->
       <section class="content">
 
-        <script type="text/javascript">
+        <!-- PESQUISA DE CADASTROS -->
+        <div class="col-md-12">
+          <div class="box box-danger container mb-3 " style="margin-bottom: 30px;">
+              <div class="row">
+
+                <!-- CADASTROS DE TURMAS OU DISCIPLINAS -->
+                <?php if ($id >= "2"){ ?>
+                  <div class="col-md-3" style="margin: 15px 5px 10px;">
+                    <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
+                  </div>
+                <?php }
+                // CADASTROS DE PROFESSORES OU ALUNOS
+                elseif($id < "2"){ ?>
+                  <div class="col-md-3" style="margin: 15px 5px 10px;">
+                    <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
+                  </div>
+                  <div class="col-md-3" style="margin: 15px 5px 10px;">
+                    <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre"/>
+                  </div>
+                  <div class="col-md-3" style="margin: 15px 5px 10px;">
+                    <input type="text" class="form-control" placeholder= "ID/Matricula" id = "buscaID"/>
+                  </div>
+                <?php } ?>
+                
+                <div class="col-md-6">
+                  <div class="box-footer ">
+                    <button type="button" class="btn btn-primary " id="busca" onclick="buscador()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
+                    <button type="button" class="btn btn-warning mb-sm-4" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
+                    <button type="button" class="btn btn-danger" id="remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
+                  </div>  
+                </div>
+
+              </div>
+          </div>
+        </div>
+
+        <!-- FORMULARIO DE CADASTRO/EDIÇÃO/EXIBIÇÃO -->
+        <div class="col-md-12">
+            <div class="box box-primary">
+              <form role="form" action="" method="POST" id="form-cadastro">
+                <div class="box-body">
+
+                  <!-- CADASTRO DE ALUNO OU PROFESSOR -->
+                  <?php if ($id < "2"){ ?>
+                    <div class="form-group col-md-6">
+                      <label for="nomeUser">Nome</label>
+                      <input type="text" class="form-control" id="nomeUser" name="nomeUser" placeholder="Nome" required/>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="sobrenomeUser">Sobrenome</label>
+                      <input type="text" class="form-control" id="sobrenomeUser" name="sobrenomeUser" placeholder="Sobrenome" required>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="emailUser">Email</label>
+                      <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="Email" required>
+                    </div>
+
+                    <!-- CADASTRO ESPECIFICO DE ALUNO -->
+                    <?php if ($id == '0'){ ?>
+                      <div class="form-group col-md-3">
+                        <label for="matriUser">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" placeholder="Data de Nascimento" required>
+                      </div>
+                    <?php } ?>
+
+                    <div class="form-group col-md-6">
+                      <label for="foneUser">Telefone</label>
+                      <input type="text" class="form-control" id="foneUser" name = "foneUser" placeholder="Telefone" required>
+                    </div>
+                    <div class="form-group col-md-3" >
+                      <label>Sexo: </label>
+                      <div class="radio">
+                        <label style="margin-right: 5px;">
+                          <input type="radio" id="masculino" value="Masculino" name="sexo" >
+                          Masculino
+                        </label>
+                        <label>
+                          <input type="radio" id="feminino" value="Feminino" name="sexo">
+                          Feminino
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="loginUser">Login</label>
+                      <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
+                    </div>
+                    <?php if($id == "1"){ ?>
+                      <div class="form-group col-md-4" id = "senhaprofedit">
+                        <label for="senhaprof">Senha</label>
+                        <input type="password" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
+                      </div>
+                    <?php } ?>
+                    <div class="form-group col-md-4" id ="idMatricula">
+                      <label for="loginUser">ID/Matricula*</label>
+                      <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
+                    </div>
+                    </div>
+                  <?php }elseif($id == "2"){ ?>
+                    <div class="form-group col-md-12">
+                      <label for="nomeTurma">Nome da Turma</label>
+                      <input type="text" class="form-control" id="nomeTurma" name="nomeTurma" placeholder="Nome" required />
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label>Curso</label>
+                      <select class="form-control" name="cursoTurma">
+                        <option value="" id="0">Selecione um curso</option>
+                        <option value="1" id="1">Técnico em Informática</option>
+                        <option value="2" id="2">Técnico em Secretariado</option>
+                        <option value="3" id="3">Técnico em Contabilidade</option>
+                      </select>
+                    </div>
+
+                  <?php }elseif($id == "3"){ ?>
+                    <div class="form-group col-md-6">
+                      <label for="nomeDisc">Nome da Disciplina</label>
+                      <input type="text" class="form-control" id="nomeDisc" name="nomeDisc" placeholder="Nome" required/>
+                    </div>
+                    <div class="checkbox col-md-2 form-group" style="margin-top: 30px;">
+                      <label>
+                        <input type="checkbox" name="prerequisito" id="prerequisito" onclick="habilitaSelect()"> *Pré-requisito
+                      </label>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>*Disciplina que tranca</label>
+                      <select class="form-control" name="DiscPre" id="DiscPre">
+                          <option value=""></option>
+                        <?php
+                          $conexao = DBConecta();
+                          $sql_code = "SELECT `idDisciplina`, `nome` FROM disciplina ORDER BY nome asc;";
+                          $results = mysqli_query($conexao, $sql_code);
+                          if ($results && mysqli_num_rows($results)){
+                            while ($disciplinas = mysqli_fetch_assoc($results)){
+                              echo "<option value=".$disciplinas["idDisciplina"].">".$disciplinas["nome"]."</option>";
+                            }
+                          }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-12" id="divId">
+                      <label for="idDisciplina">ID/Matricula</label>
+                      <input type="text" class="form-control" id="idDisciplina" name="idDisciplina" placeholder="ID">
+                    </div>
+                <?php } ?>
+
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
+                  <button type="submit" class="btn btn-primary" name="edita" id="edita" style="margin-right: 5px;">Salvar Edição</button>
+                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-warning" id="cancela">Cancelar</a>
+                </div>
+              </form>
+            </div>
+          </div>
+          </section>
+          <?php if($id == "3"){ ?>
+          <section class="content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box box-primary">
+                  <div class="box-header">
+                    <h3 class="box-title">Disciplinas Cadastradas</h3>
+                  </div>
+                  <div class="box-body table-responsive ">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Disciplina</th>
+                          <th>Pré-Requisito(ID)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                          $sql_code = "SELECT * FROM disciplina ORDER BY nome asc;";
+                          $results = mysqli_query($conexao, $sql_code);
+                          if ($results && mysqli_num_rows($results)){
+                            while ($disciplinas = mysqli_fetch_assoc($results)){
+                              if ($disciplinas["prerequisito"])
+                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$disciplinas["prerequisito"]."</td></tr>";
+                              else 
+                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
+                            }
+                          }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+            <?php }?>
+          <?php if($id == "2"){ ?>
+          <section class="content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box box-primary">
+                  <div class="box-header">
+                    <h3 class="box-title">Turmas Cadastradas</h3>
+                  </div>
+                  <div class="box-body table-responsive ">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Turma</th>
+                          <th>Curso</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                          $sql_code = "SELECT * FROM turma;";
+                          $results = mysqli_query(DBConecta(), $sql_code);
+                          if ($results && mysqli_num_rows($results)){
+                            while ($turma = mysqli_fetch_assoc($results)){
+                              $sql_code = "SELECT nome FROM curso WHERE idCurso=".$turma["idCurso"];
+                              $results1 = mysqli_query(DBConecta(), $sql_code);
+                              $nomeCurso = mysqli_fetch_assoc($results1);
+                                echo "<tr><td>".$turma["idTurma"]."</td><td>".$nomeCurso["nome"]."</td><td>-</td></tr>";
+                            }
+                          }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <?php }?>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <i>Todos os direitos reservados</i>
+      </div>
+      <strong>Copyright &copy; 2019 Guilherme Selair</strong>
+    </footer>
+  </div>
+
+  <script type="text/javascript">
           function buscador(){
             $('#edit').show();
             $('#remove').show();
@@ -609,229 +845,6 @@ if (isset($_GET['id'])){
           }
         </script>
 
-        <div class="container text-center mb-4" style="margin-bottom: 30px;">
-            <div class="row">
-              <?php if ($id >= "2"){ ?>
-              <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
-              </div>
-              <?php }elseif($id < "2"){ ?>
-                <div class="col-md-3" style="margin: 2px 0px;">
-                <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
-              </div>
-              <?php } ?>
-              <?php if ($id < "2"){ ?>
-              <div class="col-md-2" style="margin: 2px 0px;">
-                <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre"/>
-              </div>
-              <?php } ?>
-              <div class="col-md-7">
-                <button type="button" class="btn btn-primary" id="busca" onclick="buscador()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
-                <button type="button" class="btn btn-warning mb-sm-4" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
-                <button type="button" class="btn btn-danger" id="remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
-              </div>
-
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="box box-primary" >
-              <form role="form" action="" method="POST" id="form-cadastro">
-                <div class="box-body">
-                  <?php if ($id < "2"){ ?>
-                    <div class="form-group col-md-6">
-                      <label for="nomeUser">Nome</label>
-                      <input type="text" class="form-control" id="nomeUser" name="nomeUser" placeholder="Nome" required/>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="sobrenomeUser">Sobrenome</label>
-                      <input type="text" class="form-control" id="sobrenomeUser" name="sobrenomeUser" placeholder="Sobrenome" required>
-                    </div>
-                    <div class="form-group col-md-12">
-                      <label for="emailUser">Email</label>
-                      <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="Email" required>
-                    </div>
-                    <?php if ($id == '0'){ ?>
-                      <div class="form-group col-md-3">
-                        <label for="matriUser">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" placeholder="Data de Nascimento" required>
-                      </div>
-                    <?php } ?>
-                    <div class="form-group col-md-6">
-                      <label for="foneUser">Telefone</label>
-                      <input type="text" class="form-control" id="foneUser" name = "foneUser" placeholder="Telefone" required>
-                    </div>
-                    <div class="form-group col-md-3" >
-                      <label>Sexo: </label>
-                      <div class="radio"  >
-                        <label style="margin-right: 5px;">
-                          <input type="radio" id="masculino" value="Masculino" name="sexo" >
-                          Masculino
-                        </label>
-                        <label>
-                          <input type="radio" id="feminino" value="Feminino" name="sexo">
-                          Feminino
-                        </label>
-                      </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="loginUser">Login</label>
-                      <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
-                    </div>
-                    <?php if($id == "1"){ ?>
-                    <div class="form-group col-md-4" id = "senhaprofedit">
-                      <label for="senhaprof">Senha</label>
-                      <input type="password" class="form-control" id="senhaprof1" name="senhaprof" placeholder="senha">
-                    </div>
-                    <?php } ?>
-                    <div class="form-group col-md-4" id ="idMatricula">
-                      <label for="loginUser">ID/Matricula*</label>
-                      <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
-                    </div>
-                    </div>
-                  <?php }elseif($id == "2"){ ?>
-                    <div class="form-group col-md-12">
-                      <label for="nomeTurma">Nome da Turma</label>
-                      <input type="text" class="form-control" id="nomeTurma" name="nomeTurma" placeholder="Nome" required />
-                    </div>
-                    <div class="form-group col-md-12">
-                      <label>Curso</label>
-                      <select class="form-control" name="cursoTurma">
-                        <option value="" id="0">Selecione um curso</option>
-                        <option value="1" id="1">Técnico em Informática</option>
-                        <option value="2" id="2">Técnico em Secretariado</option>
-                        <option value="3" id="3">Técnico em Contabilidade</option>
-                      </select>
-                    </div>
-
-                  <?php }elseif($id == "3"){ ?>
-                    <div class="form-group col-md-6">
-                      <label for="nomeDisc">Nome da Disciplina</label>
-                      <input type="text" class="form-control" id="nomeDisc" name="nomeDisc" placeholder="Nome" required/>
-                    </div>
-                    <div class="checkbox col-md-2 form-group" style="margin-top: 30px;">
-                      <label>
-                        <input type="checkbox" name="prerequisito" id="prerequisito" onclick="habilitaSelect()"> *Pré-requisito
-                      </label>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label>*Disciplina que tranca</label>
-                      <select class="form-control" name="DiscPre" id="DiscPre">
-                          <option value=""></option>
-                        <?php
-                          $conexao = DBConecta();
-                          $sql_code = "SELECT `idDisciplina`, `nome` FROM disciplina ORDER BY nome asc;";
-                          $results = mysqli_query($conexao, $sql_code);
-                          if ($results && mysqli_num_rows($results)){
-                            while ($disciplinas = mysqli_fetch_assoc($results)){
-                              echo "<option value=".$disciplinas["idDisciplina"].">".$disciplinas["nome"]."</option>";
-                            }
-                          }
-                        ?>
-                      </select>
-                    </div>
-                    <div class="form-group col-md-12" id="divId">
-                      <label for="idDisciplina">ID/Matricula</label>
-                      <input type="text" class="form-control" id="idDisciplina" name="idDisciplina" placeholder="ID">
-                    </div>
-                <?php } ?>
-
-                <div class="box-footer ">
-                  <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
-                  <button type="submit" class="btn btn-primary" name="edita" id="edita" style="margin-right: 5px;">Salvar Edição</button>
-                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-warning" id="cancela">Cancelar</a>
-                </div>
-              </form>
-            </div>
-          </div>
-          </section>
-          <?php if($id == "3"){ ?>
-          <section class="content">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="box box-primary">
-                  <div class="box-header">
-                    <h3 class="box-title">Disciplinas Cadastradas</h3>
-                  </div>
-                  <div class="box-body table-responsive ">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Disciplina</th>
-                          <th>Pré-Requisito(ID)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                          $sql_code = "SELECT * FROM disciplina ORDER BY nome asc;";
-                          $results = mysqli_query($conexao, $sql_code);
-                          if ($results && mysqli_num_rows($results)){
-                            while ($disciplinas = mysqli_fetch_assoc($results)){
-                              if ($disciplinas["prerequisito"])
-                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$disciplinas["prerequisito"]."</td></tr>";
-                              else 
-                                echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
-                            }
-                          }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-            <?php }?>
-          <?php if($id == "2"){ ?>
-          <section class="content">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="box box-primary">
-                  <div class="box-header">
-                    <h3 class="box-title">Turmas Cadastradas</h3>
-                  </div>
-                  <div class="box-body table-responsive ">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Turma</th>
-                          <th>Curso</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                          $sql_code = "SELECT * FROM turma;";
-                          $results = mysqli_query(DBConecta(), $sql_code);
-                          if ($results && mysqli_num_rows($results)){
-                            while ($turma = mysqli_fetch_assoc($results)){
-                              $sql_code = "SELECT nome FROM curso WHERE idCurso=".$turma["idCurso"];
-                              $results1 = mysqli_query(DBConecta(), $sql_code);
-                              $nomeCurso = mysqli_fetch_assoc($results1);
-                                echo "<tr><td>".$turma["idTurma"]."</td><td>".$nomeCurso["nome"]."</td><td>-</td></tr>";
-                            }
-                          }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <?php }?>
-          
-        
-      
-    </div>
-
-    <!-- Rodapé -->
-    <footer class="main-footer">
-      <div class="pull-right hidden-xs">
-        <i>Todos os direitos reservados</i>
-      </div>
-      <strong>Copyright &copy; 2019 Guilherme Selair</strong>
-    </footer>
-  </div>
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>

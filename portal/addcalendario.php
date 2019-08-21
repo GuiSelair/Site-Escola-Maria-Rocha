@@ -23,9 +23,8 @@ $conexao = DBConecta();
 
 // PESQUISA DE TURMAS
 if ($_SESSION["tipo"] == "Professor"){
-  $id = $_SESSION["id"];
-  $sql_code = "SELECT `idTurma` FROM `turma-professor` WHERE `idProfessor`=$id";
-  $results = mysqli_query($conexao,$sql_code);
+  $idProfessor = $_SESSION["id"];
+  $query = BuscaRetornaQuery($conexao, "turma-professor", "idProfessor", $idProfessor);
 }
 
 // FUNÇÃO SALVA O EVENTO AO BANCO DE DADOS
@@ -33,7 +32,7 @@ if (isset($_POST["salva"])){
   $turma = $_POST["turma"];
   $cor = $_POST["cor"];
   $titulo = $_POST["titulo"];
-  $editor = $_POST["editor"];
+  $editor = $_POST["descricao"];
   $start = $_POST["start"];
   $end = $_POST["end"];
   $idDisciplina = $_POST["disciplina"];
@@ -85,11 +84,10 @@ if (isset($_POST["salva"])){
   <link rel="stylesheet" href="bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
   <script src="bower_components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt-BR.js"></script>
 
-  <!-- IMPORTAÇÃO EDITOR SUMMERNOTE -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
-  <link rel="stylesheet" href="../editor/dist/summernote-bs4.css">
-  <script src="../editor/dist/summernote-bs4.min.js"></script>
+  <!-- IMPORTAÇÃO EDITOR SUMMERNOTE  --> 
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+  
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -123,7 +121,7 @@ if (isset($_POST["salva"])){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Senha</a>
+                    <a href="#" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -200,10 +198,12 @@ if (isset($_POST["salva"])){
         </h1>
       </section>
       <section class="content">
-        <div>
+        <div >
             <div class="box box-primary">
               <form role="form" action="" method="POST" id="form-cadastro">
                 <div class="box-body">
+
+                  <!-- EXIBE TODAS AS TURMAS -->
                   <div class="form-group col-md-6">
                     <label>Turmas</label>
                     <select class="form-control" name="turma">
@@ -211,18 +211,20 @@ if (isset($_POST["salva"])){
                       <?php if ($_SESSION["tipo"] == "Administrador"){ ?>
                         <option value="-1" id="todos">TODOS os professores</option>
                       <?php } 
-                        $AllTurmas = [];
-                        if (mysqli_num_rows($results)){
-                          while($turmas = mysqli_fetch_assoc($results)){
+                        if ($query){
+                          $AllTurmas = [];
+                          while($turmas = mysqli_fetch_assoc($query)){
                             if (!in_array($turmas["idTurma"], $AllTurmas)){
-                            echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
-                            $AllTurmas[] = $turmas["idTurma"];
+                              echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
+                              $AllTurmas[] = $turmas["idTurma"];
                             }
                           }
                         }
                        ?>
                     </select>
                   </div>
+                  
+                  <!-- EXIBE CORES -->
                   <div class="form-group col-md-6">
                     <label>Cores</label>
                     <select class="form-control" name="cor">
@@ -233,61 +235,60 @@ if (isset($_POST["salva"])){
                       <option value="black" id="4">Preto</option>
                     </select>
                   </div>
+
+                  <!-- INPUT DE TITULO DO EVENTO -->
                   <div class="form-group col-md-12">
                     <label for="emailUser">Titulo</label>
                     <input type="text" class="form-control" id="tituloEvent" name="titulo" placeholder="Titulo" required>
                   </div>
+
+                  <!-- TEXTAREA EDITOR -->
                   <div class="form-group col-md-12">
                     <label for="editor">Descrição</label>
                     <textarea class="form-control" name="descricao" id="editor" ></textarea>
                   </div>
+
+                  <!-- DATA/HORA INICIO -->
                   <div class="form-group col-md-3">
                       <label for="matriUser">Data e hora inicial: *</label>
                       <input size="16" type="text"  class="form-control form_datetime" id="start" name="start" placeholder="AAA-MM-DD HH:mm:ss" required>
                       <span class="add-on"><i class="icon-th"></i></span>
                   </div>
+
+                  <!-- DATA/HORA FIM -->
                   <div class="form-group col-md-3">
                       <label for="matriUser">Data e hora final: *</label>
                       <input size="16" type="text"  class="form-control form_datetime" id="end" name="end" placeholder="AAA-MM-DD HH:mm:ss" required>
                       <span class="add-on"><i class="icon-remove"></i></span>
                       <span class="add-on"><i class="icon-th"></i></span>
                   </div>
+
+                  <!-- MOSTRA DISCIPLINAS DO PROFESSOR -->
                   <?php if ($_SESSION["tipo"] == "Professor"){ ?>
                     <div class="form-group col-md-3">
                       <label>Disciplina</label>
                       <select class="form-control" name="disciplina">
                         <option value="" id="0">Selecione sua disciplina</option>
                         <?php 
-                          $conexao = DBConecta();
-                          $AllDisciplinas = [];
-                          $id = $_SESSION["id"];
-                          $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idProfessor`= $id";
-                          $results = mysqli_query($conexao, $sql_code);
-                          if (mysqli_num_rows($results)){
-                            while($idDisciplinas = mysqli_fetch_assoc($results)){
+                          $query = BuscaRetornaQuery($conexao, "turma-professor", "idProfessor", $idProfessor);
+                          if ($query){
+                            $AllDisciplinas = [];
+                            while($idDisciplinas = mysqli_fetch_assoc($query)){
                               if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplinas)){
+                                $nameDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $idDisciplinas["idDisciplina"]);
+                                echo "<option value=".$idDisciplinas["idDisciplina"].">".$nameDisciplina["nome"]."</option>";
                                 $AllDisciplinas[] = $idDisciplinas["idDisciplina"];
                               }
                             }
-                            for ($i = 0; $i < count($AllDisciplinas); $i++){
-                              $sql_code = "SELECT * FROM `disciplina` WHERE `idDisciplina`= $AllDisciplinas[$i]";
-                              $results = mysqli_query($conexao, $sql_code);
-                              if (mysqli_num_rows($results)){
-                                $nameDisciplina = mysqli_fetch_assoc($results);
-                                $AllNameDisciplinas[] = $nameDisciplina; 
-                              }
-                            }
                           }
-                          for ($i = 0; $i < count($AllDisciplinas); $i++){
-                            echo "<option value=".$AllNameDisciplinas[$i]["idDisciplina"].">".$AllNameDisciplinas[$i]["nome"]."</option>";
-                          }     
+                              
                         ?>
                       </select>
                     </div>
                   <?php } ?>
-                  <p class="col-md-12">*OBS: Não esquecer de marcar o horário destido a este evento.</p>
+
                 </div>
-                <div class="box-footer ">
+                <div class="box-footer">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
                   <a href="addcalendario.php" class="btn btn-warning" id="cancela">Cancelar</a>
                 </div>
@@ -296,7 +297,6 @@ if (isset($_POST["salva"])){
         </div>
       </section>
     </div>
-
 
     <!-- RODAPÉ -->
     <footer class="main-footer">
@@ -323,19 +323,14 @@ if (isset($_POST["salva"])){
     $(document).ready(function() {
         $('#editor').summernote({
             toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript']],
+                ['font', ['bold', 'italic', 'underline']],
                 ['fontname', ['fontname']],
                 ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'hr', 'video']],
-                ['view', ['codeview', 'help']],
+                ['insert', ['link']],
             ],
             height: 150,
-            minHeight: null,
-            maxHeight: null,
+            minHeight: 50,
+            maxHeight: 400,
             focus: true,
             lang: 'pt-BR',
             codeviewFilter: false,
@@ -353,9 +348,6 @@ if (isset($_POST["salva"])){
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 
   <!-- CONFIGURAÇÃO EDITOR SUMMERNOTE -->
-  
-  <link rel="stylesheet" href="../editor/dist/summernote-bs4.css">
-  <script src="../editor/dist/summernote-bs4.js"></script>
   <script src="../editor/dist/lang/summernote-pt-BR.js"></script>
 </body>
 
