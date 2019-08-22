@@ -23,12 +23,14 @@ if (!isset($_SESSION["id"])){
 
 $conexao = DBConecta();
 
+//  EDITA CADASTROS
 if (isset($_POST['edita'])){
   $id = $_GET['id'];
 
   switch ($id) {
+    //  EDITA CADASTRO ALUNO
     case '0':
-      $idUser = $_POST["idUser"];
+      $idUser = $_POST["idAluno"];
       $nome = $_POST['nome'];
       $sobrenome = $_POST['sobrenome'];
       $email = $_POST['email'];
@@ -40,23 +42,23 @@ if (isset($_POST['edita'])){
       $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone WHERE idAluno = '$idUser'";
       $execute_sql = mysqli_query($conexao, $sql_code);
 
-
       if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
+        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro ao Salvar!</strong>
             </div>
             ";
       } else {
-        echo "<div class='alert alert-success alert-dismissable my-0'>
+        echo "<div class='alert alert-success alert-dismissable my-0' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Operação efetuada com sucesso!</strong>
             </div>
             ";
       }
       break;
+    // EDITA CADASTRO PROFESSOR
     case '1':
-      $idUser = $_POST["idUser"];
+      $idUser = $_POST["idProfessor"];
       $nome = $_POST['nome'];
       $sobrenome = $_POST['sobrenome'];
       $email = $_POST['email'];
@@ -67,60 +69,67 @@ if (isset($_POST['edita'])){
       $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone' WHERE idProfessor = $idUser";
       $execute_sql = mysqli_query($conexao, $sql_code);
 
-
       if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
+        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro ao Salvar!</strong>
             </div>
             ";
       } else {
-        echo "<div class='alert alert-success alert-dismissable'>
+        echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Operação efetuada com sucesso!</strong>
             </div>
             ";
       }
       break;
+    //  EDITA CADASTRO TURMA
     case '2':
       $nomeTurma = $_POST['idTurma'];
       $cursoTurma = $_POST['idCurso'];
-      // ALTERAR COLOCAR CAMPO NOME
+
       $sql_code = "UPDATE turma SET idCurso = '$cursoTurma' WHERE idTurma = '$nomeTurma'";
       $execute_sql = mysqli_query($conexao, $sql_code);
       
       if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
+        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro ao Salvar!</strong>
             </div>
             ";
       } else {
-        echo "<div class='alert alert-success alert-dismissable'>
+        echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Operação efetuada com sucesso!</strong>
             </div>
             ";
       }
       break;
+    //  EDITA CADASTRO DISCIPLINA
     case '3':
       $nomeDisc = $_POST['nome'];
       $idDisc = $_POST["idDisciplina"];
-      $DiscPre = $_POST["prerequisito"];
+      if (!empty($_POST["prerequisito"])){
+        $DiscPre = "";
+      }
+      else{
+        $DiscPre = $_POST["prerequisito"];
+      }
+      $idCurso = $_POST["idCurso"];
       if ($DiscPre != ""){
-        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', prerequisito = $DiscPre WHERE idDisciplina = $idDisc;";
+        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', prerequisito = $DiscPre, idCurso = $idCurso WHERE idDisciplina = $idDisc;";
       }else{
-        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc' WHERE idDisciplina = $idDisc;";
+        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', idCurso = $idCurso WHERE idDisciplina = $idDisc;";
       }
       $execute_sql = mysqli_query($conexao, $sql_code);
       if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable'>
+        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro ao Salvar!</strong>
             </div>
             ";
       } else {
-        echo "<div class='alert alert-success alert-dismissable'>
+        echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Operação efetuada com sucesso!</strong>
             </div>
@@ -132,6 +141,7 @@ if (isset($_POST['edita'])){
 
 }
 
+//  SALVA NOVOS CADASTROS
 if (isset($_POST['salva'])){
   $id = $_GET['id'];
 
@@ -144,26 +154,22 @@ if (isset($_POST['salva'])){
       $dataNascimento = $_POST['dataNascimento'];
       $sexo = $_POST['sexo'];
       $telefone = $_POST["telefone"];
-      $idAluno = $_POST["idUser"];
+      $idAluno = $_POST["idAluno"];
       $senha = substr($login,0,2).substr($dataNascimento,0,4);
-      $cript = md5($senha);
+      $cript = CriptografiaSenhas($senha);
 
-      $sql_code = "SELECT idAluno FROM aluno WHERE nome = '$nome' AND sobrenome = '$sobrenome' AND dataNascimento = '$dataNascimento' AND email = '$email' AND login = '$login'";
-      $results = mysqli_query($conexao, $sql_code);
-      
-      if ($results && !mysqli_num_rows($results)){
+      if (!VerificaExistencia($conexao, "idAluno", "aluno", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
         $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript')";
-
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
-          echo "<div class='alert alert-danger alert-dismissable'>
+          echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
               <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
               <strong>Erro ao Salvar!</strong>
               </div>
               ";
         } else {
-          echo "<div class='alert alert-success alert-dismissable my-0'>
+          echo "<div class='alert alert-success alert-dismissable my-0' style='margin-bottom: 0px;'>
               <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
               <strong>Operação efetuada com sucesso!</strong>
               </div>
@@ -171,11 +177,12 @@ if (isset($_POST['salva'])){
         }
       }
       else{
-        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
         <strong>Cadastro já existente!</strong>
         </div>
         ";
+
       }
       break;
     case '1':
@@ -186,22 +193,20 @@ if (isset($_POST['salva'])){
       $sexo = $_POST['sexo'];
       $telefone = $_POST["telefone"];
       $senha = substr($login,0,2).substr($email,0,4);
-      $cript = md5($senha);
+      $cript = CriptografiaSenhas($senha);
 
-      $sql_code = "SELECT idProfessor FROM professor WHERE nome = '$nome' AND sobrenome = '$sobrenome' AND email = '$email' AND login = '$login'";
-      $results = mysqli_query($conexao, $sql_code);
-      if ($results && !mysqli_num_rows($results)){
+      if (!VerificaExistencia($conexao,"idProfessor", "professor", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
         $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript')";
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
-          echo "<div class='alert alert-danger alert-dismissable'>
+          echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
               <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
               <strong>Erro ao Salvar!</strong>
               </div>
               ";
         } else {
-          echo "<div class='alert alert-success alert-dismissable'>
+          echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
               <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
               <strong>Operação efetuada com sucesso!</strong>
               </div>
@@ -209,7 +214,7 @@ if (isset($_POST['salva'])){
         }
       }
       else{
-        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
         <strong>Cadastro já existente!</strong>
         </div>
@@ -220,27 +225,25 @@ if (isset($_POST['salva'])){
       $nomeTurma = $_POST['idTurma'];
       $cursoTurma = $_POST['idCurso'];
 
-      $sql_code = "SELECT idTurma FROM turma WHERE idTurma = '$nomeTurma' AND idCurso = '$cursoTurma'";
-      $results = mysqli_query($conexao, $sql_code);
-      if ($results && !mysqli_num_rows($results)){
+      if (!VerificaExistencia($conexao, "idTurma", "turma", "idTurma", $nomeTurma, "idCurso", $cursoTurma)){
         if ($nomeTurma != " "){
           $sql_code = "INSERT INTO turma (idTurma, idCurso) VALUES ('$nomeTurma','$cursoTurma')";
           $execute_sql = mysqli_query($conexao, $sql_code);
           if (!$execute_sql) {
-            echo "<div class='alert alert-danger alert-dismissable'>
+            echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                 <strong>Erro ao Salvar!</strong>
                 </div>
                 ";
           } else {
-            echo "<div class='alert alert-success alert-dismissable'>
+            echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                 <strong>Operação efetuada com sucesso!</strong>
                 </div>
                 ";
           }
         }else{
-          echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+          echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
           <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
           </div>
@@ -248,7 +251,7 @@ if (isset($_POST['salva'])){
         }
       }
       else{
-        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
         <strong>Cadastro já existente!</strong>
         </div>
@@ -257,7 +260,8 @@ if (isset($_POST['salva'])){
       break;
     case '3':
       $nomeDisc = $_POST['nome'];
-      if (!isset($_POST["prerequisito"])){
+      $idCurso = $_POST["idCurso"];
+      if (!empty($_POST["prerequisito"])){
         $DiscPre = "";
       }
       else{
@@ -269,26 +273,26 @@ if (isset($_POST['salva'])){
       if ($results && !mysqli_num_rows($results)){
         if ($nomeDisc != " "){
           if ($DiscPre != ""){
-            $sql_code = "INSERT INTO disciplina (nome, prerequisito) VALUES ('$nomeDisc', $DiscPre)";
+            $sql_code = "INSERT INTO disciplina (nome, prerequisito, idCurso) VALUES ('$nomeDisc', $DiscPre, $idCurso)";
           }else{
-            $sql_code = "INSERT INTO disciplina (nome) VALUES ('$nomeDisc')";
+            $sql_code = "INSERT INTO disciplina (nome, idCurso) VALUES ('$nomeDisc', $idCurso)";
           }
           $execute_sql = mysqli_query($conexao, $sql_code);
           if (!$execute_sql) {
-            echo "<div class='alert alert-danger alert-dismissable'>
+            echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                 <strong>Erro ao Salvar!</strong>
                 </div>
                 ";
           } else {
-            echo "<div class='alert alert-success alert-dismissable'>
+            echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                 <strong>Operação efetuada com sucesso!</strong>
                 </div>
                 ";
           }
         }else{
-          echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+          echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
           <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
           </div>
@@ -296,7 +300,7 @@ if (isset($_POST['salva'])){
         }
       }
       else{
-        echo "<div class='alert alert-warning alert-dismissable my-0 py-0'>
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
         <strong>Cadastro já existente!</strong>
         </div>
@@ -486,7 +490,7 @@ if (isset($_GET['id'])){
                   <div class="box-footer ">
                     <button type="button" class="btn btn-primary" id="btn-busca" onclick="RealizaPesquisa()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
                     <button type="button" class="btn btn-warning" id="btn-edit"  onclick="LiberaEdicao()" style="margin: 2px 5px;">Editar Cadastro</button>
-                    <button type="button" class="btn btn-danger" id="btn-remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
+                    <button type="button" class="btn btn-danger" id="btn-remove" onclick="removeCadastro()" style="margin: 2px 5px;">Excluir Cadastro</button>
                   </div>  
                 </div>
               </div>
@@ -543,10 +547,18 @@ if (isset($_GET['id'])){
                       <label for="loginUser">Login</label>
                       <input type="text" class="form-control" id="login" name="login" placeholder="Login" required>
                     </div>
-                    <div class="form-group col-md-4" id ="idMatricula">
-                      <label for="idUser">ID/Matricula*</label>
-                      <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
-                    </div>
+                    <?php if ($id == "0"){ ?>
+                      <div class="form-group col-md-4" id ="idMatricula">
+                        <label for="idUser">ID/Matricula*</label>
+                        <input type="text" class="form-control" id="idUser" name="idAluno" placeholder="ID" <?php if($id == "0") echo "required";?>>
+                      </div>
+                    <?php }
+                    elseif ($id == "1"){?>
+                      <div class="form-group col-md-4" id ="idMatricula">
+                        <label for="idUser">ID/Matricula*</label>
+                        <input type="text" class="form-control" id="idUser" name="idProfessor" placeholder="ID" <?php if($id == "0") echo "required";?>>
+                      </div>
+                    <?php } ?>
                     </div>
                   <?php }
 
@@ -593,16 +605,26 @@ if (isset($_GET['id'])){
                         ?>
                       </select>
                     </div>
+                    <div class="form-group col-md-6">
+                      <label>Curso</label>
+                      <select class="form-control" name="idCurso">
+                        <option value="" id="0">Selecione um curso</option>
+                        <option value="1" id="1">Técnico em Informática</option>
+                        <option value="2" id="2">Técnico em Secretariado</option>
+                        <option value="3" id="3">Técnico em Contabilidade</option>
+                      </select>
+                    </div>
                     <div class="form-group col-md-12" id="divId">
                       <label for="idDisciplina">ID/Matricula</label>
                       <input type="text" class="form-control" id="idDisciplina" name="idDisciplina" placeholder="ID">
                     </div>
                 <?php } ?>
-
-                <div class="box-footer">
-                  <button type="submit" class="btn btn-primary" name="salva" id="btn-salva" style="margin-right: 5px;">Salvar</button>
-                  <button type="submit" class="btn btn-primary" name="edita" id="btn-edita" style="margin-right: 5px;">Salvar Edição</button>
-                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-light" id="btn-cancela">Cancelar</a>
+                <div class="col-md-12">
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" name="salva" id="btn-salva" style="margin-right: 5px;">Salvar</button>
+                    <button type="submit" class="btn btn-primary" name="edita" id="btn-edita" style="margin-right: 5px;">Salvar Edição</button>
+                    <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-light" id="btn-cancela">Cancelar</a>
+                  </div>
                 </div>
               </form>
             </div>
@@ -721,41 +743,36 @@ if (isset($_GET['id'])){
       <?php } ?>
 
       if (buscaNome){
-        DesabilitaHabilitaCampos(true, 0)
-
         //  REQUISIÇÃO AJAX
         $.ajax({
           type: "POST",
           dataType:"json",
-          url: "buscador.php",
+          url: "controllers/buscaCadastro.php",
           data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
           success: function(results){
             if (results){
+              DesabilitaHabilitaCampos(true, 0)
               //  HABILITA BOTÕES DE EDIÇÃO
               $('#btn-edit').show();
               $('#btn-remove').show();
 
               //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS, PROFESSORES, TURMAS E DISCIPLINAS
               let form = document.querySelector("#form-cadastro")
-              for (let campo in json){
+              for (let campo in results){
                 let field = form.querySelector("[name="+campo+"]")
                 if (field){
                   switch (field.type) {
                     case "radio":
-                      console.log(json[campo]);
-                      field = form.querySelector("[name="+campo.+"][value="+json[campo]+"]");
+                      field = form.querySelector("[name="+campo+"][value="+results[campo]+"]");
                       field.checked = true;
                       break;
                     case "checkbox":
-                      field.checked = json[campo];
+                      field.checked = results[campo];
                       break;
-
                     default:
-                      field.value = json[campo]
+                      field.value = results[campo]
                   }
-
                 }
-
               }
             }
           }
@@ -764,6 +781,9 @@ if (isset($_GET['id'])){
         <?php if ($id < '2'){ ?>
           buscaSobre.value = "";
         <?php } ?>
+      }
+      else{
+        document.querySelector("#buscaNome").parentElement.classList.add("has-error");
       }
       
     }
@@ -799,31 +819,36 @@ if (isset($_GET['id'])){
       $('#btn-edita').show();
       $("#btn-salva").hide();
       $("#idMatricula").hide();
-      document.querySelector("#DiscPre").disabled = true;
+      document.querySelector("#prerequisito").disabled = true;
     }
 
+    //  CONTROLA A EXIBIÇÃO DOS PREREQUISITOS DE DISCIPLINAS
     function habilitaSelect(){
-      const disciplinaPreRequisito = document.querySelector("#DiscPre")
+      const disciplinaPreRequisito = document.querySelector("#prerequisito")
       if (disciplinaPreRequisito.disabled == false){
         disciplinaPreRequisito.disabled = true;
       }
       else{
         disciplinaPreRequisito.disabled = false;
+        disciplinaPreRequisito.value = " ";
       }
     }
 
-    function remove(){
-      <?php if ($id < 2){ ?>
-        let idCadastro = $("#idUser").val();
-      <?php }elseif($id == 2){ ?>
-        let idCadastro = $("#nomeTurma").val();
-      <?php  }else{ ?>
-        let idCadastro = $("#idDisciplina").val();
+    //  REMOVE O CADASTRO
+    function removeCadastro(){
+      <?php if ($id == "0"){ ?>
+        const idCadastro = $("#idAluno").val();
+      <?php }elseif($id == "1"){ ?>
+        const idCadastro = $("idAluno").val();
+      <?php }elseif($id == "2"){ ?>
+        const idCadastro = $("#idTurma").val();
+      <?php }else{ ?>
+        const idCadastro = $("#idDisciplina").val();
       <?php } ?>
-      console.log(idCadastro);
+      
       $.ajax({
         type: "POST",
-        url: "deleteCadastro.php",
+        url: "./controllers/deleteCadastro.php",
         data: "idCadastro="+idCadastro+"&idTabela=<?php echo $id; ?>",
         beforeSend: function(){
           $("#remove").html("Apagando...");
@@ -831,14 +856,13 @@ if (isset($_GET['id'])){
         success: function(html){
           $("#status").html(html);
           $("#remove").html("Excluir Cadastro");
-          desabilita(false,"limpa");
+          DesabilitaHabilitaCampos(false,"limpa");
         }
       })
 
     }
 
   </script>
-
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>

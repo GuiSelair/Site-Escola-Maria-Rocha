@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 
 
-include_once("conexao/conexao.php");
-include_once("conexao/config.php");
-include_once("../conexao/function.php");
+include_once("../conexao/conexao.php");
+include_once("../conexao/config.php");
+include_once("../../conexao/function.php");
 
 $conexao = DBConecta();
 
@@ -52,11 +52,9 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"])){
         $response ? $cadastro = json_encode($response) : $cadastro = null;
         echo $cadastro;
     }
-}else{
-    echo "dasdasdas";
 }
 
-/*
+
 // METODO DE BUSCA: ID
 if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"])){
     $idUser = $_POST["idUser"];
@@ -83,5 +81,5 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"])){
     $response ? $cadastro = json_encode($row) : $cadastro = null;
     echo $cadastro;
 }
-*/
+
 ?>

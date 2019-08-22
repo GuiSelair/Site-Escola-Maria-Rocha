@@ -203,8 +203,9 @@
 
     // =========== ATUALIZAÇÕES NO BANCO DE DADOS ===========
 
-    function InsereNovaSenha($conexao, $cript, $nomeTabela, $email){
-        $sql_code = "UPDATE $nomeTabela SET senha = '$cript' WHERE email = '$email'";
+    function InsereNovaSenha($conexao, $senha, $nomeTabela, $coluna, $parametro){
+        $cript = CriptografiaSenhas($senha);
+        $sql_code = "UPDATE $nomeTabela SET senha = '$cript' WHERE $coluna = '$parametro'";
         $results = mysqli_query($conexao, $sql_code);
         if ($results)
             return true;
@@ -212,6 +213,19 @@
             return false;
     }
 
+    function CriptografiaSenhas($senha){
+        $criptMD5 = md5($senha);
+        $criptSHA1 = sha1($criptMD5);
+        $cript = md5($criptSHA1);
+        return $cript;
+    }
+
+    function VerificaExistencia($conexao, $selecao, $tabela, $coluna1, $parametro1, $coluna2, $parametro2, $coluna3, $parametro3, $coluna4, $parametro4){
+        $sql_code = "SELECT $selecao FROM $tabela WHERE $coluna1 = '$parametro1' AND $coluna2 = '$parametro2' AND $coluna3 = '$parametro3' AND $coluna4 = '$parametro4'";
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results && mysqli_num_rows($results)) return true;
+        return false;
+    }
     //=============================================================
 
     // =========== REDIRECIONAMENTO ===========
