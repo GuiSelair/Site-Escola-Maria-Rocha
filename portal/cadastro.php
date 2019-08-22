@@ -29,16 +29,16 @@ if (isset($_POST['edita'])){
   switch ($id) {
     case '0':
       $idUser = $_POST["idUser"];
-      $nome = $_POST['nomeUser'];
-      $sobrenome = $_POST['sobrenomeUser'];
-      $email = $_POST['emailUser'];
-      $login = $_POST['loginUser'];
+      $nome = $_POST['nome'];
+      $sobrenome = $_POST['sobrenome'];
+      $email = $_POST['email'];
+      $login = $_POST['login'];
       $dataNascimento = $_POST['dataNascimento'];
       $sexo = $_POST['sexo'];
-      $telefone = $_POST["foneUser"];
+      $telefone = $_POST["telefone"];
 
       $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone WHERE idAluno = '$idUser'";
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      $execute_sql = mysqli_query($conexao, $sql_code);
 
 
       if (!$execute_sql) {
@@ -57,18 +57,15 @@ if (isset($_POST['edita'])){
       break;
     case '1':
       $idUser = $_POST["idUser"];
-      $nome = $_POST['nomeUser'];
-      $sobrenome = $_POST['sobrenomeUser'];
-      $email = $_POST['emailUser'];
-      $login = $_POST['loginUser'];
+      $nome = $_POST['nome'];
+      $sobrenome = $_POST['sobrenome'];
+      $email = $_POST['email'];
+      $login = $_POST['login'];
       $sexo = $_POST['sexo'];
-      $telefone = $_POST["foneUser"];
-      $senha = mysqli_real_escape_string(DBConecta(), $_POST['senhaprof']);
-      //$senha = $_POST["senhaprof"];
-      $cript = md5($senha);
-
-      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', senha = '$cript' WHERE idProfessor = $idUser";
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      $telefone = $_POST["telefone"];
+    
+      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone' WHERE idProfessor = $idUser";
+      $execute_sql = mysqli_query($conexao, $sql_code);
 
 
       if (!$execute_sql) {
@@ -86,11 +83,12 @@ if (isset($_POST['edita'])){
       }
       break;
     case '2':
-      $nomeTurma = $_POST['nomeTurma'];
-      $cursoTurma = $_POST['cursoTurma'];
+      $nomeTurma = $_POST['idTurma'];
+      $cursoTurma = $_POST['idCurso'];
       // ALTERAR COLOCAR CAMPO NOME
       $sql_code = "UPDATE turma SET idCurso = '$cursoTurma' WHERE idTurma = '$nomeTurma'";
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      $execute_sql = mysqli_query($conexao, $sql_code);
+      
       if (!$execute_sql) {
         echo "<div class='alert alert-danger alert-dismissable'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -106,15 +104,15 @@ if (isset($_POST['edita'])){
       }
       break;
     case '3':
-      $nomeDisc = $_POST['nomeDisc'];
+      $nomeDisc = $_POST['nome'];
       $idDisc = $_POST["idDisciplina"];
-      $DiscPre = $_POST["DiscPre"];
+      $DiscPre = $_POST["prerequisito"];
       if ($DiscPre != ""){
         $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', prerequisito = $DiscPre WHERE idDisciplina = $idDisc;";
       }else{
         $sql_code = "UPDATE disciplina SET nome = '$nomeDisc' WHERE idDisciplina = $idDisc;";
       }
-      $execute_sql = mysqli_query(DBConecta(), $sql_code);
+      $execute_sql = mysqli_query($conexao, $sql_code);
       if (!$execute_sql) {
         echo "<div class='alert alert-danger alert-dismissable'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -139,23 +137,24 @@ if (isset($_POST['salva'])){
 
   switch ($id) {
     case '0':
-      $nome = $_POST['nomeUser'];
-      $sobrenome = $_POST['sobrenomeUser'];
-      $email = $_POST['emailUser'];
-      $login = $_POST['loginUser'];
+      $nome = $_POST['nome'];
+      $sobrenome = $_POST['sobrenome'];
+      $email = $_POST['email'];
+      $login = $_POST['login'];
       $dataNascimento = $_POST['dataNascimento'];
       $sexo = $_POST['sexo'];
-      $telefone = $_POST["foneUser"];
+      $telefone = $_POST["telefone"];
       $idAluno = $_POST["idUser"];
       $senha = substr($login,0,2).substr($dataNascimento,0,4);
       $cript = md5($senha);
 
       $sql_code = "SELECT idAluno FROM aluno WHERE nome = '$nome' AND sobrenome = '$sobrenome' AND dataNascimento = '$dataNascimento' AND email = '$email' AND login = '$login'";
-      $results = mysqli_query(DBConecta(), $sql_code);
+      $results = mysqli_query($conexao, $sql_code);
+      
       if ($results && !mysqli_num_rows($results)){
         $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript')";
 
-        $execute_sql = mysqli_query(DBConecta(), $sql_code);
+        $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
           echo "<div class='alert alert-danger alert-dismissable'>
@@ -180,20 +179,20 @@ if (isset($_POST['salva'])){
       }
       break;
     case '1':
-      $nome = $_POST['nomeUser'];
-      $sobrenome = $_POST['sobrenomeUser'];
-      $email = $_POST['emailUser'];
-      $login = $_POST['loginUser'];
+      $nome = $_POST['nome'];
+      $sobrenome = $_POST['sobrenome'];
+      $email = $_POST['email'];
+      $login = $_POST['login'];
       $sexo = $_POST['sexo'];
-      $telefone = $_POST["foneUser"];
+      $telefone = $_POST["telefone"];
       $senha = substr($login,0,2).substr($email,0,4);
       $cript = md5($senha);
 
       $sql_code = "SELECT idProfessor FROM professor WHERE nome = '$nome' AND sobrenome = '$sobrenome' AND email = '$email' AND login = '$login'";
-      $results = mysqli_query(DBConecta(), $sql_code);
+      $results = mysqli_query($conexao, $sql_code);
       if ($results && !mysqli_num_rows($results)){
         $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript')";
-        $execute_sql = mysqli_query(DBConecta(), $sql_code);
+        $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
           echo "<div class='alert alert-danger alert-dismissable'>
@@ -218,15 +217,15 @@ if (isset($_POST['salva'])){
       }
       break;
     case '2':
-      $nomeTurma = $_POST['nomeTurma'];
-      $cursoTurma = $_POST['cursoTurma'];
+      $nomeTurma = $_POST['idTurma'];
+      $cursoTurma = $_POST['idCurso'];
 
       $sql_code = "SELECT idTurma FROM turma WHERE idTurma = '$nomeTurma' AND idCurso = '$cursoTurma'";
-      $results = mysqli_query(DBConecta(), $sql_code);
+      $results = mysqli_query($conexao, $sql_code);
       if ($results && !mysqli_num_rows($results)){
         if ($nomeTurma != " "){
           $sql_code = "INSERT INTO turma (idTurma, idCurso) VALUES ('$nomeTurma','$cursoTurma')";
-          $execute_sql = mysqli_query(DBConecta(), $sql_code);
+          $execute_sql = mysqli_query($conexao, $sql_code);
           if (!$execute_sql) {
             echo "<div class='alert alert-danger alert-dismissable'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -257,16 +256,16 @@ if (isset($_POST['salva'])){
       }
       break;
     case '3':
-      $nomeDisc = $_POST['nomeDisc'];
-      if (!isset($_POST["DiscPre"])){
+      $nomeDisc = $_POST['nome'];
+      if (!isset($_POST["prerequisito"])){
         $DiscPre = "";
       }
       else{
-        $DiscPre = $_POST["DiscPre"];
+        $DiscPre = $_POST["prerequisito"];
       }
 
       $sql_code = "SELECT idDisciplina FROM disciplina WHERE nome = '$nomeDisc'";
-      $results = mysqli_query(DBConecta(), $sql_code);
+      $results = mysqli_query($conexao, $sql_code);
       if ($results && !mysqli_num_rows($results)){
         if ($nomeDisc != " "){
           if ($DiscPre != ""){
@@ -274,7 +273,7 @@ if (isset($_POST['salva'])){
           }else{
             $sql_code = "INSERT INTO disciplina (nome) VALUES ('$nomeDisc')";
           }
-          $execute_sql = mysqli_query(DBConecta(), $sql_code);
+          $execute_sql = mysqli_query($conexao, $sql_code);
           if (!$execute_sql) {
             echo "<div class='alert alert-danger alert-dismissable'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -504,15 +503,15 @@ if (isset($_GET['id'])){
                   <?php if ($id < "2"){ ?>
                     <div class="form-group col-md-6">
                       <label for="nomeUser">Nome</label>
-                      <input type="text" class="form-control" id="nomeUser" name="nomeUser" placeholder="Nome" required/>
+                      <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required/>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="sobrenomeUser">Sobrenome</label>
-                      <input type="text" class="form-control" id="sobrenomeUser" name="sobrenomeUser" placeholder="Sobrenome" required>
+                      <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome" required>
                     </div>
                     <div class="form-group col-md-12">
                       <label for="emailUser">Email</label>
-                      <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="Email" required>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                     </div>
 
                     <!-- CADASTRO ESPECIFICO DE ALUNO -->
@@ -525,7 +524,7 @@ if (isset($_GET['id'])){
 
                     <div class="form-group col-md-6">
                       <label for="foneUser">Telefone</label>
-                      <input type="text" class="form-control" id="foneUser" name = "foneUser" placeholder="Telefone" required>
+                      <input type="text" class="form-control" id="telefone" name = "telefone" placeholder="Telefone" required>
                     </div>
                     <div class="form-group col-md-3" >
                       <label>Sexo: </label>
@@ -542,10 +541,10 @@ if (isset($_GET['id'])){
                     </div>
                     <div class="form-group col-md-4">
                       <label for="loginUser">Login</label>
-                      <input type="text" class="form-control" id="loginUser" name="loginUser" placeholder="Login" required>
+                      <input type="text" class="form-control" id="login" name="login" placeholder="Login" required>
                     </div>
                     <div class="form-group col-md-4" id ="idMatricula">
-                      <label for="loginUser">ID/Matricula*</label>
+                      <label for="idUser">ID/Matricula*</label>
                       <input type="text" class="form-control" id="idUser" name="idUser" placeholder="ID" <?php if($id == "0") echo "required";?>>
                     </div>
                     </div>
@@ -554,12 +553,12 @@ if (isset($_GET['id'])){
                   // CADASTRO DE TURMAS
                   elseif($id == "2"){ ?>
                     <div class="form-group col-md-12">
-                      <label for="nomeTurma">Nome da Turma</label>
-                      <input type="text" class="form-control" id="nomeTurma" name="nomeTurma" placeholder="Turma" required />
+                      <label for="idTurma">Nome da Turma</label>
+                      <input type="text" class="form-control" id="idTurma" name="idTurma" placeholder="Turma" required />
                     </div>
                     <div class="form-group col-md-12">
                       <label>Curso</label>
-                      <select class="form-control" name="cursoTurma">
+                      <select class="form-control" name="idCurso">
                         <option value="" id="0">Selecione um curso</option>
                         <option value="1" id="1">Técnico em Informática</option>
                         <option value="2" id="2">Técnico em Secretariado</option>
@@ -572,17 +571,17 @@ if (isset($_GET['id'])){
                   // CADASTRO DE DISCIPLINAS
                   elseif($id == "3"){ ?>
                     <div class="form-group col-md-6">
-                      <label for="nomeDisc">Nome da Disciplina</label>
-                      <input type="text" class="form-control" id="nomeDisc" name="nomeDisc" placeholder="Disciplina" required/>
+                      <label for="nome">Nome da Disciplina</label>
+                      <input type="text" class="form-control" id="nome" name="nome" placeholder="Disciplina" required/>
                     </div>
                     <div class="checkbox col-md-2 form-group" style="margin-top: 30px;">
                       <label>
-                        <input type="checkbox" name="prerequisito" id="prerequisito" onclick="habilitaSelect()"> *Pré-requisito
+                        <input type="checkbox" name="prerequisitoCheck" id="prerequisitoCheck" onclick="habilitaSelect()"> *Pré-requisito
                       </label>
                     </div>
                     <div class="form-group col-md-4">
                       <label>*Disciplina que tranca</label>
-                      <select class="form-control" name="DiscPre" id="DiscPre">
+                      <select class="form-control" name="prerequisito" id="prerequisito">
                           <option value=""></option>
                         <?php
                           $query = BuscaRetornaQuery($conexao, "disciplina");
@@ -705,11 +704,11 @@ if (isset($_GET['id'])){
         $("#idMatricula").hide();
       <?php }if($id == "3"){ ?>
         $("#divId").hide();
-        document.querySelector("#DiscPre").disabled = true;
+        document.querySelector("#prerequisito").disabled = true;
       <?php } ?>
       
       //  HABILITA O BOTÃO SALVA
-      $('#salva').show();
+      $('#btn-salva').show();
     })
 
     //  REALIZA BUSCA E EXIBE NOS INPUTS
@@ -736,44 +735,28 @@ if (isset($_GET['id'])){
               $('#btn-edit').show();
               $('#btn-remove').show();
 
-              //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS E PROFESSORES
-              <?php if($id < '2'){ ?>
-                document.getElementById("nomeUser").value = results["nome"]
-                document.getElementById("sobrenomeUser").value = results["sobrenome"]
-                if (results["email"] != "NULL")
-                  document.getElementById("emailUser").value = results["email"]
-                if (results["dataEntrada"] != "NULL" && <?php echo $id; ?> != '1')
-                  document.getElementById("dataNascimento").value = results["dataNascimento"]
-                document.getElementById("foneUser").value = results["telefone"]
-                document.getElementById("loginUser").value = results["login"]
-                <?php if ($id == "0"){ ?>
-                  document.getElementById("idUser").value = results["idAluno"]
-                <?php }else{ ?>
-                  document.getElementById("idUser").value = results["idProfessor"]
-                <?php } ?>
-                if (results["sexo"] == "Masculino") document.getElementById("masculino").checked = true;
-                else document.getElementById("feminino").checked = true;
-              <?php }
+              //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS, PROFESSORES, TURMAS E DISCIPLINAS
+              let form = document.querySelector("#form-cadastro")
+              for (let campo in json){
+                let field = form.querySelector("[name="+campo+"]")
+                if (field){
+                  switch (field.type) {
+                    case "radio":
+                      console.log(json[campo]);
+                      field = form.querySelector("[name="+campo.+"][value="+json[campo]+"]");
+                      field.checked = true;
+                      break;
+                    case "checkbox":
+                      field.checked = json[campo];
+                      break;
 
-              //  INSERE INFORMAÇÕES NOS CAMPOS DE TURMA
-              elseif($id == "2"){ ?>
-                document.getElementById("nomeTurma").value = results["idTurma"];
-                document.getElementById(results["idCurso"]).selected = true;
-              <?php }
-              
-              //  INSERE INFORMAÇÕES NOS CAMPOS DE DISCIPLINAS
-              else{ ?>
-                document.getElementById("idDisciplina").value = results["idDisciplina"];
-                document.getElementById("nomeDisc").value = results["nome"];
-                if (results["prerequisito"] == null){
-                  document.getElementById("DiscPre").value = "";
-                  document.getElementById("DiscPre").disabled = true;
+                    default:
+                      field.value = json[campo]
+                  }
+
                 }
-                else{
-                  document.getElementById("DiscPre").value = results["prerequisito"];
-                  document.getElementById("prerequisito").checked = true;
-                }
-              <?php } ?>
+
+              }
             }
           }
         })
