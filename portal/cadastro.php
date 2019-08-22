@@ -384,7 +384,7 @@ if (isset($_GET['id'])){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Alterar senha</a>
+                    <a href="./redefineSenhaPortal.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -468,19 +468,13 @@ if (isset($_GET['id'])){
         <!-- PESQUISA DE CADASTROS -->
         <div class="col-md-12">
           <div class="box box-danger container mb-3 " style="margin-bottom: 30px;">
-              <div class="row">
-
-                <!-- CADASTROS DE TURMAS OU DISCIPLINAS -->
-                <?php if ($id >= "2"){ ?>
-                  <div class="col-md-3" style="margin: 15px 5px 10px;">
-                    <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
-                  </div>
-                <?php }
-                // CADASTROS DE PROFESSORES OU ALUNOS
-                elseif($id < "2"){ ?>
-                  <div class="col-md-3" style="margin: 15px 5px 10px;">
-                    <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
-                  </div>
+              <div class="row">   
+                <div class="col-md-3" style="margin: 15px 5px 10px;">
+                  <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
+                </div>
+               
+                <!-- CADASTROS DE PROFESSORES OU ALUNOS -->
+                <?php if($id < "2"){ ?>
                   <div class="col-md-3" style="margin: 15px 5px 10px;">
                     <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre"/>
                   </div>
@@ -491,9 +485,9 @@ if (isset($_GET['id'])){
                 
                 <div class="col-md-6">
                   <div class="box-footer ">
-                    <button type="button" class="btn btn-primary" id="busca" onclick="buscador()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
-                    <button type="button" class="btn btn-warning" id="edit"  onclick="edicao()" style="margin: 2px 5px;">Editar Cadastro</button>
-                    <button type="button" class="btn btn-danger" id="remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
+                    <button type="button" class="btn btn-primary" id="btn-busca" onclick="RealizaPesquisa()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
+                    <button type="button" class="btn btn-warning" id="btn-edit"  onclick="LiberaEdicao()" style="margin: 2px 5px;">Editar Cadastro</button>
+                    <button type="button" class="btn btn-danger" id="btn-remove" onclick="remove()" style="margin: 2px 5px;">Excluir Cadastro</button>
                   </div>  
                 </div>
               </div>
@@ -607,89 +601,89 @@ if (isset($_GET['id'])){
                 <?php } ?>
 
                 <div class="box-footer">
-                  <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
-                  <button type="submit" class="btn btn-primary" name="edita" id="edita" style="margin-right: 5px;">Salvar Edição</button>
-                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-light" id="cancela">Cancelar</a>
+                  <button type="submit" class="btn btn-primary" name="salva" id="btn-salva" style="margin-right: 5px;">Salvar</button>
+                  <button type="submit" class="btn btn-primary" name="edita" id="btn-edita" style="margin-right: 5px;">Salvar Edição</button>
+                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-light" id="btn-cancela">Cancelar</a>
                 </div>
               </form>
             </div>
         </div>
       </section>
     
-    <!-- TABELA DE EXIBIÇÃO COM TODAS AS DISCIPLINAS E TURMAS -->
-    <?php if($id > "1"){ ?>
-      <section class="content">
-        <div class="row">
+      <!-- TABELA DE EXIBIÇÃO COM TODAS AS DISCIPLINAS E TURMAS -->
+      <?php if($id > "1"){ ?>
+        <section class="content">
+          <div class="row">
 
-          <!-- DISCIPLINAS -->
-          <div class="col-md-6">
-            <div class="box box-primary">
-              <div class="box-header">
-                <h3 class="box-title text-uppercase">Disciplinas Cadastradas</h3>
-              </div>
-              <div class="box-body table-responsive ">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Disciplina</th>
-                      <th>Pré-Requisito(ID)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                      $query = BuscaRetornaQuery($conexao, "disciplina");
-                      if ($query){
-                        while ($disciplinas = mysqli_fetch_assoc($query)){
-                          if ($disciplinas["prerequisito"]){
-                            $nomeDisciplinaPreRequisito = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $disciplinas["prerequisito"]);
-                            echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$nomeDisciplinaPreRequisito["nome"]."</td></tr>";
+            <!-- DISCIPLINAS -->
+            <div class="col-md-6">
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title text-uppercase">Disciplinas Cadastradas</h3>
+                </div>
+                <div class="box-body table-responsive ">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Disciplina</th>
+                        <th>Pré-Requisito(ID)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                        $query = BuscaRetornaQuery($conexao, "disciplina");
+                        if ($query){
+                          while ($disciplinas = mysqli_fetch_assoc($query)){
+                            if ($disciplinas["prerequisito"]){
+                              $nomeDisciplinaPreRequisito = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $disciplinas["prerequisito"]);
+                              echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$nomeDisciplinaPreRequisito["nome"]."</td></tr>";
+                            }
+                            else 
+                              echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
                           }
-                          else 
-                            echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
                         }
-                      }
-                    ?>
-                  </tbody>
-                </table>
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- TURMAS -->
-          <div class="col-md-6">
-            <div class="box box-primary">
-              <div class="box-header">
-                <h3 class="box-title text-uppercase">Turmas Cadastradas</h3>
-              </div>
-              <div class="box-body table-responsive ">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Turma</th>
-                      <th>Curso</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                      $query = BuscaRetornaQuery($conexao, "turma");
-                      if ($query){
-                        while ($turma = mysqli_fetch_assoc($query)){
-                          $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $turma["idCurso"]);
-                          echo "<tr><td>".$turma["idTurma"]."</td><td>".$nomeCurso["nome"]."</td></tr>";
+            <!-- TURMAS -->
+            <div class="col-md-6">
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title text-uppercase">Turmas Cadastradas</h3>
+                </div>
+                <div class="box-body table-responsive ">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Turma</th>
+                        <th>Curso</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                        $query = BuscaRetornaQuery($conexao, "turma");
+                        if ($query){
+                          while ($turma = mysqli_fetch_assoc($query)){
+                            $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $turma["idCurso"]);
+                            echo "<tr><td>".$turma["idTurma"]."</td><td>".$nomeCurso["nome"]."</td></tr>";
+                          }
                         }
-                      }
-                    ?>
-                  </tbody>
-                </table>
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
 
-        </div>
-      </section>
-    <?php }?>
-  </div>
+          </div>
+        </section>
+      <?php }?>
+    </div>
 
   <!-- RODAPÉ -->
   <footer class="main-footer">
@@ -701,145 +695,166 @@ if (isset($_GET['id'])){
 
   <!-- SCRIPTS DE AUTOMATIZAÇÃO DA PÁGINA -->
   <script type="text/javascript">
-          function buscador(){
-            $('#edit').show();
-            $('#remove').show();
-            let buscaNome = document.getElementById("buscaNome").value;
-            <?php if ($id < '2'){ ?>
-            let buscaSobre = document.getElementById("buscaSobre").value;
-            <?php } ?>
-            desabilita(true, 0)
-            $.ajax({
-              type: "POST",
-              dataType:"json",
-              url: "buscador.php",
-              data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
-              success: function(results){
-                console.log(results);
-                
-                <?php if($id < '2'){ ?>
-                  document.getElementById("nomeUser").value = results["nome"]
-                  document.getElementById("sobrenomeUser").value = results["sobrenome"]
 
-                  if (results["email"] != "NULL")
-                    document.getElementById("emailUser").value = results["email"]
+    $(document).ready(function(){
+      //  OCULTA BOTÕES
+      $('#btn-edita').hide();
+      $('#btn-edit').hide();
+      $('#btn-remove').hide();
+      <?php if($id == "1"){ ?>
+        $("#idMatricula").hide();
+      <?php }if($id == "3"){ ?>
+        $("#divId").hide();
+        document.querySelector("#DiscPre").disabled = true;
+      <?php } ?>
+      
+      //  HABILITA O BOTÃO SALVA
+      $('#salva').show();
+    })
 
-                  if (results["dataEntrada"] != "NULL" && <?php echo $id; ?> != '1')
-                    document.getElementById("dataNascimento").value = results["dataNascimento"]
+    //  REALIZA BUSCA E EXIBE NOS INPUTS
+    function RealizaPesquisa(){
+      
+      const buscaNome = document.querySelector("#buscaNome").value;
+      <?php if ($id < '2'){ ?>
+        const buscaSobre = document.getElementById("buscaSobre").value;
+        const buscaID = document.querySelector("#buscaID").value;
+      <?php } ?>
 
-                  document.getElementById("foneUser").value = results["telefone"]
-                  document.getElementById("loginUser").value = results["login"]
+      if (buscaNome){
+        DesabilitaHabilitaCampos(true, 0)
 
-                  <?php if ($id == "0"){ ?>
-                    document.getElementById("idUser").value = results["idAluno"]
-                  <?php }else{ ?>
-                    document.getElementById("idUser").value = results["idProfessor"]
-                  <?php } ?>
+        //  REQUISIÇÃO AJAX
+        $.ajax({
+          type: "POST",
+          dataType:"json",
+          url: "buscador.php",
+          data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
+          success: function(results){
+            if (results){
+              //  HABILITA BOTÕES DE EDIÇÃO
+              $('#btn-edit').show();
+              $('#btn-remove').show();
 
-                  if (results["sexo"] == "Masculino"){ 
-                     document.getElementById("masculino").checked = true;
-                  }
-                  else{
-                    document.getElementById("feminino").checked = true;
-                  }
-                <?php }elseif($id == "2"){ ?>
-                  document.getElementById("nomeTurma").value = results["idTurma"];
-                  document.getElementById(results["idCurso"]).selected = true;
+              //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS E PROFESSORES
+              <?php if($id < '2'){ ?>
+                document.getElementById("nomeUser").value = results["nome"]
+                document.getElementById("sobrenomeUser").value = results["sobrenome"]
+                if (results["email"] != "NULL")
+                  document.getElementById("emailUser").value = results["email"]
+                if (results["dataEntrada"] != "NULL" && <?php echo $id; ?> != '1')
+                  document.getElementById("dataNascimento").value = results["dataNascimento"]
+                document.getElementById("foneUser").value = results["telefone"]
+                document.getElementById("loginUser").value = results["login"]
+                <?php if ($id == "0"){ ?>
+                  document.getElementById("idUser").value = results["idAluno"]
                 <?php }else{ ?>
-                  document.getElementById("idDisciplina").value = results["idDisciplina"];
-                  document.getElementById("nomeDisc").value = results["nome"];
-                  if (results["prerequisito"] == null){
-                    document.getElementById("DiscPre").value = "";
-                    document.getElementById("DiscPre").disabled = true;
-                  }
-                  else{
-                    document.getElementById("DiscPre").value = results["prerequisito"];
-                    document.getElementById("prerequisito").checked = true;
-                  }
+                  document.getElementById("idUser").value = results["idProfessor"]
                 <?php } ?>
-              }
-            })
-            document.getElementById("buscaNome").value = "";
-            document.getElementById("buscaSobre").value = "";
-          }
+                if (results["sexo"] == "Masculino") document.getElementById("masculino").checked = true;
+                else document.getElementById("feminino").checked = true;
+              <?php }
 
-          function desabilita(opcao, tipo){
-
-            let form = document.querySelectorAll("#form-cadastro [id]");
-            form.forEach(function(elemento, index){
-              //console.log(elemento);
-              elemento.disabled = opcao
-              //elemento.reset();
-            });
-            if (tipo == 0){
-              document.getElementById("salva").disabled = opcao
-              document.getElementById("cancela").disabled = opcao
-            }
-            if (tipo == "editar"){
-              document.getElementById("edita").disabled = opcao
-              document.getElementById("cancela").disabled = opcao
-            }
-            if (tipo == "limpa"){
-              $("#form-cadastro").each(function(){
-                this.reset();
-              })
+              //  INSERE INFORMAÇÕES NOS CAMPOS DE TURMA
+              elseif($id == "2"){ ?>
+                document.getElementById("nomeTurma").value = results["idTurma"];
+                document.getElementById(results["idCurso"]).selected = true;
+              <?php }
+              
+              //  INSERE INFORMAÇÕES NOS CAMPOS DE DISCIPLINAS
+              else{ ?>
+                document.getElementById("idDisciplina").value = results["idDisciplina"];
+                document.getElementById("nomeDisc").value = results["nome"];
+                if (results["prerequisito"] == null){
+                  document.getElementById("DiscPre").value = "";
+                  document.getElementById("DiscPre").disabled = true;
+                }
+                else{
+                  document.getElementById("DiscPre").value = results["prerequisito"];
+                  document.getElementById("prerequisito").checked = true;
+                }
+              <?php } ?>
             }
           }
+        })
+        buscaNome.value = "";
+        <?php if ($id < '2'){ ?>
+          buscaSobre.value = "";
+        <?php } ?>
+      }
+      
+    }
 
-          function edicao(){
-            desabilita(false, "editar")
-            $('#edita').show();
-            $("#salva").hide();
-            $("#senhaprofedit").show();
-            $("#idMatricula").hide();
-            
+    //  DESABILITA CAMPOS DE ACORDO COM PARAMETROS
+    function DesabilitaHabilitaCampos(opcao, tipo){
+      const btnSalva = document.getElementById("btn-salva")
+      const btnCancela = document.getElementById("btn-cancela")
+      const btnEdita = document.getElementById("btn-edita")
+      const formID = document.querySelectorAll("#form-cadastro [id]")
 
-          }
+      formID.forEach(function(elemento, index){
+        elemento.disabled = opcao
+      });
+      if (tipo == 0){
+        btnSalva.disabled = opcao
+        btnCancela.disabled = opcao
+      }
+      if (tipo == "editar"){
+        btnEdita.disabled = opcao
+        btnCancela.disabled = opcao
+      }
+      if (tipo == "limpa"){
+        $("#form-cadastro").each(function(){
+          this.reset();
+        })
+      }
+    }
 
-          $(document).ready(function(){
-            $('#edita').hide();
-            $('#edit').hide();
-            $('#remove').hide();
-            $('#salva').show();
-            <?php if($id == "1"){ ?>
-              $("#idMatricula").hide();
-              $("#senhaprofedit").hide();
+    //  LIBERA BOTÕES PARA EDIÇÃO
+    function LiberaEdicao(){
+      DesabilitaHabilitaCampos(false, "editar")
+      $('#btn-edita').show();
+      $("#btn-salva").hide();
+      $("#idMatricula").hide();
+      document.querySelector("#DiscPre").disabled = true;
+    }
 
-            <?php }if($id == "3"){ ?>
-              $("#divId").hide();
-              document.getElementById("DiscPre").disabled = true
-            <?php } ?>
-          })
+    function habilitaSelect(){
+      const disciplinaPreRequisito = document.querySelector("#DiscPre")
+      if (disciplinaPreRequisito.disabled == false){
+        disciplinaPreRequisito.disabled = true;
+      }
+      else{
+        disciplinaPreRequisito.disabled = false;
+      }
+    }
 
-          function habilitaSelect(){
-            document.getElementById("DiscPre").disabled = false
-          }
+    function remove(){
+      <?php if ($id < 2){ ?>
+        let idCadastro = $("#idUser").val();
+      <?php }elseif($id == 2){ ?>
+        let idCadastro = $("#nomeTurma").val();
+      <?php  }else{ ?>
+        let idCadastro = $("#idDisciplina").val();
+      <?php } ?>
+      console.log(idCadastro);
+      $.ajax({
+        type: "POST",
+        url: "deleteCadastro.php",
+        data: "idCadastro="+idCadastro+"&idTabela=<?php echo $id; ?>",
+        beforeSend: function(){
+          $("#remove").html("Apagando...");
+        },
+        success: function(html){
+          $("#status").html(html);
+          $("#remove").html("Excluir Cadastro");
+          desabilita(false,"limpa");
+        }
+      })
 
-          function remove(){
-            <?php if ($id < 2){ ?>
-              let idCadastro = $("#idUser").val();
-            <?php }elseif($id == 2){ ?>
-              let idCadastro = $("#nomeTurma").val();
-            <?php  }else{ ?>
-              let idCadastro = $("#idDisciplina").val();
-            <?php } ?>
-            console.log(idCadastro);
-            $.ajax({
-              type: "POST",
-              url: "deleteCadastro.php",
-              data: "idCadastro="+idCadastro+"&idTabela=<?php echo $id; ?>",
-              beforeSend: function(){
-                $("#remove").html("Apagando...");
-              },
-              success: function(html){
-                $("#status").html(html);
-                $("#remove").html("Excluir Cadastro");
-                desabilita(false,"limpa");
-              }
-            })
+    }
 
-          }
-        </script>
+  </script>
 
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

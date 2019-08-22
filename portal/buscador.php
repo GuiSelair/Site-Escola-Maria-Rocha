@@ -12,7 +12,7 @@ include_once("../conexao/function.php");
 $conexao = DBConecta();
 
 // METODO DE BUSCA: NOME COMPLETO
-if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && !empty($_POST["nome"]) ){
+if(isset($_POST["tabela_ID"]) && isset($_POST["nome"])){
     $id = $_POST["tabela_ID"];
 
     switch ($id) {
@@ -42,19 +42,21 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"]) && !empty($_POST["nome"])
     }
     //  CASO A TABELA ESCOLHIDA FOR TURMA
     elseif($id == '2'){
-        $response = BuscaRetorneResponse($conexao, $tabela, "idTurma", $buscaNome);
+        $response = BuscaRetornaResponse($conexao, $tabela, "idTurma", $buscaNome);
         $response ? $cadastro = json_encode($response) : $cadastro = null;
         echo $cadastro;
     }
     //  CASO A TABELA ESCOLHIDA FOR DISCIPLINA
     else{
-        $response = BuscaRetorneResponse($conexao, $tabela, "nome", $buscaNome);
+        $response = BuscaRetornaResponse($conexao, $tabela, "nome", $buscaNome);
         $response ? $cadastro = json_encode($response) : $cadastro = null;
         echo $cadastro;
     }
+}else{
+    echo "dasdasdas";
 }
 
-
+/*
 // METODO DE BUSCA: ID
 if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"])){
     $idUser = $_POST["idUser"];
@@ -81,5 +83,5 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"])){
     $response ? $cadastro = json_encode($row) : $cadastro = null;
     echo $cadastro;
 }
-
+*/
 ?>
