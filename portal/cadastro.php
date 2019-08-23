@@ -735,57 +735,101 @@ if (isset($_GET['id'])){
 
     //  REALIZA BUSCA E EXIBE NOS INPUTS
     function RealizaPesquisa(){
-      
+
       const buscaNome = document.querySelector("#buscaNome").value;
       <?php if ($id < '2'){ ?>
         const buscaSobre = document.getElementById("buscaSobre").value;
         const buscaID = document.querySelector("#buscaID").value;
       <?php } ?>
 
-      if (buscaNome){
-        //  REQUISIÇÃO AJAX
-        $.ajax({
-          type: "POST",
-          dataType:"json",
-          url: "controllers/buscaCadastro.php",
-          data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
-          success: function(results){
-            if (results){
-              DesabilitaHabilitaCampos(true, 0)
-              //  HABILITA BOTÕES DE EDIÇÃO
-              $('#btn-edit').show();
-              $('#btn-remove').show();
+      if (!buscaID && buscaNome){
+          //  REQUISIÇÃO AJAX
+          $.ajax({
+            type: "POST",
+            dataType:"json",
+            url: "controllers/buscaCadastro.php",
+            data: 'tabela_ID='+<?php echo $id; ?>+'&nome='+buscaNome<?php if ($id < '2') echo "+'&sobrenome='+buscaSobre,"; else echo",";?>
+            success: function(results){
+              if (results){
+                DesabilitaHabilitaCampos(true, 0)
+                //  HABILITA BOTÕES DE EDIÇÃO
+                $('#btn-edit').show();
+                $('#btn-remove').show();
 
-              //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS, PROFESSORES, TURMAS E DISCIPLINAS
-              let form = document.querySelector("#form-cadastro")
-              for (let campo in results){
-                let field = form.querySelector("[name="+campo+"]")
-                if (field){
-                  switch (field.type) {
-                    case "radio":
-                      field = form.querySelector("[name="+campo+"][value="+results[campo]+"]");
-                      field.checked = true;
-                      break;
-                    case "checkbox":
-                      field.checked = results[campo];
-                      break;
-                    default:
-                      field.value = results[campo]
+                //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS, PROFESSORES, TURMAS E DISCIPLINAS
+                let form = document.querySelector("#form-cadastro")
+                for (let campo in results){
+                  let field = form.querySelector("[name="+campo+"]")
+                  if (field){
+                    switch (field.type) {
+                      case "radio":
+                        field = form.querySelector("[name="+campo+"][value="+results[campo]+"]");
+                        field.checked = true;
+                        break;
+                      case "checkbox":
+                        field.checked = results[campo];
+                        break;
+                      default:
+                        field.value = results[campo]
+                    }
                   }
                 }
               }
             }
-          }
-        })
-        buscaNome.value = "";
-        <?php if ($id < '2'){ ?>
-          buscaSobre.value = "";
-        <?php } ?>
+          })
+          buscaNome.value = "";
+          <?php if ($id < '2'){ ?>
+            buscaSobre.value = "";
+          <?php } ?>
+      }
+      //  FAZ A BUSCA ATRAVÉS DO ID DO CADASTRO
+      else if (buscaID){
+        //  REQUISIÇÃO AJAX
+        console.log(buscaID);
+        
+        $.ajax({
+            type: "POST",
+            dataType:"json",
+            url: "controllers/buscaCadastro.php",
+            data: 'tabela_ID='+<?php echo $id; ?>+'&id='+buscaID,
+            success: function(results){
+              console.log(results)
+              if (results){
+                DesabilitaHabilitaCampos(true, 0)
+                //  HABILITA BOTÕES DE EDIÇÃO
+                $('#btn-edit').show();
+                $('#btn-remove').show();
+
+                //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS, PROFESSORES, TURMAS E DISCIPLINAS
+                let form = document.querySelector("#form-cadastro")
+                for (let campo in results){
+                  let field = form.querySelector("[name="+campo+"]")
+                  if (field){
+                    switch (field.type) {
+                      case "radio":
+                        field = form.querySelector("[name="+campo+"][value="+results[campo]+"]");
+                        field.checked = true;
+                        break;
+                      case "checkbox":
+                        field.checked = results[campo];
+                        break;
+                      default:
+                        field.value = results[campo]
+                    }
+                  }
+                }
+              }
+            }
+          })
+          buscaNome.value = "";
+          buscaID.value = ""
+          <?php if ($id < '2'){ ?>
+            buscaSobre.value = "";
+          <?php } ?>
       }
       else{
-        document.querySelector("#buscaNome").parentElement.classList.add("has-error");
-      }
-      
+          $("#buscaNome").parentElement.classList.add("has-error");
+        } 
     }
 
     //  DESABILITA CAMPOS DE ACORDO COM PARAMETROS

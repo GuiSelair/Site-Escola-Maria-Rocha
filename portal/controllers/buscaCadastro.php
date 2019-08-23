@@ -14,7 +14,6 @@ $conexao = DBConecta();
 // METODO DE BUSCA: NOME COMPLETO
 if(isset($_POST["tabela_ID"]) && isset($_POST["nome"])){
     $id = $_POST["tabela_ID"];
-
     switch ($id) {
         case '0':
             $tabela = "aluno";
@@ -56,8 +55,8 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"])){
 
 
 // METODO DE BUSCA: ID
-if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"])){
-    $idUser = $_POST["idUser"];
+if(isset($_POST["tabela_ID"]) && isset($_POST["id"])){
+    $idUser = $_POST["id"];
     $id = $_POST["tabela_ID"];
     switch ($id) {
         case '0':
@@ -78,7 +77,7 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["idUser"])){
             break;
     }
     $response = BuscaRetornaResponse($conexao, $tabela, $idTabela, $idUser);
-    $response ? $cadastro = json_encode($row) : $cadastro = null;
+    $response ? $cadastro = json_encode($response) : $cadastro = null;
     echo $cadastro;
 }
 
