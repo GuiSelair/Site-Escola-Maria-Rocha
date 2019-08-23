@@ -290,7 +290,7 @@ if (isset($_POST["salva"])){
                 </div>
                 <div class="box-footer">
                   <button type="submit" class="btn btn-primary" name="salva" id="salva" style="margin-right: 5px;">Salvar</button>
-                  <a href="addcalendario.php" class="btn btn-warning" id="cancela">Cancelar</a>
+                  <a href="addcalendario.php" class="btn btn-secundary" id="cancela">Cancelar</a>
                 </div>
               </form>
           </div>

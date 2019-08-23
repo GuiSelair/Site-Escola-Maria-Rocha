@@ -26,7 +26,7 @@ $conexao = DBConecta();
 //  EDITA CADASTROS
 if (isset($_POST['edita'])){
   $id = $_GET['id'];
-
+  var_dump($_POST["status"]);
   switch ($id) {
     //  EDITA CADASTRO ALUNO
     case '0':
@@ -38,8 +38,9 @@ if (isset($_POST['edita'])){
       $dataNascimento = $_POST['dataNascimento'];
       $sexo = $_POST['sexo'];
       $telefone = $_POST["telefone"];
+      $status = $_POST["status"];
 
-      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone WHERE idAluno = '$idUser'";
+      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone, status = $status WHERE idAluno = '$idUser'";
       $execute_sql = mysqli_query($conexao, $sql_code);
 
       if (!$execute_sql) {
@@ -65,8 +66,9 @@ if (isset($_POST['edita'])){
       $login = $_POST['login'];
       $sexo = $_POST['sexo'];
       $telefone = $_POST["telefone"];
+      $status = $_POST["status"];
     
-      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone' WHERE idProfessor = $idUser";
+      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', status = $status WHERE idProfessor = $idUser";
       $execute_sql = mysqli_query($conexao, $sql_code);
 
       if (!$execute_sql) {
@@ -143,6 +145,7 @@ if (isset($_POST['edita'])){
 
 //  SALVA NOVOS CADASTROS
 if (isset($_POST['salva'])){
+  
   $id = $_GET['id'];
 
   switch ($id) {
@@ -157,9 +160,10 @@ if (isset($_POST['salva'])){
       $idAluno = $_POST["idAluno"];
       $senha = substr($login,0,2).substr($dataNascimento,0,4);
       $cript = CriptografiaSenhas($senha);
+      $status = $_POST["status"];
 
       if (!VerificaExistencia($conexao, "idAluno", "aluno", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
-        $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript')";
+        $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha, status) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript', $status)";
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
@@ -194,9 +198,10 @@ if (isset($_POST['salva'])){
       $telefone = $_POST["telefone"];
       $senha = substr($login,0,2).substr($email,0,4);
       $cript = CriptografiaSenhas($senha);
+      $status = $_POST["status"];
 
       if (!VerificaExistencia($conexao,"idProfessor", "professor", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
-        $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript')";
+        $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha, status) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript', $status)";
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
@@ -471,25 +476,28 @@ if (isset($_GET['id'])){
         <!-- PESQUISA DE CADASTROS -->
         <div class="col-md-12">
           <div class="box box-danger container mb-3 " style="margin-bottom: 30px;">
+              <div class="box-header">
+                <h4 class="box-title">PESQUISE POR NOME COMPLETO OU ID</h4>
+              </div>
               <div class="row">   
-                <div class="col-md-3" style="margin: 15px 5px 10px;">
+                <div class="col-md-3" style="margin: 10px 5px 10px;">
                   <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
                 </div>
                
-                <!-- CADASTROS DE PROFESSORES OU ALUNOS -->
+                <!-- SOMENTE PARA CADASTROS DE PROFESSORES OU ALUNOS -->
                 <?php if($id < "2"){ ?>
-                  <div class="col-md-3" style="margin: 15px 5px 10px;">
+                  <div class="col-md-3" style="margin: 10px 5px 10px;">
                     <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre"/>
-                  </div>
-                  <div class="col-md-3" style="margin: 15px 5px 10px;">
-                    <input type="text" class="form-control" placeholder= "ID/Matricula" id = "buscaID"/>
                   </div>
                 <?php } ?>
                 
+                <div class="col-md-3" style="margin: 10px 5px 10px;">
+                    <input type="text" class="form-control" placeholder= "ID/Matricula" id = "buscaID"/>
+                  </div>
                 <div class="col-md-6">
                   <div class="box-footer ">
                     <button type="button" class="btn btn-primary" id="btn-busca" onclick="RealizaPesquisa()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
-                    <button type="button" class="btn btn-warning" id="btn-edit"  onclick="LiberaEdicao()" style="margin: 2px 5px;">Editar Cadastro</button>
+                    <button type="button" class="btn btn-secundary" id="btn-edit"  onclick="LiberaEdicao()" style="margin: 2px 5px;">Editar Cadastro</button>
                     <button type="button" class="btn btn-danger" id="btn-remove" onclick="removeCadastro()" style="margin: 2px 5px;">Excluir Cadastro</button>
                   </div>  
                 </div>
@@ -500,6 +508,9 @@ if (isset($_GET['id'])){
         <!-- FORMULARIO DE CADASTRO/EDIÇÃO/EXIBIÇÃO -->
         <div class="col-md-12">
             <div class="box box-primary">
+              <div class="box-header">
+                <h4 class="box-title">INFORMAÇÕES DO CADASTRO</h4>
+              </div>
               <form role="form" action="" method="POST" id="form-cadastro">
                 <div class="box-body">
 
@@ -559,6 +570,10 @@ if (isset($_GET['id'])){
                         <input type="text" class="form-control" id="idUser" name="idProfessor" placeholder="ID" <?php if($id == "0") echo "required";?>>
                       </div>
                     <?php } ?>
+                    <div class="col-md-2 form-group" style="margin-top: 30px;">
+                      <label>
+                        <input type="checkbox" name="status" id="status" value="1"> Ativo
+                      </label>
                     </div>
                   <?php }
 
@@ -619,17 +634,18 @@ if (isset($_GET['id'])){
                       <input type="text" class="form-control" id="idDisciplina" name="idDisciplina" placeholder="ID">
                     </div>
                 <?php } ?>
-                <div class="col-md-12">
-                  <div class="box-footer">
-                    <button type="submit" class="btn btn-primary" name="salva" id="btn-salva" style="margin-right: 5px;">Salvar</button>
-                    <button type="submit" class="btn btn-primary" name="edita" id="btn-edita" style="margin-right: 5px;">Salvar Edição</button>
-                    <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-light" id="btn-cancela">Cancelar</a>
-                  </div>
                 </div>
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary" name="salva" id="btn-salva" style="margin-right: 5px;">Salvar</button>
+                  <button type="submit" class="btn btn-primary" name="edita" id="btn-edita" style="margin-right: 5px;">Salvar Edição</button>
+                  <a href="cadastro.php?id=<?php echo $id; ?>" class="btn btn-light" id="btn-cancela">Cancelar</a>
+                </div>
+                
               </form>
             </div>
         </div>
       </section>
+     
     
       <!-- TABELA DE EXIBIÇÃO COM TODAS AS DISCIPLINAS E TURMAS -->
       <?php if($id > "1"){ ?>
@@ -737,9 +753,9 @@ if (isset($_GET['id'])){
     function RealizaPesquisa(){
 
       const buscaNome = document.querySelector("#buscaNome").value;
+      const buscaID = document.querySelector("#buscaID").value;
       <?php if ($id < '2'){ ?>
         const buscaSobre = document.getElementById("buscaSobre").value;
-        const buscaID = document.querySelector("#buscaID").value;
       <?php } ?>
 
       if (!buscaID && buscaNome){
@@ -785,8 +801,6 @@ if (isset($_GET['id'])){
       //  FAZ A BUSCA ATRAVÉS DO ID DO CADASTRO
       else if (buscaID){
         //  REQUISIÇÃO AJAX
-        console.log(buscaID);
-        
         $.ajax({
             type: "POST",
             dataType:"json",

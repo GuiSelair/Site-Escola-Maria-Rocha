@@ -54,12 +54,25 @@
     }
 
     function BuscaRetornaResponse($conn, $tabela, $coluna, $parametro){
-        $sql_code = "SELECT * FROM $tabela WHERE `$coluna` = '$parametro'";
-        $query = mysqli_query($conn, $sql_code);
-        if ($query && mysqli_num_rows($query))
-            return mysqli_fetch_assoc($query);
-        else
-            return false;
+        
+        switch (gettype($parametro)) {
+            case 'string':
+                $sql_code = "SELECT * FROM $tabela WHERE `$coluna` = '$parametro'";
+                $query = mysqli_query($conn, $sql_code);
+                if ($query && mysqli_num_rows($query))
+                    return mysqli_fetch_assoc($query);
+                else
+                    return false;
+                break;
+            case 'integer':
+                $sql_code = "SELECT * FROM $tabela WHERE `$coluna` = $parametro";
+                $query = mysqli_query($conn, $sql_code);
+                if ($query && mysqli_num_rows($query))
+                    return mysqli_fetch_assoc($query);
+                else
+                    return false;
+                break;
+        }
     }
 
     function BuscaTodosCursos($conexao, $idAluno){
