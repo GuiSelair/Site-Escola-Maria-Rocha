@@ -21,7 +21,7 @@ if (isset($_GET["idAvalhacao"])){
     $sql_code = "DELETE FROM `avalhacao` WHERE `idAvalhacao`= $idAvalhacao";
     $results = mysqli_query($conexao, $sql_code);
     if ($results){
-        header("location: ../notas.php");
+        header("location: ../lancamentoDeNotas.php");
     }
     else{
         echo "<script><alert>ERRO AO APAGAR NOTA! VERIFIQUE SUA CONEXÃO OU TENTE MAIS TARDE!</alert></script>";

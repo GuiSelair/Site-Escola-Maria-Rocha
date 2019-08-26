@@ -5,9 +5,9 @@
 ////////////////////////////////////////////
 
 session_start();
-include_once("conexao/config.php");
-include_once("conexao/conexao.php");
-include_once("../conexao/function.php");
+include_once("../conexao/config.php");
+include_once("../conexao/conexao.php");
+include_once("../../conexao/function.php");
 
 // VERIFICA SE O USUÁRIO ESTA LOGADO
 if (!isset($_SESSION["id"])){
@@ -29,17 +29,26 @@ if ($_SESSION["tipo"] == "Professor" || $_SESSION["tipo"] == "Administrador"){
 
 //	FUNÇÃO CASO O USUARIO SEJA ALUNO, VERIFICA NÃO HÁ NENHUM REGISTRO COM A TURMA DO ALUNO, CASO TENHA, RETONA O EVENTO PARA SER EXIBIDO
 if ($_SESSION["tipo"] == "Aluno"){
-	$sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno`=".$_SESSION["id"];	//ENCONTRA AS TURMAS DO ALUNO
-	$turmaAluno = mysqli_query($conexao, $sql_code);
-	if (mysqli_num_rows($turmaAluno)){
-		while ($turmaAlunoNum = mysqli_fetch_assoc($turmaAluno)){
-			$turmaAlunoResults[] = $turmaAlunoNum; // IDs DA TURMA DO ALUNO
+	$noticeTurmaResults = [];
+	$turmas = BuscaRetornaQuery($conexao, "turma-aluno", "idAluno", $_SESSION["id"]);
+	if ($turmas){
+		while ($turmaAlunoNum = mysqli_fetch_assoc($turmas)){
+			$notificacoes = BuscaRetornaQuery($conexao, "calendario", "idTurma", $turmaAlunoNum["idTurma"]);
+			if ($notificacoes){
+				while ($disciplinas = mysqli_fetch_assoc($notificacoes)){
+					$aprovado = ConfereAprovacao($conexao, $disciplinas["idDisciplina"], $_SESSION["id"]);
+					if ($aprovado["conceitoDisciplina"] != "APTO"){
+						if (!in_array($disciplinas, $noticeTurmaResults))
+							$noticeTurmaResults[] = $disciplinas;
+					}
+				}
+			}
 		}
+		/*
 		for ($i = 0; $i < count($turmaAlunoResults); $i++){
-			$sql_code = "SELECT * FROM `calendario` WHERE `idTurma`=".$turmaAlunoResults[$i]["idTurma"];	// ENCONTRA AS NOTICIAS LIGADAS A TURMA
-			$noticeTurma = mysqli_query($conexao, $sql_code);
-			if (mysqli_num_rows($noticeTurma)){
-				while ($noticeTurmaNum = mysqli_fetch_assoc($noticeTurma)){
+			$query = BuscaRetornaQuery($conexao, "calendario", "idTurma", $turmaAlunoResults[$i]["idTurma"]);
+			if ($query){
+				while ($noticeTurmaNum = mysqli_fetch_assoc($query)){
 					$sql_code = "SELECT * FROM `aluno-disciplina` WHERE idDisciplina = ".$noticeTurmaNum["idDisciplina"]." AND `idAluno`=".$_SESSION["id"];
 					$results = mysqli_query($conexao, $sql_code);
 					if ($results && mysqli_num_rows($results)){
@@ -54,6 +63,8 @@ if ($_SESSION["tipo"] == "Aluno"){
 				}
 			}
 		}
+		*/
+		//var_dump($noticeTurmaResults);
 		echo json_encode($noticeTurmaResults);
 	}
 }

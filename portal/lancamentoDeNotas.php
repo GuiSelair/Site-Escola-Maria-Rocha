@@ -211,7 +211,7 @@ if ($_SESSION["tipo"] == "Professor"){
               </div>
 
               <!-- CONCEITO -->
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-5">
                 <label>Conceito: </label>
                 <div class="radio">
                   <label style="margin-right: 5px;">
@@ -367,7 +367,7 @@ if ($_SESSION["tipo"] == "Professor"){
         $('#tabela').empty();
         $.ajax({
           type: "POST",
-          url: "./controllers/buscaTurmasAlunos.php",
+          url: "./controllers/buscaMatriculasNotas.php",
           data: "idTurma="+idTurma+"&idDisciplina="+idDisciplina+"&data="+data,
           beforeSend: function(){
             $("#buscar").html("Buscando...")
