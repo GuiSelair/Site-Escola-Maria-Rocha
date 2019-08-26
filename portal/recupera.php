@@ -11,71 +11,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="shortcut icon" href="../img/favicon.ico" />
         <link rel="stylesheet" href="../node_modules/bootstrap/compiler/bootstrap.css">
-        <title>Recupera senha</title>
+        <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-
-        <style>
-            html,
-            body {
-                height: 100%;
-            }
-
-            body {
-                display: -ms-flexbox;
-                display: -webkit-box;
-                display: flex;
-                -ms-flex-align: center;
-                -ms-flex-pack: center;
-                -webkit-box-align: center;
-                align-items: center;
-                -webkit-box-pack: center;
-                justify-content: center;
-                padding-top: 40px;
-                padding-bottom: 40px;
-                background-color: #f5f5f5;
-            }
-
-            .form-signin {
-                width: 100%;
-                max-width: 330px;
-                padding: 15px;
-                margin: 0 auto;
-            }
-
-            .form-signin .checkbox {
-                font-weight: 400;
-            }
-
-            .form-signin .form-control {
-                position: relative;
-                box-sizing: border-box;
-                height: auto;
-                padding: 10px;
-                font-size: 16px;
-            }
-
-            .form-signin .form-control:focus {
-                z-index: 2;
-            }
-
-            .form-signin input[type="email"] {
-                margin-bottom: -1px;
-                border-bottom-right-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-
-            .form-signin input[type="password"] {
-                margin-bottom: 10px;
-                border-top-left-radius: 0;
-                border-top-right-radius: 0;
-            }
-            .status {
-                position: absolute;
-                width: 100%;
-                top:0px;
-            }
-        </style>
-
+        <link rel="stylesheet" href="./dist/css/Login-Recuperation.css">
     </head>
     <body class="text-center">
         <div class="status"></div>
@@ -94,17 +32,17 @@
                 $("#envia").on("click", function(){
                     let email = document.querySelector("#email").value;        
                     $.ajax({
-                    type: "POST",
-                    url: "./enviaEmail.php",
-                    data: "email="+email+"&tipo=portal",
-                    beforeSend: function(){
-                        $("#envia").html("Enviando...");
-                    },
-                    success: function(html){                
-                        $(".status").html(html);
-                        $("#envia").html("Enviar");
-                        document.querySelector("#email").value = "";
-                    }
+                        type: "POST",
+                        url: "./controllers/enviaEmail.php",
+                        data: "email="+email+"&tipo=portal",
+                        beforeSend: function(){
+                            $("#envia").html("Enviando...");
+                        },
+                        success: function(html){                
+                            $(".status").html(html);
+                            $("#envia").html("Enviar");
+                            email = "";
+                        }
                     });
                 })
             })

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 14-Ago-2019 às 06:18
+-- Generation Time: 26-Ago-2019 às 05:25
 -- Versão do servidor: 10.1.40-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -59,18 +59,20 @@ CREATE TABLE `aluno` (
   `sexo` varchar(100) NOT NULL,
   `dataNascimento` date DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `telefone` varchar(20) NOT NULL
+  `telefone` varchar(20) NOT NULL,
+  `status` varchar(20) DEFAULT 'ativo'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `aluno`
 --
 
-INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `dataNascimento`, `email`, `telefone`) VALUES
-('0', 'guiselair', '202cb962ac59075b964b07152d234b70', 'Guilherme', 'Selair Batista de Lima', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545'),
-('1', 'daniqcosta', '91b3f4671b6b51499ffb9ce34eced7dc', 'Daniela', 'Quadros da Costa', 'Feminino', '1998-03-24', 'daniqcosta@gmail.com', '55992145552'),
-('2', 'lucasdu', 'f9da6024f9867f1c511efa704474a2c8', 'Lucas', 'Duarte', 'Masculino', '1995-03-25', 'lucasduarte@gmail.com', '55991716362'),
-('3', 'vitorHugo', '753bf46b4a1d2b3af41f5c3868ead4cd', 'Vitor Hugo', 'Batista de Lima', 'Masculino', '2002-02-08', 'vitorhugo@gmail.com', '55993456982');
+INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `dataNascimento`, `email`, `telefone`, `status`) VALUES
+('0', 'guiselair', '202cb962ac59075b964b07152d234b70', 'Guilherme', 'Selair Batista de Lima', 'Masculino', '1997-11-11', 'guilherme.lima1997@hotmail.com', '55992174545', 'desativado'),
+('1', 'daniqcosta', '91b3f4671b6b51499ffb9ce34eced7dc', 'Daniela', 'Quadros da Costa', 'Feminino', '1998-03-24', 'daniqcosta@gmail.com', '55992145552', 'ativo'),
+('2', 'lucasdu', 'f9da6024f9867f1c511efa704474a2c8', 'Lucas', 'Duarte', 'Masculino', '1995-03-25', 'lucasduarte@gmail.com', '55991716362', 'ativo'),
+('3', 'vitorHugo', '753bf46b4a1d2b3af41f5c3868ead4cd', 'Vitor Hugo', 'Batista de Lima', 'Masculino', '2002-02-08', 'vitorhugo@gmail.com', '55993456982', 'ativo'),
+('AL#01', 'alunoTeste', 'd189b67bc9e1b9df15e60b7d5fa005a0', 'Aluno', 'Teste1', 'Masculino', '1996-02-02', 'alunoTeste@gmail.com', '5599999999', 'ativo');
 
 -- --------------------------------------------------------
 
@@ -79,6 +81,7 @@ INSERT INTO `aluno` (`idAluno`, `login`, `senha`, `nome`, `sobrenome`, `sexo`, `
 --
 
 CREATE TABLE `aluno-disciplina` (
+  `idAprovacao` int(11) NOT NULL,
   `idAluno` varchar(15) NOT NULL,
   `idDisciplina` int(11) NOT NULL,
   `conceito` varchar(100) DEFAULT NULL
@@ -88,19 +91,20 @@ CREATE TABLE `aluno-disciplina` (
 -- Extraindo dados da tabela `aluno-disciplina`
 --
 
-INSERT INTO `aluno-disciplina` (`idAluno`, `idDisciplina`, `conceito`) VALUES
-('0', 11, 'Apto'),
-('1', 11, 'Não Apto'),
-('2', 11, 'Não Apto'),
-('3', 11, 'Apto'),
-('0', 14, 'Apto'),
-('1', 14, 'Apto'),
-('2', 14, 'Apto'),
-('3', 14, 'Apto'),
-('0', 26, 'Não Apto'),
-('1', 26, 'Apto'),
-('2', 26, 'Apto'),
-('3', 26, 'Apto');
+INSERT INTO `aluno-disciplina` (`idAprovacao`, `idAluno`, `idDisciplina`, `conceito`) VALUES
+(1, '0', 11, 'Apto'),
+(2, '1', 11, 'Não Apto'),
+(3, '2', 11, 'Não Apto'),
+(4, '3', 11, 'Apto'),
+(5, '0', 14, 'Apto'),
+(6, '1', 14, 'Apto'),
+(7, '2', 14, 'Apto'),
+(8, '3', 14, 'Apto'),
+(9, '0', 26, 'Não Apto'),
+(10, '1', 26, 'Apto'),
+(11, '2', 26, 'Apto'),
+(12, '3', 26, 'Apto'),
+(13, '0', 26, 'Apto');
 
 -- --------------------------------------------------------
 
@@ -147,7 +151,9 @@ INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `c
 (24, 26, 411, '1', 'Apto', 1, '2019-07-19'),
 (25, 26, 411, '2', 'Apto', 1, '2019-07-19'),
 (26, 26, 411, '3', 'Apto', 1, '2019-07-19'),
-(27, 12, 421, '0', 'Apto', 0, '2019-08-21');
+(27, 12, 421, '0', 'Apto', 0, '2019-08-21'),
+(28, 26, 411, '0', 'Apto', 0, '2019-08-14'),
+(29, 26, 411, '0', 'Apto', 1, '2019-08-15');
 
 -- --------------------------------------------------------
 
@@ -180,7 +186,8 @@ INSERT INTO `calendario` (`id`, `title`, `description`, `color`, `start`, `end`,
 (5, 'Prova de Programação 1 - Segunda Prova', '<p>Conte&uacute;do: Condi&ccedil;&atilde;o SE, Repeat, e WHILE</p>', '#f4cc00', '2019-07-15 19:00:00', '2019-07-15 21:00:00', 411, 11, NULL, 'Jonathan Pippi'),
 (7, 'Lançamento de notas finais', '...', 'black', '2019-07-19 19:00:00', '2019-07-19 19:10:00', 411, 26, NULL, 'Laísa Quadros da Costa'),
 (8, 'Trabalho com consulta', '<p>O trabalho ser&aacute; realizado na pr&oacute;xima aula para aqueles que n&atilde;o foram bem na primeira prova. N&atilde;o faltem.</p>', '#576ee5', '2019-07-29 19:00:00', '2019-07-29 21:00:00', 421, 12, NULL, 'Jonathan Pippi'),
-(9, 'Portfólio', '<p>Portf&oacute;lio sobre crimes cibern&eacute;ticos. Temas: .....</p>', '#ed5959', '2019-07-29 21:30:00', '2019-07-29 22:30:00', 411, 26, NULL, 'Laísa Quadros da Costa');
+(9, 'Portfólio', '<p>Portf&oacute;lio sobre crimes cibern&eacute;ticos. Temas: .....</p>', '#ed5959', '2019-07-29 21:30:00', '2019-07-29 22:30:00', 411, 26, NULL, 'Laísa Quadros da Costa'),
+(10, 'Testes', '<p>Olá, pova!</p><p>Este aqui é um teste!!!!!&nbsp;</p>', '#f4cc00', '2019-08-20 21:16:00', '2019-08-20 22:00:00', 421, 12, NULL, 'Jonathan Pippi');
 
 -- --------------------------------------------------------
 
@@ -284,18 +291,31 @@ CREATE TABLE `professor` (
   `telefone` varchar(100) DEFAULT NULL,
   `login` varchar(150) NOT NULL,
   `senha` varchar(100) NOT NULL,
-  `sexo` varchar(100) NOT NULL
+  `sexo` varchar(100) NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'ativo'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `professor`
 --
 
-INSERT INTO `professor` (`idProfessor`, `nome`, `sobrenome`, `email`, `telefone`, `login`, `senha`, `sexo`) VALUES
-(5, 'Jonathan', 'Pippi', 'jonathanpippi@gmail.com', '55992174545', 'pippi', '1cec415f3725081d65ce9f6aa6b86c49', 'Masculino'),
-(6, 'Laísa', 'Quadros da Costa', 'laisaquadros@hotmail.com', '55992164353', 'laisaquadros', '4b7d2115f6990467b4ac1200352ff54f', 'Feminino'),
-(7, 'Angélica', 'Menegassi da Silveira', 'angelicamenegassi@gmail.com', '53991764252', 'angelicaSilveira', '8ed2d5b4fa6fcfe09f54dc914a523e2a', 'Feminino'),
-(8, 'Natanael ', 'da Silva Fim', 'natanaelSilva@globo.com', '65981640232', 'natanael', '1a031ff15e7099b2ee232fd94a274f56', 'Masculino');
+INSERT INTO `professor` (`idProfessor`, `nome`, `sobrenome`, `email`, `telefone`, `login`, `senha`, `sexo`, `status`) VALUES
+(5, 'Jonathan', 'Pippi', 'jonathanpippi@gmail.com', '55992174545', 'pippi', '1cec415f3725081d65ce9f6aa6b86c49', 'Masculino', 'ativo'),
+(6, 'Laísa', 'Quadros da Costa', 'laisaquadros@hotmail.com', '55992164353', 'laisaquadros', '4b7d2115f6990467b4ac1200352ff54f', 'Feminino', 'ativo'),
+(7, 'Angélica', 'Menegassi da Silveira', 'angelicamenegassi@gmail.com', '53991764252', 'angelicaSilveira', '8ed2d5b4fa6fcfe09f54dc914a523e2a', 'Feminino', 'ativo'),
+(8, 'Natanael ', 'da Silva Fim', 'natanaelSilva@globo.com', '65981640232', 'natanael', '1a031ff15e7099b2ee232fd94a274f56', 'Masculino', 'ativo');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `recuperaSegurança`
+--
+
+CREATE TABLE `recuperaSegurança` (
+  `id` int(11) NOT NULL,
+  `hash` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -341,7 +361,6 @@ INSERT INTO `turma-aluno` (`idTurma`, `idAluno`, `dataMatricula`) VALUES
 (411, '0', '2019.01'),
 (411, '1', '2019.01'),
 (411, '2', '2019.01'),
-(411, '3', '2019.02'),
 (421, '0', '2019.02'),
 (421, '1', '2019.02'),
 (421, '2', '2019.02'),
@@ -393,12 +412,14 @@ ALTER TABLE `administrador`
 -- Indexes for table `aluno`
 --
 ALTER TABLE `aluno`
-  ADD PRIMARY KEY (`idAluno`);
+  ADD PRIMARY KEY (`idAluno`),
+  ADD UNIQUE KEY `idAluno` (`idAluno`);
 
 --
 -- Indexes for table `aluno-disciplina`
 --
 ALTER TABLE `aluno-disciplina`
+  ADD PRIMARY KEY (`idAprovacao`),
   ADD KEY `idAluno` (`idAluno`),
   ADD KEY `idDisciplina` (`idDisciplina`);
 
@@ -440,6 +461,12 @@ ALTER TABLE `professor`
   ADD PRIMARY KEY (`idProfessor`);
 
 --
+-- Indexes for table `recuperaSegurança`
+--
+ALTER TABLE `recuperaSegurança`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `turma`
 --
 ALTER TABLE `turma`
@@ -472,16 +499,22 @@ ALTER TABLE `administrador`
   MODIFY `idAdministrador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `aluno-disciplina`
+--
+ALTER TABLE `aluno-disciplina`
+  MODIFY `idAprovacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `calendario`
 --
 ALTER TABLE `calendario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `disciplina`
@@ -494,6 +527,12 @@ ALTER TABLE `disciplina`
 --
 ALTER TABLE `professor`
   MODIFY `idProfessor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `recuperaSegurança`
+--
+ALTER TABLE `recuperaSegurança`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -538,7 +577,7 @@ ALTER TABLE `turma`
 --
 ALTER TABLE `turma-aluno`
   ADD CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `turma-aluno_ibfk_1` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`);
+  ADD CONSTRAINT `turma-aluno_ibfk_1` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `turma-professor`

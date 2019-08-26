@@ -26,7 +26,6 @@ $conexao = DBConecta();
 //  EDITA CADASTROS
 if (isset($_POST['edita'])){
   $id = $_GET['id'];
-  var_dump($_POST["status"]);
   switch ($id) {
     //  EDITA CADASTRO ALUNO
     case '0':
@@ -38,9 +37,9 @@ if (isset($_POST['edita'])){
       $dataNascimento = $_POST['dataNascimento'];
       $sexo = $_POST['sexo'];
       $telefone = $_POST["telefone"];
-      $status = $_POST["status"];
+      $status = $_POST['status'];
 
-      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone, status = $status WHERE idAluno = '$idUser'";
+      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone, status = '$status' WHERE idAluno = '$idUser'";
       $execute_sql = mysqli_query($conexao, $sql_code);
 
       if (!$execute_sql) {
@@ -66,9 +65,9 @@ if (isset($_POST['edita'])){
       $login = $_POST['login'];
       $sexo = $_POST['sexo'];
       $telefone = $_POST["telefone"];
-      $status = $_POST["status"];
+      $status = $_POST['status'];
     
-      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', status = $status WHERE idProfessor = $idUser";
+      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', status = '$status' WHERE idProfessor = $idUser";
       $execute_sql = mysqli_query($conexao, $sql_code);
 
       if (!$execute_sql) {
@@ -160,10 +159,10 @@ if (isset($_POST['salva'])){
       $idAluno = $_POST["idAluno"];
       $senha = substr($login,0,2).substr($dataNascimento,0,4);
       $cript = CriptografiaSenhas($senha);
-      $status = $_POST["status"];
+      $status = $_POST['status'];
 
       if (!VerificaExistencia($conexao, "idAluno", "aluno", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
-        $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha, status) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript', $status)";
+        $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha, status) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript', '$status')";
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
@@ -198,10 +197,10 @@ if (isset($_POST['salva'])){
       $telefone = $_POST["telefone"];
       $senha = substr($login,0,2).substr($email,0,4);
       $cript = CriptografiaSenhas($senha);
-      $status = $_POST["status"];
+      $status = $_POST['status'];
 
       if (!VerificaExistencia($conexao,"idProfessor", "professor", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
-        $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha, status) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript', $status)";
+        $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha, status) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript', '$status')";
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
@@ -498,7 +497,6 @@ if (isset($_GET['id'])){
                   <div class="box-footer ">
                     <button type="button" class="btn btn-primary" id="btn-busca" onclick="RealizaPesquisa()" style="margin: 2px 5px;">Buscar <?php echo $tit; ?></button>
                     <button type="button" class="btn btn-secundary" id="btn-edit"  onclick="LiberaEdicao()" style="margin: 2px 5px;">Editar Cadastro</button>
-                    <button type="button" class="btn btn-danger" id="btn-remove" onclick="removeCadastro()" style="margin: 2px 5px;">Excluir Cadastro</button>
                   </div>  
                 </div>
               </div>
@@ -558,6 +556,19 @@ if (isset($_GET['id'])){
                       <label for="loginUser">Login</label>
                       <input type="text" class="form-control" id="login" name="login" placeholder="Login" required>
                     </div>
+                    <div class="form-group col-md-3" >
+                      <label>Status: </label>
+                      <div class="radio">
+                        <label style="margin-right: 5px;">
+                          <input type="radio" value="ativo" name="status" id="status">
+                          Ativo
+                        </label>
+                        <label>
+                          <input type="radio" value="desativado" name="status" id="status">
+                          Não Ativo
+                        </label>
+                      </div>
+                    </div>
                     <?php if ($id == "0"){ ?>
                       <div class="form-group col-md-4" id ="idMatricula">
                         <label for="idUser">ID/Matricula*</label>
@@ -570,11 +581,7 @@ if (isset($_GET['id'])){
                         <input type="text" class="form-control" id="idUser" name="idProfessor" placeholder="ID" <?php if($id == "0") echo "required";?>>
                       </div>
                     <?php } ?>
-                    <div class="col-md-2 form-group" style="margin-top: 30px;">
-                      <label>
-                        <input type="checkbox" name="status" id="status" value="1"> Ativo
-                      </label>
-                    </div>
+                    
                   <?php }
 
                   // CADASTRO DE TURMAS
@@ -737,7 +744,6 @@ if (isset($_GET['id'])){
       //  OCULTA BOTÕES
       $('#btn-edita').hide();
       $('#btn-edit').hide();
-      $('#btn-remove').hide();
       <?php if($id == "1"){ ?>
         $("#idMatricula").hide();
       <?php }if($id == "3"){ ?>
@@ -770,7 +776,6 @@ if (isset($_GET['id'])){
                 DesabilitaHabilitaCampos(true, 0)
                 //  HABILITA BOTÕES DE EDIÇÃO
                 $('#btn-edit').show();
-                $('#btn-remove').show();
 
                 //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS, PROFESSORES, TURMAS E DISCIPLINAS
                 let form = document.querySelector("#form-cadastro")
@@ -812,7 +817,6 @@ if (isset($_GET['id'])){
                 DesabilitaHabilitaCampos(true, 0)
                 //  HABILITA BOTÕES DE EDIÇÃO
                 $('#btn-edit').show();
-                $('#btn-remove').show();
 
                 //  INSERE INFORMAÇÕES NOS CAMPOS ALUNOS, PROFESSORES, TURMAS E DISCIPLINAS
                 let form = document.querySelector("#form-cadastro")
@@ -842,9 +846,13 @@ if (isset($_GET['id'])){
           <?php } ?>
       }
       else{
-          $("#buscaNome").parentElement.classList.add("has-error");
+        document.querySelector("#buscaNome").parentElement.classList.add("has-error");
+        document.querySelector("#buscaID").parentElement.classList.add("has-error");
+        document.getElementById("buscaSobre").parentElement.classList.add("has-error");
+
         } 
     }
+
 
     //  DESABILITA CAMPOS DE ACORDO COM PARAMETROS
     function DesabilitaHabilitaCampos(opcao, tipo){
@@ -877,7 +885,9 @@ if (isset($_GET['id'])){
       $('#btn-edita').show();
       $("#btn-salva").hide();
       $("#idMatricula").hide();
+      <?php if ($id == "3"){ ?>
       document.querySelector("#prerequisito").disabled = true;
+      <?php } ?>
     }
 
     //  CONTROLA A EXIBIÇÃO DOS PREREQUISITOS DE DISCIPLINAS
@@ -890,34 +900,6 @@ if (isset($_GET['id'])){
         disciplinaPreRequisito.disabled = false;
         disciplinaPreRequisito.value = " ";
       }
-    }
-
-    //  REMOVE O CADASTRO
-    function removeCadastro(){
-      <?php if ($id == "0"){ ?>
-        const idCadastro = $("#idAluno").val();
-      <?php }elseif($id == "1"){ ?>
-        const idCadastro = $("idAluno").val();
-      <?php }elseif($id == "2"){ ?>
-        const idCadastro = $("#idTurma").val();
-      <?php }else{ ?>
-        const idCadastro = $("#idDisciplina").val();
-      <?php } ?>
-      
-      $.ajax({
-        type: "POST",
-        url: "./controllers/deleteCadastro.php",
-        data: "idCadastro="+idCadastro+"&idTabela=<?php echo $id; ?>",
-        beforeSend: function(){
-          $("#remove").html("Apagando...");
-        },
-        success: function(html){
-          $("#status").html(html);
-          $("#remove").html("Excluir Cadastro");
-          DesabilitaHabilitaCampos(false,"limpa");
-        }
-      })
-
     }
 
   </script>

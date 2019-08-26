@@ -233,7 +233,7 @@ if (!isset($_SESSION["id"])){
         defaultDate: Date(),
         navLinks: true,
         editable: false,
-        events: "eventosCalendario.php", //ARQUIVO QUE BUSCA OS EVENTOS
+        events: "./controllers/eventosCalendario.php", //ARQUIVO QUE BUSCA OS EVENTOS
         eventLimit: true,
         contentHeight: 500,
         selectable: true,

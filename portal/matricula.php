@@ -1,9 +1,14 @@
 <?php
 
-session_start();
+////////////////////////////////////////
+////        PÁGINA MATRICULAS      ////
+//////////////////////////////////////
 
+session_cache_expire(20);
+session_start();
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
+include_once("../conexao/function.php");
 
 
 if (isset($_GET['deslogar'])) {
@@ -16,7 +21,22 @@ if (!isset($_SESSION["tipo"]) == "Administrador"){
 }
 
 if (isset($_GET["id"])){
-  $id = $_GET["id"];
+
+  switch ($_GET["id"]) {
+    case '0':
+      $conexao = DBConecta();
+      $id = $_GET["id"];
+      break;
+    case "1":
+      $conexao = DBConecta();
+      $id = $_GET["id"];
+      break;
+
+    default:
+      header("location: ./loginUser.php");
+      break;
+  }
+  
 }
 
 ?>
@@ -25,54 +45,52 @@ if (isset($_GET["id"])){
 <html lang="pt-br">
 
 <head>
-  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Portal Acadêmico</title>
+  <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 
-    <!-- Barra cabeçalho -->
+    <!-- CABEÇALHO -->
     <header class="main-header">
-      <!-- Logo -->
       <a href="index.php" class="logo">
-        <!-- Logo abreviada -->
-        <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
-        <span class="logo-lg">Portal Acadêmico</span>
+      <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
+        <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Portal Acadêmico</span>
       </a>
-      <!-- Toggle Hamburguer -->
+
+      <!-- MENU DISPOSITIVOS MÓVEIS -->
       <nav class="navbar navbar-static-top" role="navigation">
-        <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
           <span class="sr-only">Toggle navigation</span>
         </a>
-        <!-- Notificações e Usuario -->
+
+        <!-- NOTIFICAÇÕES E USUÁRIOS -->
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
 
-            <!-- Notificações -->
+            <!--IMPORTANDO O ARQUIVO DE NOTIFICAÇÕES-->
             <?php include_once("notificacoes.php") ?>
 
-            <!-- Conta do usuario -->
             <li class="dropdown user user-menu ">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user mx-5"></i>
                 <span class="hidden-xs"><?php echo $_SESSION['nome']; ?></span>
-                <!--NOME COMPLETO DO USUARIO-->
               </a>
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Senha</a>
+                    <a href="./redefineSenhaPortal.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -80,16 +98,13 @@ if (isset($_GET["id"])){
                 </li>
               </ul>
             </li>
-            <!-- Botão Toggle de ADM
-            <li>
-              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-            </li>-->
+
           </ul>
         </div>
       </nav>
     </header>
-
-    <!-- Barra Lateral Links -->
+    
+    <!-- MENU LATERAL -->
     <aside class="main-sidebar">
       <section class="sidebar">
         <div class="user-panel">
@@ -98,7 +113,6 @@ if (isset($_GET["id"])){
           </div>
           <div class="pull-left info ">
             <p><?php echo $_SESSION['nome']; ?></p>
-            <!--NOME COMPLETO-->
             <a href="#">
               <i class="fa fa-circle text-success"> <?php echo $_SESSION['tipo']; ?></i>
             </a>
@@ -106,95 +120,95 @@ if (isset($_GET["id"])){
 
         </div>
 
-        <!-- Menu -->
+        <!-- OPÇÕES DE MENU PARA CADA TIPO DE USUÁRIO -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MENU</li>
-          <li class="active"><a href="index.php"><i class="fa fa-home"></i> <span>INICIO</span></a></li>
+          <li><a href="index.php"><i class="fa fa-home"></i> <span class="text-uppercase">Inicio</span></a></li>
 
-          <?php if ($_SESSION['tipo'] == "Aluno"){ ?>
-          <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Quadro de notas</span></a></li>
-          <?php } ?>
-
-          <?php if ($_SESSION['tipo'] == "Professor"){ ?>
-          <li><a href="notas.php"><i class="fa fa-clipboard"></i> <span>Lançar notas</span></a></li>
-          <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
-          <?php } ?>
-
+          <!-- OPÇÕES APENAS DE ADMINISTRADORES -->
           <?php if ($_SESSION['tipo'] == "Administrador"){ ?>
-          <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span>Adicionar Calendario</span></a></li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-plus-square"></i> <span>Cadastros</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu text-center">
-              <li><a href="cadastro.php?id=0">Aluno</a></li>
-              <li><a href="cadastro.php?id=1">Professor</a></li>
-              <li><a href="cadastro.php?id=2">Turma</a></li>
-              <li><a href="cadastro.php?id=3">Disciplinas</a></li>
-            </ul>
-          </li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-id-badge"></i><span>Matricula</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu text-center">
-              <li><a href="matricula.php?id=0">Aluno na turma</a></li>
-              <li><a href="matricula.php?id=1">Professor para disciplina</a></li>
-            </ul>
-          </li>
+            <li><a href="addcalendario.php"><i class="fa fa-calendar"></i> <span class="text-uppercase">Adicionar Calendario</span></a></li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-plus-square"></i> <span class="text-uppercase">Cadastros</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu text-center">
+                <li><a href="cadastro.php?id=0" class="text-uppercase">Aluno</a></li>
+                <li><a href="cadastro.php?id=1" class="text-uppercase">Professor</a></li>
+                <li><a href="cadastro.php?id=2" class="text-uppercase">Turma</a></li>
+                <li><a href="cadastro.php?id=3" class="text-uppercase">Disciplina</a></li>
+              </ul>
+            </li>
+            <li class="treeview active">
+              <a href="#"><i class="fa fa-id-badge"></i><span class="text-uppercase">Matricula</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu text-center">
+                <li <?php if ($id == "0") echo "class='active'" ?>><a href="matricula.php?id=0" class="text-uppercase">Aluno na turma</a></li>
+                <li <?php if ($id == "1") echo "class='active'" ?>><a href="matricula.php?id=1" class="text-uppercase">Professor para disciplina</a></li>
+              </ul>
+            </li>
           <?php } ?>
         </ul>
       </section>
     </aside>
+
+    <!-- ÁREA DE CONTEÚDO -->
+
+    <!-- MATRICULAS ALUNO -->
     <?php if ($id == "0"){ ?>
-      <!-- Titulo da Área com conteudo -->
       <div class="content-wrapper">
         <section class="content-header">
           <h1>
-            Matricula de Aluno
-            <!--NOME DA PAGINA-->
+            MATRICULA DE ALUNO
           </h1>
         </section>
-
-        <!-- Área com Conteudo -->
         <section class="content">
           <div class="col-md-12">
               <div class="box box-primary" >
                   <div class="box-body">
+
+                    <!-- TURMAS -->
                     <div class="form-group col-md-6">
                       <label>Turmas</label>
                       <select class="form-control" id="turma" name="turma">
                         <option value="" id="0">Selecione uma turma</option>
                         <?php
-                          $sql_code = "SELECT `idTurma` FROM `turma`";
-                          $results = mysqli_query(DBConecta(),$sql_code);
-                          if (mysqli_num_rows($results)){
-                            while($turmas = mysqli_fetch_assoc($results)){
+                          $query = BuscaRetornaQuery($conexao, "turma");
+                          if ($query){
+                            while($turmas = mysqli_fetch_assoc($query)){
                               echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
                             }
                           }
                          ?>
                       </select>
                     </div>
+
+                    <!-- ALUNOS -->
                     <div class="form-group col-md-6">
                       <label>Alunos</label>
                       <select class="form-control" id="aluno" name="aluno">
                         <option value="" id="0">Selecione um nome</option>
                         <?php
-                          $sql_code = "SELECT `idAluno`, `nome`, `sobrenome` FROM `aluno`";
-                          $results = mysqli_query(DBConecta(),$sql_code);
-                          if (mysqli_num_rows($results)){
-                            while($alunos = mysqli_fetch_assoc($results)){
+                          $query = BuscaRetornaQuery($conexao, "aluno");
+                          if ($query){
+                            while($alunos = mysqli_fetch_assoc($query)){
                               $nomeCompleto = $alunos["nome"]." ".$alunos["sobrenome"];
-                              echo "<option value=".$alunos["idAluno"].">".$nomeCompleto."</option>";
+                              echo "<option value=".$alunos["idAluno"].">".$alunos["idAluno"]." - ".$nomeCompleto."</option>";
                             }
                           }
                          ?>
                       </select>
+                    </div>
+
+                    <!-- SEMESTRE -->
+                    <div class="form-group col-md-1">
+                      <label for="ano">Ano: </label>
+                      <input type="text" class="form-control" id="ano" name="ano" placeholder="AAAA" required>
                     </div>
                     <div class="form-group col-md-3" >
                       <label>Semestre: </label>
@@ -209,90 +223,99 @@ if (isset($_GET["id"])){
                         </label>
                       </div>
                     </div>
-                    <p class="text-muted col-md-12">OBS: Para buscar não precisa selecionar Alunos. A busca ocorre só com os valores Turma e Semestre</p>
+
+                    <p class="text-muted col-md-12">OBS: Para realizar uma busca. Basta selecionar os campos: Turma, Ano e Semestre</p>
                   </div>
                   <div class="box-footer ">
-                    <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
-                    <button class="btn btn-success" id="buscar" style="margin-right: 5px;">Buscar</button>
-                    <a href="matricula.php?id=0" class="btn btn-warning" id="cancela">Cancelar</a>
+                    <button class="btn btn-primary" id="btn-salva" style="margin-right: 5px;">Salvar</button>
+                    <button class="btn btn-sucundary" id="btn-buscar" style="margin-right: 5px;">Buscar</button>
+                    <a href="matricula.php?id=0" class="btn btn-light" id="cancela">Cancelar</a>
                   </div>
             </div>
           </div>
-
+          
           <script>
-                // APAGANDO
-                function apaga(turma, aluno, semestre){
-                  $.ajax({
-                    type: 'POST',
-                    url: 'deleteMatriculaNota.php',
-                    data: 'idTurma='+turma+'&idAluno='+aluno+'&semestre='+semestre,
-                    beforeSend: function () {
-                      $("#apaga").html("Apagando...")
-                    },
-                    success: function (html) {
-                      $("#buscar").html("Atualizar");
-                      $('#status').html(html);
-                    }
-                  })
+
+            // APAGA REGISTRO
+            function apagaRegistro(turma, aluno, semestre){
+              $.ajax({
+                type: 'POST',
+                url: './controllers/removeMatriculasNotas.php',
+                data: 'idTurma='+turma+'&idAluno='+aluno+'&semestre='+semestre,
+                beforeSend: function () {
+                  $("#btn-apaga").html("Apagando...")
+                },
+                success: function (html) {
+                  $("#btn-buscar").html("Atualizar");
+                  $('#status').html(html);
                 }
-                $(document).ready(function () {
-                  // SALVANDO
-                  $("#salva").on("click", function () {
-                    let idTurma = $("#turma").val();
-                    let idAluno = $("#aluno").val();
-                    let semestre = document.getElementsByName("semestre");
-                    for (let i = 0; i < semestre.length; i++) {
-                      if (semestre[i].checked) {
-                        semestre = semestre[i].value
-                      }
-                    }
+              })
+            }
 
-                    $.ajax({
-                      type: 'POST',
-                      url: 'salvaEMontaTabela.php',
-                      data: 'idTurma='+idTurma+'&idAluno='+idAluno+'&semestre='+semestre,
-                      beforeSend: function () {
-                        $("#salva").html("Enviando...")
-                      },
-                      success: function (html) {
-                        $("#salva").html("Salvar")
-                        $('#tabela').append(html);
-                      }
-                    });
-                  })
-                  // BUSCANDO
-                  $("#buscar").on("click", function(){
-                    let idTurma = $("#turma").val();
-                    let semestre = document.getElementsByName("semestre");
-                    for (let i = 0; i < semestre.length; i++) {
-                      if (semestre[i].checked) {
-                        semestre = semestre[i].value
-                      }
-                    }
-                    $('#tabela').empty();
-                    $.ajax({
-                      type: "POST",
-                      url: "buscaTabela.php",
-                      data: "idTurma="+idTurma+"&semestre="+semestre,
-                      beforeSend: function(){
-                        $("#buscar").html("Buscando...")
-                      },
-                      success: function(html){
-                        console.log(html);
-                        $("#buscar").html("Buscar")
-                        $('#tabela').append(html);
-                      }
-                    })
+            $(document).ready(function () {
 
-                  })
+              // SALVANDO MATRICULA
+              $("#btn-salva").on("click", function () {
+                const idTurma = $("#turma").val();
+                const idAluno = $("#aluno").val();
+                let semestre = document.getElementsByName("semestre");
+                for (let i = 0; i < semestre.length; i++) {
+                  if (semestre[i].checked) {
+                    semestre = semestre[i].value
+                  }
+                }
+                const ano = $("#ano").val();
+
+                $.ajax({
+                  type: 'POST',
+                  url: './controllers/salvaEMontaTabela.php',
+                  data: 'idTurma='+idTurma+'&idAluno='+idAluno+'&semestre='+semestre+'&ano='+ano,
+                  beforeSend: function () {
+                    $("#btn-salva").html("Enviando...")
+                  },
+                  success: function (html) {
+                    $("#btn-salva").html("Salvar")
+                    $('#tabela').append(html);
+                  }
+                });
+              })
+
+              // BUSCANDO REGISTRO
+              $("#btn-buscar").on("click", function(){
+                let idTurma = $("#turma").val();
+                let semestre = document.getElementsByName("semestre");
+                for (let i = 0; i < semestre.length; i++) {
+                  if (semestre[i].checked) {
+                    semestre = semestre[i].value
+                  }
+                }
+                const ano = $("#ano").val();
+                $('#tabela').empty();
+                $.ajax({
+                  type: "POST",
+                  url: "./controllers/buscaTabela.php",
+                  data: "idTurma="+idTurma+"&semestre="+semestre+'&ano='+ano,
+                  beforeSend: function(){
+                    $("#btn-buscar").html("Buscando...")
+                  },
+                  success: function(html){
+                    $("#btn-buscar").html("Buscar")
+                    $('#tabela').append(html);
+                  }
                 })
-              </script>
+
+              })
+            })
+
+          </script>
+
+          <!-- TABELA -->
           <div class="row">
             <div class="col-md-12">
               <div id="status"></div>
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Notas Lançadas</h3>
+                  <h3 class="box-title">MATRICULAS LANÇADAS</h3>
                 </div>
                 <div class="box-body table-responsive ">
                   <table class="table table-hover">
@@ -304,9 +327,7 @@ if (isset($_GET["id"])){
                         <th>Opção</th>
                       </tr>
                     </thead>
-                    <tbody id="tabela">
-
-                    </tbody>
+                    <tbody id="tabela"></tbody>
                   </table>
                 </div>
               </div>
@@ -314,30 +335,30 @@ if (isset($_GET["id"])){
           </div>
         </section>
       </div>
-    <?php }elseif($id == "1"){ ?>
-      <!-- Titulo da Área com conteudo -->
+    <?php }
+
+    // MATRICULAS PROFESSOR
+    elseif($id == "1"){ ?>
       <div class="content-wrapper">
         <section class="content-header">
           <h1>
-            Cadastro de Professor a Turma e Disciplina
-            <!--NOME DA PAGINA-->
+            CADASTRO DE PROFESSOR A TURMA E DISCIPLINA
           </h1>
         </section>
-
-        <!-- Área com Conteudo -->
         <section class="content">
           <div class="col-md-12">
               <div class="box box-primary" >
                   <div class="box-body">
+
+                    <!-- PROFESSOR -->
                     <div class="form-group col-md-6">
                       <label>Professor</label>
                       <select class="form-control" id="professor" name="professor" required>
                         <option value="" id="0">Selecione um Professor</option>
                         <?php
-                          $sql_code = "SELECT `idProfessor`, `nome`, `sobrenome` FROM `professor`";
-                          $results = mysqli_query(DBConecta(),$sql_code);
-                          if (mysqli_num_rows($results)){
-                            while($professores = mysqli_fetch_assoc($results)){
+                          $query = BuscaRetornaQuery($conexao, "professor");
+                          if ($query){
+                            while($professores = mysqli_fetch_assoc($query)){
                               $nomeCompleto = $professores["nome"]." ".$professores["sobrenome"];
                               echo "<option value=".$professores["idProfessor"].">".$nomeCompleto."</option>";
                             }
@@ -345,35 +366,43 @@ if (isset($_GET["id"])){
                          ?>
                       </select>
                     </div>
+
+                    <!-- TURMAS -->
                     <div class="form-group col-md-6">
                       <label>Turmas</label>
                       <select class="form-control" id="turma" name="turma" required>
                         <option value="" id="0">Selecione uma turma</option>
                         <?php
-                          $sql_code = "SELECT `idTurma` FROM `turma`";
-                          $results = mysqli_query(DBConecta(),$sql_code);
-                          if (mysqli_num_rows($results)){
-                            while($turmas = mysqli_fetch_assoc($results)){
+                          $query = BuscaRetornaQuery($conexao, "turma");
+                          if ($query){
+                            while($turmas = mysqli_fetch_assoc($query)){
                               echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
                             }
                           }
                          ?>
                       </select>
                     </div>
+
+                    <!-- DISCIPLINAS -->
                     <div class="form-group col-md-6">
                       <label>Disciplina</label>
                       <select class="form-control" id="disciplina" name="disciplina" required>
                         <option value="" id="0">Selecione uma disciplina</option>
                         <?php
-                          $sql_code = "SELECT * FROM `disciplina` ORDER BY nome asc";
-                          $results = mysqli_query(DBConecta(),$sql_code);
-                          if (mysqli_num_rows($results)){
-                            while($disciplinas = mysqli_fetch_assoc($results)){
+                          $query = BuscaRetornaQuery($conexao, "disciplina");
+                          if ($query){
+                            while($disciplinas = mysqli_fetch_assoc($query)){
                               echo "<option value=".$disciplinas["idDisciplina"].">".$disciplinas["nome"]."</option>";
                             }
                           }
                          ?>
                       </select>
+                    </div>
+
+                    <!-- SEMESTRE -->
+                    <div class="form-group col-md-1">
+                      <label for="ano">Ano: </label>
+                      <input type="text" class="form-control" id="ano" name="ano" placeholder="AAAA" required>
                     </div>
                     <div class="form-group col-md-3" >
                       <label>Semestre: </label>
@@ -388,92 +417,98 @@ if (isset($_GET["id"])){
                         </label>
                       </div>
                     </div>
-                    <p class="text-muted col-md-12">OBS: Para buscar não precisa selecionar Professor. A busca ocorre só com os valores Turma, Disciplina e Semestre</p>
+
+                    <p class="text-muted col-md-12">OBS: PARA BUSCAR POR MATRICULAS DE PROFESSORES, BASTA SELECIONAR TURMA, DISCIPLINA, ANO E SEMESTRE</p>
                   </div>
                   <div class="box-footer ">
                     <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
-                    <button class="btn btn-success" id="buscar" style="margin-right: 5px;">Buscar</button>
-                    <a href="matricula.php?id=1" class="btn btn-warning" id="cancela">Cancelar</a>
+                    <button class="btn btn-secundary" id="buscar" style="margin-right: 5px;">Buscar</button>
+                    <a href="matricula.php?id=1" class="btn btn-light" id="cancela">Cancelar</a>
                   </div>
             </div>
           </div>
 
           <script>
-                // APAGANDO
-                function apaga(turma, professor, semestre, disciplina){
-                  $.ajax({
-                    type: 'POST',
-                    url: 'deleteMatriculaNota.php',
-                    data: 'idTurma='+turma+'&idProfessor='+professor+'&semestre='+semestre+'&idDisciplina='+disciplina,
-                    beforeSend: function () {
-                      $("#apaga").html("Apagando...")
-                    },
-                    success: function (html) {
-                      $("#buscar").html("Atualizar");
-                      $('#status').html(html);
-                    }
-                  })
+
+            // APAGANDO REGISTRO
+            function apagaRegistro(turma, professor, semestre, disciplina){
+              $.ajax({
+                type: 'POST',
+                url: './controllers/removeMatriculasNotas.php',
+                data: 'idTurma='+turma+'&idProfessor='+professor+'&semestre='+semestre+'&idDisciplina='+disciplina,
+                beforeSend: function () {
+                  $("#btn-apaga").html("Apagando...")
+                },
+                success: function (html) {
+                  $("#btn-buscar").html("Atualizar");
+                  $('#status').html(html);
                 }
-                $(document).ready(function () {
+              })
+            }
 
-                  // SALVANDO
-                  $("#salva").on("click", function () {
-                    let idTurma = $("#turma").val();
-                    let idProfessor = $("#professor").val();
-                    let idDisciplina = $("#disciplina").val();
-                    let semestre = document.getElementsByName("semestre");
-                    for (let i = 0; i < semestre.length; i++) {
-                      if (semestre[i].checked) {
-                        semestre = semestre[i].value
-                      }
-                    }
-                    $.ajax({
-                      type: 'POST',
-                      url: 'salvaEMontaTabela.php',
-                      data: 'idTurma='+idTurma+'&idProfessor='+idProfessor+'&semestre='+semestre+'&idDisciplina='+idDisciplina,
-                      beforeSend: function () {
-                        $("#salva").html("Enviando...")
-                      },
-                      success: function (html) {
-                        $("#salva").html("Salvar")
-                        $('#tabela').append(html);
-                      }
-                    });
-                  })
+            $(document).ready(function () {
 
-                  // BUSCANDO
-                  $("#buscar").on("click", function(){
-                    let idTurma = $("#turma").val();
-                    let idDisciplina = $("#disciplina").val();
-                    let semestre = document.getElementsByName("semestre");
-                    for (let i = 0; i < semestre.length; i++) {
-                      if (semestre[i].checked) {
-                        semestre = semestre[i].value
-                      }
-                    }
-                    $('#tabela').empty();
-                    $.ajax({
-                      type: "POST",
-                      url: "buscaTabela.php",
-                      data: "idTurma="+idTurma+"&semestre="+semestre+'&idDisciplina='+idDisciplina,
-                      beforeSend: function(){
-                        $("#buscar").html("Buscando...")
-                      },
-                      success: function(html){
-                        console.log(html);
-                        $("#buscar").html("Buscar");
-                        $('#tabela').append(html);
-                      }
-                    })
-                  })
+              // SALVANDO MATRICULA
+              $("#btn-salva").on("click", function () {
+                let idTurma = $("#turma").val();
+                let idProfessor = $("#professor").val();
+                let idDisciplina = $("#disciplina").val();
+                let semestre = document.getElementsByName("semestre");
+                for (let i = 0; i < semestre.length; i++) {
+                  if (semestre[i].checked) {
+                    semestre = semestre[i].value
+                  }
+                }
+                $.ajax({
+                  type: 'POST',
+                  url: './controllers/salvaEMontaTabela.php',
+                  data: 'idTurma='+idTurma+'&idProfessor='+idProfessor+'&semestre='+semestre+'&idDisciplina='+idDisciplina,
+                  beforeSend: function () {
+                    $("#btn-salva").html("Enviando...")
+                  },
+                  success: function (html) {
+                    $("#btn-salva").html("Salvar")
+                    $('#tabela').append(html);
+                  }
+                });
+              })
+
+              // BUSCANDO REGISTROS
+              $("#btn-buscar").on("click", function(){
+                let idTurma = $("#turma").val();
+                let idDisciplina = $("#disciplina").val();
+                let semestre = document.getElementsByName("semestre");
+                for (let i = 0; i < semestre.length; i++) {
+                  if (semestre[i].checked) {
+                    semestre = semestre[i].value
+                  }
+                }
+                const ano = $("#ano").val();
+                $('#tabela').empty();
+
+                $.ajax({
+                  type: "POST",
+                  url: "./controllers/buscaTabela.php",
+                  data: "idTurma="+idTurma+"&semestre="+semestre+'&idDisciplina='+idDisciplina+'&ano='+ano,
+                  beforeSend: function(){
+                    $("#btn-buscar").html("Buscando...")
+                  },
+                  success: function(html){
+                    $("#btn-buscar").html("Buscar");
+                    $('#tabela').append(html);
+                  }
                 })
-              </script>
+              })
+            })
+          </script>
+
+          <!-- TABELA -->
           <div class="row">
             <div class="col-md-12">
               <div id="status"></div>
               <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title">Notas Lançadas</h3>
+                  <h3 class="box-title">MATRICULAS LANÇADAS</h3>
                 </div>
                 <div class="box-body table-responsive ">
                   <table class="table table-hover">
@@ -486,9 +521,7 @@ if (isset($_GET["id"])){
                         <th>Opção</th>
                       </tr>
                     </thead>
-                    <tbody id="tabela">
-
-                    </tbody>
+                    <tbody id="tabela"></tbody>
                   </table>
                 </div>
               </div>
@@ -498,7 +531,7 @@ if (isset($_GET["id"])){
       </div>
     <?php } ?>
     
-    <!-- Rodapé -->
+    <!-- RODAPÉ -->
     <footer class="main-footer">
       <div class="pull-right hidden-xs">
         <i>Todos os direitos reservados</i>
@@ -509,8 +542,6 @@ if (isset($_GET["id"])){
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
-  <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/fastclick/lib/fastclick.js"></script>
   <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>
