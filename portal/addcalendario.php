@@ -121,7 +121,7 @@ if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="#" class="btn btn-default btn-flat">Alterar senha</a>
+                    <a href="redefineSenhaPortal.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
