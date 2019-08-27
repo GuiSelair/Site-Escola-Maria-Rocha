@@ -660,7 +660,7 @@ if (isset($_GET['id'])){
           <div class="row">
 
             <!-- DISCIPLINAS -->
-            <div class="col-md-6">
+            <div class="col-md-8">
               <div class="box box-primary">
                 <div class="box-header">
                   <h3 class="box-title text-uppercase">Disciplinas Cadastradas</h3>
@@ -672,6 +672,7 @@ if (isset($_GET['id'])){
                         <th>ID</th>
                         <th>Disciplina</th>
                         <th>Pré-Requisito(ID)</th>
+                        <th>Curso</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -681,10 +682,13 @@ if (isset($_GET['id'])){
                           while ($disciplinas = mysqli_fetch_assoc($query)){
                             if ($disciplinas["prerequisito"]){
                               $nomeDisciplinaPreRequisito = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $disciplinas["prerequisito"]);
-                              echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$nomeDisciplinaPreRequisito["nome"]."</td></tr>";
+                              $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $disciplinas["idCurso"]);
+                              echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>".$nomeDisciplinaPreRequisito["nome"]."</td><td>".$nomeCurso["nome"]."</td></tr>";
                             }
-                            else 
-                              echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td></tr>";
+                            else{
+                              $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $disciplinas["idCurso"]);
+                              echo "<tr><td>".$disciplinas["idDisciplina"]."</td><td>".$disciplinas["nome"]."</td><td>-</td><td>".$nomeCurso["nome"]."</td></tr>";
+                            }
                           }
                         }
                       ?>
@@ -695,7 +699,7 @@ if (isset($_GET['id'])){
             </div>
 
             <!-- TURMAS -->
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="box box-primary">
                 <div class="box-header">
                   <h3 class="box-title text-uppercase">Turmas Cadastradas</h3>

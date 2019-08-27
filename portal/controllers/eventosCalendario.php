@@ -44,27 +44,6 @@ if ($_SESSION["tipo"] == "Aluno"){
 				}
 			}
 		}
-		/*
-		for ($i = 0; $i < count($turmaAlunoResults); $i++){
-			$query = BuscaRetornaQuery($conexao, "calendario", "idTurma", $turmaAlunoResults[$i]["idTurma"]);
-			if ($query){
-				while ($noticeTurmaNum = mysqli_fetch_assoc($query)){
-					$sql_code = "SELECT * FROM `aluno-disciplina` WHERE idDisciplina = ".$noticeTurmaNum["idDisciplina"]." AND `idAluno`=".$_SESSION["id"];
-					$results = mysqli_query($conexao, $sql_code);
-					if ($results && mysqli_num_rows($results)){
-					  $conceito = mysqli_fetch_assoc($results);
-					  if ($conceito["conceito"] != "Apto"){
-						$noticeTurmaResults[] = $noticeTurmaNum;
-					  }
-					}
-					else{
-					  $noticeTurmaResults[] = $noticeTurmaNum;	// IDs DAS NOTICIAS QUE REFERENCIAM ESTA TURMA
-					}
-				}
-			}
-		}
-		*/
-		//var_dump($noticeTurmaResults);
 		echo json_encode($noticeTurmaResults);
 	}
 }

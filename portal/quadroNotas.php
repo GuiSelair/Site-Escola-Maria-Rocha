@@ -30,6 +30,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
   <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -215,45 +216,47 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                 <!--MATRIZ CURRICULAR-->
                 <div class="tab-pane" id="tab_2">
                   <div class="box-body table-responsive ">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Disciplina</th>
-                          <th>Conceito</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tabela">
-                        <?php
-                            $idAluno = $_SESSION["id"];
-                            $AllCursos = BuscaTodosCursos($conexao, $idAluno);
-                            foreach ($AllCursos as $curso => $idCurso) {
-                              $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $idCurso);
-                              echo '<h4> -- Curso '.$nomeCurso["nome"].' --</h4>';
-                              $sql_code = "SELECT * FROM `disciplina` WHERE `idCurso` = 1";
-                              $query = mysqli_query($conexao, $sql_code);
-                              if ($query && mysqli_num_rows($query)){
-                                while ($response = mysqli_fetch_assoc($query)){
-                                  $dados = ConfereAprovacao($conexao, $response["idDisciplina"], $idAluno); 
-                                  switch ($dados["conceitoDisciplina"]) {
-                                    case 'APTO':
-                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-success'>".$dados["conceitoDisciplina"]."</span></td></tr>";
-                                      break;
-                                    case "NÃO APTO":
-                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-danger'>".$dados["conceitoDisciplina"]."</span></td></tr>";
-                                      break;
-                                    case "AUSENTE":
-                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-info btn-lg'>".$dados["conceitoDisciplina"]."</span></td></tr>";
-                                      break;                             
-                                    default:
-                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-warning'>".$dados["conceitoDisciplina"]."</span></td></tr>";
-                                      break;
-                                  }
-                                } 
-                              }  
-                            };                                               
-                          ?> 
-                      </tbody>
-                    </table>
+                    <?php
+                      $idAluno = $_SESSION["id"];
+                      $AllCursos = BuscaTodosCursos($conexao, $idAluno);
+                      $todosCursos = [];
+                      while ($idCurso = mysqli_fetch_assoc($AllCursos)) {
+                          $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $idCurso["idCurso"]);
+                          echo '<h4> -- Curso '.$nomeCurso["nome"].' --</h4>';
+                          echo "<table class='table table-hover'>
+                                  <thead>
+                                    <tr>
+                                      <th>Disciplina</th>
+                                      <th>Conceito</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id='tabela'>";
+                          $query = BuscaRetornaQuery($conexao, "disciplina", "idCurso", $idCurso["idCurso"]);
+                          if ($query){
+                            while ($response = mysqli_fetch_assoc($query)){
+                              $dados = ConfereAprovacao($conexao, $response["idDisciplina"], $idAluno); 
+                              switch ($dados["conceitoDisciplina"]) {
+                                case 'APTO':
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-success'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;
+                                case "NÃO APTO":
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-danger'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;
+                                case "AUSENTE":
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-info btn-lg'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;                             
+                                default:
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-warning'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;
+                              }
+                            } 
+                          }  
+                          echo "
+                          </tbody>
+                        </table>";                            
+                      };  
+                                                                
+                    ?> 
                   </div>
                 </div>
               </div>

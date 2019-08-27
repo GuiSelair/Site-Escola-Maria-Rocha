@@ -76,10 +76,10 @@
     }
 
     function BuscaTodosCursos($conexao, $idAluno){
-        $sql_code = "SELECT `turma`.`idCurso` FROM `turma-aluno`, `turma` WHERE `turma-aluno`.`idAluno`= $idAluno AND `turma-aluno`.`idTurma`=`turma`.`idTurma`";
+        $sql_code = "SELECT DISTINCT `turma`.`idCurso` FROM `turma-aluno`, `turma` WHERE `turma-aluno`.`idAluno`= '$idAluno' AND `turma-aluno`.`idTurma`=`turma`.`idTurma`";
         $query = mysqli_query($conexao, $sql_code);
         if ($query && mysqli_num_rows($query)){
-            return mysqli_fetch_assoc($query);
+            return $query;
         }
         return null;
     }
