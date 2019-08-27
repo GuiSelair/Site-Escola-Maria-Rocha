@@ -70,7 +70,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="./redefine.php" class="btn btn-default btn-flat">Alterar senha</a>
+                    <a href="./redefineSenhaPortal.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -189,13 +189,13 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                                   if ($dados["conceitoDisciplina"] != "APTO"){
                                     switch ($avaliacoes["conceito"]) {
                                       case 'Apto':
-                                        echo "<tr><td></td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-success'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        echo "<tr><td>".$avaliacoes["nomeAvaliacao"]."</td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-success text-uppercase'>".$avaliacoes["conceito"]."</span></td></tr>";
                                         break;
                                       case "Não Apto":
-                                        echo "<tr><td></td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-danger'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        echo "<tr><td>".$avaliacoes["nomeAvaliacao"]."</td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-danger text-uppercase'>".$avaliacoes["conceito"]."</span></td></tr>";
                                         break;
                                       case "Ausente":
-                                        echo "<tr><td></td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-dark'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        echo "<tr><td>".$avaliacoes["nomeAvaliacao"]."</td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-info text-uppercase'>".$avaliacoes["conceito"]."</span></td></tr>";
                                         break;
                                       
                                     }
@@ -242,7 +242,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                                       echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-danger'>".$dados["conceitoDisciplina"]."</span></td></tr>";
                                       break;
                                     case "AUSENTE":
-                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-dark'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                      echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-info btn-lg'>".$dados["conceitoDisciplina"]."</span></td></tr>";
                                       break;                             
                                     default:
                                       echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-warning'>".$dados["conceitoDisciplina"]."</span></td></tr>";

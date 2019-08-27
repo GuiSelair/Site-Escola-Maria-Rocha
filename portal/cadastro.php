@@ -110,7 +110,7 @@ if (isset($_POST['edita'])){
     case '3':
       $nomeDisc = $_POST['nome'];
       $idDisc = $_POST["idDisciplina"];
-      if (!empty($_POST["prerequisito"])){
+      if (empty($_POST["prerequisito"])){
         $DiscPre = "";
       }
       else{
@@ -265,7 +265,7 @@ if (isset($_POST['salva'])){
     case '3':
       $nomeDisc = $_POST['nome'];
       $idCurso = $_POST["idCurso"];
-      if (!empty($_POST["prerequisito"])){
+      if (empty($_POST["prerequisito"])){
         $DiscPre = "";
       }
       else{

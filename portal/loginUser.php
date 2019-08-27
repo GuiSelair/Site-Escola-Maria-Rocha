@@ -14,7 +14,7 @@ if(isset($_POST['entrar'])) {
     $conn = DBConecta();
     $login = mysqli_escape_string($conn, $_POST['login']);
     $senha = mysqli_escape_string($conn, $_POST['senha']);
-    $cript = md5($senha);
+    $cript = CriptografiaSenhas($senha);
     $tipoUsuario = ConfereTipoUsuario($conn, $login, $cript);
     
     if($tipoUsuario["tipo"]){

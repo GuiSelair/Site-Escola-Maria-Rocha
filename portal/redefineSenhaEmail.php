@@ -10,8 +10,8 @@ include_once("../conexao/function.php");
 $conexao = DBConecta();
 
 // VERIFICA SE A HASH ESTÁ NO BD
-if (!isset($_GET["hash"]) || VerificaHash($conexao, $_GET["hash"])){
-    header("location: ./index.php");
+if (!isset($_GET["hash"]) || !VerificaHash($conexao, $_GET["hash"])){
+    header("location: ./loginUser.php");
 }
 
 $hash = $_GET["hash"];
@@ -20,21 +20,20 @@ if (isset($_POST["redefine"]) && $_POST["senha"] != " "){
     $senha = mysqli_escape_string($conexao, $_POST['senha']);
     $senhaConfirma = mysqli_escape_string($conexao, $_POST['senhaConfirma']);
     if ($senha === $senhaConfirma){
-        $cript = md5($senha);
         $nomeTabela = ConfereTipoUsuario($conexao, null, null, $email);
-        if(InsereNovaSenha($conexao, $cript, $nomeTabela, $email)){
+        if(InsereNovaSenha($conexao, $senha, $nomeTabela, "email", $email)){
             echo "<div class='alert alert-success alert-dismissable status'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Senha alterada com sucesso!</strong>
             </div>";
             RemoveHashEEmail($conexao, $email);
-            Redireciona("index.php");
+            Redireciona("./loginUser.php");
         }else{
             echo "<div class='alert alert-warning alert-dismissable status'>
             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
             <strong>Erro ao salvar senha. Tente mair tarde</strong>
             </div>";
-            Redireciona("index.php");
+            Redireciona("./loginUser.php");
         }
     }
 }

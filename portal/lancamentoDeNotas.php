@@ -210,6 +210,12 @@ if ($_SESSION["tipo"] == "Professor"){
                 <input type="date" class="form-control" id="data" name="dataAvaliacao" required>
               </div>
 
+              <!-- NOME DA AVALIAÇÃO -->
+              <div class="form-group col-md-3">
+                <label for="emailUser">Nome da avaliação</label>
+                <input type="text" class="form-control" id="nomeAvaliacao" name="nome" placeholder="Nome da Avaliação" required>
+              </div>
+
               <!-- CONCEITO -->
               <div class="form-group col-md-5">
                 <label>Conceito: </label>
@@ -223,8 +229,8 @@ if ($_SESSION["tipo"] == "Professor"){
                     NÃO APTO
                   </label>
                   <label style="margin-left: 5px;">
-                    <input type="radio" id="mensao" value="Faltou" name="mensao">
-                    NÃO COMPARECEU
+                    <input type="radio" id="mensao" value="Ausente" name="mensao">
+                    AUSENTE
                   </label>
                 </div>
               </div>
@@ -324,10 +330,11 @@ if ($_SESSION["tipo"] == "Professor"){
 
       // SALVA
       $("#salva").on("click", function () {
-        let idDisciplina = $("#disciplina").val();
-        let idTurma = $("#turma").val();
-        let idAluno = $("#aluno").val();
-        let data = $("#data").val();
+        const idDisciplina = $("#disciplina").val();
+        const idTurma = $("#turma").val();
+        const idAluno = $("#aluno").val();
+        const data = $("#data").val();
+        const nome = $("#nomeAvaliacao").val();
         let mensao = document.getElementsByName("mensao");
         for (let i = 0; i < mensao.length; i++) {
           if (mensao[i].checked) {
@@ -348,7 +355,7 @@ if ($_SESSION["tipo"] == "Professor"){
           type: 'POST',
           url: './controllers/salvaMatriculasNotas.php',
           data: 'idTurma=' + idTurma + '&idDisciplina=' + idDisciplina + '&idAluno=' + idAluno +
-            '&data=' + data + '&mensao=' + mensao + '&final=' + final,
+            '&data=' + data + '&mensao=' + mensao + '&final=' + final + '&nome=' + nome,
           beforeSend: function () {
             $("#salva").html("Enviando...")
           },

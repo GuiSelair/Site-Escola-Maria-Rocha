@@ -28,7 +28,7 @@ if ($_SESSION["tipo"] == "Professor"){
 }
 
 // FUNÇÃO SALVA O EVENTO AO BANCO DE DADOS
-if (isset($_POST["salva"])){
+if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
   $turma = $_POST["turma"];
   $cor = $_POST["cor"];
   $titulo = $_POST["titulo"];

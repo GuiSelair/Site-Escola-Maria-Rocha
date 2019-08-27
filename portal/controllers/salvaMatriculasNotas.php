@@ -17,22 +17,28 @@ if (!isset($_SESSION["id"])){
 $conexao = DBConecta();
 
 // FUNÇÃO SALVA A NOTA DO ALUNO E RETORNA A LINHA INSERIDA PARA SER MOSTRADA NA TABELA
-if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisciplina"]) && isset($_POST["final"]) && isset($_POST["idTurma"])){
+if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisciplina"]) && isset($_POST["final"]) && isset($_POST["idTurma"]) && isset($_POST["nome"])){
     $idTurma = $_POST["idTurma"];
     $idDisciplina = $_POST["idDisciplina"];
     $idAluno = $_POST["idAluno"];
     $mensao = $_POST["mensao"];
     $final = $_POST["final"];
     $data = $_POST["data"];
+    $nome = $_POST["nome"];
 
-    $sql_code = "INSERT INTO `avalhacao`(`idDisciplina`, `idTurma`, `idAluno`, `conceito`, `final`, `data`) VALUES ($idDisciplina,$idTurma,'$idAluno','$mensao',$final, '$data')";
+    $sql_code = "INSERT INTO `avalhacao`(`idDisciplina`, `idTurma`, `idAluno`, `nomeAvaliacao`, `conceito`, `final`, `data`) VALUES ($idDisciplina,$idTurma,'$idAluno', '$nome', '$mensao',$final, '$data')";
     $results = mysqli_query($conexao, $sql_code);
 
     if ($results){
 
+        $sql_code = "SELECT `idAvalhacao` FROM `avalhacao` WHERE `idDisciplina` = $idDisciplina AND `idAluno` = '$idAluno' AND `data` = '$data'";
+        $results = mysqli_query($conexao, $sql_code);
+        $idAvalhacao = mysqli_fetch_assoc($results);
+
         //  VERIFICA SE É A NOTA FINAL DA DISCIPLINA
         if ($final != "0"){
-            $sql_code = "INSERT INTO `aluno-disciplina`(`idAluno`, `idDisciplina`, `conceito`) VALUES ('$idAluno',$idDisciplina,'$mensao')";
+            $idAvaliacao = $idAvalhacao['idAvalhacao'];
+            $sql_code = "INSERT INTO `aluno-disciplina`(`idAluno`, `idDisciplina`, `conceito`, `idAvalhacao`) VALUES ('$idAluno',$idDisciplina,'$mensao', $idAvaliacao)";
             $results = mysqli_query($conexao, $sql_code);
         }
 
@@ -41,15 +47,11 @@ if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisci
         $dataNova = date("d/m/Y", strtotime($data));
         $nomeCompleto = $nomeAluno["nome"]." ".$nomeAluno["sobrenome"];
 
-        $sql_code = "SELECT `idAvalhacao` FROM `avalhacao` WHERE `idDisciplina` = $idDisciplina AND `idAluno` = '$idAluno' AND `data` = '$data'";
-        $results = mysqli_query($conexao, $sql_code);
-        $idAvalhacao = mysqli_fetch_assoc($results);
-
         //  RETORNA LINHA DA TABELA COM INFORMAÇÕES
         if ($mensao == "Apto")
-            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-success'>".$mensao."</span></td><td><a class='btn btn-danger' href='removeMatriculasNotas.php?idAvalhacao=".$idAvalhacao["idAvalhacao"]."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
+            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-success text-uppercase'>".$mensao."</span></td><td><a class='btn btn-danger' href='./controllers/removeMatriculasNotas.php?idAvalhacao=".$idAvaliacao."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
         else
-            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-danger'>".$mensao."</span></td><td><a class='btn btn-danger' href='removeMatriculasNotas.php?idAvalhacao=".$idAvalhacao["idAvalhacao"]."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
+            echo "<tr><td>".$nomeCompleto."</td><td>".$nomeDisciplina["nome"]."</td><td>".$idTurma."</td><td>".$dataNova."</td><td><span class='label label-danger text-uppercase'>".$mensao."</span></td><td><a class='btn btn-danger' href='./controllers/removeMatriculasNotas.php?idAvalhacao=".$idAvaliacao."'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
     }
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 26-Ago-2019 às 05:25
+-- Generation Time: 27-Ago-2019 às 04:15
 -- Versão do servidor: 10.1.40-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -84,27 +84,27 @@ CREATE TABLE `aluno-disciplina` (
   `idAprovacao` int(11) NOT NULL,
   `idAluno` varchar(15) NOT NULL,
   `idDisciplina` int(11) NOT NULL,
-  `conceito` varchar(100) DEFAULT NULL
+  `conceito` varchar(100) DEFAULT NULL,
+  `idAvalhacao` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `aluno-disciplina`
 --
 
-INSERT INTO `aluno-disciplina` (`idAprovacao`, `idAluno`, `idDisciplina`, `conceito`) VALUES
-(1, '0', 11, 'Apto'),
-(2, '1', 11, 'Não Apto'),
-(3, '2', 11, 'Não Apto'),
-(4, '3', 11, 'Apto'),
-(5, '0', 14, 'Apto'),
-(6, '1', 14, 'Apto'),
-(7, '2', 14, 'Apto'),
-(8, '3', 14, 'Apto'),
-(9, '0', 26, 'Não Apto'),
-(10, '1', 26, 'Apto'),
-(11, '2', 26, 'Apto'),
-(12, '3', 26, 'Apto'),
-(13, '0', 26, 'Apto');
+INSERT INTO `aluno-disciplina` (`idAprovacao`, `idAluno`, `idDisciplina`, `conceito`, `idAvalhacao`) VALUES
+(1, '0', 11, 'Apto', 15),
+(2, '1', 11, 'Não Apto', 16),
+(3, '2', 11, 'Não Apto', 17),
+(4, '3', 11, 'Apto', 18),
+(5, '0', 14, 'Apto', 19),
+(6, '1', 14, 'Apto', 20),
+(7, '2', 14, 'Apto', 21),
+(8, '3', 14, 'Apto', 22),
+(9, '0', 26, 'Não Apto', 23),
+(10, '1', 26, 'Apto', 24),
+(11, '2', 26, 'Apto', 25),
+(12, '3', 26, 'Apto', 26);
 
 -- --------------------------------------------------------
 
@@ -117,6 +117,7 @@ CREATE TABLE `avalhacao` (
   `idDisciplina` int(11) NOT NULL,
   `idTurma` int(11) NOT NULL,
   `idAluno` varchar(15) NOT NULL,
+  `nomeAvaliacao` varchar(100) NOT NULL DEFAULT 'Prova',
   `conceito` varchar(100) NOT NULL,
   `final` tinyint(1) DEFAULT NULL,
   `data` date NOT NULL
@@ -126,34 +127,33 @@ CREATE TABLE `avalhacao` (
 -- Extraindo dados da tabela `avalhacao`
 --
 
-INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `conceito`, `final`, `data`) VALUES
-(2, 11, 411, '0', 'Apto', 0, '2019-07-10'),
-(3, 11, 411, '1', 'Não Apto', 0, '2019-07-10'),
-(4, 11, 411, '2', 'Apto', 0, '2019-07-10'),
-(5, 11, 411, '3', 'Apto', 0, '2019-07-10'),
-(6, 14, 411, '0', 'Apto', 0, '2019-07-12'),
-(7, 14, 411, '1', 'Apto', 0, '2019-07-12'),
-(8, 14, 411, '2', 'Não Apto', 0, '2019-07-12'),
-(9, 14, 411, '3', 'Não Apto', 0, '2019-07-12'),
-(11, 26, 411, '0', 'Não Apto', 0, '2019-07-02'),
-(12, 26, 411, '1', 'Apto', 0, '2019-07-02'),
-(13, 26, 411, '2', 'Apto', 0, '2019-07-02'),
-(14, 26, 411, '3', 'Apto', 0, '2019-07-02'),
-(15, 11, 411, '0', 'Apto', 1, '2019-07-15'),
-(16, 11, 411, '1', 'Não Apto', 1, '2019-07-15'),
-(17, 11, 411, '2', 'Não Apto', 1, '2019-07-15'),
-(18, 11, 411, '3', 'Apto', 1, '2019-07-15'),
-(19, 14, 411, '0', 'Apto', 1, '2019-07-19'),
-(20, 14, 411, '1', 'Apto', 1, '2019-07-19'),
-(21, 14, 411, '2', 'Apto', 1, '2019-07-19'),
-(22, 14, 411, '3', 'Apto', 1, '2019-07-19'),
-(23, 26, 411, '0', 'Não Apto', 1, '2019-07-19'),
-(24, 26, 411, '1', 'Apto', 1, '2019-07-19'),
-(25, 26, 411, '2', 'Apto', 1, '2019-07-19'),
-(26, 26, 411, '3', 'Apto', 1, '2019-07-19'),
-(27, 12, 421, '0', 'Apto', 0, '2019-08-21'),
-(28, 26, 411, '0', 'Apto', 0, '2019-08-14'),
-(29, 26, 411, '0', 'Apto', 1, '2019-08-15');
+INSERT INTO `avalhacao` (`idAvalhacao`, `idDisciplina`, `idTurma`, `idAluno`, `nomeAvaliacao`, `conceito`, `final`, `data`) VALUES
+(2, 11, 411, '0', 'Prova', 'Apto', 0, '2019-07-10'),
+(3, 11, 411, '1', 'Prova', 'Não Apto', 0, '2019-07-10'),
+(4, 11, 411, '2', 'Prova', 'Apto', 0, '2019-07-10'),
+(5, 11, 411, '3', 'Prova', 'Apto', 0, '2019-07-10'),
+(6, 14, 411, '0', 'Prova', 'Apto', 0, '2019-07-12'),
+(7, 14, 411, '1', 'Prova', 'Apto', 0, '2019-07-12'),
+(8, 14, 411, '2', 'Prova', 'Não Apto', 0, '2019-07-12'),
+(9, 14, 411, '3', 'Prova', 'Não Apto', 0, '2019-07-12'),
+(11, 26, 411, '0', 'Prova', 'Não Apto', 0, '2019-07-02'),
+(12, 26, 411, '1', 'Prova', 'Apto', 0, '2019-07-02'),
+(13, 26, 411, '2', 'Prova', 'Apto', 0, '2019-07-02'),
+(14, 26, 411, '3', 'Prova', 'Apto', 0, '2019-07-02'),
+(15, 11, 411, '0', 'Prova', 'Apto', 1, '2019-07-15'),
+(16, 11, 411, '1', 'Prova', 'Não Apto', 1, '2019-07-15'),
+(17, 11, 411, '2', 'Prova', 'Não Apto', 1, '2019-07-15'),
+(18, 11, 411, '3', 'Prova', 'Apto', 1, '2019-07-15'),
+(19, 14, 411, '0', 'Prova', 'Apto', 1, '2019-07-19'),
+(20, 14, 411, '1', 'Prova', 'Apto', 1, '2019-07-19'),
+(21, 14, 411, '2', 'Prova', 'Apto', 1, '2019-07-19'),
+(22, 14, 411, '3', 'Prova', 'Apto', 1, '2019-07-19'),
+(23, 26, 411, '0', 'Prova', 'Não Apto', 1, '2019-07-19'),
+(24, 26, 411, '1', 'Prova', 'Apto', 1, '2019-07-19'),
+(25, 26, 411, '2', 'Prova', 'Apto', 1, '2019-07-19'),
+(26, 26, 411, '3', 'Prova', 'Apto', 1, '2019-07-19'),
+(27, 12, 421, '0', 'Prova', 'Apto', 0, '2019-08-21'),
+(28, 26, 411, '0', 'Prova', 'Apto', 0, '2019-08-14');
 
 -- --------------------------------------------------------
 
@@ -421,7 +421,8 @@ ALTER TABLE `aluno`
 ALTER TABLE `aluno-disciplina`
   ADD PRIMARY KEY (`idAprovacao`),
   ADD KEY `idAluno` (`idAluno`),
-  ADD KEY `idDisciplina` (`idDisciplina`);
+  ADD KEY `idDisciplina` (`idDisciplina`),
+  ADD KEY `idAvalhacao` (`idAvalhacao`);
 
 --
 -- Indexes for table `avalhacao`
@@ -502,13 +503,13 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT for table `aluno-disciplina`
 --
 ALTER TABLE `aluno-disciplina`
-  MODIFY `idAprovacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idAprovacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `avalhacao`
 --
 ALTER TABLE `avalhacao`
-  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `idAvalhacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `calendario`
@@ -543,7 +544,8 @@ ALTER TABLE `recuperaSegurança`
 --
 ALTER TABLE `aluno-disciplina`
   ADD CONSTRAINT `aluno-disciplina_ibfk_2` FOREIGN KEY (`idDisciplina`) REFERENCES `disciplina` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `aluno-disciplina_ibfk_3` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `aluno-disciplina_ibfk_3` FOREIGN KEY (`idAluno`) REFERENCES `aluno` (`idAluno`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `aluno-disciplina_ibfk_4` FOREIGN KEY (`idAvalhacao`) REFERENCES `avalhacao` (`idAvalhacao`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `avalhacao`

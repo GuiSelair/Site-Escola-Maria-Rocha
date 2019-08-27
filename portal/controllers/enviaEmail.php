@@ -4,11 +4,11 @@
 ////      PÁGINA ENVIA EMAIL      ////
 //////////////////////////////////////
  
-include_once("conexao/config.php");
-include_once("conexao/conexao.php");
-include_once("../conexao/function.php");
+include_once("../conexao/config.php");
+include_once("../conexao/conexao.php");
+include_once("../../conexao/function.php");
 
-require_once("../node_modules/PHPMailer/PHPMailerAutoload.php");
+require_once("../../node_modules/PHPMailer/PHPMailerAutoload.php");
 
 if(isset($_POST["tipo"]) && $_POST["tipo"] == "portal" && isset($_POST["email"]) && !empty($_POST["email"])){
     $emailDestino = $_POST["email"];
@@ -78,7 +78,7 @@ if(isset($_POST["tipo"]) && $_POST["tipo"] == "portal" && isset($_POST["email"])
     }
  }
  else{
-    header("location: index.php");
+    header("location: ../../../index.php");
 }
 
 ?>

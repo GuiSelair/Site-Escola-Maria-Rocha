@@ -78,8 +78,11 @@ if (isset($_POST["idTurma"]) && isset($_POST["semestre"]) && !isset($_POST["idDi
   if (mysqli_num_rows($results)){
     while ($matricula = mysqli_fetch_assoc($results)){
       $nomeAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $matricula["idAluno"]);
-      $nomeCompleto = $nomeAluno["nome"]." ".$nomeAluno["sobrenome"];
-      echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td>".$data."</td><td><a class='btn btn-danger' id='apaga' onclick='apagaRegistro($idTurma,\"$idAluno\", $data)'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
+      if ($nomeAluno){
+        $nomeCompleto = $nomeAluno["nome"]." ".$nomeAluno["sobrenome"];
+        $idAluno = $nomeAluno["idAluno"];
+        echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td>".$data."</td><td><a class='btn btn-danger' id='apaga' onclick='apagaRegistro($idTurma,\"$idAluno\", $data)'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
+        }
     }
   }
 }

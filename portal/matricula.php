@@ -268,7 +268,7 @@ if (isset($_GET["id"])){
 
                 $.ajax({
                   type: 'POST',
-                  url: './controllers/salvaEMontaTabela.php',
+                  url: './controllers/salvaMatriculasNotas.php',
                   data: 'idTurma='+idTurma+'&idAluno='+idAluno+'&semestre='+semestre+'&ano='+ano,
                   beforeSend: function () {
                     $("#btn-salva").html("Enviando...")
@@ -293,7 +293,7 @@ if (isset($_GET["id"])){
                 $('#tabela').empty();
                 $.ajax({
                   type: "POST",
-                  url: "./controllers/buscaTabela.php",
+                  url: "./controllers/buscaMatriculasNotas.php",
                   data: "idTurma="+idTurma+"&semestre="+semestre+'&ano='+ano,
                   beforeSend: function(){
                     $("#btn-buscar").html("Buscando...")
@@ -421,8 +421,8 @@ if (isset($_GET["id"])){
                     <p class="text-muted col-md-12">OBS: PARA BUSCAR POR MATRICULAS DE PROFESSORES, BASTA SELECIONAR TURMA, DISCIPLINA, ANO E SEMESTRE</p>
                   </div>
                   <div class="box-footer ">
-                    <button class="btn btn-primary" id="salva" style="margin-right: 5px;">Salvar</button>
-                    <button class="btn btn-secundary" id="buscar" style="margin-right: 5px;">Buscar</button>
+                    <button class="btn btn-primary" id="btn-salva" style="margin-right: 5px;">Salvar</button>
+                    <button class="btn btn-secundary" id="btn-buscar" style="margin-right: 5px;">Buscar</button>
                     <a href="matricula.php?id=1" class="btn btn-light" id="cancela">Cancelar</a>
                   </div>
             </div>
@@ -461,7 +461,7 @@ if (isset($_GET["id"])){
                 }
                 $.ajax({
                   type: 'POST',
-                  url: './controllers/salvaEMontaTabela.php',
+                  url: './controllers/salvaMatriculasNotas.php',
                   data: 'idTurma='+idTurma+'&idProfessor='+idProfessor+'&semestre='+semestre+'&idDisciplina='+idDisciplina,
                   beforeSend: function () {
                     $("#btn-salva").html("Enviando...")
@@ -488,7 +488,7 @@ if (isset($_GET["id"])){
 
                 $.ajax({
                   type: "POST",
-                  url: "./controllers/buscaTabela.php",
+                  url: "./controllers/buscaMatriculasNotas.php",
                   data: "idTurma="+idTurma+"&semestre="+semestre+'&idDisciplina='+idDisciplina+'&ano='+ano,
                   beforeSend: function(){
                     $("#btn-buscar").html("Buscando...")
