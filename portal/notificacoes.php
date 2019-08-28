@@ -20,24 +20,22 @@ if($_SESSION["tipo"] == "Professor" || $_SESSION["tipo"] == "Administrador"){
 
 // ALUNOS
 if ($_SESSION["tipo"] == "Aluno"){
-  //  BUSCA TURMAS DO ALUNO
-  $idAluno = $_SESSION["id"];
-  $query = BuscaRetornaQuery($conexao, "turma-aluno", "idAluno", $idAluno);
-  $linha = mysqli_num_rows($query);
-	if ($linha){
-		while ($turmaAlunoNum = mysqli_fetch_assoc($query)){
-      $query_1 = BuscaRetornaQuery($conexao, "calendario", "idTurma", $turmaAlunoNum["idTurma"]);
-      if ($query_1){
-        //  NOTICIAS VINCULADAS A(S) TURMA(S) DO ALUNO
-        while($noticeTurmaNum = mysqli_fetch_assoc($query_1)){
-          $disciplinaConfereAprovacao = ConfereAprovacao($conexao, $noticeTurmaNum["idDisciplina"], $idAluno);
-          if ($disciplinaConfereAprovacao["conceitoDisciplina"] != "APTO"){
-              $noticeTurmaResults[] = $noticeTurmaNum;
-              
-            }
-        } 
-      }
-    }
+  $noticeTurmaResults = [];
+	$turmas = BuscaRetornaQuery($conexao, "turma-aluno", "idAluno", $_SESSION["id"]);
+	if ($turmas){
+    $linha = 1;
+		while ($turmaAlunoNum = mysqli_fetch_assoc($turmas)){
+			$notificacoes = BuscaRetornaQuery($conexao, "calendario", "idTurma", $turmaAlunoNum["idTurma"]);
+			if ($notificacoes){
+				while ($disciplinas = mysqli_fetch_assoc($notificacoes)){
+					$aprovado = ConfereAprovacao($conexao, $disciplinas["idDisciplina"], $_SESSION["id"]);
+					if ($aprovado["conceitoDisciplina"] != "APTO"){
+						if (!in_array($disciplinas, $noticeTurmaResults))
+							$noticeTurmaResults[] = $disciplinas;
+					}
+				}
+			}
+		}
 	}
 }
  ?>
@@ -61,21 +59,15 @@ if ($_SESSION["tipo"] == "Aluno"){
       <ul class="menu">
         <li>
           <?php if($linha){
-            //var_dump($noticeTurmaResults);
-            print_r($noticeTurmaResults);
-            //for ($i = 0; $i > 3 || $i < sizeof($noticeTurmaResults) ; $i++){
+            for ($i = 0; $i < sizeof($noticeTurmaResults); $i++){
+              echo "<a><i class='fa fa-users text-aqua'></i>".$noticeTurmaResults[$i]["title"]." - ".date("d/m/Y", strtotime($noticeTurmaResults[$i]["start"]))."</a>";
+            }
+          }
           ?>
-          <a>
-          
-            <i class="fa fa-users text-aqua"></i> <?php //echo $noticeTurmaResults[$i]["title"]." - ".date("d/m/Y", strtotime($noticeTurmaResults[$i]["start"]));  ?>
-          </a>
-          <?php
-          } ?>
         </li>
 
       </ul>
     </li>
-    <!--<li class="footer"><a href="#">Ver mais</a></li>-->
   <?php } ?>
   </ul>
 </li>
