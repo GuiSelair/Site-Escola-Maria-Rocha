@@ -82,7 +82,7 @@ if(isset($_POST['envia'])) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="../node_modules/bootstrap/compiler/bootstrap.css">
-        <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
+        <title>PLATAFORMA ONLINE - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
         <link rel="stylesheet" href="./dist/css/Login-Recuperation.css">
         <link rel="shortcut icon" href="../img/favicon.ico" />
     </head>

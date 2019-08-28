@@ -46,7 +46,7 @@ if (isset($_POST["redefine"]) && $_POST["senha"] != " "){
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="shortcut icon" href="../img/favicon.ico" />
         <link rel="stylesheet" href="../node_modules/bootstrap/compiler/bootstrap.css">
-        <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
+        <title>PLATAFORMA ONLINE - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <link rel="stylesheet" href="./dist/css/Login-Recuperation.css">
     </head>

@@ -42,7 +42,7 @@ if(isset($_POST['entrar'])) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="../node_modules/bootstrap/compiler/bootstrap.css">
-        <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
+        <title>PLATAFORMA ONLINE - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
         <link rel="stylesheet" href="./dist/css/Login-Recuperation.css">
         <link rel="shortcut icon" href="../img/favicon.ico" />
 
@@ -50,7 +50,7 @@ if(isset($_POST['entrar'])) {
     <body class="text-center">
         <form class="form-signin" action="" method="POST">
             <img class="mb-4" src="../img/Login1.png" alt="" width="170" height="170">
-            <h3 class="h4 mb-3 font-weight-normal">Entrar no Portal Acadêmico</h3>
+            <h3 class="h4 mb-3 font-weight-normal">Entrar na Plataforma online</h3>
             <input type="text" id="inputEmail" class="form-control mb-2 rounded" placeholder="Login" name="login" required autofocus>
             <input type="password" id="inputPassword" class="form-control rounded" placeholder="Senha" name="senha" required>
             <div class="checkbox mb-3">

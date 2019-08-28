@@ -46,7 +46,7 @@ if (isset($_GET["id"])){
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>PORTAL ACADÊMICO - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
+  <title>PLATAFORMA ONLINE - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="shortcut icon" href="../img/favicon.ico" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -66,7 +66,7 @@ if (isset($_GET["id"])){
     <header class="main-header">
       <a href="index.php" class="logo">
       <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
-        <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Portal Acadêmico</span>
+      <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Maria Rocha</span>
       </a>
 
       <!-- MENU DISPOSITIVOS MÓVEIS -->
