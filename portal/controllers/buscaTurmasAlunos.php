@@ -22,15 +22,11 @@ if (isset($_POST["idDisciplina"]) && !isset($_POST["idTurma"])){
   $idProfessor = $_SESSION["id"];
   echo "<option value=''>Selecione abaixo</option>";
 
-  $AllTurmas = [];
-  $sql_code = "SELECT `idTurma` FROM `turma-professor` WHERE `idDisciplina`= $idDisciplina AND `idProfessor` = $idProfessor";
+  $sql_code = "SELECT DISTINCT `idTurma` FROM `turma-professor` WHERE `idDisciplina`= $idDisciplina AND `idProfessor` = $idProfessor";
   $results = mysqli_query($conexao, $sql_code);
   if (mysqli_num_rows($results)){
     while($idTurmas = mysqli_fetch_assoc($results)){
-      if (!in_array($idTurmas["idTurma"], $AllTurmas)){
-        echo "<option value='".$idTurmas["idTurma"]."'>".$idTurmas["idTurma"]."</option>";
-        $AllTurmas[] = $idTurmas["idTurma"];
-      }
+        echo "<option value='".$idTurmas["idTurma"]."'>".$idTurmas["idTurma"]."</option>";      
     }
   }    
 }
@@ -48,25 +44,28 @@ if (isset($_POST["idTurma"]) && isset($_POST["idDisciplina"])){
 
     //  PERCORRE TODOS OS ALUNOS DA TURMA
     while($idAluno = mysqli_fetch_assoc($query)){
-      //  EXISTE PREREQUISITO PARA A DISCIPLINA
-      if($prerequisito){
-        $conferePrerequisito = ConfereAprovacao($conexao, $prerequisito["prerequisito"], $idAluno["idAluno"]);
-        if ($conferePrerequisito && $conferePrerequisito["conceitoDisciplina"] == "APTO"){
+      if (VerificaStatusUsuarios($conexao, $idAluno["idAluno"], null)){
+        //  EXISTE PREREQUISITO PARA A DISCIPLINA
+        if($prerequisito){
+          $conferePrerequisito = ConfereAprovacao($conexao, $prerequisito["prerequisito"], $idAluno["idAluno"]);
+          if ($conferePrerequisito && $conferePrerequisito["conceitoDisciplina"] == "APTO"){
+            $confereDisciplinaAtual = ConfereAprovacao($conexao, $idDisciplina, $idAluno["idAluno"]);
+            if ($confereDisciplinaAtual && $confereDisciplinaAtual["conceitoDisciplina"] != "APTO"){
+              $nomeAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno["idAluno"]);
+              echo "<option value='".$nomeAluno["idAluno"]."'>".$nomeAluno["idAluno"]." - ".$nomeAluno["nome"]." ".$nomeAluno["sobrenome"]."</option>";
+            }
+          }
+        }
+        // NÃO EXISTE PREREQUISITOS PARA A DISCIPLINA
+        else{
           $confereDisciplinaAtual = ConfereAprovacao($conexao, $idDisciplina, $idAluno["idAluno"]);
-          if ($confereDisciplinaAtual && $confereDisciplinaAtual["conceitoDisciplina"] != "APTO"){
+          if ($confereDisciplinaAtual["conceitoDisciplina"] != "APTO"){
             $nomeAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno["idAluno"]);
             echo "<option value='".$nomeAluno["idAluno"]."'>".$nomeAluno["idAluno"]." - ".$nomeAluno["nome"]." ".$nomeAluno["sobrenome"]."</option>";
           }
         }
       }
-      // NÃO EXISTE PREREQUISITOS PARA A DISCIPLINA
-      else{
-        $confereDisciplinaAtual = ConfereAprovacao($conexao, $idDisciplina, $idAluno["idAluno"]);
-        if ($confereDisciplinaAtual["conceitoDisciplina"] != "APTO"){
-          $nomeAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno["idAluno"]);
-          echo "<option value='".$nomeAluno["idAluno"]."'>".$nomeAluno["idAluno"]." - ".$nomeAluno["nome"]." ".$nomeAluno["sobrenome"]."</option>";
-        }
-      }
+      
     }
   }
 }

@@ -338,25 +338,21 @@
         else return $str;
     }
 
-    function VerificaStatusUsuarios ($conexao, $idUsuario){
-        if (isset($idUsuario)){
-            switch (gettype($idUsuario)){
-                case "string":
-                    // USUÁRIO ALUNO
-                    $dadosAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idUsuario);
-                    if ($dadosAluno){
-                        if ($dadosAluno["status"] == "ativo")   return true;
-                        return false;
-                    }
-                    break;
-                case "integer":
-                    // USUÁRIO PROFESSOR
-                    $dadosAluno = BuscaRetornaResponse($conexao, "professor", "idProfessor", $idUsuario);
-                    if ($dadosAluno){
-                        if ($dadosAluno["status"] == "ativo")   return true;
-                        return false;
-                    }
-                    break;
+    function VerificaStatusUsuarios ($conexao, $idAluno = null, $idProfessor = null){
+        if (isset($idAluno)){
+            // USUÁRIO ALUNO
+            $dadosAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno);
+            if ($dadosAluno){
+                if ($dadosAluno["status"] == "ativo")   return true;
+                return false;
+            }
+        }
+        else{
+            // USUÁRIO Professor
+            $dadosProfessor = BuscaRetornaResponse($conexao, "professor", "idProfessor", $idProfessor);
+            if ($dadosProfessor){
+                if ($dadosProfessor["status"] == "ativo")   return true;
+                return false;
             }
         }
     }

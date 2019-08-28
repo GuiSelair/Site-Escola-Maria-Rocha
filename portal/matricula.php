@@ -197,8 +197,10 @@ if (isset($_GET["id"])){
                           $query = BuscaRetornaQuery($conexao, "aluno");
                           if ($query){
                             while($alunos = mysqli_fetch_assoc($query)){
-                              $nomeCompleto = $alunos["nome"]." ".$alunos["sobrenome"];
-                              echo "<option value=".$alunos["idAluno"].">".$alunos["idAluno"]." - ".$nomeCompleto."</option>";
+                              if (VerificaStatusUsuarios($conexao, $alunos["idAluno"])){
+                                $nomeCompleto = $alunos["nome"]." ".$alunos["sobrenome"];
+                                echo "<option value=".$alunos["idAluno"].">".$alunos["idAluno"]." - ".$nomeCompleto."</option>";
+                              }
                             }
                           }
                          ?>
@@ -359,8 +361,10 @@ if (isset($_GET["id"])){
                           $query = BuscaRetornaQuery($conexao, "professor");
                           if ($query){
                             while($professores = mysqli_fetch_assoc($query)){
-                              $nomeCompleto = $professores["nome"]." ".$professores["sobrenome"];
-                              echo "<option value=".$professores["idProfessor"].">".$nomeCompleto."</option>";
+                              if (VerificaStatusUsuarios($conexao, null, $professores["idProfessor"])){
+                                $nomeCompleto = $professores["nome"]." ".$professores["sobrenome"];
+                                echo "<option value=".$professores["idProfessor"].">".$nomeCompleto."</option>";
+                              }
                             }
                           }
                          ?>

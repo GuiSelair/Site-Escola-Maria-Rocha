@@ -58,7 +58,7 @@ if (isset($_POST["idTurma"]) && isset($_POST["semestre"]) && isset($_POST["idDis
 
         //BUSCANDO NOME DA DISCIPLINA
         $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $idDisciplina);
-
+        $idProfessor = $nomeProfessor["idProfessor"];
         //RETORNANDO LINHA
         echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td>".$nomeDisciplina["nome"]."</td><td>".$data."</td><td><a class='btn btn-danger' id='apaga' onclick='apagaRegistro($idTurma,$idProfessor, $data, $idDisciplina)'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
       }
