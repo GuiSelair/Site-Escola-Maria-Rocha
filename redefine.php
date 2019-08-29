@@ -11,7 +11,7 @@ $conexao = DBConecta();
 
 // VERIFICA SE A HASH ESTÁ NO BD
 if (!isset($_GET["hash"]) || !VerificaHash($conexao, $_GET["hash"])){
-    header("location: ./galeria.php");
+    header("location: ./index.php");
 }
 
 $hash = $_GET["hash"];

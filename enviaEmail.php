@@ -47,7 +47,7 @@
             $mail->Body = "<h3>Você solicitou recuperação de senha?</h3>
                             <hr/>
                             <strong>Para redefinir sua senha, </strong>
-                            <a href='http://localhost/MariaRocha/redefine.php?hash=".$hash."&email=".$emailDestino."'>Clique Aqui!</a>
+                            <a href='http://www.mariarocha.org.br/redefine.php?hash=".$hash."&email=".$emailDestino."'>Clique Aqui!</a>
                             <br><br>
                             <p style='font-size: 12px;'><i>Não responda esta mensagem. Está mensagem é automática e não será respondida.</i></p>"; // Texto da mensagem
 

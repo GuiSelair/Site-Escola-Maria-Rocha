@@ -243,7 +243,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                                   echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-danger'>".$dados["conceitoDisciplina"]."</span></td></tr>";
                                   break;
                                 case "AUSENTE":
-                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-info btn-lg'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-info'>".$dados["conceitoDisciplina"]."</span></td></tr>";
                                   break;                             
                                 default:
                                   echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-warning'>".$dados["conceitoDisciplina"]."</span></td></tr>";

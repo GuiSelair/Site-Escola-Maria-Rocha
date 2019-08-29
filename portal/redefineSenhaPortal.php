@@ -7,6 +7,7 @@
 session_start();
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
+include_once("../conexao/function.php");
 
 if (!isset($_SESSION["id"])){
     header("location: ./loginUser.php");
@@ -21,7 +22,7 @@ if(isset($_POST['envia'])) {
     if ($senha1 == $senha2 && !empty($senha1) && !empty($senha2)){
         if($_SESSION["tipo"] == "Administrador"){
             $id = $_SESSION["id"];
-            $cript = md5($senha1);
+            $cript = CriptografiaSenhas($senha1);
             $sql_code = "UPDATE administrador SET senha='$cript' WHERE idAdministrador='$id';";
             $verifica = mysqli_query($conn, $sql_code);
             if($verifica)
@@ -39,7 +40,7 @@ if(isset($_POST['envia'])) {
         }else{
             if($_SESSION["tipo"] == "Professor"){
                 $id = $_SESSION["id"];
-                $cript = md5($senha1);
+                $cript = CriptografiaSenhas($senha1);
                 $sql_code = "UPDATE professor SET senha='$cript' WHERE idProfessor='$id';";
                 $verifica = mysqli_query($conn, $sql_code);
                 if($verifica)
@@ -55,7 +56,7 @@ if(isset($_POST['envia'])) {
                     </div>";
             }else{
                 $id = $_SESSION["id"];
-                $cript = md5($senha1);
+                $cript = CriptografiaSenhas($senha1);
                 $sql_code = "UPDATE aluno SET senha='$cript' WHERE idAluno='$id';";
                 $verifica = mysqli_query($conn, $sql_code);
                 if($verifica)

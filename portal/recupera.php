@@ -33,12 +33,14 @@
                     let email = document.querySelector("#email").value;        
                     $.ajax({
                         type: "POST",
-                        url: "./controllers/enviaEmail.php",
+                        url: "controllers/enviaEmail.php",
                         data: "email="+email+"&tipo=portal",
                         beforeSend: function(){
                             $("#envia").html("Enviando...");
                         },
-                        success: function(html){                
+                        success: function(html){ 
+                            console.log(html);
+                                           
                             $(".status").html(html);
                             $("#envia").html("Enviar");
                             email = "";

@@ -106,10 +106,15 @@
           $response = mysqli_fetch_assoc($query);
       
           // DISCIPLINAS NÃO APROVADAS OU AUSENTES
-          if ($response["conceito"] != "Apto"){
+          if ($response["conceito"] == "Não Apto"){
             $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $response["idDisciplina"]);
             $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
             return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "NÃO APTO");
+          }
+          else if ($response["conceito"] == "Ausente") {
+            $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $response["idDisciplina"]);
+            $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+            return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "AUSENTE");
           }
           //  DISCIPLINAS APROVADAS
           else{
@@ -184,12 +189,14 @@
     // =========== HASH (RECUPERAÇÃO DE SENHA) ===========
 
     function AddHash($conexao, $hash, $email){
-        $sql_code = "INSERT INTO recuperaSegurança (hash, email) VALUES ('$hash', '$email');";
+        $sql_code = "INSERT INTO `recuperaSegurança` (`hash`, `email`) VALUES ('$hash', '$email');";
         $results = mysqli_query($conexao, $sql_code);
-        if ($results) 
+        if ($results){
             return true;
-        else  
+        }
+        else{  
             return false;
+        }
 
     }
 

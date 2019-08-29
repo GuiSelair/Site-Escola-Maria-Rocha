@@ -48,7 +48,7 @@ if(isset($_POST["tipo"]) && $_POST["tipo"] == "portal" && isset($_POST["email"])
             $mail->Body = "<h3>Você solicitou recuperação de senha?</h3>
                             <hr/>
                             <strong>Para redefinir sua senha, </strong>
-                            <a href='http://localhost/MariaRocha/portal/redefineSenhaEmail.php?hash=".$hash."&email=".$emailDestino."'>Clique Aqui!</a>
+                            <a href='http://www.mariarocha.org.br/portal/redefineSenhaEmail.php?hash=".$hash."&email=".$emailDestino."'>Clique Aqui!</a>
                             <br><br>
                             <p style='font-size: 12px;'><i>Não responda esta mensagem. Está mensagem é automática e não será respondida.</i></p>"; // Texto da mensagem
 
@@ -78,7 +78,7 @@ if(isset($_POST["tipo"]) && $_POST["tipo"] == "portal" && isset($_POST["email"])
     }
  }
  else{
-    header("location: ../../../index.php");
+    header("location: ../loginUser.php");
 }
 
 ?>

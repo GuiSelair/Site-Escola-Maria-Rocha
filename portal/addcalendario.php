@@ -46,14 +46,14 @@ if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
   $query = mysqli_query($conexao, $sql_code);
 
   if ($query){
-    echo "<div class='alert alert-success alert-dismissable status'>
+    echo "<div class='alert alert-success alert-dismissable status' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
           <strong>Evento adicionado com sucesso!</strong>
           </div>
           ";
   }
   else{
-    echo "<div class='alert alert-danger alert-dismissable status'>
+    echo "<div class='alert alert-danger alert-dismissable status' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
           <strong>Erro no cadastro do evento. Tente mais tarde e verifique sua conexão!</strong>
           </div>";

@@ -237,7 +237,8 @@ if (!isset($_SESSION["id"])){
         eventLimit: true,
         contentHeight: 500,
         selectable: true,
-
+        defaultView: $(window).width() < 765 ? 'basicDay':'month',
+        
         //MANDA INFORMAÇÕES PARA O MODAL
         eventClick: function (event) {
           $("#visualiza #title").text(event.title)
@@ -248,6 +249,7 @@ if (!isset($_SESSION["id"])){
           $("#visualiza #postador").text(event.postador)
           $('#visualiza').modal('show')
         }
+
       });
     });
   </script>
