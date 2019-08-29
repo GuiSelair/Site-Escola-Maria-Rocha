@@ -338,9 +338,49 @@
             $tbl = array_flip($tbl);
             $str = addslashes($str);
             $str = strip_tags($str);
+            $str = htmlspecialchars($str);
             if (filter_var($str, FILTER_VALIDATE_INT)) {
                 return strtr($str, $tbl);
             } 
+        }
+        else return $str;
+    }
+
+    function ValidaInteiro($input) {
+        $input = trim($input);
+        $input = stripslashes($input);
+        $input = htmlspecialchars($input);
+        if (filter_var($input, FILTER_VALIDATE_INT)) {
+            return $input;
+        } 
+    }
+
+    function ValidaEmail($email){
+        if ((!isset($email) || !filter_var($email, FILTER_VALIDATE_EMAIL) )) {
+            return null;
+        }
+        return $email;
+    }
+
+    function ValidaString( $str ){
+        /**
+        * Função para retornar uma string protegida contra SQL/Blind/XSS Injection
+        */
+        if( !is_array( $str ) ) {
+            $str = preg_replace("/(from|select|insert|delete|where|drop table|show tables)/i","",$str);
+            $str = preg_replace('~&amp;#x([0-9a-f]+);~i', 'chr(hexdec("\\1"))', $str);
+            $str = preg_replace('~&amp;#([0-9]+);~', 'chr("\\1")', $str);
+            $str = str_replace("<script","",$str);
+            $str = str_replace("script>","",$str);
+            $str = str_replace("<Script","",$str);
+            $str = str_replace("Script>","",$str);
+            $str = trim($str);
+            $tbl = get_html_translation_table(HTML_ENTITIES);
+            $tbl = array_flip($tbl);
+            $str = addslashes($str);
+            $str = strip_tags($str);
+            $str = htmlspecialchars($str);
+            return strtr($str, $tbl);
         }
         else return $str;
     }

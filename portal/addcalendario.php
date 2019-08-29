@@ -29,13 +29,13 @@ if ($_SESSION["tipo"] == "Professor"){
 
 // FUNÇÃO SALVA O EVENTO AO BANCO DE DADOS
 if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
-  $turma = $_POST["turma"];
-  $cor = $_POST["cor"];
-  $titulo = $_POST["titulo"];
-  $editor = $_POST["descricao"];
+  $turma = ValidaString($_POST["turma"]);
+  $cor = ValidaString($_POST["cor"]);
+  $titulo = ValidaString($_POST["titulo"]);
+  $editor = ValidaString($_POST["descricao"]);
   $start = $_POST["start"];
   $end = $_POST["end"];
-  $idDisciplina = $_POST["disciplina"];
+  $idDisciplina = ValidaString($_POST["disciplina"]);
   $postador = $_SESSION["nome"];
 
   // VERIFICA QUAL TIPO DE USUÁRIO ESTÁ GRAVANDO O EVENTO

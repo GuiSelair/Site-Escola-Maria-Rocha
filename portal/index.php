@@ -235,10 +235,9 @@ if (!isset($_SESSION["id"])){
         editable: false,
         events: "./controllers/eventosCalendario.php", //ARQUIVO QUE BUSCA OS EVENTOS
         eventLimit: true,
-        Height: 'parent',
+        contentHeight: 500,
         selectable: true,
-        defaultView: $(window).width() < 765 ? 'basicWeek':'dayGridMonth',
-        
+
         //MANDA INFORMAÇÕES PARA O MODAL
         eventClick: function (event) {
           $("#visualiza #title").text(event.title)
