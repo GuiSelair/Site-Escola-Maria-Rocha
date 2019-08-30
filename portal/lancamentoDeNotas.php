@@ -288,7 +288,7 @@ if ($_SESSION["tipo"] == "Professor"){
     <!-- Rodapé -->
     <footer class="main-footer">
       <div class="pull-right hidden-xs">
-        <i>Todos os direitos reservados</i>
+        <i>Algum problema? Mande um email para: escola@mariarocha.org.br</i>
       </div>
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>

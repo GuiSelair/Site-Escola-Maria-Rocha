@@ -363,7 +363,7 @@ if (isset($_GET["id"])){
                             while($professores = mysqli_fetch_assoc($query)){
                               if (VerificaStatusUsuarios($conexao, null, $professores["idProfessor"])){
                                 $nomeCompleto = $professores["nome"]." ".$professores["sobrenome"];
-                                echo "<option value=".$professores["idProfessor"].">".$nomeCompleto."</option>";
+                                echo "<option value=".$professores["idProfessor"].">".$professores["idProfessor"] ." - ".$nomeCompleto."</option>";
                               }
                             }
                           }
@@ -396,7 +396,8 @@ if (isset($_GET["id"])){
                           $query = BuscaRetornaQuery($conexao, "disciplina");
                           if ($query){
                             while($disciplinas = mysqli_fetch_assoc($query)){
-                              echo "<option value=".$disciplinas["idDisciplina"].">".$disciplinas["nome"]."</option>";
+                              $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $disciplinas["idCurso"]);
+                              echo "<option value=".$disciplinas["idDisciplina"].">".$disciplinas["idDisciplina"]." - ".$disciplinas["nome"]." - ".$nomeCurso["nome"]."</option>";
                             }
                           }
                          ?>
@@ -538,7 +539,7 @@ if (isset($_GET["id"])){
     <!-- RODAPÉ -->
     <footer class="main-footer">
       <div class="pull-right hidden-xs">
-        <i>Todos os direitos reservados</i>
+        <i>Algum problema? Mande um email para: escola@mariarocha.org.br</i>
       </div>
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>

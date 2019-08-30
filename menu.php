@@ -9,7 +9,7 @@
     <div class="row align-items-center">
         <div class="col-sm-10 col-md-6 col-lg-6 col-xl-6  ">
             <div class="text-center mb-0 pb-0">
-                <!--<a href="#" target="_blank" class="btn btn-info p-1 my-0 rounded-0" ><i class="fa fa-graduation-cap mx-2"></i>Plataforma Online</a>-->
+                <a href="./portal/loginUser.php" target="_blank" class="btn btn-info p-1 my-0 rounded-0" ><i class="fa fa-graduation-cap mx-2"></i>Plataforma Online</a>
             </div>
         </div>
         <div class="col-sm-2 col-md-6 col-lg-6 col-xl-6 ">

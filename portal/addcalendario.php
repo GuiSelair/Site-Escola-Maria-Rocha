@@ -24,7 +24,7 @@ $conexao = DBConecta();
 // PESQUISA DE TURMAS
 if ($_SESSION["tipo"] == "Professor"){
   $idProfessor = $_SESSION["id"];
-  $query = BuscaRetornaQuery($conexao, "turma-professor", "idProfessor", $idProfessor);
+  $query1 = BuscaRetornaQuery($conexao, "turma-professor", "idProfessor", $idProfessor);
 }
 
 // FUNÇÃO SALVA O EVENTO AO BANCO DE DADOS
@@ -211,9 +211,9 @@ if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
                       <?php if ($_SESSION["tipo"] == "Administrador"){ ?>
                         <option value="-1" id="todos">TODOS os professores</option>
                       <?php } 
-                        if ($query){
+                        if ($_SESSION["tipo"] == "Professor" && $query1){
                           $AllTurmas = [];
-                          while($turmas = mysqli_fetch_assoc($query)){
+                          while($turmas = mysqli_fetch_assoc($query1)){
                             if (!in_array($turmas["idTurma"], $AllTurmas)){
                               echo "<option value=".$turmas["idTurma"].">".$turmas["idTurma"]."</option>";
                               $AllTurmas[] = $turmas["idTurma"];
@@ -301,7 +301,7 @@ if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
     <!-- RODAPÉ -->
     <footer class="main-footer">
       <div class="pull-right hidden-xs">
-        <i>Todos os direitos reservados</i>
+        <i>Algum problema? Mande um email para: escola@mariarocha.org.br</i>
       </div>
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>

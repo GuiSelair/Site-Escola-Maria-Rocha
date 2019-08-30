@@ -35,7 +35,7 @@
     }
 
     function BuscaRetornaQuery($conn, $tabela, $coluna = null, $parametro = null){
-        if (!empty($coluna) && !empty($parametro)){
+        if (!empty($coluna) && isset($parametro)){
             $sql_code = "SELECT * FROM `$tabela` WHERE `$coluna` = $parametro";
             $query = mysqli_query($conn, $sql_code);
             if ($query && mysqli_num_rows($query))

@@ -736,10 +736,36 @@ if (isset($_GET['id'])){
   <!-- RODAPÉ -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <i>Todos os direitos reservados</i>
+      <i>Algum problema? Mande um email para: escola@mariarocha.org.br</i>
     </div>
     <strong>Copyright &copy; 2019 Guilherme Selair</strong>
   </footer>
+
+  <!-- CADASTRO DE ADMIN -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="active"><a href="#control-sidebar-theme-demo-options-tab" data-toggle="tab"><i
+            class="fa fa-wrench"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
+        <div id="cadastra-Admin">
+          <h4 class="control-sidebar-heading">CADASTRO DE ADMIN</h4>
+          <Label for="nomeADMIN">Nome: </Label>
+          <input type="text" class="form-control" id="nomeADMIN" name="nomeADMIN" placeholder="Nome" required>
+          <label for="sobreADMIN" style="margin-top: 10px;">Sobrenome: </label>
+          <input type="text" class="form-control" id="sobreADMIN" name="sobreADMIN" placeholder="Sobrenome" required>
+          <label for="loginADMIN" style="margin-top: 10px;">Login: </label>
+          <input type="text" class="form-control" id="loginADMIN" name="loginADMIN" placeholder="Login" required>
+          <label for="senhaADMIN" style="margin-top: 10px;">Senha: </label>
+          <input type="password" class="form-control" id="senhaADMIN" name="senhaADMIN" placeholder="Senha" required>
+          <label for="emailADMIN" style="margin-top: 10px;">Email: </label>
+          <input type="email" class="form-control" id="emailADMIN" name="emailADMIN" placeholder="Email" required>
+          <button type="submit" class="btn btn-primary btn-block" name="salvaADMIN" id="btn-salvaADMIN" style="margin-top: 20px;">Cadastrar</button>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <!-- SCRIPTS DE AUTOMATIZAÇÃO DA PÁGINA -->
   <script type="text/javascript">
@@ -904,6 +930,13 @@ if (isset($_GET['id'])){
         disciplinaPreRequisito.disabled = false;
         disciplinaPreRequisito.value = " ";
       }
+    }
+
+    function salvaADMIN(){
+      let informacoesADMIN = document.querySelectorAll("#cadastra-Admin [id]");
+      informacoesADMIN.forEach(input => {
+        
+      });
     }
 
   </script>
