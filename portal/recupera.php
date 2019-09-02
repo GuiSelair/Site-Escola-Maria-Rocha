@@ -38,9 +38,7 @@
                         beforeSend: function(){
                             $("#envia").html("Enviando...");
                         },
-                        success: function(html){ 
-                            console.log(html);
-                                           
+                        success: function(html){                                            
                             $(".status").html(html);
                             $("#envia").html("Enviar");
                             email = "";

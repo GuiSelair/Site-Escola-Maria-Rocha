@@ -13,7 +13,7 @@ $conexao = DBConecta();
 
 // METODO DE BUSCA: NOME COMPLETO
 if(isset($_POST["tabela_ID"]) && isset($_POST["nome"])){
-    $id = $_POST["tabela_ID"];
+    $id = ValidaString($_POST["tabela_ID"]);
     switch ($id) {
         case '0':
             $tabela = "aluno";
@@ -28,36 +28,38 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"])){
             $tabela = "disciplina";
             break;
     }
-    $buscaNome = $_POST["nome"];
-    if (!empty($_POST["sobrenome"])) $buscaSobre = $_POST["sobrenome"];
+    $buscaNome = ValidaString($_POST["nome"]);
+    if (!empty($_POST["sobrenome"])) $buscaSobre = ValidaString($_POST["sobrenome"]);
 
-    //  CASO A TABELA ESCOLHIDA FOR ALUNO OU PROFESSOR
-    if ($id < '2'){
-        $sql_code = "SELECT * FROM $tabela WHERE nome='$buscaNome' AND sobrenome='$buscaSobre';";
-        $sql = mysqli_query($conexao, $sql_code);
-        $row = mysqli_fetch_assoc($sql);
-        $cadastro = json_encode($row);
-        echo $cadastro;
-    }
-    //  CASO A TABELA ESCOLHIDA FOR TURMA
-    elseif($id == '2'){
-        $response = BuscaRetornaResponse($conexao, $tabela, "idTurma", $buscaNome);
-        $response ? $cadastro = json_encode($response) : $cadastro = null;
-        echo $cadastro;
-    }
-    //  CASO A TABELA ESCOLHIDA FOR DISCIPLINA
-    else{
-        $response = BuscaRetornaResponse($conexao, $tabela, "nome", $buscaNome);
-        $response ? $cadastro = json_encode($response) : $cadastro = null;
-        echo $cadastro;
+    if ($id && $buscaNome){
+        //  CASO A TABELA ESCOLHIDA FOR ALUNO OU PROFESSOR
+        if ($id < '2'){
+            $sql_code = "SELECT * FROM $tabela WHERE nome='$buscaNome' AND sobrenome='$buscaSobre';";
+            $sql = mysqli_query($conexao, $sql_code);
+            $row = mysqli_fetch_assoc($sql);
+            $cadastro = json_encode($row);
+            echo $cadastro;
+        }
+        //  CASO A TABELA ESCOLHIDA FOR TURMA
+        elseif($id == '2'){
+            $response = BuscaRetornaResponse($conexao, $tabela, "idTurma", $buscaNome);
+            $response ? $cadastro = json_encode($response) : $cadastro = null;
+            echo $cadastro;
+        }
+        //  CASO A TABELA ESCOLHIDA FOR DISCIPLINA
+        else{
+            $response = BuscaRetornaResponse($conexao, $tabela, "nome", $buscaNome);
+            $response ? $cadastro = json_encode($response) : $cadastro = null;
+            echo $cadastro;
+        }
     }
 }
 
 
 // METODO DE BUSCA: ID
 if(isset($_POST["tabela_ID"]) && isset($_POST["id"])){
-    $idUser = $_POST["id"];
-    $id = $_POST["tabela_ID"];
+    $idUser = ValidaString($_POST["id"]);
+    $id = ValidaString($_POST["tabela_ID"]);
     switch ($id) {
         case '0':
             $tabela = "aluno";

@@ -33,29 +33,40 @@ if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
   $cor = ValidaString($_POST["cor"]);
   $titulo = ValidaString($_POST["titulo"]);
   $editor = ValidaString($_POST["descricao"]);
-  $start = $_POST["start"];
-  $end = $_POST["end"];
-  $idDisciplina = ValidaString($_POST["disciplina"]);
+  $start = ValidaString($_POST["start"]);
+  $end = ValidaString($_POST["end"]);
+  if ($_SESSION["tipo"] != "Administrador"){
+    $idDisciplina = ValidaString($_POST["disciplina"]);
+  }
   $postador = $_SESSION["nome"];
+  $validacaoDate = $start < $end ? true : false;
 
-  // VERIFICA QUAL TIPO DE USUÁRIO ESTÁ GRAVANDO O EVENTO
-  if ($_SESSION["tipo"] == "Administrador")
+  if ($turma && $cor && $titulo && $editor && $start && $end && $validacaoDate){
+    // VERIFICA QUAL TIPO DE USUÁRIO ESTÁ GRAVANDO O EVENTO
+    if ($_SESSION["tipo"] == "Administrador")
     $sql_code = "INSERT INTO calendario (title,description,color,start,end,geral,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$postador')";
-  else
+    else
     $sql_code = "INSERT INTO calendario (title,description,color,start,end,idTurma,idDisciplina,postador) VALUES ('$titulo','$editor','$cor','$start','$end','$turma','$idDisciplina','$postador')";
-  $query = mysqli_query($conexao, $sql_code);
+    $query = mysqli_query($conexao, $sql_code);
 
-  if ($query){
+    if ($query){
     echo "<div class='alert alert-success alert-dismissable status' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
           <strong>Evento adicionado com sucesso!</strong>
           </div>
           ";
+    }
+    else{
+    echo "<div class='alert alert-danger alert-dismissable status' style='margin-bottom: 0px;'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Erro no cadastro do evento. Tente mais tarde e verifique sua conexão!</strong>
+          </div>";
+    }
   }
   else{
     echo "<div class='alert alert-danger alert-dismissable status' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-          <strong>Erro no cadastro do evento. Tente mais tarde e verifique sua conexão!</strong>
+          <strong>Preencha corretamente os dados!</strong>
           </div>";
   }
 }
@@ -251,14 +262,14 @@ if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
                   <!-- DATA/HORA INICIO -->
                   <div class="form-group col-md-3">
                       <label for="matriUser">Data e hora inicial: *</label>
-                      <input size="16" type="text"  class="form-control form_datetime" id="start" name="start" placeholder="AAA-MM-DD HH:mm:ss" required>
+                      <input size="16" type="text"  class="form-control form_datetime" id="start" name="start" placeholder="AAA-MM-DD HH:mm:ss" required autocomplete="off">
                       <span class="add-on"><i class="icon-th"></i></span>
                   </div>
 
                   <!-- DATA/HORA FIM -->
                   <div class="form-group col-md-3">
                       <label for="matriUser">Data e hora final: *</label>
-                      <input size="16" type="text"  class="form-control form_datetime" id="end" name="end" placeholder="AAA-MM-DD HH:mm:ss" required>
+                      <input size="16" type="text"  class="form-control form_datetime" id="end" name="end" placeholder="AAA-MM-DD HH:mm:ss" required autocomplete="off">
                       <span class="add-on"><i class="icon-remove"></i></span>
                       <span class="add-on"><i class="icon-th"></i></span>
                   </div>
@@ -344,7 +355,6 @@ if (isset($_POST["salva"]) && $_SESSION["tipo"] != "Aluno"){
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
-  <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 
   <!-- CONFIGURAÇÃO EDITOR SUMMERNOTE -->

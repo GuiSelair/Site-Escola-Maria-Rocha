@@ -25,11 +25,11 @@ if (isset($_GET["id"])){
   switch ($_GET["id"]) {
     case '0':
       $conexao = DBConecta();
-      $id = $_GET["id"];
+      $id = ValidaString($_GET["id"]);
       break;
     case "1":
       $conexao = DBConecta();
-      $id = $_GET["id"];
+      $id = ValidaString($_GET["id"]);
       break;
 
     default:
@@ -547,7 +547,6 @@ if (isset($_GET["id"])){
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
-  <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>
 

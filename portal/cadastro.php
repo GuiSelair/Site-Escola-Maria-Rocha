@@ -29,140 +29,18 @@ if (isset($_POST['edita'])){
   switch ($id) {
     //  EDITA CADASTRO ALUNO
     case '0':
-      $idUser = $_POST["idAluno"];
-      $nome = $_POST['nome'];
-      $sobrenome = $_POST['sobrenome'];
-      $email = $_POST['email'];
-      $login = $_POST['login'];
-      $dataNascimento = $_POST['dataNascimento'];
-      $sexo = $_POST['sexo'];
-      $telefone = $_POST["telefone"];
-      $status = $_POST['status'];
+      $idUser = ValidaString($_POST["idAluno"]);
+      $nome = ValidaString($_POST['nome']);
+      $sobrenome = ValidaString($_POST['sobrenome']);
+      $email = ValidaEmail($_POST['email']);
+      $login = ValidaString($_POST['login']);
+      $dataNascimento = ValidaString($_POST['dataNascimento']);
+      $sexo = ValidaString($_POST['sexo']);
+      $telefone = ValidaString($_POST["telefone"]);
+      $status = ValidaString($_POST['status']);
 
-      $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone, status = '$status' WHERE idAluno = '$idUser'";
-      $execute_sql = mysqli_query($conexao, $sql_code);
-
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable my-0' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
-      }
-      break;
-    // EDITA CADASTRO PROFESSOR
-    case '1':
-      $idUser = $_POST["idProfessor"];
-      $nome = $_POST['nome'];
-      $sobrenome = $_POST['sobrenome'];
-      $email = $_POST['email'];
-      $login = $_POST['login'];
-      $sexo = $_POST['sexo'];
-      $telefone = $_POST["telefone"];
-      $status = $_POST['status'];
-    
-      $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', status = '$status' WHERE idProfessor = $idUser";
-      $execute_sql = mysqli_query($conexao, $sql_code);
-
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
-      }
-      break;
-    //  EDITA CADASTRO TURMA
-    case '2':
-      $nomeTurma = $_POST['idTurma'];
-      $cursoTurma = $_POST['idCurso'];
-
-      $sql_code = "UPDATE turma SET idCurso = '$cursoTurma' WHERE idTurma = '$nomeTurma'";
-      $execute_sql = mysqli_query($conexao, $sql_code);
-      
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
-      }
-      break;
-    //  EDITA CADASTRO DISCIPLINA
-    case '3':
-      $nomeDisc = $_POST['nome'];
-      $idDisc = $_POST["idDisciplina"];
-      if (empty($_POST["prerequisito"])){
-        $DiscPre = "";
-      }
-      else{
-        $DiscPre = $_POST["prerequisito"];
-      }
-      $idCurso = $_POST["idCurso"];
-      if ($DiscPre != ""){
-        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', prerequisito = $DiscPre, idCurso = $idCurso WHERE idDisciplina = $idDisc;";
-      }else{
-        $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', idCurso = $idCurso WHERE idDisciplina = $idDisc;";
-      }
-      $execute_sql = mysqli_query($conexao, $sql_code);
-      if (!$execute_sql) {
-        echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Erro ao Salvar!</strong>
-            </div>
-            ";
-      } else {
-        echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Operação efetuada com sucesso!</strong>
-            </div>
-            ";
-      }
-      break;
-
-  }
-
-}
-
-//  SALVA NOVOS CADASTROS
-if (isset($_POST['salva'])){
-  
-  $id = $_GET['id'];
-
-  switch ($id) {
-    case '0':
-      $nome = $_POST['nome'];
-      $sobrenome = $_POST['sobrenome'];
-      $email = $_POST['email'];
-      $login = $_POST['login'];
-      $dataNascimento = $_POST['dataNascimento'];
-      $sexo = $_POST['sexo'];
-      $telefone = $_POST["telefone"];
-      $idAluno = $_POST["idAluno"];
-      $senha = substr($login,0,2).substr($dataNascimento,0,4);
-      $cript = CriptografiaSenhas($senha);
-      $status = $_POST['status'];
-
-      if (!VerificaExistencia($conexao, "idAluno", "aluno", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
-        $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha, status) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript', '$status')";
+      if ($nome && $sobrenome && $email && $login && $dataNascimento && $sexo && $telefone && $status){
+        $sql_code = "UPDATE aluno SET nome = '$nome', sobrenome = '$sobrenome', dataNascimento = '$dataNascimento', email = '$email', sexo = '$sexo', login = '$login', telefone = $telefone, status = '$status' WHERE idAluno = '$idUser'";
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
@@ -182,25 +60,25 @@ if (isset($_POST['salva'])){
       else{
         echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-        <strong>Cadastro já existente!</strong>
+        <strong>Insira corretamente os dados pedidos!</strong>
         </div>
         ";
 
       }
       break;
+    // EDITA CADASTRO PROFESSOR
     case '1':
-      $nome = $_POST['nome'];
-      $sobrenome = $_POST['sobrenome'];
-      $email = $_POST['email'];
-      $login = $_POST['login'];
-      $sexo = $_POST['sexo'];
-      $telefone = $_POST["telefone"];
-      $senha = substr($login,0,2).substr($email,0,4);
-      $cript = CriptografiaSenhas($senha);
-      $status = $_POST['status'];
+      $idUser = ValidaInteiro($_POST["idProfessor"]);
+      $nome = ValidaString($_POST['nome']);
+      $sobrenome = ValidaString($_POST['sobrenome']);
+      $email = ValidaEmail($_POST['email']);
+      $login = ValidaString($_POST['login']);
+      $sexo = ValidaString($_POST['sexo']);
+      $telefone = ValidaString($_POST["telefone"]);
+      $status = ValidaString($_POST['status']);
 
-      if (!VerificaExistencia($conexao,"idProfessor", "professor", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
-        $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha, status) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript', '$status')";
+      if ($nome && $sobrenome && $email && $login && $sexo && $telefone && $status){
+        $sql_code = "UPDATE professor SET nome = '$nome', sobrenome = '$sobrenome', email = '$email', sexo = '$sexo', login = '$login',telefone = '$telefone', status = '$status' WHERE idProfessor = $idUser";
         $execute_sql = mysqli_query($conexao, $sql_code);
 
         if (!$execute_sql) {
@@ -220,36 +98,222 @@ if (isset($_POST['salva'])){
       else{
         echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-        <strong>Cadastro já existente!</strong>
+        <strong>Insira corretamente os dados pedidos!</strong>
         </div>
         ";
+
+      }
+      break;
+    //  EDITA CADASTRO TURMA
+    case '2':
+      $nomeTurma = ValidaString($_POST['idTurma']);
+      $cursoTurma = ValidaString($_POST['idCurso']);
+
+      if ($nomeTurma && $cursoTurma){
+        $sql_code = "UPDATE turma SET idCurso = '$cursoTurma' WHERE idTurma = '$nomeTurma'";
+        $execute_sql = mysqli_query($conexao, $sql_code);
+        
+        if (!$execute_sql) {
+          echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Erro ao Salvar!</strong>
+              </div>
+              ";
+        } else {
+          echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Operação efetuada com sucesso!</strong>
+              </div>
+              ";
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Insira corretamente os dados pedidos!</strong>
+        </div>
+        ";
+
+      }
+      break;
+    //  EDITA CADASTRO DISCIPLINA
+    case '3':
+      $nomeDisc = ValidaString($_POST['nome']);
+      $idDisc = ValidaString($_POST["idDisciplina"]);
+      $DiscPre = empty($_POST["prerequisito"]) ? "" : ValidaString($_POST["prerequisito"]);
+      $idCurso = ValidaString($_POST["idCurso"]);
+
+      if ($nomeDisc && $idDisc && $DiscPre && $idCurso){
+        if ($DiscPre != ""){
+          $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', prerequisito = $DiscPre, idCurso = $idCurso WHERE idDisciplina = $idDisc;";
+        }else{
+          $sql_code = "UPDATE disciplina SET nome = '$nomeDisc', idCurso = $idCurso WHERE idDisciplina = $idDisc;";
+        }
+        $execute_sql = mysqli_query($conexao, $sql_code);
+        if (!$execute_sql) {
+          echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Erro ao Salvar!</strong>
+              </div>
+              ";
+        } else {
+          echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
+              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+              <strong>Operação efetuada com sucesso!</strong>
+              </div>
+              ";
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Insira corretamente os dados pedidos!</strong>
+        </div>
+        ";
+
+      }
+      break;
+  }
+
+}
+
+//  SALVA NOVOS CADASTROS
+if (isset($_POST['salva'])){
+  
+  $id = $_GET['id'];
+
+  switch ($id) {
+    case '0':
+      $nome = ValidaString($_POST['nome']);
+      $sobrenome = ValidaString($_POST['sobrenome']);
+      $email = ValidaEmail($_POST['email']);
+      $login = ValidaString($_POST['login']);
+      $dataNascimento = ValidaString($_POST['dataNascimento']);
+      $sexo = ValidaString($_POST['sexo']);
+      $telefone = ValidaString($_POST["telefone"]);
+      $idAluno = ValidaString($_POST["idAluno"]);
+      $senha = substr($login,0,2).substr($dataNascimento,0,4);
+      $cript = CriptografiaSenhas($senha);
+      $status = ValidaString($_POST['status']);
+
+      if ($idAluno && $nome && $sobrenome && $email && $login && $dataNascimento && $sexo && $telefone && $status){
+        if (!VerificaExistencia($conexao, "idAluno", "aluno", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
+          $sql_code = "INSERT INTO aluno (idAluno,nome, sobrenome, dataNascimento, email, sexo, login, telefone, senha, status) VALUES ('$idAluno','$nome','$sobrenome','$dataNascimento','$email','$sexo','$login', $telefone, '$cript', '$status')";
+          $execute_sql = mysqli_query($conexao, $sql_code);
+
+          if (!$execute_sql) {
+            echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao Salvar!</strong>
+                </div>
+                ";
+          } else {
+            echo "<div class='alert alert-success alert-dismissable my-0' style='margin-bottom: 0px;'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Operação efetuada com sucesso!</strong>
+                </div>
+                ";
+          }
+        }
+        else{
+          echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Cadastro já existente!</strong>
+          </div>
+          ";
+
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Insira corretamente os dados pedidos!</strong>
+        </div>
+        ";
+
+      }
+      break;
+    case '1':
+      $nome = ValidaString($_POST['nome']);
+      $sobrenome = ValidaString($_POST['sobrenome']);
+      $email = ValidaEmail($_POST['email']);
+      $login = ValidaString($_POST['login']);
+      $sexo = ValidaString($_POST['sexo']);
+      $telefone = ValidaString($_POST["telefone"]);
+      $senha = substr($login,0,2).substr($email,0,4);
+      $cript = CriptografiaSenhas($senha);
+      $status = ValidaString($_POST['status']);
+
+      if ($nome && $sobrenome && $email && $login && $sexo && $telefone && $status){
+        if (!VerificaExistencia($conexao,"idProfessor", "professor", "nome", $nome, "sobrenome", $sobrenome, "email", $email, "login", $login)){
+          $sql_code = "INSERT INTO professor (nome, sobrenome, email, sexo, telefone, login, senha, status) VALUES ('$nome','$sobrenome','$email','$sexo','$telefone','$login', '$cript', '$status')";
+          $execute_sql = mysqli_query($conexao, $sql_code);
+
+          if (!$execute_sql) {
+            echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Erro ao Salvar!</strong>
+                </div>
+                ";
+          } else {
+            echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Operação efetuada com sucesso!</strong>
+                </div>
+                ";
+          }
+        }
+        else{
+          echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong>Cadastro já existente!</strong>
+          </div>
+          ";
+        }
+      }
+      else{
+        echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+        <strong>Insira corretamente os dados pedidos!</strong>
+        </div>
+        ";
+
       }
       break;
     case '2':
-      $nomeTurma = $_POST['idTurma'];
-      $cursoTurma = $_POST['idCurso'];
+      $nomeTurma = ValidaString($_POST['idTurma']);
+      $cursoTurma = ValidaString($_POST['idCurso']);
 
-      if (!VerificaExistencia($conexao, "idTurma", "turma", "idTurma", $nomeTurma, "idCurso", $cursoTurma)){
-        if ($nomeTurma != " "){
-          $sql_code = "INSERT INTO turma (idTurma, idCurso) VALUES ('$nomeTurma','$cursoTurma')";
-          $execute_sql = mysqli_query($conexao, $sql_code);
-          if (!$execute_sql) {
-            echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
-                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Erro ao Salvar!</strong>
-                </div>
-                ";
-          } else {
-            echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
-                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Operação efetuada com sucesso!</strong>
-                </div>
-                ";
+      if ($nomeTurma && $cursoTurma){
+        if (!VerificaExistencia($conexao, "idTurma", "turma", "idTurma", $nomeTurma, "idCurso", $cursoTurma)){
+          if ($nomeTurma != " "){
+            $sql_code = "INSERT INTO turma (idTurma, idCurso) VALUES ('$nomeTurma','$cursoTurma')";
+            $execute_sql = mysqli_query($conexao, $sql_code);
+            if (!$execute_sql) {
+              echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
+                  <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                  <strong>Erro ao Salvar!</strong>
+                  </div>
+                  ";
+            } else {
+              echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
+                  <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                  <strong>Operação efetuada com sucesso!</strong>
+                  </div>
+                  ";
+            }
+          }else{
+            echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
+            </div>
+            ";
           }
-        }else{
+        }
+        else{
           echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-          <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
+          <strong>Cadastro já existente!</strong>
           </div>
           ";
         }
@@ -257,59 +321,66 @@ if (isset($_POST['salva'])){
       else{
         echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-        <strong>Cadastro já existente!</strong>
+        <strong>Insira corretamente os dados pedidos!</strong>
         </div>
         ";
+
       }
+      
       break;
     case '3':
-      $nomeDisc = $_POST['nome'];
-      $idCurso = $_POST["idCurso"];
-      if (empty($_POST["prerequisito"])){
-        $DiscPre = "";
-      }
-      else{
-        $DiscPre = $_POST["prerequisito"];
-      }
+      $nomeDisc = ValidaString($_POST['nome']);
+      $idCurso = ValidaString($_POST["idCurso"]);
+      $DiscPre = empty($_POST["prerequisito"]) ? "" : ValidaString($_POST["prerequisito"]);
 
-      $sql_code = "SELECT idDisciplina FROM disciplina WHERE nome = '$nomeDisc'";
-      $results = mysqli_query($conexao, $sql_code);
-      if ($results && !mysqli_num_rows($results)){
-        if ($nomeDisc != " "){
-          if ($DiscPre != ""){
-            $sql_code = "INSERT INTO disciplina (nome, prerequisito, idCurso) VALUES ('$nomeDisc', $DiscPre, $idCurso)";
+      if ($nomeDisc && $idCurso && $DiscPre){
+        $sql_code = "SELECT idDisciplina FROM disciplina WHERE nome = '$nomeDisc'";
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results && !mysqli_num_rows($results)){
+          if ($nomeDisc != " "){
+            if ($DiscPre != ""){
+              $sql_code = "INSERT INTO disciplina (nome, prerequisito, idCurso) VALUES ('$nomeDisc', $DiscPre, $idCurso)";
+            }else{
+              $sql_code = "INSERT INTO disciplina (nome, idCurso) VALUES ('$nomeDisc', $idCurso)";
+            }
+            $execute_sql = mysqli_query($conexao, $sql_code);
+            if (!$execute_sql) {
+              echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
+                  <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                  <strong>Erro ao Salvar!</strong>
+                  </div>
+                  ";
+            } else {
+              echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
+                  <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                  <strong>Operação efetuada com sucesso!</strong>
+                  </div>
+                  ";
+            }
           }else{
-            $sql_code = "INSERT INTO disciplina (nome, idCurso) VALUES ('$nomeDisc', $idCurso)";
+            echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
+            </div>
+            ";
           }
-          $execute_sql = mysqli_query($conexao, $sql_code);
-          if (!$execute_sql) {
-            echo "<div class='alert alert-danger alert-dismissable' style='margin-bottom: 0px;'>
-                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Erro ao Salvar!</strong>
-                </div>
-                ";
-          } else {
-            echo "<div class='alert alert-success alert-dismissable' style='margin-bottom: 0px;'>
-                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Operação efetuada com sucesso!</strong>
-                </div>
-                ";
-          }
-        }else{
+        }
+        else{
           echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
           <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-          <strong>Não é permitida a inserção de campos em branco. Preencha corretamente!</strong>
+          <strong>Cadastro já existente!</strong>
           </div>
           ";
         }
-      }
-      else{
+      }else{
         echo "<div class='alert alert-warning alert-dismissable my-0 py-0' style='margin-bottom: 0px;'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-        <strong>Cadastro já existente!</strong>
+        <strong>Insira corretamente os dados pedidos!</strong>
         </div>
         ";
+
       }
+      
       break;
 
   }
@@ -318,7 +389,7 @@ if (isset($_POST['salva'])){
 
 //  DEFINIÇÃO QUAL PÁGINA DE CADASTRO MOSTRAR
 if (isset($_GET['id'])){
-    $id = $_GET['id'];
+    $id = ValidaString($_GET['id']);
 
     switch ($id) {
         case '0':
@@ -481,18 +552,18 @@ if (isset($_GET['id'])){
               </div>
               <div class="row">   
                 <div class="col-md-3" style="margin: 10px 5px 10px;">
-                  <input type="text" class="form-control" placeholder="Nome" id="buscaNome" />
+                  <input type="text" class="form-control" placeholder="Nome" id="buscaNome" name="buscaNome"/>
                 </div>
                
                 <!-- SOMENTE PARA CADASTROS DE PROFESSORES OU ALUNOS -->
                 <?php if($id < "2"){ ?>
                   <div class="col-md-3" style="margin: 10px 5px 10px;">
-                    <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre"/>
+                    <input type="text" class="form-control" placeholder="Sobrenome" id="buscaSobre" name="buscaSobre"/>
                   </div>
                 <?php } ?>
                 
                 <div class="col-md-3" style="margin: 10px 5px 10px;">
-                    <input type="text" class="form-control" placeholder= "ID/Matricula" id = "buscaID"/>
+                    <input type="text" class="form-control" placeholder= "ID/Matricula" id = "buscaID" name="buscaID"/>
                   </div>
                 <div class="col-md-6">
                   <div class="box-footer ">
@@ -561,7 +632,7 @@ if (isset($_GET['id'])){
                       <label>Status: </label>
                       <div class="radio">
                         <label style="margin-right: 5px;">
-                          <input type="radio" value="ativo" name="status" id="status">
+                          <input type="radio" value="ativo" name="status" id="status" checked>
                           Ativo
                         </label>
                         <label>
@@ -932,36 +1003,9 @@ if (isset($_GET['id'])){
       }
     }
 
-    function salvaADMIN(){
-      let adminValues = []
-      let error = false
-      let informacoesADMIN = document.querySelectorAll("#cadastra-Admin input")
-      informacoesADMIN.forEach((input, index) => {
-        if (["nomeADMIN", "sobreADMIN", "loginADMIN", "senhaADMIN", "emailADMIN"].indexOf(input.name) >= 0 && !input.value){
-          input.parentElement.classList.add("has-error")
-          error = true
-        }
-        adminValues.push(input.value)
-      })
-
-      if (!error){
-        $.ajax({
-          type: "POST",
-          url: "./controllers/salvaCadastro.php",
-          datatype: "JSON",
-          data: { adminArray: adminValues },
-          success: function(response){
-            $(".status").html(response)
-          },
-          error: function(response){
-            $(".status").html(response)
-          }
-        })
-      }
-    }
-
   </script>
 
+  <script src="./controllers/controlaFormularios.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>

@@ -14,8 +14,8 @@ if (!isset($_GET["hash"]) || !VerificaHash($conexao, $_GET["hash"])){
     header("location: ./loginUser.php");
 }
 
-$hash = $_GET["hash"];
-$email = $_GET["email"];
+$hash = ValidaString($_GET["hash"]);
+$email = ValidaEmail($_GET["email"]);
 if (isset($_POST["redefine"]) && $_POST["senha"] != " "){
     $senha = mysqli_escape_string($conexao, $_POST['senha']);
     $senhaConfirma = mysqli_escape_string($conexao, $_POST['senhaConfirma']);

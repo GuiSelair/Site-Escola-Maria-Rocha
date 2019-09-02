@@ -352,7 +352,9 @@
         $input = htmlspecialchars($input);
         if (filter_var($input, FILTER_VALIDATE_INT)) {
             return $input;
-        } 
+        }
+        else
+            return null;
     }
 
     function ValidaEmail($email){
@@ -361,6 +363,7 @@
         }
         return $email;
     }
+
 
     function ValidaString( $str ){
         /**
@@ -382,7 +385,7 @@
             $str = htmlspecialchars($str);
             return strtr($str, $tbl);
         }
-        else return $str;
+        else return null;
     }
 
     function VerificaStatusUsuarios ($conexao, $idAluno = null, $idProfessor = null){
