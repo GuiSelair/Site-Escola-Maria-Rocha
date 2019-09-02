@@ -470,6 +470,7 @@ if (isset($_GET['id'])){
           CADASTRO DE <?php echo $tit; ?>
         </h1>
       </section>
+      <div class="status"></div>
       <section class="content">
 
         <!-- PESQUISA DE CADASTROS -->
@@ -564,7 +565,7 @@ if (isset($_GET['id'])){
                           Ativo
                         </label>
                         <label>
-                          <input type="radio" value="desativado" name="status" id="status">
+                          <input type="radio" value="desativado" name="status" id="status1">
                           Não Ativo
                         </label>
                       </div>
@@ -761,7 +762,7 @@ if (isset($_GET['id'])){
           <input type="password" class="form-control" id="senhaADMIN" name="senhaADMIN" placeholder="Senha" required>
           <label for="emailADMIN" style="margin-top: 10px;">Email: </label>
           <input type="email" class="form-control" id="emailADMIN" name="emailADMIN" placeholder="Email" required>
-          <button type="submit" class="btn btn-primary btn-block" name="salvaADMIN" id="btn-salvaADMIN" style="margin-top: 20px;">Cadastrar</button>
+          <button type="submit" class="btn btn-primary btn-block" name="salvaADMIN" id="btn-salvaADMIN" onclick="salvaADMIN()" style="margin-top: 20px;">Cadastrar</button>
         </div>
       </div>
     </div>
@@ -883,7 +884,6 @@ if (isset($_GET['id'])){
         } 
     }
 
-
     //  DESABILITA CAMPOS DE ACORDO COM PARAMETROS
     function DesabilitaHabilitaCampos(opcao, tipo){
       const btnSalva = document.getElementById("btn-salva")
@@ -933,17 +933,37 @@ if (isset($_GET['id'])){
     }
 
     function salvaADMIN(){
-      let informacoesADMIN = document.querySelectorAll("#cadastra-Admin [id]");
-      informacoesADMIN.forEach(input => {
-        
-      });
+      let adminValues = []
+      let error = false
+      let informacoesADMIN = document.querySelectorAll("#cadastra-Admin input")
+      informacoesADMIN.forEach((input, index) => {
+        if (["nomeADMIN", "sobreADMIN", "loginADMIN", "senhaADMIN", "emailADMIN"].indexOf(input.name) >= 0 && !input.value){
+          input.parentElement.classList.add("has-error")
+          error = true
+        }
+        adminValues.push(input.value)
+      })
+
+      if (!error){
+        $.ajax({
+          type: "POST",
+          url: "./controllers/salvaCadastro.php",
+          datatype: "JSON",
+          data: { adminArray: adminValues },
+          success: function(response){
+            $(".status").html(response)
+          },
+          error: function(response){
+            $(".status").html(response)
+          }
+        })
+      }
     }
 
   </script>
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
-  <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>
 
