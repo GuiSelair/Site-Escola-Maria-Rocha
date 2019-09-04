@@ -31,7 +31,7 @@ if(isset($_POST["tabela_ID"]) && isset($_POST["nome"])){
     $buscaNome = ValidaString($_POST["nome"]);
     if (!empty($_POST["sobrenome"])) $buscaSobre = ValidaString($_POST["sobrenome"]);
 
-    if ($id && $buscaNome){
+    if ($buscaNome){
         //  CASO A TABELA ESCOLHIDA FOR ALUNO OU PROFESSOR
         if ($id < '2'){
             $sql_code = "SELECT * FROM $tabela WHERE nome='$buscaNome' AND sobrenome='$buscaSobre';";

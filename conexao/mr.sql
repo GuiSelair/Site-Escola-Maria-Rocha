@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: 14-Ago-2019 às 06:18
--- Versão do servidor: 10.1.40-MariaDB
--- versão do PHP: 7.3.5
+-- Host: 127.0.0.1
+-- Tempo de geração: 04-Set-2019 às 23:26
+-- Versão do servidor: 10.4.6-MariaDB
+-- versão do PHP: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `mr`
+-- Banco de dados: `mr`
 --
 
 -- --------------------------------------------------------
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cursocontabilidade` (
-  `objetivoCurso` longtext,
-  `criteriosAvaliacao` longtext,
-  `estagio` longtext,
-  `perfilConclusao` longtext,
-  `gradeCurricular` longtext,
+  `objetivoCurso` longtext DEFAULT NULL,
+  `criteriosAvaliacao` longtext DEFAULT NULL,
+  `estagio` longtext DEFAULT NULL,
+  `perfilConclusao` longtext DEFAULT NULL,
+  `gradeCurricular` longtext DEFAULT NULL,
   `horario` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -52,11 +52,11 @@ INSERT INTO `cursocontabilidade` (`objetivoCurso`, `criteriosAvaliacao`, `estagi
 
 CREATE TABLE `cursoinformatica` (
   `id` int(11) NOT NULL,
-  `objetivoCurso` longtext,
-  `criteriosAvaliacao` longtext,
-  `estagio` longtext,
-  `perfilConclusao` longtext,
-  `gradeCurricular` longtext,
+  `objetivoCurso` longtext DEFAULT NULL,
+  `criteriosAvaliacao` longtext DEFAULT NULL,
+  `estagio` longtext DEFAULT NULL,
+  `perfilConclusao` longtext DEFAULT NULL,
+  `gradeCurricular` longtext DEFAULT NULL,
   `horario` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -109,11 +109,11 @@ INSERT INTO `cursomedio` (`objetivocurso`) VALUES
 --
 
 CREATE TABLE `cursosecretariado` (
-  `objetivoCurso` longtext,
-  `criteriosAvaliacao` longtext,
-  `estagio` longtext,
-  `perfilConclusao` longtext,
-  `gradeCurricular` longtext,
+  `objetivoCurso` longtext DEFAULT NULL,
+  `criteriosAvaliacao` longtext DEFAULT NULL,
+  `estagio` longtext DEFAULT NULL,
+  `perfilConclusao` longtext DEFAULT NULL,
+  `gradeCurricular` longtext DEFAULT NULL,
   `horario` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -211,86 +211,86 @@ INSERT INTO `mr_usuarios` (`id`, `login`, `senha`, `email`, `categoria`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `recuperaSegurança`
+-- Estrutura da tabela `recuperasegurança`
 --
 
-CREATE TABLE `recuperaSegurança` (
+CREATE TABLE `recuperasegurança` (
   `id` int(11) NOT NULL,
   `hash` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `cursoinformatica`
+-- Índices para tabela `cursoinformatica`
 --
 ALTER TABLE `cursoinformatica`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `imagens`
+-- Índices para tabela `imagens`
 --
 ALTER TABLE `imagens`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idPosts` (`idPosts`);
 
 --
--- Indexes for table `mr_posts`
+-- Índices para tabela `mr_posts`
 --
 ALTER TABLE `mr_posts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mr_usuarios`
+-- Índices para tabela `mr_usuarios`
 --
 ALTER TABLE `mr_usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `recuperaSegurança`
+-- Índices para tabela `recuperasegurança`
 --
-ALTER TABLE `recuperaSegurança`
+ALTER TABLE `recuperasegurança`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `cursoinformatica`
+-- AUTO_INCREMENT de tabela `cursoinformatica`
 --
 ALTER TABLE `cursoinformatica`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `imagens`
+-- AUTO_INCREMENT de tabela `imagens`
 --
 ALTER TABLE `imagens`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `mr_posts`
+-- AUTO_INCREMENT de tabela `mr_posts`
 --
 ALTER TABLE `mr_posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
--- AUTO_INCREMENT for table `mr_usuarios`
+-- AUTO_INCREMENT de tabela `mr_usuarios`
 --
 ALTER TABLE `mr_usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `recuperaSegurança`
+-- AUTO_INCREMENT de tabela `recuperasegurança`
 --
-ALTER TABLE `recuperaSegurança`
+ALTER TABLE `recuperasegurança`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Restrições para despejos de tabelas
 --
 
 --

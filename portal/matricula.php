@@ -344,7 +344,7 @@ if (isset($_GET["id"])){
       <div class="content-wrapper">
         <section class="content-header">
           <h1>
-            CADASTRO DE PROFESSOR A TURMA E DISCIPLINA
+            MATRICULA DE PROFESSOR A TURMA E DISCIPLINA
           </h1>
         </section>
         <section class="content">
@@ -464,10 +464,12 @@ if (isset($_GET["id"])){
                     semestre = semestre[i].value
                   }
                 }
+                const ano = $("#ano").val();
+
                 $.ajax({
                   type: 'POST',
                   url: './controllers/salvaMatriculasNotas.php',
-                  data: 'idTurma='+idTurma+'&idProfessor='+idProfessor+'&semestre='+semestre+'&idDisciplina='+idDisciplina,
+                  data: 'idTurma='+idTurma+'&idProfessor='+idProfessor+'&semestre='+semestre+'&idDisciplina='+idDisciplina+'&ano='+ano,
                   beforeSend: function () {
                     $("#btn-salva").html("Enviando...")
                   },

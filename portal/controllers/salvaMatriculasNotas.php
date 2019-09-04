@@ -57,35 +57,34 @@ if (isset($_POST["mensao"]) && isset($_POST["idAluno"]) && isset($_POST["idDisci
 }
 
 // FUNÇÃO SALVA A MATRICULA DO ALUNO E RETORNA A LINHA INSERIDA PARA MOSTRAR NA TABELA
-if (isset($_POST["idTurma"]) && isset($_POST["idAluno"]) && isset($_POST["semestre"]) && isset($_POST["ano"])){
+if (isset($_POST["idTurma"]) && isset($_POST["idAluno"]) && !empty($_POST["semestre"]) && !empty($_POST["ano"])){
     $idTurma = ValidaString($_POST["idTurma"]);
     $idAluno = ValidaString($_POST["idAluno"]);
     $semestre = ValidaString($_POST["semestre"]);
     $data = $_POST["ano"].".0".$semestre;
 
-    if ($idTurma && $idAluno && $semestre){
+    if ($idTurma && $idAluno && $data){
         $sql_code = "INSERT INTO `turma-aluno`(`idTurma`,`idAluno`, `dataMatricula`) VALUES ($idTurma,'$idAluno','$data')";
         $results = mysqli_query($conexao, $sql_code);
     
         if ($results){
-    
             $nomeAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno);
             $nomeCompleto = $nomeAluno["nome"]." ".$nomeAluno["sobrenome"];
-            echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td>".$data."</td><td><a class='btn btn-danger' id='apaga' onclick='apagaRegistro($idTurma, \"$idAluno\", $data)'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
+            echo "<tr><td>".$nomeCompleto."</td><td>".$idTurma."</td><td>".$data."</td><td><a class='btn btn-danger' id='apaga' onclick='apagaRegistro($idTurma, \"$idAluno\", \"$data\")'><i class='fa fa-trash'></i>Excluir</a></td></tr>";
         }
     }
 }
 
 //FUNÇÃO SALVA MATRICULA DO PROFESSOR A TURMA E DISCIPLINA E RETORNE A LINHA INSERIDA PARA MOSTRAR NA TABELA
-if (isset($_POST["idProfessor"]) && isset($_POST["idDisciplina"]) && isset($_POST["idTurma"]) && isset($_POST["semestre"])){
+if (isset($_POST["idProfessor"]) && isset($_POST["idDisciplina"]) && isset($_POST["idTurma"]) && !empty($_POST["semestre"]) && !empty($_POST["ano"])){
     if (!empty($_POST["idTurma"]) && !empty($_POST["semestre"])){  
         $idProfessor = ValidaString($_POST["idProfessor"]);
         $idTurma = ValidaString($_POST["idTurma"]);
         $idDisciplina = ValidaString($_POST["idDisciplina"]);
         $semestre = ValidaString($_POST["semestre"]);
-        $data = date("Y").".0".$semestre;
+        $data = ValidaString($_POST["ano"]).".0".$semestre;
 
-        if ($idProfessor && $idTurma && $idDisciplina && $semestre){
+        if ($idProfessor && $idTurma && $idDisciplina && $data){
             $sql_code = "INSERT INTO `turma-professor` (`idDisciplina`, `idProfessor`, `idTurma`, `dataMatricula`) VALUES ($idDisciplina, $idProfessor, $idTurma, '$data')";
             $results = mysqli_query($conexao, $sql_code);
     
