@@ -5,15 +5,16 @@
 //////////////////////////////////////
 
 session_start();
-
 include_once("conexao/config.php");
 include_once("conexao/conexao.php");
+include_once("../conexao/function.php");
 
 // VERIFICA SE O USUÁRIO ESTÁ LOGADO
 if (isset($_GET['deslogar'])) {
   session_destroy();
   header("location: ./loginUser.php");
 }
+
 // VERIFICA SE O USUÁRIO É ALUNO
 if (!isset($_SESSION["tipo"]) == "Aluno"){
     header("location: ./loginUser.php");
@@ -23,20 +24,19 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Quadro de notas</title>
+  <title>PLATAFORMA ONLINE - &nbsp; :::&nbsp; E.E.E.M. Profª Maria Rocha&nbsp; :::</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- IMPORTAÇÃO ADMINLTE -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <link rel="shortcut icon" href="../img/favicon.ico" />
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 
@@ -47,8 +47,9 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
     <header class="main-header">
       <a href="index.php" class="logo">
         <span class="logo-mini"><img src="../img/Logo.png" alt="logo" width="30" height="30"></span>
-        <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Portal Acadêmico</span>
+        <span class="logo-lg"><img src="../img/Logo.png" alt="logo" width="25" height="25"> Maria Rocha</span>
       </a>
+
       <!--MENU DISPOSITIVOS MÓVEIS-->
       <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -70,7 +71,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
               <ul class="dropdown-menu">
                 <li class="user-footer">
                   <div class="pull-left mx-5">
-                    <a href="./redefine.php" class="btn btn-default btn-flat">Senha</a>
+                    <a href="./redefineSenhaPortal.php" class="btn btn-default btn-flat">Alterar senha</a>
                   </div>
                   <div class="pull-right mx-5">
                     <a href="?deslogar" class="btn btn-default btn-flat">Sair</a>
@@ -154,6 +155,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
         <div class="row">
           <div class="col-md-12">
             <div class="nav-tabs-custom">
+
             <!--ABAS DE OPÇÕES-->
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">NOTAS LANÇADAS</a></li>
@@ -167,6 +169,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                     <table class="table table-hover">
                       <thead>
                         <tr>
+                          <th>Nome da Avaliação</th>
                           <th>Disciplina</th>
                           <th>Turma</th>
                           <th>Data da Avaliação</th>
@@ -183,34 +186,23 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                             if ($results && mysqli_num_rows($results)){
                                 while ($avaliacoes = mysqli_fetch_assoc($results)){
                                   // VERIFICA SE O ALUNO JA ESTÁ APROVADO NA DISCIPLINA DA AVALIAÇÃO E MOSTRA CASO NÃO ESTIVER
-                                  $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idAluno` = $idAluno AND `idDisciplina` =".$avaliacoes['idDisciplina'];
-                                  $buscaAprovacao = mysqli_query($conexao, $sql_code);
-                                  if ($buscaAprovacao && mysqli_num_rows($buscaAprovacao)){
-                                      $verificaAprovacao = mysqli_fetch_assoc($buscaAprovacao);
-                                      // CASO O ALUNO NÃO ESTEJA APTO NA DISCIPLINA
-                                      if ($verificaAprovacao["conceito"] != "Apto")
-                                        $DiscNaoAprovadas[] = $avaliacoes;
-                                  }elseif (!mysqli_num_rows($buscaAprovacao)){
-                                    // CASO O ALUNO NÃO TENHA CONCLUIDO PELO MENOS UMAS VEZ A DISCIPLINA
-                                    $DiscNaoAprovadas[] = $avaliacoes;
+                                  $dados = ConfereAprovacao($conexao, $avaliacoes["idDisciplina"], $idAluno);
+                                  if ($dados["conceitoDisciplina"] != "APTO"){
+                                    switch ($avaliacoes["conceito"]) {
+                                      case 'Apto':
+                                        echo "<tr><td>".$avaliacoes["nomeAvaliacao"]."</td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-success text-uppercase'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        break;
+                                      case "Não Apto":
+                                        echo "<tr><td>".$avaliacoes["nomeAvaliacao"]."</td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-danger text-uppercase'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        break;
+                                      case "Ausente":
+                                        echo "<tr><td>".$avaliacoes["nomeAvaliacao"]."</td><td>".$dados["nomeDisciplina"]."</td><td>".$avaliacoes["idTurma"]."</td><td>".date("d/m/Y", strtotime($avaliacoes["data"]))."</td><td><span class='label label-info text-uppercase'>".$avaliacoes["conceito"]."</span></td></tr>";
+                                        break;
+                                      
+                                    }
                                   }
                                 }
-                                if (!empty($DiscNaoAprovadas)){
-                                    for ($i = 0; $i < count($DiscNaoAprovadas); $i++){
-                                        // BUSCA NOME DA DISCIPLINA
-                                        $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$DiscNaoAprovadas[$i]["idDisciplina"];
-                                        $results0 = mysqli_query($conexao, $sql_code);
-                                        $nomeDisciplina = mysqli_fetch_assoc($results0);
-                                        // IMPRIME LINHA DA TABELA
-                                        if ($DiscNaoAprovadas[$i]["conceito"] == "Apto")
-                                          echo "<tr><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-success'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
-                                        else  
-                                          echo "<tr><th>".$nomeDisciplina["nome"]."</th><th>".$DiscNaoAprovadas[$i]["idTurma"]."</th><th>".date("d/m/Y", strtotime($DiscNaoAprovadas[$i]["data"]))."</th><th><span class='label label-danger'>".$DiscNaoAprovadas[$i]["conceito"]."</span></th></tr>";
-                                      }
-                                }
-                                else{
-                                  echo "<p class='text-muted'>Nenhuma nota disponível...</p>";
-                                }
+                                
                             }
                             else{
                               echo "<p class='text-muted'>Nenhuma nota disponível...</p>";
@@ -224,70 +216,49 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
                 <!--MATRIZ CURRICULAR-->
                 <div class="tab-pane" id="tab_2">
                   <div class="box-body table-responsive ">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Disciplina</th>
-                          <th>Conceito</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tabela">
-                        <?php 
-                              //$conexao = DBConecta();
-                              $AllTurmas = [];
-                              $AllDisciplina = [];
-                              $idAluno = $_SESSION["id"];
-                              // BUSCANDO TURMAS QUE O USUARIO ESTA MATRICULADO
-                              $sql_code = "SELECT `idTurma` FROM `turma-aluno` WHERE `idAluno` = '$idAluno'";
-                              $results = mysqli_query($conexao, $sql_code);
-                              if ($results && mysqli_num_rows($results)){
-                                while($idTurmas = mysqli_fetch_assoc($results)){
-                                  if (!in_array($idTurmas["idTurma"], $AllTurmas)){
-                                    $AllTurmas[] = $idTurmas["idTurma"];
-                                  }
-                                }
-                                for ($i = 0; $i < count($AllTurmas); $i++){
-                                  // BUSCANDO DISCIPLINAS DAS TURMAS QUE O USUARIO ESTA MATRICULADO
-                                  $sql_code = "SELECT `idDisciplina` FROM `turma-professor` WHERE `idTurma`=".$AllTurmas[$i];
-                                  $results0 = mysqli_query($conexao, $sql_code);
-                                  if ($results0 && mysqli_num_rows($results0)){
-                                    while($idDisciplinas = mysqli_fetch_assoc($results0)){
-                                      if (!in_array($idDisciplinas["idDisciplina"], $AllDisciplina)){
-                                        $AllDisciplina[] = $idDisciplinas["idDisciplina"];
-                                      }
-                                    }
-                                  }
-                                }
-
-                                // BUSCANDO NOMES DAS DISCIPLINAS
-                                if (!empty($AllDisciplina)){
-                                  for ($i = 0; $i < count($AllDisciplina); $i++){
-                                    $sql_code = "SELECT `nome` FROM `disciplina` WHERE `idDisciplina` = ".$AllDisciplina[$i];
-                                    $results0 = mysqli_query($conexao, $sql_code);
-                                    $nomeDisciplina = mysqli_fetch_assoc($results0);
-
-                                    // VERIFICANDO SE O ALUNO ESTA APROVADO NA DISCIPLINA
-                                    $sql_code = "SELECT `conceito` FROM `aluno-disciplina` WHERE `idDisciplina`=".$AllDisciplina[$i]." AND `idAluno` = '$idAluno'";
-                                    $results0 = mysqli_query($conexao, $sql_code);
-                                    if (mysqli_num_rows($results0)){
-                                      $conceito = mysqli_fetch_assoc($results0);
-                                      if ($conceito["conceito"] == "Apto")
-                                        echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-success'>".$conceito["conceito"]."</span></td></tr>";
-                                      else
-                                        echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-danger'>".$conceito["conceito"]."</span></td></tr>";
-                                    }
-                                    else{
-                                      echo "<tr><td>".$nomeDisciplina["nome"]."</td><td><span class='label label-warning'>Pendente</span></td></tr>";
-                                    }
-                                  }
-                                }
+                    <?php
+                      $idAluno = $_SESSION["id"];
+                      $AllCursos = BuscaTodosCursos($conexao, $idAluno);
+                      $todosCursos = [];
+                      while ($idCurso = mysqli_fetch_assoc($AllCursos)) {
+                          $nomeCurso = BuscaRetornaResponse($conexao, "curso", "idCurso", $idCurso["idCurso"]);
+                          echo '<h4> -- Curso '.$nomeCurso["nome"].' --</h4>';
+                          echo "<table class='table table-hover'>
+                                  <thead>
+                                    <tr>
+                                      <th>Disciplina</th>
+                                      <th>Conceito</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id='tabela'>";
+                          $query = BuscaRetornaQuery($conexao, "disciplina", "idCurso", $idCurso["idCurso"]);
+                          if ($query){
+                            while ($response = mysqli_fetch_assoc($query)){
+                              $dados = ConfereAprovacao($conexao, $response["idDisciplina"], $idAluno); 
+                              switch ($dados["conceitoDisciplina"]) {
+                                case 'APTO':
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-success'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;
+                                case "NÃO APTO":
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-danger'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;
+                                case "AUSENTE":
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-info'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;                             
+                                default:
+                                  echo "<tr><td>".$dados["nomeDisciplina"]."</td><td><span class='label label-warning'>".$dados["conceitoDisciplina"]."</span></td></tr>";
+                                  break;
                               }
-                          ?>
-                      </tbody>
-                    </table>
+                            } 
+                          }  
+                          echo "
+                          </tbody>
+                        </table>";                            
+                      };  
+                                                                
+                    ?> 
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -299,7 +270,7 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
     <!-- Rodapé -->
     <footer class="main-footer">
       <div class="pull-right hidden-xs">
-        <i>Todos os direitos reservados</i>
+        <i>Algum problema? Mande um email para: escola@mariarocha.org.br</i>
       </div>
       <strong>Copyright &copy; 2019 Guilherme Selair</strong>
     </footer>
@@ -307,9 +278,6 @@ if (!isset($_SESSION["tipo"]) == "Aluno"){
 
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="dist/js/adminlte.min.js"></script>
-  <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/fastclick/lib/fastclick.js"></script>
-  <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 </body>
 </html>

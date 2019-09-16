@@ -32,20 +32,171 @@
     function BuscaTodosIDs($conn){
         $sql_code = "SELECT id FROM mr_posts ORDER BY id DESC";
         return mysqli_query($conn, $sql_code);
-        
-        
     }
+
+    function BuscaRetornaQuery($conn, $tabela, $coluna = null, $parametro = null){
+        if (!empty($coluna) && isset($parametro)){
+            $sql_code = "SELECT * FROM `$tabela` WHERE `$coluna` = $parametro";
+            $query = mysqli_query($conn, $sql_code);
+            if ($query && mysqli_num_rows($query))
+                return $query;
+            else
+                return false;
+        }else{
+            $sql_code = "SELECT * FROM `$tabela`";
+            $query = mysqli_query($conn, $sql_code);
+            if ($query && mysqli_num_rows($query))
+                return $query;
+            else
+                return false;
+        }
+
+    }
+
+    function BuscaRetornaResponse($conn, $tabela, $coluna, $parametro){
+        
+        switch (gettype($parametro)) {
+            case 'string':
+                $sql_code = "SELECT * FROM $tabela WHERE `$coluna` = '$parametro'";
+                $query = mysqli_query($conn, $sql_code);
+                if ($query && mysqli_num_rows($query))
+                    return mysqli_fetch_assoc($query);
+                else
+                    return false;
+                break;
+            case 'integer':
+                $sql_code = "SELECT * FROM $tabela WHERE `$coluna` = $parametro";
+                $query = mysqli_query($conn, $sql_code);
+                if ($query && mysqli_num_rows($query))
+                    return mysqli_fetch_assoc($query);
+                else
+                    return false;
+                break;
+        }
+    }
+
+    function BuscaTodosCursos($conexao, $idAluno){
+        $sql_code = "SELECT DISTINCT `turma`.`idCurso` FROM `turma-aluno`, `turma` WHERE `turma-aluno`.`idAluno`= '$idAluno' AND `turma-aluno`.`idTurma`=`turma`.`idTurma`";
+        $query = mysqli_query($conexao, $sql_code);
+        if ($query && mysqli_num_rows($query)){
+            return $query;
+        }
+        return null;
+    }
+
+    function VerificaPrerequisito($conexao, $idDisciplina){
+        $sql_code = "SELECT prerequisito FROM disciplina WHERE idDisciplina = ".$idDisciplina;
+        $query = mysqli_query($conexao, $sql_code);
+        if ($query && mysqli_num_rows($query)){
+            $response = mysqli_fetch_assoc($query);
+            if ($response["prerequisito"] != null)
+                return $response;
+            return false;
+        }
+        return false;
+    }
+
+    function ConfereAprovacao($conexao, $idDisciplina, $idAluno){
+        $sql_code = "SELECT * FROM `aluno-disciplina` WHERE `idDisciplina` = ".$idDisciplina." AND `idAluno` = $idAluno ORDER BY `idAprovacao` DESC";
+        $query = mysqli_query($conexao, $sql_code);     
+      
+        // BUSCA POR DISCIPLINAS JÁ CONCLUÍDAS
+        if ($query && mysqli_num_rows($query)){
+            
+          $response = mysqli_fetch_assoc($query);
+      
+          // DISCIPLINAS NÃO APROVADAS OU AUSENTES
+          if ($response["conceito"] == "Não Apto"){
+            $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $response["idDisciplina"]);
+            $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+            return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "NÃO APTO");
+          }
+          else if ($response["conceito"] == "Ausente") {
+            $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $response["idDisciplina"]);
+            $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+            return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "AUSENTE");
+          }
+          //  DISCIPLINAS APROVADAS
+          else{
+            $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $response["idDisciplina"]);
+            $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+            return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "APTO");
+          }  
+        }
+        //  DISCIPLINAS AINDA NÃO CURSADAS
+        else{
+          $nomeDisciplina = BuscaRetornaResponse($conexao, "disciplina", "idDisciplina", $idDisciplina);
+          $nomeDisciplina["prerequisito"] ? $prerequisito = "*" : $prerequisito = "";
+          return array("nomeDisciplina" => $nomeDisciplina["nome"].$prerequisito, "conceitoDisciplina" => "PENDENTE");
+        }                                
+      }
+
+      function ConfereTipoUsuario($conexao, $login, $senha, $email = null){
+        if(!empty($login) && !empty($senha)){
+            $sql_code = "SELECT * FROM `administrador` WHERE `login` = '$login' AND `senha` = '$senha';";
+            $query = mysqli_query($conexao, $sql_code);
+            // TESTE DE ADMINISTRADOR
+            if (mysqli_num_rows($query)){
+                $response = mysqli_fetch_assoc($query);
+                return array("tipo" => "Administrador", "id" => $response["idAdministrador"], "nome" => $response["nome"], "sobrenome" => $response["sobrenome"]);
+            }
+            else{
+                $sql_code = "SELECT * FROM `professor` WHERE `login` = '$login' AND `senha` = '$senha' ";
+                $query = mysqli_query($conexao, $sql_code);
+                if (mysqli_num_rows($query)){
+                    $response = mysqli_fetch_assoc($query);
+                    return array("tipo" => "Professor", "id" => $response["idProfessor"], "nome" => $response["nome"], "sobrenome" => $response["sobrenome"]);
+                }
+                else{
+                    $sql_code = "SELECT * FROM `aluno` WHERE `login` = '$login' AND `senha` = '$senha';";
+                    $query = mysqli_query($conexao, $sql_code);
+                    if (mysqli_num_rows($query)){
+                        $response = mysqli_fetch_assoc($query);
+                        return array("tipo" => "Aluno", "id" => $response["idAluno"], "nome" => $response["nome"], "sobrenome" => $response["sobrenome"]);
+                    }
+                }       
+            } 
+        }elseif(!empty($email)){
+            $sql_code = "SELECT * FROM `administrador` WHERE `email` = '$email';";
+            $query = mysqli_query($conexao, $sql_code);
+            // TESTE DE ADMINISTRADOR
+            if (mysqli_num_rows($query)){
+                $response = mysqli_fetch_assoc($query);
+                return "administrador";
+            }
+            else{
+                $sql_code = "SELECT * FROM `professor` WHERE `email` = '$email' ";
+                $query = mysqli_query($conexao, $sql_code);
+                if (mysqli_num_rows($query)){
+                    $response = mysqli_fetch_assoc($query);
+                    return "professor";
+                }
+                else{
+                    $sql_code = "SELECT * FROM `aluno` WHERE `email` = '$email';";
+                    $query = mysqli_query($conexao, $sql_code);
+                    if (mysqli_num_rows($query)){
+                        $response = mysqli_fetch_assoc($query);
+                        return "aluno";
+                    }
+                }       
+            } 
+        }
+        else return array("tipo" => false);
+      }
+
     // ============================================================
 
     // =========== HASH (RECUPERAÇÃO DE SENHA) ===========
 
     function AddHash($conexao, $hash, $email){
-        $sql_code = "INSERT INTO recuperaSegurança (hash, email) VALUES ('$hash', '$email');";
+        $sql_code = "INSERT INTO `recuperaSegurança` (`hash`, `email`) VALUES ('$hash', '$email');";
         $results = mysqli_query($conexao, $sql_code);
-        if ($results) 
+        if ($results){
             return true;
-        else  
+        }
+        else{  
             return false;
+        }
 
     }
 
@@ -72,8 +223,9 @@
 
     // =========== ATUALIZAÇÕES NO BANCO DE DADOS ===========
 
-    function InsereNovaSenha($conexao, $cript, $nomeTabela, $email){
-        $sql_code = "UPDATE $nomeTabela SET senha = '$cript' WHERE email = '$email'";
+    function InsereNovaSenha($conexao, $senha, $nomeTabela, $coluna, $parametro){
+        $cript = CriptografiaSenhas($senha);
+        $sql_code = "UPDATE $nomeTabela SET senha = '$cript' WHERE $coluna = '$parametro'";
         $results = mysqli_query($conexao, $sql_code);
         if ($results)
             return true;
@@ -81,12 +233,25 @@
             return false;
     }
 
+    function CriptografiaSenhas($senha){
+        $criptMD5 = md5($senha);
+        $criptSHA1 = sha1($criptMD5);
+        $cript = md5($criptSHA1);
+        return $cript;
+    }
+
+    function VerificaExistencia($conexao, $selecao, $tabela, $coluna1, $parametro1, $coluna2, $parametro2, $coluna3, $parametro3, $coluna4, $parametro4){
+        $sql_code = "SELECT $selecao FROM $tabela WHERE $coluna1 = '$parametro1' AND $coluna2 = '$parametro2' AND $coluna3 = '$parametro3' AND $coluna4 = '$parametro4'";
+        $results = mysqli_query($conexao, $sql_code);
+        if ($results && mysqli_num_rows($results)) return true;
+        return false;
+    }
     //=============================================================
 
     // =========== REDIRECIONAMENTO ===========
 
     function Redireciona($dir){
-        echo "<meta http-equiv='refresh' content='5; url={$dir}'>";
+        echo "<meta http-equiv='refresh' content='3; url={$dir}'>";
     }
 
     //=============================================================
@@ -159,9 +324,6 @@
     function ValidaURL( $str ){
         /**
         * Função para retornar uma string protegida contra SQL/Blind/XSS Injection
-        * @param Mixed str
-        * @access public
-        * @return string
         */
         if( !is_array( $str ) ) {
             $str = preg_replace("/(from|select|insert|delete|where|drop table|show tables)/i","",$str);
@@ -176,12 +338,75 @@
             $tbl = array_flip($tbl);
             $str = addslashes($str);
             $str = strip_tags($str);
+            $str = htmlspecialchars($str);
             if (filter_var($str, FILTER_VALIDATE_INT)) {
                 return strtr($str, $tbl);
             } 
         }
         else return $str;
     }
+
+    function ValidaInteiro($input) {
+        $input = trim($input);
+        $input = stripslashes($input);
+        $input = htmlspecialchars($input);
+        if (filter_var($input, FILTER_VALIDATE_INT)) {
+            return $input;
+        }
+        else
+            return null;
+    }
+
+    function ValidaEmail($email){
+        if ((!isset($email) || !filter_var($email, FILTER_VALIDATE_EMAIL) )) {
+            return null;
+        }
+        return $email;
+    }
+
+
+    function ValidaString( $str ){
+        /**
+        * Função para retornar uma string protegida contra SQL/Blind/XSS Injection
+        */
+        if( !is_array( $str ) ) {
+            $str = preg_replace("/(from|select|insert|delete|where|drop table|show tables)/i","",$str);
+            $str = preg_replace('~&amp;#x([0-9a-f]+);~i', 'chr(hexdec("\\1"))', $str);
+            $str = preg_replace('~&amp;#([0-9]+);~', 'chr("\\1")', $str);
+            $str = str_replace("<script","",$str);
+            $str = str_replace("script>","",$str);
+            $str = str_replace("<Script","",$str);
+            $str = str_replace("Script>","",$str);
+            $str = trim($str);
+            $tbl = get_html_translation_table(HTML_ENTITIES);
+            $tbl = array_flip($tbl);
+            $str = addslashes($str);
+            $str = strip_tags($str);
+            $str = htmlspecialchars($str);
+            return strtr($str, $tbl);
+        }
+        else return null;
+    }
+
+    function VerificaStatusUsuarios ($conexao, $idAluno = null, $idProfessor = null){
+        if (isset($idAluno)){
+            // USUÁRIO ALUNO
+            $dadosAluno = BuscaRetornaResponse($conexao, "aluno", "idAluno", $idAluno);
+            if ($dadosAluno){
+                if ($dadosAluno["status"] == "ativo")   return true;
+                return false;
+            }
+        }
+        else{
+            // USUÁRIO Professor
+            $dadosProfessor = BuscaRetornaResponse($conexao, "professor", "idProfessor", $idProfessor);
+            if ($dadosProfessor){
+                if ($dadosProfessor["status"] == "ativo")   return true;
+                return false;
+            }
+        }
+    }
+
     //=============================================================
 
 ?>

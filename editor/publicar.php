@@ -113,10 +113,12 @@ if(isset($_POST['postar'])) {
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
+    <!-- IMPORTAÇÃO BOOTSTRAP, JQUERY -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
     <!-- EDITOR SUMMERNOTE -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
@@ -170,50 +172,50 @@ if(isset($_POST['postar'])) {
 
     <!--SCRIPT DE CONFIGURA DO EDITOR DE TEXTO ALTERNATIVA (SUMMERNOTE)-->
     <script type="text/javascript">
-            $(document).ready(function() {
-                $('#editor').summernote({
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript']],
-                        ['fontname', ['fontname']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'hr', 'video']],
-                        ['view', ['codeview', 'help']],
-                    ],
-                    height: 300,
-                    minHeight: null,
-                    maxHeight: null,
-                    focus: true,
-                    lang: 'pt-BR',
-                    codeviewFilter: false,
-                    codeviewIframeFilter: true,
-                    tableClassName: function()
-                    {
-                        $(this).addClass('table table-bordered')
+        $(document).ready(function() {
+            $('#editor').summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'hr', 'video']],
+                    ['view', ['codeview', 'help']],
+                ],
+                height: 300,
+                minHeight: null,
+                maxHeight: null,
+                focus: true,
+                lang: 'pt-BR',
+                codeviewFilter: false,
+                codeviewIframeFilter: true,
+                tableClassName: function()
+                {
+                    $(this).addClass('table table-bordered')
 
-                        .attr('cellpadding', 12)
-                        .attr('cellspacing', 0)
-                        .attr('border', 1)
-                        .css('borderCollapse', 'collapse');
+                    .attr('cellpadding', 12)
+                    .attr('cellspacing', 0)
+                    .attr('border', 1)
+                    .css('borderCollapse', 'collapse');
 
-                        $(this).find('td')
-                        .css('borderColor', 'black')
-                        .css('padding', '15px');
-                    },
-                });
+                    $(this).find('td')
+                    .css('borderColor', 'black')
+                    .css('padding', '15px');
+                },
             });
-            var postForm = function() {
-                var content = $('textarea[name="descricao"]').html($('#editor').code());
-            }
-        </script>
+        });
+        var postForm = function() {
+            var content = $('textarea[name="descricao"]').html($('#editor').code());
+        }
+    </script>
 
-        <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
-        <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="dist/summernote-bs4.css">
-        <script src="dist/summernote-bs4.js"></script>
-        <script src="dist/lang/summernote-pt-BR.js"></script>
+    <script src="../painel/componentes/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="../painel/componentes/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="dist/summernote-bs4.css">
+    <script src="dist/summernote-bs4.js"></script>
+    <script src="dist/lang/summernote-pt-BR.js"></script>
 </body>
 </html>
