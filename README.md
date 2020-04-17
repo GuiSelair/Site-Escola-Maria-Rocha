@@ -17,7 +17,7 @@ A Escola Maria Rocha é uma escola estadual que além de possuir o ensino médio
 O planejamento da reformulação do site deveria conter todas as funcionalidades antigas, como possibilidade de postagem de noticias e editais, e também adicionar novas funcionalidades, como um painel administrativo contendo um CRUD e um galeria.
 
 
-Além disso, junto com o WebSite foi solicitado também a criação de um portal acadêmico afim de auxiliar o aluno a visualizar notas e presenças. O repositorio do Portal Acadêmico pode ser acessado AQUI.
+Além disso, junto com o WebSite foi solicitado também a criação de um portal acadêmico afim de auxiliar o aluno a visualizar notas e presenças. O repositorio do Portal Acadêmico pode ser acessado [AQUI](https://github.com/GuiSelair/Portal-Academico-Maria-Rocha)..
 
 
 Durante a execução deste projeto vale destacar a manipulação das seguintes tecnologias:
